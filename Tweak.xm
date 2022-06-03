@@ -261,11 +261,68 @@
     return YES;
 }
 %end
-
-%hook HookName
-
 %end
 
+%group oledTheme
+%hook YTCommonColorPalette
+- (UIColor *)brandBackgroundSolid { return [UIColor blackColor]; }
+- (UIColor *)brandBackgroundPrimary { return [UIColor blackColor]; }
+%end
+
+%hook YTPivotBarView
+- (void)didMoveToWindow {
+    self.subviews[0].backgroundColor = [UIColor blackColor];
+    %orig;
+}
+%end
+
+%hook YTMMusicMenuTitleView
+- (void)didMoveToWindow {
+    self.backgroundColor = [UIColor blackColor];
+    %orig;
+}
+%end
+
+%hook MDCSnackbarMessageView
+- (void)didMoveToWindow {
+    self.backgroundColor = [UIColor blackColor];
+    %orig;
+}
+%end
+%end
+
+%group oledKB
+%hook UIKBRenderConfig // Prediction text color
+- (void)setLightKeyboard:(BOOL)arg1 { %orig(NO); }
+%end
+
+%hook UIKeyboardDockView
+- (void)didMoveToWindow {
+    self.backgroundColor = [UIColor blackColor];
+    %orig;
+}
+%end
+
+%hook UIKeyboardLayoutStar 
+- (void)didMoveToWindow {
+    self.backgroundColor = [UIColor blackColor];
+    %orig;
+}
+%end
+
+%hook TUIPredictionViewStackView
+- (void)didMoveToWindow {
+    self.backgroundColor = [UIColor blackColor];
+    %orig;
+}
+%end
+
+%hook TUIEmojiSearchView
+- (void)didMoveToWindow {
+    self.backgroundColor = [UIColor blackColor];
+    %orig;
+}
+%end
 %end
 
 %ctor{
@@ -274,14 +331,25 @@
     
     BOOL showStatusBarInPlayer = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateShowStatusBarInPlayer"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateShowStatusBarInPlayer"] : NO;
     
+    BOOL oledDarkTheme = ([[NSUserDefaults standardUserDefaults] objectForKey:@"oledDarkTheme_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"oledDarkTheme_enabled"] : NO;
+
+    BOOL oledDarkKeyboard = ([[NSUserDefaults standardUserDefaults] objectForKey:@"oledDarkKeyboard_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"oledDarkKeyboard_enabled"] : NO;
+    
     //Apply
     [[YTMUltimatePrefs sharedInstance] setIsEnabled:isEnabled];
     [[YTMUltimatePrefs sharedInstance] setShowStatusBarInPlayer:showStatusBarInPlayer];
-    
+    [[YTMUltimatePrefs sharedInstance] setOledDarkTheme:oledDarkTheme];
+    [[YTMUltimatePrefs sharedInstance] setOledDarkKeyboard:oledDarkKeyboard];
+
     %init(ui);
     
     if ([[YTMUltimatePrefs sharedInstance] isEnabled]){
         %init(hack);
     }
-    
+    if ([[YTMUltimatePrefs sharedInstance] oledDarkTheme]){
+        %init(oledTheme);
+    }
+    if ([[YTMUltimatePrefs sharedInstance] oledDarkKeyboard]){
+        %init(oledKB);
+    }
 }

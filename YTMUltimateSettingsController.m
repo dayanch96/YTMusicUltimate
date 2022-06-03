@@ -69,7 +69,7 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 4;
+    return 6;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -80,7 +80,7 @@
     }
 
     UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
-    if (indexPath.row != 2 && indexPath.row != 3){
+    if (indexPath.row != 4 && indexPath.row != 5){
         cell.accessoryView = switchView;
     }
     
@@ -100,12 +100,26 @@
             [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
             break;
         case 2:
+            cell.textLabel.text = @"OLED Dark Theme";
+            cell.detailTextLabel.text = @"Enable OLED Dark Theme";
+            switchView.tag = 3;
+            [switchView setOn:[[YTMUltimatePrefs sharedInstance] oledDarkTheme] animated:NO];
+            [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
+            break;
+        case 3:
+            cell.textLabel.text = @"OLED Dark Keyboard";
+            cell.detailTextLabel.text = @"Enable OLED Dark Keyboard";
+            switchView.tag = 4;
+            [switchView setOn:[[YTMUltimatePrefs sharedInstance] oledDarkKeyboard] animated:NO];
+            [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
+            break;
+        case 4:
             cell.textLabel.text = @"Apply";
             cell.detailTextLabel.text = @"Restarts the app to apply changes.";
             cell.textLabel.textColor = [UIColor systemBlueColor];
             cell.detailTextLabel.textColor = [UIColor systemBlueColor];
             break;
-        case 3:
+        case 5:
             cell.textLabel.text = @"Follow me on Twitter";
             cell.detailTextLabel.text = @"Tap to follow @ginsudev on Twitter.";
             cell.textLabel.textColor = [UIColor systemBlueColor];
@@ -119,9 +133,9 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 2){
+    if (indexPath.row == 4){
         @throw NSInternalInconsistencyException;
-    } else if (indexPath.row == 3){
+    } else if (indexPath.row == 5){
         [[UIApplication sharedApplication]
             openURL:[NSURL URLWithString:@"https://twitter.com/ginsudev"]
             options:@{}
@@ -138,6 +152,14 @@
         case 2:
             [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"YTMUltimateShowStatusBarInPlayer"];
             [[YTMUltimatePrefs sharedInstance] setShowStatusBarInPlayer:sender.on];
+            break;
+        case 3:
+            [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"oledDarkTheme_enabled"];
+            [[YTMUltimatePrefs sharedInstance] setOledDarkTheme:sender.on];
+            break;
+        case 4:
+            [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"oledDarkKeyboard_enabled"];
+            [[YTMUltimatePrefs sharedInstance] setOledDarkKeyboard:sender.on];
             break;
         default:
             break;
