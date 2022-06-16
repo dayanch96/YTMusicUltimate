@@ -21,12 +21,6 @@
 @interface UIKeyboardLayoutStar : UIView
 @end
 
-@interface TUIPredictionViewStackView : UIView
-@end
-
-@interface TUIEmojiSearchView : UIView
-@end
-
 @interface YTPivotBarView : UIView
 @end
 
@@ -34,4 +28,10 @@
 @end
 
 @interface MDCSnackbarMessageView : UIView
+@end
+
+@interface UIPredictionViewController : UIViewController
+@end
+
+@interface UICandidateViewController : UIViewController
 @end
