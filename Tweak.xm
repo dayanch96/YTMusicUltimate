@@ -292,6 +292,20 @@
 %end
 
 %group oledKB
+%hook UIPredictionViewController // support prediction bar - @ichitaso: http://gist.github.com/ichitaso/935100fd53a26f18a9060f7195a1be0e
+- (void)loadView {
+    %orig;
+    [self.view setBackgroundColor:[UIColor blackColor]];
+}
+%end
+
+%hook UICandidateViewController // support prediction bar - @ichitaso:http://gist.github.com/ichitaso/935100fd53a26f18a9060f7195a1be0e
+- (void)loadView {
+    %orig;
+    [self.view setBackgroundColor:[UIColor blackColor]];
+}
+%end
+
 %hook UIKBRenderConfig // Prediction text color
 - (void)setLightKeyboard:(BOOL)arg1 { %orig(NO); }
 %end
@@ -304,20 +318,6 @@
 %end
 
 %hook UIKeyboardLayoutStar 
-- (void)didMoveToWindow {
-    self.backgroundColor = [UIColor blackColor];
-    %orig;
-}
-%end
-
-%hook TUIPredictionViewStackView
-- (void)didMoveToWindow {
-    self.backgroundColor = [UIColor blackColor];
-    %orig;
-}
-%end
-
-%hook TUIEmojiSearchView
 - (void)didMoveToWindow {
     self.backgroundColor = [UIColor blackColor];
     %orig;
