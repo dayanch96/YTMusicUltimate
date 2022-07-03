@@ -1,6 +1,6 @@
 #import "YTMUltimatePrefs.h"
 #import "YTMUltimateSettingsController.h"
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface UIView (Private)
 - (UIViewController *)_viewControllerForAncestor;
@@ -33,4 +33,26 @@
 
 @interface YTMAvatarAccountView : UIView
 @property(nonatomic,strong) YTMUltimateSettingsController *YTMUltimateController;
+@end
+
+// Color
+@interface UIKeyboardDockView : UIView
+@end
+
+@interface UIKeyboardLayoutStar : UIView
+@end
+
+@interface YTPivotBarView : UIView
+@end
+
+@interface YTMMusicMenuTitleView : UIView
+@end
+
+@interface MDCSnackbarMessageView : UIView
+@end
+
+@interface UIPredictionViewController : UIViewController
+@end
+
+@interface UICandidateViewController : UIViewController
 @end
