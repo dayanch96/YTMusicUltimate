@@ -1,6 +1,9 @@
 ARCHS = arm64
 TARGET = iphone:clang:latest:13.0
 PACKAGE_VERSION = 1.1.5
+THEOS_DEVICE_IP = localhost -p 2222
+INSTALL_TARGET_PROCESSES = SpringBoard
+# PREFIX = $(THEOS)/toolchain/Xcode11.xctoolchain/usr/bin/
 
 ifeq ($(SIDELOADED),1)
 MODULES = jailed
