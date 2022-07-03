@@ -91,6 +91,14 @@
     return YES;
 }
 
+- (BOOL)canPlayBackgroundableContent {
+    return YES;
+}
+
+- (BOOL)isAudioCastEnabled {
+    return YES;
+}
+
 - (id)sidePanelPromo{
     return nil;
 }
@@ -114,6 +122,10 @@
 -(void)presentInterstitialPromoForEvent:(id)event{
     return;
 }
+
+-(void)presentInterstitialGridPromoForEvent:(id)event{
+    return;
+}
 %end
 
 %hook YTPromosheetController
@@ -122,20 +134,14 @@
 }
 %end
 
-%hook YTCarPlayController
+%hook YTMCarPlayController
 -(BOOL)isPremiumSubscriber{
     return YES;
 }
 %end
 
-%hook YTHotConfig
--(BOOL)isPremiumBrandEnabled{
-    return YES;
-}
-%end
-
-%hook YTMYPCGetOfflineUpsellEndpointCommand
--(bool)isPremiumSubscriber{
+%hook YTMYPCGetOfflineUpsellEndpointCommandHandler
+- (_Bool)isPremiumSubscriber{
     return YES;
 }
 %end
@@ -163,6 +169,12 @@
 
 %hook YTIPlayerResponse
 -(bool)isPlayableInBackground{
+    return YES;
+}
+%end
+
+%hook YTMIntentHandler
+- (_Bool)isBackgroundPlaybackEnabled {
     return YES;
 }
 %end
