@@ -54,14 +54,11 @@ jobs:
           ref: master
           path: theos
           submodules: recursive
-
-      - name: Download iOS 15 SDK
+          
+      - name: Download iOS 15.5 SDK
         run: |
-          curl -LO https://github.com/chrisharper22/sdks/archive/main.zip
-          TMP=$(mktemp -d)
-          unzip -qq main.zip -d $TMP
-          mv $TMP/sdks-main/*.sdk $THEOS/sdks
-          rm -r main.zip $TMP
+          svn checkout -q https://github.com/chrisharper22/sdks/trunk/iPhoneOS15.5.sdk
+          mv *.sdk $THEOS/sdks
         env:
           THEOS: ${{ github.workspace }}/theos
 
