@@ -1,0 +1,136 @@
+# Original idea by @ISnackable. Thanks to him for handling the hardest parts!
+
+name: Build and Release YTMusicUltimate IPA
+
+on:
+  workflow_dispatch:
+    inputs:
+      ytmusicultimate_version:
+        description: "The version of YTMusicUltimate"
+        default: "1.1.5"
+        required: false
+        type: string
+      youtubemusic_version:
+        description: "The version of YouTube Music"
+        default: ""
+        required: true
+        type: string
+      decrypted_youtubemusic_url:
+        description: "The direct URL to the decrypted YouTube Music ipa"
+        default: ""
+        required: true
+        type: string
+      create_release:
+        description: "Create a draft release"
+        default: true
+        required: false
+        type: boolean
+  
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build YTMusicUltimate IPA
+    runs-on: macos-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Main
+        uses: actions/checkout@v3
+        with:
+          path: main
+          submodules: recursive
+
+      - name: Install Dependencies
+        run: brew install ldid
+
+      - name: Setup Theos
+        uses: actions/checkout@v3
+        with:
+          repository: theos/theos
+          ref: master
+          path: theos
+          submodules: recursive
+          
+      - name: Download iOS 15.5 SDK
+        run: |
+          svn checkout -q https://github.com/chrisharper22/sdks/trunk/iPhoneOS15.5.sdk
+          mv *.sdk $THEOS/sdks
+        env:
+          THEOS: ${{ github.workspace }}/theos
+
+      - name: Setup Theos Jailed
+        uses: actions/checkout@v3
+        with:
+          repository: kabiroberai/theos-jailed
+          ref: master
+          path: theos-jailed
+          submodules: recursive
+
+      - name: Install Theos Jailed
+        run: |
+          ./theos-jailed/install
+        env:
+          THEOS: ${{ github.workspace }}/theos
+
+      - name: Prepare YouTube Music iPA
+        run: |
+          wget "$YOUTUBEMUSIC_URL" --no-verbose -O ./main/YouTubeMusic.ipa
+          unzip -q ./main/YouTubeMusic.ipa -d ./main/tmp
+          rm -rf ./main/tmp/Payload/YouTubeMusic.app/Watch
+
+        env:
+          THEOS: ${{ github.workspace }}/theos
+          YOUTUBEMUSIC_URL: ${{ inputs.decrypted_youtubemusic_url }}
+
+      - name: Build Package
+        id: build_package
+        run: |
+          cd ${{ github.workspace }}/main
+          make package FINALPACKAGE=1 SIDELOADED=1
+          (mv "packages/$(ls -t packages | head -n1)" "packages/YTMusicUltimate_${{ env.YOUTUBEMUSIC_VERSION  }}_${{ env.YTMUSICULTIMATE_VERSION }}.ipa")
+          echo "::set-output name=package::$(ls -t packages | head -n1)"
+        env:
+          THEOS: ${{ github.workspace }}/theos
+          YTMUSICULTIMATE_VERSION: ${{ inputs.ytmusicultimate_version }}
+          YOUTUBEMUSIC_VERSION: ${{ inputs.youtubemusic_version }}
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        env:
+          YTMUSICULTIMATE_VERSION: ${{ inputs.ytmusicultimate_version }}
+          YOUTUBEMUSIC_VERSION: ${{ inputs.youtubemusic_version }}
+        with:
+          name: YTMusicUltimate_${{ env.YOUTUBEMUSIC_VERSION  }}_${{ env.YTMUSICULTIMATE_VERSION }}
+          path: ${{ github.workspace }}/main/packages/${{ steps.build_package.outputs.package }}
+          if-no-files-found: error
+
+      - name: Create Release
+        if: ${{ inputs.create_release }}
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          YTMUSICULTIMATE_VERSION: ${{ inputs.ytmusicultimate_version }}
+          YOUTUBEMUSIC_VERSION: ${{ inputs.youtubemusic_version }}
+        with:
+          tag_name: v${{ env.YOUTUBEMUSIC_VERSION }}-${{ env.YTMUSICULTIMATE_VERSION }}-(${{ github.run_number }})
+          release_name: v${{ env.YOUTUBEMUSIC_VERSION }}-${{ env.YTMUSICULTIMATE_VERSION }}-(${{ github.run_number }})
+          draft: true
+          prerelease: false
+
+      - name: Upload Release Asset
+        if: ${{ inputs.create_release }}
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          YTMUSICULTIMATE_VERSION: ${{ inputs.ytmusicultimate_version }}
+          YOUTUBEMUSIC_VERSION: ${{ inputs.youtubemusic_version }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ github.workspace }}/main/packages/${{ steps.build_package.outputs.package }}
+          asset_name: YTMusicUltimate_${{ env.YOUTUBEMUSIC_VERSION  }}_${{ env.YTMUSICULTIMATE_VERSION }}.ipa
+          asset_content_type: application/vnd.debian.binary-package
