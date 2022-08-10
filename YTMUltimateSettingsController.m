@@ -23,7 +23,6 @@
     [self.headerView addConstraint:[NSLayoutConstraint constraintWithItem:headerLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.headerView attribute:NSLayoutAttributeTop multiplier:1 constant:20]];
     
     UILabel *subtitleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    //subtitleLabel.textColor = [UIColor Color];
     subtitleLabel.text = @"By @Ginsu";
     subtitleLabel.font = [UIFont systemFontOfSize:12];
     subtitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -32,27 +31,6 @@
     [self.headerView addConstraint:[NSLayoutConstraint constraintWithItem:subtitleLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.headerView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
     //y
     [self.headerView addConstraint:[NSLayoutConstraint constraintWithItem:subtitleLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:headerLabel attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
-    
-    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    backButton.frame = CGRectMake(0,0,30,30);
-    backButton.translatesAutoresizingMaskIntoConstraints = NO;
-    if (@available(iOS 13, *)) {
-        [backButton setImage:[[UIImage systemImageNamed:@"arrow.backward.circle"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    } else {
-        [backButton setTitle:@"Back" forState:UIControlStateNormal];
-    }
-    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-    backButton.tintColor = [UIColor redColor];
-    [self.headerView addSubview:backButton];
-    //x
-    [self.headerView addConstraint:[NSLayoutConstraint constraintWithItem:backButton attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.headerView attribute:NSLayoutAttributeLeft multiplier:1 constant:20]];
-    //y
-    [self.headerView addConstraint:[NSLayoutConstraint constraintWithItem:backButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:headerLabel attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
-    
-}
-
--(void)back{
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -93,24 +71,24 @@
             [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
             break;
         case 1:
-            cell.textLabel.text = @"Status bar in player";
-            cell.detailTextLabel.text = @"Always show the status bar.";
-            switchView.tag = 2;
-            [switchView setOn:[[YTMUltimatePrefs sharedInstance] showStatusBarInPlayer] animated:NO];
-            [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
-            break;
-        case 2:
             cell.textLabel.text = @"OLED Dark Theme";
             cell.detailTextLabel.text = @"Enable OLED Dark Theme";
-            switchView.tag = 3;
+            switchView.tag = 2;
             [switchView setOn:[[YTMUltimatePrefs sharedInstance] oledDarkTheme] animated:NO];
             [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
             break;
-        case 3:
+        case 2:
             cell.textLabel.text = @"OLED Dark Keyboard";
             cell.detailTextLabel.text = @"Enable OLED Dark Keyboard";
-            switchView.tag = 4;
+            switchView.tag = 3;
             [switchView setOn:[[YTMUltimatePrefs sharedInstance] oledDarkKeyboard] animated:NO];
+            [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
+            break;
+        case 3:
+            cell.textLabel.text = @"Show playback rate button";
+            cell.detailTextLabel.text = @"Adjust playback speed";
+            switchView.tag = 4;
+            [switchView setOn:[[YTMUltimatePrefs sharedInstance] playbackRateButton] animated:NO];
             [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
             break;
         case 4:
@@ -150,16 +128,16 @@
             [[YTMUltimatePrefs sharedInstance] setIsEnabled:sender.on];
             break;
         case 2:
-            [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"YTMUltimateShowStatusBarInPlayer"];
-            [[YTMUltimatePrefs sharedInstance] setShowStatusBarInPlayer:sender.on];
-            break;
-        case 3:
             [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"oledDarkTheme_enabled"];
             [[YTMUltimatePrefs sharedInstance] setOledDarkTheme:sender.on];
             break;
-        case 4:
+        case 3:
             [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"oledDarkKeyboard_enabled"];
             [[YTMUltimatePrefs sharedInstance] setOledDarkKeyboard:sender.on];
+            break;
+        case 4:
+            [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"playbackRateButton_enabled"];
+            [[YTMUltimatePrefs sharedInstance] setPlaybackRateButton:sender.on];
             break;
         default:
             break;

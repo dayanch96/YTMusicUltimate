@@ -1,7 +1,6 @@
 #import "Imports.h"
 
-%group ui
-
+%group SettingsPage
 %hook YTMAvatarAccountView
 %property(nonatomic,strong) YTMUltimateSettingsController *YTMUltimateController;
 
@@ -19,8 +18,6 @@
         //Push YTMusicUltimate view controller.
 
         self.YTMUltimateController = [[YTMUltimateSettingsController alloc] init];
-        self.YTMUltimateController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-        self.YTMUltimateController.modalPresentationStyle = UIModalPresentationFullScreen;
         [self._viewControllerForAncestor presentViewController:self.YTMUltimateController animated:YES completion:nil];
     }];
 
@@ -45,11 +42,39 @@
 %end
 %end
 
+#pragma mark - Fix sideloading issues
+%group SideloadingFixes
+%hook GULAppEnvironmentUtil
+- (BOOL)isFromAppStore {
+    NSLog(@"[YTMULT]: %@", (%orig == YES ? @"from appstore" : @"not from appstore"));
+    return YES;
+}
 
-%group hack
+- (void)setIsFromAppStore:(BOOL)appstore {
+    %orig(YES);
+}
 
-#pragma mark - Fix sideloading issues (Thanks jawshoeadan)
+- (BOOL)isAppStoreReceiptSandbox {
+    return YES;
+}
+
+- (void)setIsAppStoreReceiptSandbox:(BOOL)appstore {
+    %orig(YES);
+}
+%end
+
+%hook APMIdentity
+- (BOOL)fromAppStore {
+    return YES;
+}
+
+- (void)setFromAppStore:(BOOL)appstore {
+    %orig(YES);
+}
+%end
+
 %hook SSOKeychain
+//Thanks to jawshoeadan for this hook.
 + (id)accessGroup {
     NSDictionary *query = [NSDictionary dictionaryWithObjectsAndKeys:
                            (__bridge NSString *)kSecClassGenericPassword, (__bridge NSString *)kSecClass,
@@ -85,89 +110,498 @@
     
     return accessGroup;
 }
-
 %end
 
-#pragma mark - Showing status bar in the player
-%hook YTMWatchViewController
--(BOOL)prefersStatusBarHidden{
-    if ([[YTMUltimatePrefs sharedInstance] showStatusBarInPlayer]){
-        return NO;
-    } else {
-        return %orig;
-    }
+%hook YTMModularVideoOverlayViewController
+- (BOOL)isAppInBackground {
+    return NO;
+}
+
+- (void)setIsAppInBackground:(BOOL)background {
+    %orig(NO);
 }
 %end
 
+%hook YTMAppDelegate
+- (BOOL)shouldAudioSessionActivateInBackground {
+    return YES;
+}
+
+- (void)setShouldAudioSessionActivateInBackground:(BOOL)activate {
+    %orig(YES);
+}
+%end
+
+%hook YTMBackgroundUpsellNotificationController
+- (id)upsellNotificationTriggerOnBackground {
+    return nil;
+}
+
+- (void)appDidEnterBackground:(id)arg1 {
+    return;
+}
+
+- (void)maybeScheduleBackgroundUpsellNotification {
+    %orig;
+    [self removePendingBackgroundNotifications];
+}
+%end
+%end
+
 #pragma mark - Removing premium promos
+%group EnsurePremiumStatus
+%hook MDXFeatureFlags
+- (BOOL)isCastCloudDiscoveryEnabled {
+    return YES;
+}
+
+- (void)setIsCastCloudDiscoveryEnabled:(BOOL)enabled {
+    %orig(YES);
+}
+
+- (BOOL)isCastToNativeEnabled {
+    return YES;
+}
+
+- (void)setIsCastToNativeEnabled:(BOOL)enabled {
+    %orig(YES);
+}
+
+- (BOOL)areMementoPromotionsEnabled {
+    return NO;
+}
+
+- (void)setAreMementoPromotionsEnabled:(BOOL)enabled {
+    %orig(NO);
+}
+
+- (BOOL)isCastEnabled {
+    return YES;
+}
+
+- (void)setIsCastEnabled:(BOOL)enabled {
+    %orig(YES);
+}
+%end
+
+%hook YTColdConfig
+- (BOOL)isPassiveSignInUniquePremiumValuePropEnabled {
+    return YES;
+}
+
+- (void)setIsPassiveSignInUniquePremiumValuePropEnabled:(BOOL)enabled {
+    %orig(YES);
+}
+
+- (BOOL)isCastToNativeEnabled {
+    return YES;
+}
+
+- (void)setIsCastToNativeEnabled:(BOOL)enabled {
+    %orig(YES);
+}
+
+- (BOOL)isPersistentCastIconEnabled {
+    return YES;
+}
+
+- (void)setIsPersistentCastIconEnabled:(BOOL)enabled {
+    %orig(YES);
+}
+
+- (BOOL)musicEnableSuggestedCastDevices {
+    return YES;
+}
+
+- (void)setMusicEnableSuggestedCastDevices:(BOOL)suggest {
+    %orig(YES);
+}
+
+- (BOOL)musicClientConfigEnableCastButtonOnPlayerHeader {
+    return YES;
+}
+
+- (void)setMusicClientConfigEnableCastButtonOnPlayerHeader:(BOOL)enabled {
+    %orig(YES);
+}
+
+- (BOOL)musicClientConfigEnableAudioOnlyCastingForNonMusicAudio {
+    return YES;
+}
+
+- (void)setMusicClientConfigEnableAudioOnlyCastingForNonMusicAudio:(BOOL)enabled {
+    %orig(YES);
+}
+
+- (BOOL)disablePlaybackLockScreenController {
+    return NO;
+}
+
+- (void)setDisablePlaybackLockScreenController:(BOOL)enabled {
+    %orig(NO);
+}
+
+- (BOOL)enableIMPBackgroundableAudio {
+    return YES;
+}
+
+- (void)setEnableIMPBackgroundableAudio:(BOOL)enabled {
+    %orig(YES);
+}
+%end
+
+%hook YTMCastSessionController
+- (id)premiumUpgradeAction {
+    return nil;
+}
+
+- (void)showAudioCastUpsellDialog {
+    return;
+}
+
+- (BOOL)isFreeTierAudioCastEnabled {
+    return YES;
+}
+
+- (void)setIsFreeTierAudioCastEnabled:(BOOL)enabled {
+    %orig(YES);
+}
+
+- (void)openMusicPremiumLandingPage {
+    return;
+}
+%end
+
+%hook YTIPlayabilityStatus
+- (id)backgroundUpsell {
+    return nil;
+}
+
+- (id)offlineUpsell {
+    return nil;
+}
+%end
+
+%hook YTMAppDelegate
+- (void)showUpsellAlertWithTitle:(id)arg1 subtitle:(id)arg2 upgradeButtonTitle:(id)arg3 upsellURLString:(id)arg4 sourceApplication:(id)arg5 {
+    return;
+}
+%end
+
+%hook MDXPromotionManager
+- (void)presentMementoPromotionIfTriggerConditionsAreSatisfied {
+    return;
+}
+
+- (void)presentMementoPromotion:(long long)arg1 {
+    return;
+}
+%end
+
+%hook YTPlayerPromoController
+- (void)showBackgroundabilityUpsell {
+    return;
+}
+
+- (void)showBackgroundOnboardingHint {
+    return;
+}
+
+- (void)showPipOnboardingHint {
+    return;
+}
+%end
+
+%hook YTMMusicAppMetadata
+- (BOOL)isPremiumSubscriber{
+    return YES;
+}
+
+- (void)setIsPremiumSubscriber:(BOOL)premium {
+    %orig(YES);
+}
+
+- (BOOL)canPlayBackgroundableContent {
+    return YES;
+}
+
+- (void)setCanPlayBackgroundableContent:(BOOL)playable {
+    %orig(YES);
+}
+
+- (BOOL)isAudioCastEnabled {
+    return YES;
+}
+
+- (void)setIsAudioCastEnabled:(BOOL)enabled {
+    %orig(YES);
+}
+
+- (id)sidePanelPromo{
+    return nil;
+}
+%end
+
+%hook YTPivotBarView
+-(YTPivotBarItemView *)itemView4{
+    YTPivotBarItemView *view = %orig;
+    view.navigationButton.hidden = YES;
+    return nil;
+}
+%end
+
 %hook YTIShowFullscreenInterstitialCommand
 -(BOOL)shouldThrottleInterstitial{
     return YES;
 }
+
+- (void)setShouldThrottleInterstitial:(BOOL)throttle {
+    %orig(YES);
+}
 %end
 
 %hook YTMAppResponder
--(void)presentInterstitialPromoForEvent:(id)event{
+- (void)presentInterstitialPromoForEvent:(id)event{
+    return;
+}
+
+- (void)presentFullscreenPromoForEvent:(id)event{
+    return;
+}
+
+- (void)presentInterstitialGridPromoForEvent:(id)event{
     return;
 }
 %end
 
 %hook YTPromosheetController
--(void)presentPromosheetWithEvent:(id)event{
+- (void)presentPromosheetWithEvent:(id)event{
     return;
 }
 %end
 
-#pragma mark - Enabling premium features
-%hook YTIPlayabilityStatus
--(bool)isPlayableInBackground{
+%hook YTMCarPlayController
+- (BOOL)isPremiumSubscriber{
     return YES;
+}
+
+- (void)setIsPremiumSubscriber:(BOOL)premium {
+    %orig(YES);
+}
+%end
+
+%hook YTMYPCGetOfflineUpsellEndpointCommandHandler
+- (BOOL)isPremiumSubscriber{
+    return YES;
+}
+
+- (void)setIsPremiumSubscriber:(BOOL)premium {
+    %orig(YES);
+}
+%end
+%end
+
+#pragma mark - Background playback
+%group BackgroundPlayback
+%hook HAMPlayer
+- (BOOL)allowsBackgroundPlayback {
+    return YES;
+}
+
+- (void)setAllowsBackgroundPlayback:(BOOL)allow {
+    %orig(YES);
+}
+
+- (void)inactivateNonBackgroundableTrackRenderers {
+    return;
+}
+%end
+
+%hook MDXPlaybackController
+- (void)destroyBackgroundPlayer {
+    return;
+}
+%end
+
+%hook YTPlayerStatus
+- (id)initWithExternalPlayback:(_Bool)arg1 backgroundPlayback:(_Bool)arg2 inlinePlaybackActive:(_Bool)arg3 cardboardModeActive:(_Bool)arg4 layout:(int)arg5 userAudioOnlyModeActive:(_Bool)arg6 blackoutActive:(_Bool)arg7 clipID:(id)arg8 accountLinkState:(id)arg9 muted:(_Bool)arg10 pictureInPicture:(_Bool)arg11 {
+    return %orig(YES, YES, YES, YES, arg5, NO, YES, arg8, arg9, arg10, arg11);
+}
+
+- (BOOL)backgroundPlayback {
+    return YES;
+}
+
+- (void)setBackgroundPlayback:(BOOL)backgroundable {
+    %orig(YES);
+}
+%end
+
+%hook YTPlaybackData
+- (BOOL)playableInBackground {
+    return YES;
+}
+
+- (void)setPlayableInBackground:(BOOL)playable {
+    %orig(YES);
+}
+%end
+
+%hook YTPlaybackBackgroundTaskController
+- (id)backgroundTaskExpirationTimer {
+    return nil;
+}
+- (void)endBackgroundTask {
+    return;
+}
+
+- (void)endBackgroundTaskAfterDelay {
+    return;
+}
+
+- (BOOL)contentPlayableInBackground {
+    return YES;
+}
+
+- (void)setContentPlayableInBackground:(BOOL)playable {
+    %orig(YES);
+}
+
+%end
+
+%hook YTLocalPlaybackController
+- (BOOL)isAppInBackground {
+    return NO;
+}
+
+- (void)setIsAppInBackground:(BOOL)backgrounded {
+    %orig(NO);
+}
+
+- (void)stopBackgroundPlayback {
+    return;
+}
+
+- (void)updateForceDisableBackgroundingForVideo:(id)arg1 {
+    return;
+}
+
+- (void)playbackBackgroundTaskIsExpiring {
+    return;
+}
+
+- (void)maybeStopBackgroundPlayback {
+    return;
+}
+
+- (BOOL)isPlaybackBackgroundable {
+    return YES;
+}
+
+- (void)setIsPlaybackBackgroundable:(BOOL)playable {
+    %orig(YES);
+}
+%end
+
+%hook YTIPlayabilityStatus
+- (BOOL)isPlayableInBackground{
+    return YES;
+}
+
+- (void)setIsPlayableInBackground:(BOOL)backgroundable {
+    %orig(YES);
 }
 %end
 
 %hook YTSingleVideo
--(bool)isPlayableInBackground{
+- (BOOL)isPlayableInBackground{
     return YES;
+}
+
+- (void)setIsPlayableInBackground:(BOOL)backgroundable {
+    %orig(YES);
 }
 %end
 
 %hook YTIPlaybackData
--(bool)isPlayableInBackground{
+- (BOOL)isPlayableInBackground{
     return YES;
+}
+
+- (void)setIsPlayableInBackground:(BOOL)backgroundable {
+    %orig(YES);
 }
 %end
 
 %hook YTIPlayerResponse
--(bool)isPlayableInBackground{
+- (BOOL)isPlayableInBackground{
     return YES;
 }
 
--(bool)ytm_isAudioOnlyPlayable{
+- (void)setIsPlayableInBackground:(BOOL)backgroundable {
+    %orig(YES);
+}
+%end
+
+%hook YTMIntentHandler
+- (BOOL)isBackgroundPlaybackEnabled {
     return YES;
 }
 
--(id)ytm_audioOnlyPlayabilityRenderer{
-    return %orig;
+- (void)setIsBackgroundPlaybackEnabled:(BOOL)backgroundable {
+    %orig(YES);
+}
+%end
+%end
+
+#pragma mark - Removing ads
+%group RemoveAds
+%hook YTAdsInnerTubeContextDecorator
+- (void)decorateContext:(id)arg1{
+    return;
+}
+%end
+%end
+
+#pragma mark - Video/Audio switching
+%group VideoAndAudioModePatches
+%hook YTIPlayerResponse
+- (BOOL)ytm_isAudioOnlyPlayable{
+    return YES;
+}
+
+- (void)setYtm_isAudioOnlyPlayable:(BOOL)playable{
+    %orig(YES);
 }
 %end
 
 %hook YTMSettings
-
--(_Bool)noVideoModeEnabled{
+- (BOOL)noVideoModeEnabled{
     return NO;
+}
+
+- (void)setNoVideoModeEnabled:(BOOL)enabled {
+    %orig(NO);
 }
 %end
 
 %hook YTUserDefaults
--(_Bool)noVideoModeEnabled{
+- (BOOL)noVideoModeEnabled{
     return NO;
+}
+
+- (void)setNoVideoModeEnabled:(BOOL)enabled {
+    %orig(NO);
 }
 %end
 
-#pragma mark - AV Switch
 %hook YTMAudioVideoModeController
-- (_Bool)isAudioOnlyBlocked {
+- (BOOL)isAudioOnlyBlocked {
     return NO;
+}
+
+- (void)setIsAudioOnlyBlocked:(BOOL)blocked {
+    %orig(NO);
 }
 
 - (void)setSwitchAvailability:(long long)arg1 {
@@ -176,93 +610,27 @@
 %end
 
 %hook YTMQueueConfig
-- (_Bool)isAudioVideoModeSupported {
+- (BOOL)isAudioVideoModeSupported {
     return YES;
 }
 
-- (_Bool)isMobileAudioTierScreenedCastEnabled {
-    return YES;
+- (void)setIsAudioVideoModeSupported:(BOOL)supported {
+    %orig(YES);
 }
 %end
 
 %hook YTDefaultQueueConfig
-- (_Bool)isAudioVideoModeSupported {
-    return YES;
-}
-%end
-
-%hook YTHotConfig
--(BOOL)isPremiumBrandEnabled{
-    return YES;
-}
-%end
-
-%hook YTOfflineVideo
-- (_Bool)isPlayableForStatusWithUpsell:(id *)arg1{
-    return YES;
-}
-- (_Bool)isPlayableForPlayabilityStatusWithUpsell:(id *)arg1{
-    return YES;
-}
-- (_Bool)isPlayableForOfflineActionWithUpsell:(id *)arg1{
-    return YES;
-}
-- (_Bool)isPlayableForManualDeletionCheckWithUpsell:(id *)arg1{
-    return YES;
-}
-- (_Bool)isPlayableOfflineWithUpsell:(id *)arg1{
-    return YES;
-}
-- (_Bool)isPlayableOfflineWithReason:(id *)arg1{
-    return YES;
-}
-%end
-
-%hook YTCarPlayController
--(bool)isPremiumSubscriber{
-    return YES;
-}
-%end
-
-%hook YTMMusicAppMetadata
--(bool)isPremiumSubscriber{
+- (BOOL)isAudioVideoModeSupported {
     return YES;
 }
 
--(id)sidePanelPromo{
-    return nil;
-}
-%end
-
-%hook YTPivotBarView
-
--(YTPivotBarItemView *)itemView4{
-    YTPivotBarItemView *view = %orig;
-    view.navigationButton.hidden = YES;
-    return nil;
-}
-%end
-
-%hook YTMYPCGetOfflineUpsellEndpointCommand
--(bool)isPremiumSubscriber{
-    return YES;
-}
-%end
-
-%hook YTAdsInnerTubeContextDecorator
-- (void)decorateContext:(id)arg1{
-    return;
-}
-%end
-
-%hook MDXDIALScreen
-
-- (_Bool)castSupported {
-    return YES;
+- (void)setIsAudioVideoModeSupported:(BOOL)supported {
+    %orig(YES);
 }
 %end
 %end
 
+#pragma mark - OLED Theme
 %group oledTheme
 %hook YTCommonColorPalette
 - (UIColor *)brandBackgroundSolid { return [UIColor blackColor]; }
@@ -291,6 +659,7 @@
 %end
 %end
 
+#pragma mark - OLED Keyboard
 %group oledKB
 %hook UIPredictionViewController // support prediction bar - @ichitaso: http://gist.github.com/ichitaso/935100fd53a26f18a9060f7195a1be0e
 - (void)loadView {
@@ -325,31 +694,52 @@
 %end
 %end
 
-%ctor{
-    //Get values
-    BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
-    
-    BOOL showStatusBarInPlayer = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateShowStatusBarInPlayer"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateShowStatusBarInPlayer"] : NO;
-    
-    BOOL oledDarkTheme = ([[NSUserDefaults standardUserDefaults] objectForKey:@"oledDarkTheme_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"oledDarkTheme_enabled"] : NO;
+%group RateController
+%hook YTMModularNowPlayingViewController
+- (BOOL)playbackRateButtonEnabled {
+    return YES;
+}
 
+- (void)setPlaybackRateButtonEnabled:(BOOL)enabled {
+    %orig(YES);
+}
+%end
+%end
+
+%ctor{
+
+    //Get / read values
+    BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
+    BOOL oledDarkTheme = ([[NSUserDefaults standardUserDefaults] objectForKey:@"oledDarkTheme_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"oledDarkTheme_enabled"] : NO;
     BOOL oledDarkKeyboard = ([[NSUserDefaults standardUserDefaults] objectForKey:@"oledDarkKeyboard_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"oledDarkKeyboard_enabled"] : NO;
-    
-    //Apply
+    BOOL playbackRateButton = ([[NSUserDefaults standardUserDefaults] objectForKey:@"playbackRateButton_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"playbackRateButton_enabled"] : NO;
+
+    //Parse values to YTMUltimatePrefs for easy access.
     [[YTMUltimatePrefs sharedInstance] setIsEnabled:isEnabled];
-    [[YTMUltimatePrefs sharedInstance] setShowStatusBarInPlayer:showStatusBarInPlayer];
     [[YTMUltimatePrefs sharedInstance] setOledDarkTheme:oledDarkTheme];
     [[YTMUltimatePrefs sharedInstance] setOledDarkKeyboard:oledDarkKeyboard];
+    [[YTMUltimatePrefs sharedInstance] setPlaybackRateButton:playbackRateButton];
 
-    %init(ui);
+    //Apply patches
+    %init(SideloadingFixes);
+    %init(SettingsPage);
     
-    if ([[YTMUltimatePrefs sharedInstance] isEnabled]){
-        %init(hack);
-    }
-    if ([[YTMUltimatePrefs sharedInstance] oledDarkTheme]){
-        %init(oledTheme);
-    }
-    if ([[YTMUltimatePrefs sharedInstance] oledDarkKeyboard]){
-        %init(oledKB);
+    if (isEnabled){
+        %init(EnsurePremiumStatus);
+        %init(BackgroundPlayback);
+        %init(RemoveAds);
+        %init(VideoAndAudioModePatches);
+
+        if (oledDarkTheme) {
+            %init(oledTheme);
+        }
+
+        if (oledDarkKeyboard) {
+            %init(oledKB);
+        }
+
+        if (playbackRateButton) {
+            %init(RateController);
+        }
     }
 }

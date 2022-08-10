@@ -1,0 +1,152 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate'
+ 
+fcntl(): Bad file descriptor
+
+make: Entering directory '/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate'
+mkdir -p /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos
+make: Leaving directory '/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate'
+make: Entering directory '/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate'
+(rm -rf /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/swift)
+(mkdir -p /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/swift /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/swift/markers)
+make: Leaving directory '/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate'
+ 
+fcntl(): Bad file descriptor
+
+\
+abs_build_dir=.; \
+if [[ "" != "" ]]; then \
+  printf "\e[1;31m> \e[1;3;39m%s…\e[m\n" "Making all in subprojects of tweak YTMusicUltimate"; \
+  for d in ; do \
+    d="${d%:*}"; \
+    if [[ "${abs_build_dir}" = "." ]]; then \
+      lbuilddir="."; \
+    else \
+      lbuilddir="${abs_build_dir}/$d"; \
+    fi; \
+    if make -C $d -f Makefile --no-keep-going COLOR=1 --no-print-directory all \
+        THEOS_BUILD_DIR="$lbuilddir" \
+       ; then\
+       :; \
+    else exit $?; \
+    fi; \
+  done; \
+ fi; \
+printf "\e[1;31m> \e[1;3;39m%s…\e[m\n" "Making all for tweak YTMusicUltimate"; \
+make -f Makefile --no-keep-going COLOR=1 --no-print-directory \
+internal-tweak-all \
+_THEOS_CURRENT_TYPE="tweak" \
+THEOS_CURRENT_INSTANCE="YTMusicUltimate" \
+_THEOS_CURRENT_OPERATION="all" \
+THEOS_BUILD_DIR="."; \
+exit_code=$?; if [[ $exit_code != 0 ]]; then kill $(cat "/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/swift/jobserver.pid" 2>/dev/null) 2>/dev/null || :; exit $exit_code; fi
+ 
+[1;31m> [1;3;39mMaking all for tweak YTMusicUltimate…[m
+ 
+fcntl(): Bad file descriptor
+
+for i in Tweak.xm YTMUltimatePrefs.m YTMUltimateSettingsController.m      ; do \
+	if [[ ! -f "$i" ]]; then \
+		printf "\e[0;31m==> \e[1;31mError:\e[m %s\n" "File $i does not exist."  >&2; exit 1; \
+	fi; \
+done
+ 
+fcntl(): Bad file descriptor
+
+mkdir -p /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug
+ 
+fcntl(): Bad file descriptor
+
+mkdir -p /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/; touch /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/.stamp
+ 
+make -f Makefile --no-keep-going COLOR=1 --no-print-directory \
+	internal-library-compile \
+	_THEOS_CURRENT_TYPE=tweak THEOS_CURRENT_INSTANCE=YTMusicUltimate _THEOS_CURRENT_OPERATION=compile \
+	THEOS_BUILD_DIR="." _THEOS_MAKE_PARALLEL=yes
+ 
+fcntl(): Bad file descriptor
+
+mkdir -p /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64
+make -f Makefile --no-print-directory --no-keep-going internal-tweak-compile _THEOS_CURRENT_TYPE="tweak" THEOS_CURRENT_INSTANCE="YTMusicUltimate" _THEOS_CURRENT_OPERATION="compile" THEOS_BUILD_DIR="." THEOS_CURRENT_ARCH="arm64"
+ 
+fcntl(): Bad file descriptor
+
+mkdir -p /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64e
+make -f Makefile --no-print-directory --no-keep-going internal-tweak-compile _THEOS_CURRENT_TYPE="tweak" THEOS_CURRENT_INSTANCE="YTMusicUltimate" _THEOS_CURRENT_OPERATION="compile" THEOS_BUILD_DIR="." THEOS_CURRENT_ARCH="arm64e"
+ 
+fcntl(): Bad file descriptor
+
+(mkdir -p /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64/)
+(printf "\e[0;3%im==> \e[1;39m%s…\e[m\n" 1 "Preprocessing Tweak.xm"); set -o pipefail; (/Users/noah/theos/bin/logos.pl -c warnings=error -c generator=MobileSubstrate    Tweak.xm > /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64/Tweak.xm.mm)
+ 
+fcntl(): Bad file descriptor
+
+(mkdir -p /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64/)
+(printf "\e[0;3%im==> \e[1;39m%s…\e[m\n" 2 "Compiling Tweak.xm (arm64)"); set -o pipefail; (/Users/noah/theos/toolchain/Xcode11.xctoolchain/usr/bin/clang++ -x objective-c++ -c -I"/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate" -I/Users/noah/theos/include -I/Users/noah/theos/vendor/include -I/Users/noah/theos/include/_fallback -include /Users/noah/theos/Prefix.pch -iquote /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate -MT /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64/Tweak.xm.5f24c0c9.o -MMD -MP -MF "/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64/Tweak.xm.5f24c0c9.Td" -fcolor-diagnostics -DTARGET_IPHONE=1 -O0 -Wall -ggdb -Wno-unused-command-line-argument -Qunused-arguments -Werror  -isysroot "/Users/noah/theos/sdks/iPhoneOS14.4.sdk" -target arm64-apple-ios12.1.2  -resource-dir /Users/noah/theos/toolchain/Xcode11.xctoolchain/usr/bin/../lib/swift/clang  -fobjc-arc -DDEBUG -O0  -DTHEOS_INSTANCE_NAME="\"YTMusicUltimate\"" -fmodules -fcxx-modules -fmodule-name=YTMusicUltimate -fbuild-session-file=/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/build_session -fmodules-prune-after=345600 -fmodules-prune-interval=86400 -fmodules-validate-once-per-build-session  -arch arm64 -F/Users/noah/theos/sdks/iPhoneOS14.4.sdk/System/Library/PrivateFrameworks -F/Users/noah/theos/lib -F/Users/noah/theos/vendor/lib      -stdlib=libc++        /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64/Tweak.xm.mm -o /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64/Tweak.xm.5f24c0c9.o)
+ 
+fcntl(): Bad file descriptor
+
+(mkdir -p /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64/)
+(printf "\e[0;3%im==> \e[1;39m%s…\e[m\n" 2 "Compiling YTMUltimatePrefs.m (arm64)"); set -o pipefail; (/Users/noah/theos/toolchain/Xcode11.xctoolchain/usr/bin/clang++ -x objective-c -c -I/Users/noah/theos/include -I/Users/noah/theos/vendor/include -I/Users/noah/theos/include/_fallback -include /Users/noah/theos/Prefix.pch -iquote /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate -MT /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64/YTMUltimatePrefs.m.5f24c0c9.o -MMD -MP -MF "/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64/YTMUltimatePrefs.m.5f24c0c9.Td" -fcolor-diagnostics -DTARGET_IPHONE=1 -O0 -Wall -ggdb -Wno-unused-command-line-argument -Qunused-arguments -Werror  -isysroot "/Users/noah/theos/sdks/iPhoneOS14.4.sdk" -target arm64-apple-ios12.1.2  -resource-dir /Users/noah/theos/toolchain/Xcode11.xctoolchain/usr/bin/../lib/swift/clang  -fobjc-arc -DDEBUG -O0  -DTHEOS_INSTANCE_NAME="\"YTMusicUltimate\"" -fmodules -fcxx-modules -fmodule-name=YTMusicUltimate -fbuild-session-file=/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/build_session -fmodules-prune-after=345600 -fmodules-prune-interval=86400 -fmodules-validate-once-per-build-session  -arch arm64 -F/Users/noah/theos/sdks/iPhoneOS14.4.sdk/System/Library/PrivateFrameworks -F/Users/noah/theos/lib -F/Users/noah/theos/vendor/lib     YTMUltimatePrefs.m -o /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64/YTMUltimatePrefs.m.5f24c0c9.o)
+ 
+fcntl(): Bad file descriptor
+
+(mkdir -p /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64/)
+(printf "\e[0;3%im==> \e[1;39m%s…\e[m\n" 2 "Compiling YTMUltimateSettingsController.m (arm64)"); set -o pipefail; (/Users/noah/theos/toolchain/Xcode11.xctoolchain/usr/bin/clang++ -x objective-c -c -I/Users/noah/theos/include -I/Users/noah/theos/vendor/include -I/Users/noah/theos/include/_fallback -include /Users/noah/theos/Prefix.pch -iquote /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate -MT /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64/YTMUltimateSettingsController.m.5f24c0c9.o -MMD -MP -MF "/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64/YTMUltimateSettingsController.m.5f24c0c9.Td" -fcolor-diagnostics -DTARGET_IPHONE=1 -O0 -Wall -ggdb -Wno-unused-command-line-argument -Qunused-arguments -Werror  -isysroot "/Users/noah/theos/sdks/iPhoneOS14.4.sdk" -target arm64-apple-ios12.1.2  -resource-dir /Users/noah/theos/toolchain/Xcode11.xctoolchain/usr/bin/../lib/swift/clang  -fobjc-arc -DDEBUG -O0  -DTHEOS_INSTANCE_NAME="\"YTMusicUltimate\"" -fmodules -fcxx-modules -fmodule-name=YTMusicUltimate -fbuild-session-file=/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/build_session -fmodules-prune-after=345600 -fmodules-prune-interval=86400 -fmodules-validate-once-per-build-session  -arch arm64 -F/Users/noah/theos/sdks/iPhoneOS14.4.sdk/System/Library/PrivateFrameworks -F/Users/noah/theos/lib -F/Users/noah/theos/vendor/lib     YTMUltimateSettingsController.m -o /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64/YTMUltimateSettingsController.m.5f24c0c9.o)
+ 
+fcntl(): Bad file descriptor
+
+(mkdir -p /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64)
+(printf "\e[0;3%im==> \e[1;39m%s…\e[m\n" 3 "Linking tweak YTMusicUltimate (arm64)"); set -o pipefail; (/Users/noah/theos/toolchain/Xcode11.xctoolchain/usr/bin/clang++ -fcolor-diagnostics -L/Users/noah/theos/sdks/iPhoneOS14.4.sdk/System/Library/PrivateFrameworks -F/Users/noah/theos/sdks/iPhoneOS14.4.sdk/System/Library/PrivateFrameworks -L/Users/noah/theos/lib -F/Users/noah/theos/lib -L/Users/noah/theos/vendor/lib -F/Users/noah/theos/vendor/lib -ggdb -lobjc -framework Foundation -framework CoreFoundation -ObjC++ -fobjc-exceptions -fobjc-call-cxx-cdtors              -framework CydiaSubstrate -dynamiclib -install_name "/Library/MobileSubstrate/DynamicLibraries/YTMusicUltimate.dylib"  -isysroot "/Users/noah/theos/sdks/iPhoneOS14.4.sdk" -target arm64-apple-ios12.1.2  -multiply_defined suppress -stdlib=libc++ -lc++  -resource-dir /Users/noah/theos/toolchain/Xcode11.xctoolchain/usr/bin/../lib/swift/clang -arch arm64  -O0 -o "/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64/YTMusicUltimate.dylib" /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64/Tweak.xm.5f24c0c9.o /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64/YTMUltimatePrefs.m.5f24c0c9.o /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64/YTMUltimateSettingsController.m.5f24c0c9.o)
+(printf "\e[0;3%im==> \e[1;39m%s…\e[m\n" 4 "Generating debug symbols for YTMusicUltimate"); set -o pipefail; (/Users/noah/theos/toolchain/Xcode11.xctoolchain/usr/bin/dsymutil "/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64/YTMusicUltimate.dylib")
+ 
+fcntl(): Bad file descriptor
+
+(mkdir -p /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64e/)
+(printf "\e[0;3%im==> \e[1;39m%s…\e[m\n" 1 "Preprocessing Tweak.xm"); set -o pipefail; (/Users/noah/theos/bin/logos.pl -c warnings=error -c generator=MobileSubstrate    Tweak.xm > /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64e/Tweak.xm.mm)
+ 
+fcntl(): Bad file descriptor
+
+(mkdir -p /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64e/)
+(printf "\e[0;3%im==> \e[1;39m%s…\e[m\n" 2 "Compiling Tweak.xm (arm64e)"); set -o pipefail; (/Users/noah/theos/toolchain/Xcode11.xctoolchain/usr/bin/clang++ -x objective-c++ -c -I"/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate" -I/Users/noah/theos/include -I/Users/noah/theos/vendor/include -I/Users/noah/theos/include/_fallback -include /Users/noah/theos/Prefix.pch -iquote /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate -MT /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64e/Tweak.xm.2dbddf81.o -MMD -MP -MF "/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64e/Tweak.xm.2dbddf81.Td" -fcolor-diagnostics -DTARGET_IPHONE=1 -O0 -Wall -ggdb -Wno-unused-command-line-argument -Qunused-arguments -Werror  -isysroot "/Users/noah/theos/sdks/iPhoneOS14.4.sdk" -target arm64e-apple-ios12.1.2  -resource-dir /Users/noah/theos/toolchain/Xcode11.xctoolchain/usr/bin/../lib/swift/clang  -fobjc-arc -DDEBUG -O0  -DTHEOS_INSTANCE_NAME="\"YTMusicUltimate\"" -fmodules -fcxx-modules -fmodule-name=YTMusicUltimate -fbuild-session-file=/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/build_session -fmodules-prune-after=345600 -fmodules-prune-interval=86400 -fmodules-validate-once-per-build-session  -arch arm64e -F/Users/noah/theos/sdks/iPhoneOS14.4.sdk/System/Library/PrivateFrameworks -F/Users/noah/theos/lib -F/Users/noah/theos/vendor/lib      -stdlib=libc++        /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64e/Tweak.xm.mm -o /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64e/Tweak.xm.2dbddf81.o)
+ 
+fcntl(): Bad file descriptor
+
+(mkdir -p /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64e/)
+(printf "\e[0;3%im==> \e[1;39m%s…\e[m\n" 2 "Compiling YTMUltimatePrefs.m (arm64e)"); set -o pipefail; (/Users/noah/theos/toolchain/Xcode11.xctoolchain/usr/bin/clang++ -x objective-c -c -I/Users/noah/theos/include -I/Users/noah/theos/vendor/include -I/Users/noah/theos/include/_fallback -include /Users/noah/theos/Prefix.pch -iquote /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate -MT /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64e/YTMUltimatePrefs.m.2dbddf81.o -MMD -MP -MF "/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64e/YTMUltimatePrefs.m.2dbddf81.Td" -fcolor-diagnostics -DTARGET_IPHONE=1 -O0 -Wall -ggdb -Wno-unused-command-line-argument -Qunused-arguments -Werror  -isysroot "/Users/noah/theos/sdks/iPhoneOS14.4.sdk" -target arm64e-apple-ios12.1.2  -resource-dir /Users/noah/theos/toolchain/Xcode11.xctoolchain/usr/bin/../lib/swift/clang  -fobjc-arc -DDEBUG -O0  -DTHEOS_INSTANCE_NAME="\"YTMusicUltimate\"" -fmodules -fcxx-modules -fmodule-name=YTMusicUltimate -fbuild-session-file=/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/build_session -fmodules-prune-after=345600 -fmodules-prune-interval=86400 -fmodules-validate-once-per-build-session  -arch arm64e -F/Users/noah/theos/sdks/iPhoneOS14.4.sdk/System/Library/PrivateFrameworks -F/Users/noah/theos/lib -F/Users/noah/theos/vendor/lib     YTMUltimatePrefs.m -o /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64e/YTMUltimatePrefs.m.2dbddf81.o)
+ 
+(mkdir -p /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64e/)
+(printf "\e[0;3%im==> \e[1;39m%s…\e[m\n" 2 "Compiling YTMUltimateSettingsController.m (arm64e)"); set -o pipefail; (/Users/noah/theos/toolchain/Xcode11.xctoolchain/usr/bin/clang++ -x objective-c -c -I/Users/noah/theos/include -I/Users/noah/theos/vendor/include -I/Users/noah/theos/include/_fallback -include /Users/noah/theos/Prefix.pch -iquote /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate -MT /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64e/YTMUltimateSettingsController.m.2dbddf81.o -MMD -MP -MF "/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64e/YTMUltimateSettingsController.m.2dbddf81.Td" -fcolor-diagnostics -DTARGET_IPHONE=1 -O0 -Wall -ggdb -Wno-unused-command-line-argument -Qunused-arguments -Werror  -isysroot "/Users/noah/theos/sdks/iPhoneOS14.4.sdk" -target arm64e-apple-ios12.1.2  -resource-dir /Users/noah/theos/toolchain/Xcode11.xctoolchain/usr/bin/../lib/swift/clang  -fobjc-arc -DDEBUG -O0  -DTHEOS_INSTANCE_NAME="\"YTMusicUltimate\"" -fmodules -fcxx-modules -fmodule-name=YTMusicUltimate -fbuild-session-file=/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/build_session -fmodules-prune-after=345600 -fmodules-prune-interval=86400 -fmodules-validate-once-per-build-session  -arch arm64e -F/Users/noah/theos/sdks/iPhoneOS14.4.sdk/System/Library/PrivateFrameworks -F/Users/noah/theos/lib -F/Users/noah/theos/vendor/lib     YTMUltimateSettingsController.m -o /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64e/YTMUltimateSettingsController.m.2dbddf81.o)
+ 
+fcntl(): Bad file descriptor
+
+fcntl(): Bad file descriptor
+
+(mkdir -p /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64e)
+(printf "\e[0;3%im==> \e[1;39m%s…\e[m\n" 3 "Linking tweak YTMusicUltimate (arm64e)"); set -o pipefail; (/Users/noah/theos/toolchain/Xcode11.xctoolchain/usr/bin/clang++ -fcolor-diagnostics -L/Users/noah/theos/sdks/iPhoneOS14.4.sdk/System/Library/PrivateFrameworks -F/Users/noah/theos/sdks/iPhoneOS14.4.sdk/System/Library/PrivateFrameworks -L/Users/noah/theos/lib -F/Users/noah/theos/lib -L/Users/noah/theos/vendor/lib -F/Users/noah/theos/vendor/lib -ggdb -lobjc -framework Foundation -framework CoreFoundation -ObjC++ -fobjc-exceptions -fobjc-call-cxx-cdtors              -framework CydiaSubstrate -dynamiclib -install_name "/Library/MobileSubstrate/DynamicLibraries/YTMusicUltimate.dylib"  -isysroot "/Users/noah/theos/sdks/iPhoneOS14.4.sdk" -target arm64e-apple-ios12.1.2  -multiply_defined suppress -stdlib=libc++ -lc++  -resource-dir /Users/noah/theos/toolchain/Xcode11.xctoolchain/usr/bin/../lib/swift/clang -arch arm64e  -O0 -o "/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64e/YTMusicUltimate.dylib" /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64e/Tweak.xm.2dbddf81.o /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64e/YTMUltimatePrefs.m.2dbddf81.o /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64e/YTMUltimateSettingsController.m.2dbddf81.o)
+(printf "\e[0;3%im==> \e[1;39m%s…\e[m\n" 4 "Generating debug symbols for YTMusicUltimate"); set -o pipefail; (/Users/noah/theos/toolchain/Xcode11.xctoolchain/usr/bin/dsymutil "/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64e/YTMusicUltimate.dylib")
+ 
+fcntl(): Bad file descriptor
+
+(printf "\e[0;3%im==> \e[1;39m%s…\e[m\n" 4 "Merging tweak YTMusicUltimate"); set -o pipefail; (/Users/noah/theos/toolchain/Xcode11.xctoolchain/usr/bin/lipo -arch arm64 /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64/YTMusicUltimate.dylib -arch arm64e /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/arm64e/YTMusicUltimate.dylib -create -output "/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/YTMusicUltimate.dylib.f1076160.unsigned")
+ 
+fcntl(): Bad file descriptor
+
+(printf "\e[0;3%im==> \e[1;39m%s…\e[m\n" 4 "Signing YTMusicUltimate"); set -o pipefail; (CODESIGN_ALLOCATE=/Users/noah/theos/toolchain/Xcode11.xctoolchain/usr/bin/codesign_allocate  ldid -S "/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/YTMusicUltimate.dylib.f1076160.unsigned" && mv "/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/YTMusicUltimate.dylib.f1076160.unsigned" "/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/YTMusicUltimate.dylib")
+rm /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/obj/debug/YTMusicUltimate.dylib.f1076160.unsigned
+ 
+fcntl(): Bad file descriptor
+
+fcntl(): Bad file descriptor
+
+:
+:
+ 
+fcntl(): Bad file descriptor
+
+make: Entering directory '/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate'
+(kill $(cat "/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/swift/jobserver.pid" 2>/dev/null) 2>/dev/null || :)
+:
+make: Leaving directory '/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate'
+make: Leaving directory '/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate'
+ 
