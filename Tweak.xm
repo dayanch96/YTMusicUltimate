@@ -148,8 +148,8 @@
 %end
 %end
 
-#pragma mark - Removing premium promos
-%group EnsurePremiumStatus
+#pragma mark - Enabling cast
+%group Cast
 %hook MDXFeatureFlags
 - (BOOL)isCastCloudDiscoveryEnabled {
     return YES;
@@ -167,14 +167,6 @@
     %orig(YES);
 }
 
-- (BOOL)areMementoPromotionsEnabled {
-    return NO;
-}
-
-- (void)setAreMementoPromotionsEnabled:(BOOL)enabled {
-    %orig(NO);
-}
-
 - (BOOL)isCastEnabled {
     return YES;
 }
@@ -185,14 +177,6 @@
 %end
 
 %hook YTColdConfig
-- (BOOL)isPassiveSignInUniquePremiumValuePropEnabled {
-    return YES;
-}
-
-- (void)setIsPassiveSignInUniquePremiumValuePropEnabled:(BOOL)enabled {
-    %orig(YES);
-}
-
 - (BOOL)isCastToNativeEnabled {
     return YES;
 }
@@ -232,22 +216,6 @@
 - (void)setMusicClientConfigEnableAudioOnlyCastingForNonMusicAudio:(BOOL)enabled {
     %orig(YES);
 }
-
-- (BOOL)disablePlaybackLockScreenController {
-    return NO;
-}
-
-- (void)setDisablePlaybackLockScreenController:(BOOL)enabled {
-    %orig(NO);
-}
-
-- (BOOL)enableIMPBackgroundableAudio {
-    return YES;
-}
-
-- (void)setEnableIMPBackgroundableAudio:(BOOL)enabled {
-    %orig(YES);
-}
 %end
 
 %hook YTMCastSessionController
@@ -269,6 +237,39 @@
 
 - (void)openMusicPremiumLandingPage {
     return;
+}
+%end
+
+%hook YTMMusicAppMetadata
+- (BOOL)isAudioCastEnabled {
+    return YES;
+}
+
+- (void)setIsAudioCastEnabled:(BOOL)enabled {
+    %orig(YES);
+}
+%end
+%end
+
+#pragma mark - Removing premium promos
+%group EnsurePremiumStatus
+%hook MDXFeatureFlags
+- (BOOL)areMementoPromotionsEnabled {
+    return NO;
+}
+
+- (void)setAreMementoPromotionsEnabled:(BOOL)enabled {
+    %orig(NO);
+}
+%end
+
+%hook YTColdConfig
+- (BOOL)isPassiveSignInUniquePremiumValuePropEnabled {
+    return YES;
+}
+
+- (void)setIsPassiveSignInUniquePremiumValuePropEnabled:(BOOL)enabled {
+    %orig(YES);
 }
 %end
 
@@ -318,22 +319,6 @@
 }
 
 - (void)setIsPremiumSubscriber:(BOOL)premium {
-    %orig(YES);
-}
-
-- (BOOL)canPlayBackgroundableContent {
-    return YES;
-}
-
-- (void)setCanPlayBackgroundableContent:(BOOL)playable {
-    %orig(YES);
-}
-
-- (BOOL)isAudioCastEnabled {
-    return YES;
-}
-
-- (void)setIsAudioCastEnabled:(BOOL)enabled {
     %orig(YES);
 }
 
@@ -403,6 +388,36 @@
 
 #pragma mark - Background playback
 %group BackgroundPlayback
+%hook YTColdConfig
+
+- (BOOL)disablePlaybackLockScreenController {
+    return NO;
+}
+
+- (void)setDisablePlaybackLockScreenController:(BOOL)enabled {
+    %orig(NO);
+}
+
+- (BOOL)enableIMPBackgroundableAudio {
+    return YES;
+}
+
+- (void)setEnableIMPBackgroundableAudio:(BOOL)enabled {
+    %orig(YES);
+}
+%end
+
+%hook YTMMusicAppMetadata
+
+- (BOOL)canPlayBackgroundableContent {
+    return YES;
+}
+
+- (void)setCanPlayBackgroundableContent:(BOOL)playable {
+    %orig(YES);
+}
+%end
+
 %hook HAMPlayer
 - (BOOL)allowsBackgroundPlayback {
     return YES;
@@ -725,8 +740,9 @@
     %init(SettingsPage);
     
     if (isEnabled){
-        %init(EnsurePremiumStatus);
+        %init(Cast);
         %init(BackgroundPlayback);
+        %init(EnsurePremiumStatus);
         %init(RemoveAds);
         %init(VideoAndAudioModePatches);
 
