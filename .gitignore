@@ -1,3 +1,5 @@
-.theos
+.theos/
 .DS_Store
 .upload.swp
+.vscode/
+.packages/
