@@ -7,14 +7,17 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # There is NO WARRANTY, to the extent permitted by law.
  
 
-# Make data base, printed on Sun Aug 14 17:03:10 2022
+# Make data base, printed on Sun Aug 21 22:26:39 2022
 
 # Variables
 
+# environment
+LC_TERMINAL = iTerm2
 # 'override' directive (from '/Users/noah/theos/makefiles/common.mk', line 100)
 _THEOS_CLEANED_SCHEMA_SET := debug
 # makefile (from '/Users/noah/theos/makefiles/targets/_common/darwin_head.mk', line 9)
 _THEOS_TARGET_SUPPORTS_BUNDLES := 1
+ 
 # makefile (from '/Users/noah/theos/makefiles/package/deb.mk', line 49)
 _THEOS_DEB_ORION_DEPENDS := dev.theos.orion (>= 1.0.0)
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 90)
@@ -68,9 +71,8 @@ _THEOS_TARGET_PLATFORM_FLAG_NAME := iphoneos
 THEOS_INCLUDE_PATH := /Users/noah/theos/include
 # 'override' directive (from '/Users/noah/theos/makefiles/targets/_common/darwin_head.mk', line 131)
 _THEOS_TARGET_INCLUDE_SDK_VERSION := 14.4
- 
 # environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.38977098.38977104
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.41608152.41608158.CBE5556D-98F9-4EE5-87BA-1836E2322749
 # makefile (from '/Users/noah/theos/makefiles/messages.mk', line 69)
 ECHO_LINKING = $(ECHO_BEGIN)$(PRINT_FORMAT_YELLOW) "Linking $(_THEOS_CURRENT_TYPE) $(THEOS_CURRENT_INSTANCE)"$(ECHO_END); $(ECHO_PIPEFAIL) (
 # makefile (from '/Users/noah/theos/makefiles/package/deb.mk', line 26)
@@ -84,7 +86,7 @@ ECHO_DEBUG_SYMBOLS = $(ECHO_BEGIN)$(PRINT_FORMAT_BLUE) "Generating debug symbols
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 73)
 THEOS_SDKS_PATH := /Users/noah/theos/sdks
 # environment
-VSCODE_CWD = /
+VSCODE_CWD = /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate
 # makefile (from '/Users/noah/theos/makefiles/master/rules.mk', line 47)
 _THEOS_SWIFT_AUXILIARY_DIR = $(_THEOS_LOCAL_DATA_DIR)/swift
 # makefile (from '/Users/noah/theos/makefiles/targets/_common/darwin_tail.mk', line 52)
@@ -105,6 +107,8 @@ __schema_var_all = $(strip $(foreach sch,$(call __schema_all_var_names,$(1),$(2)
 _THEOS_PLATFORM_SWIFT = swift
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 168)
 THEOS_TARGET_INCLUDE_PATH := /Users/noah/theos/include/iphone
+# environment
+LC_TERMINAL_VERSION = 3.4.16
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 214)
 _THEOS_INTERNAL_CFLAGS = -DTARGET_$(_THEOS_TARGET_NAME_DEFINE)=1 $(OPTFLAG) -Wall $(DEBUGFLAG) -Wno-unused-command-line-argument -Qunused-arguments -Werror
 # makefile (from '/Users/noah/theos/makefiles/platform/Darwin.mk', line 43)
@@ -128,6 +132,7 @@ _THEOS_IS_MAKE_GT_4_0 := 1
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 111)
 __schema_defined_var_names = $(foreach tuple,$(filter-out undefined:%,$(foreach schvar,$(call __schema_all_var_names,$(1),$(2)),$(origin $(schvar)):$(schvar))),$(lastword $(subst :, ,$(tuple))))
 # makefile (from '/Users/noah/theos/makefiles/messages.mk', line 71)
+ 
 ECHO_LINKING_WITH_STRIP = $(ECHO_BEGIN)$(PRINT_FORMAT_YELLOW) "Linking $(_THEOS_CURRENT_TYPE) $(THEOS_CURRENT_INSTANCE) (with strip)"$(ECHO_END); $(ECHO_PIPEFAIL) (
 # makefile (from '/Users/noah/theos/makefiles/messages.mk', line 34)
 PRINT_FORMAT_MAKING = printf "\e[1;31m> \e[1;3;39m%s…\e[m\n"
@@ -193,7 +198,6 @@ ECHO_INSTALLING = $(ECHO_BEGIN)$(PRINT_FORMAT_CYAN) "Installing"$(ECHO_END); $(E
 ^D = $(patsubst %/,%,$(dir $^))
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 64)
 THEOS_BIN_PATH := /Users/noah/theos/bin
- 
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 206)
 _THEOS_INTERNAL_OBJCFLAGS = $(foreach path,$(_THEOS_INTERNAL_LIBRARY_PATHS),-F$(path))
 # automatic
@@ -203,7 +207,7 @@ _THEOS_STAGING_RULES_LOADED := 1
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 70)
 THEOS_VENDOR_SWIFT_SUPPORT_PATH := /Users/noah/theos/vendor/swift-support
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/noah/Library/Application Support/Code/CachedData/da76f93349a72022ca4670c1b84860304616aaa2
+VSCODE_CODE_CACHE_PATH = /Users/noah/Library/Application Support/Code/CachedData/e4503b30fc78200f846c62cf8091b76ff5547662
 # makefile (from '/Users/noah/theos/makefiles/messages.mk', line 79)
 ECHO_COPYING_RESOURCE_DIRS = $(ECHO_BEGIN)$(PRINT_FORMAT_MAGENTA) "Copying resource directories into the $(_THEOS_CURRENT_TYPE) wrapper"$(ECHO_END); $(ECHO_PIPEFAIL) (
 # makefile (from '/Users/noah/theos/makefiles/messages.mk', line 72)
@@ -226,18 +230,20 @@ HOMEBREW_REPOSITORY = /opt/homebrew
 .INCLUDE_DIRS = /opt/homebrew/Cellar/make/4.3/include /usr/local/include
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 113)
 __schema_var_name_last = $(strip $(lastword $(call __schema_defined_var_names,$(1),$(2))))
-# 'override' directive (from '/Users/noah/theos/makefiles/common.mk', line 99)
-THEOS_SCHEMA := DEFAULT DEBUG
+# environment
+COLORFGBG = 7;0
 # environment
 __CF_USER_TEXT_ENCODING = 0x1F5:0x19:0x34
+# 'override' directive (from '/Users/noah/theos/makefiles/common.mk', line 99)
+THEOS_SCHEMA := DEFAULT DEBUG
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 251)
 THEOS_LEGACY_PACKAGE_DIR = $(THEOS_BUILD_DIR)/debs
 # makefile (from '/Users/noah/theos/makefiles/messages.mk', line 76)
 ECHO_SIGNING = $(ECHO_BEGIN)$(PRINT_FORMAT_BLUE) "Signing $(THEOS_CURRENT_INSTANCE)"$(ECHO_END); $(ECHO_PIPEFAIL) (
-# makefile (from '/Users/noah/theos/makefiles/master/rules.mk', line 36)
-_THEOS_IS_TOP_ALL := 1
 # makefile (from '/Users/noah/theos/makefiles/master/rules.mk', line 34)
 _THEOS_TOP_ALL_MAKELEVEL := 0
+# makefile (from '/Users/noah/theos/makefiles/master/rules.mk', line 36)
+_THEOS_IS_TOP_ALL := 1
 # makefile
 MAKEFLAGS = pqrR -j8 -Otarget --jobserver-auth=3,4 --no-print-directory
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 244)
@@ -261,8 +267,9 @@ TARGET_STRIP = :
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 169)
 THEOS_TARGET_LIBRARY_PATH := /Users/noah/theos/lib/iphone
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 135)
+ 
 _THEOS_OS = $(if $(uname_o),$(uname_o),$(uname_s))
 # makefile (from '/Users/noah/theos/makefiles/messages.mk', line 43)
 PRINT_FORMAT_ERROR = printf "\e[0;31m==> \e[1;31mError:\e[m %s\n"
@@ -317,9 +324,8 @@ _THEOS_DEB_LIBSWIFT_DEPENDS := org.swift.libswift (>= 5.0)
 # makefile (from '/Users/noah/theos/makefiles/targets/Darwin/iphone.mk', line 8)
 _THEOS_TARGET_PLATFORM_SWIFT_NAME := apple-ios
 # environment
-VSCODE_PID = 37259
+VSCODE_PID = 5927
 # makefile (from '/Users/noah/theos/makefiles/messages.mk', line 88)
- 
 ERROR_END = $(NULLSTRING) >&2; exit 1;
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 150)
 _THEOS_TARGET_CALCULATED := 1
@@ -357,7 +363,6 @@ _THEOS_INTERNAL_COLORFLAGS = -fcolor-diagnostics
 MANPATH = /opt/homebrew/share/man::
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 49)
 _THEOS_STATIC_MAKEFILE_LIST := Makefile
- 
 # makefile (from '/Users/noah/theos/makefiles/package/deb.mk', line 13)
 _THEOS_DEB_CAN_PACKAGE := 1
 # makefile (from '/Users/noah/theos/makefiles/legacy.mk', line 2)
@@ -376,6 +381,8 @@ COLOR = 1
 __cmp = $(if $(filter $(1),$(2)),eq,$(strip $(eval __CMP_NUM1:=$(subst 0,0 ,$(subst 1,1 ,$(subst 2,2 ,$(subst 3,3 ,$(subst 4,4 ,$(subst 5,5 ,$(subst 6,6 ,$(subst 7,7 ,$(subst 8,8 ,$(subst 9,9 ,$(1)))))))))))) $(eval __CMP_NUM2:=$(subst 0,0 ,$(subst 1,1 ,$(subst 2,2 ,$(subst 3,3 ,$(subst 4,4 ,$(subst 5,5 ,$(subst 6,6 ,$(subst 7,7 ,$(subst 8,8 ,$(subst 9,9 ,$(2)))))))))))) $(if $(filter-out 1,$(words $(__CMP_NUM1)))$(filter-out 1,$(words $(__CMP_NUM2))),$(strip $(call ___vercmp_expand_backward,__CMP_NUM1,$(__CMP_NUM1),$(__CMP_NUM2)) $(call ___vercmp_expand_backward,__CMP_NUM2,$(__CMP_NUM2),$(__CMP_NUM1)) $(eval __CMP_RES:=eq) $(call ___vercmp_presplit,__CMP_NUM1,__CMP_NUM2,__CMP_RES) ),$(if $(filter $(1),$(firstword $(sort $(1) $(2)))),lt,gt) ) ))
 # makefile (from '/Users/noah/theos/makefiles/package.mk', line 58)
 VERSION.INC_BUILD_NUMBER = $(shell THEOS_PROJECT_DIR="$(THEOS_PROJECT_DIR)" "$(THEOS_BIN_PATH)/package_version.sh" -N "$(THEOS_PACKAGE_NAME)" -V "$(__BASEVER_FOR_BUILDNUM)")
+# environment
+ITERM_PROFILE = Default
 # makefile (from '/Users/noah/theos/makefiles/target.mk', line 21)
 ___get_target_args = $(subst ;,$(___newline), $(shell args=('$(subst :,' ',$(1))'); for (( i=0; i<$${#args[@]}; i++ )); do if [[ $${args[$$i]} != '' ]]; then printf 'export __THEOS_TARGET_ARG_%s := %s;' "$$i" "$${args[$$i]}"; fi; done ) )
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 136)
@@ -383,13 +390,14 @@ _THEOS_PLATFORM_CALCULATED := 1
 # makefile (from '/Users/noah/theos/makefiles/targets/_common/iphone.mk', line 18)
 _TARGET_LIBCPP_LDFLAGS := -stdlib=libc++ -lc++
 # makefile (from '/Users/noah/theos/makefiles/targets/_common/iphone.mk', line 37)
+ 
 _DEPLOY_VERSION_GE_5_0 = $(call __simplify,_DEPLOY_VERSION_GE_5_0,$(call __vercmp,$(_THEOS_TARGET_OS_DEPLOYMENT_VERSION),ge,5.0))
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 122)
 _THEOS_HAS_STAGING_LAYOUT := 
 # makefile (from '/Users/noah/theos/makefiles/legacy.mk', line 6)
 FW_MODDIR = $(THEOS_MODULE_PATH)
 # environment
-VSCODE_NLS_CONFIG = {"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"1d735750dbb1b9066c7513078396ba0f.zh-cn","_translationsConfigFile":"/Users/noah/Library/Application Support/Code/clp/1d735750dbb1b9066c7513078396ba0f.zh-cn/tcf.json","_cacheRoot":"/Users/noah/Library/Application Support/Code/clp/1d735750dbb1b9066c7513078396ba0f.zh-cn","_resolvedLanguagePackCoreLocation":"/Users/noah/Library/Application Support/Code/clp/1d735750dbb1b9066c7513078396ba0f.zh-cn/da76f93349a72022ca4670c1b84860304616aaa2","_corruptedFile":"/Users/noah/Library/Application Support/Code/clp/1d735750dbb1b9066c7513078396ba0f.zh-cn/corrupted.info","_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"cc0490d1397af23dc5bf44a96fe15dbb.zh-cn","_translationsConfigFile":"/Users/noah/Library/Application Support/Code/clp/cc0490d1397af23dc5bf44a96fe15dbb.zh-cn/tcf.json","_cacheRoot":"/Users/noah/Library/Application Support/Code/clp/cc0490d1397af23dc5bf44a96fe15dbb.zh-cn","_resolvedLanguagePackCoreLocation":"/Users/noah/Library/Application Support/Code/clp/cc0490d1397af23dc5bf44a96fe15dbb.zh-cn/e4503b30fc78200f846c62cf8091b76ff5547662","_corruptedFile":"/Users/noah/Library/Application Support/Code/clp/cc0490d1397af23dc5bf44a96fe15dbb.zh-cn/corrupted.info","_languagePackSupport":true}
 # makefile (from '/Users/noah/theos/makefiles/targets/_common/iphone.mk', line 36)
 _DEPLOY_VERSION_GE_9_0 = $(call __simplify,_DEPLOY_VERSION_GE_9_0,$(call __vercmp,$(_THEOS_TARGET_OS_DEPLOYMENT_VERSION),ge,9.0))
 # makefile (from '/Users/noah/theos/makefiles/messages.mk', line 70)
@@ -403,7 +411,6 @@ _THEOS_TARGET_SWIFT_TARGET := apple-ios12.1.2
 # makefile (from '/Users/noah/theos/makefiles/targets/_common/darwin_head.mk', line 109)
 _UNSORTED_SDKS := 10.3 11.2 11.4 12.1.2 12.2 12.4 13.0 13.4 13.5 13.6 13.7 14.4 15.5 9.3  15.5
 # makefile (from '/Users/noah/theos/makefiles/targets/_common/darwin_tail.mk', line 22)
- 
 MODULESFLAGS := -fmodules -fcxx-modules -fmodule-name= -fbuild-session-file=/Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/build_session -fmodules-prune-after=345600 -fmodules-prune-interval=86400 -fmodules-validate-once-per-build-session
 # default
 MAKE_HOST := arm-apple-darwin20.2.0
@@ -430,7 +437,7 @@ _TARGET_VERSION_GE_6_0 := 1
 # makefile (from '/Users/noah/theos/makefiles/platform/Darwin.mk', line 20)
 DEVELOPER_DIR = $(THEOS_PLATFORM_SDK_ROOT)
 # environment
-SHLVL = 1
+SHLVL = 3
 # makefile (from '/Users/noah/theos/makefiles/legacy.mk', line 40)
 FW_INSTANCE = $(THEOS_CURRENT_INSTANCE)$(warning FW_INSTANCE is deprecated. Please migrate to THEOS_CURRENT_INSTANCE.)
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 145)
@@ -455,8 +462,12 @@ FW_SHARED_BUNDLE_RESOURCE_PATH = $(THEOS_SHARED_BUNDLE_RESOURCE_PATH)$(warning F
 PRINT_FORMAT = printf "\e[0;36m==> \e[1;36mNotice:\e[m %s\n"
 # makefile (from '/Users/noah/theos/makefiles/messages.mk', line 93)
 NOTICE_EMPTY_LINKING = @$(PRINT_FORMAT_WARNING) "No files to link - creating a bundle containing only resources"
+# environment
+ITERM_SESSION_ID = w2t0p0:24EE6BA7-B2F8-43EB-AD7A-6C64225D8A7E
 # default
 MAKE = $(MAKE_COMMAND)
+# environment
+LaunchInstanceID = 64F20DEA-0EC3-492B-9733-C4447F1B5A21
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 77)
 PATH := /Users/noah/theos/bin:/usr/local/mysql/bin:/opt/homebrew/opt/make/libexec/gnubin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
 # makefile (from '/Users/noah/theos/makefiles/messages.mk', line 41)
@@ -495,11 +506,11 @@ _THEOS_INTERNAL_SWIFTFLAGS = -DTHEOS_SWIFT -DTARGET_$(_THEOS_TARGET_NAME_DEFINE)
 _THEOS_PLATFORM_LOADED := 1
 # makefile (from 'Makefile', line 1)
 ARCHS = arm64 arm64e
+ 
 # makefile (from '/Users/noah/theos/makefiles/targets/_common/iphone.mk', line 10)
 _TARGET_VERSION_GE_3_0 = $(call __simplify,_TARGET_VERSION_GE_3_0,$(call __vercmp,$(_THEOS_TARGET_SDK_VERSION),ge,3.0))
 # makefile (from '/Users/noah/theos/makefiles/package/deb.mk', line 15)
 _THEOS_PACKAGE_EXTRA_VERSION_PREFIX := +
- 
 # makefile (from '/Users/noah/theos/makefiles/targets/_common/darwin_head.mk', line 88)
 TARGET_STRIP_FLAGS = -x
 # makefile (from '/Users/noah/theos/makefiles/messages.mk', line 1)
@@ -510,6 +521,8 @@ _THEOS_TARGET_SWIFT_RESOURCE_DIR := /Applications/Xcode.app/Contents/Developer/T
 TARGET_XCODEBUILD = $(call __target_simplify,TARGET_XCODEBUILD,$(call __invocation,xcodebuild))
 # makefile (from '/Users/noah/theos/makefiles/platform/Darwin.mk', line 39)
 _THEOS_PLATFORM_SHOW_IN_FILE_MANAGER := open -R
+# environment
+TERM_PROGRAM = iTerm.app
 # makefile (from '/Users/noah/theos/makefiles/legacy.mk', line 17)
 FW_STAGING_DIR = $(THEOS_STAGING_DIR)$(warning FW_STAGING_DIR is deprecated. Please migrate to THEOS_STAGING_DIR.)
 # makefile (from '/Users/noah/theos/makefiles/master/rules.mk', line 11)
@@ -558,6 +571,8 @@ _THEOS_RULES_LOADED := 1
 VERCMP_SECOND := 
 # makefile (from '/Users/noah/theos/makefiles/package/deb.mk', line 44)
 _THEOS_DEB_LIBSWIFT_PACKAGE_VERSION := 5.0
+# environment
+SECURITYSESSIONID = 186b2
 # makefile (from '/Users/noah/theos/makefiles/targets/_common/iphone.mk', line 90)
 _TARGET_VERSION_GE_10_0 := 
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 33)
@@ -607,6 +622,7 @@ TARGET_CXX = $(call __target_simplify,TARGET_CXX,$(call __invocation,$(_THEOS_TA
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 32)
 _THEOS_TRUE := 1
 # makefile (from '/Users/noah/theos/makefiles/master/rules.mk', line 257)
+ 
 _THEOS_TOP_INVOCATION_DONE = 1
 # makefile
 .DEFAULT_GOAL := all
@@ -622,7 +638,6 @@ STDERR_NULL_REDIRECT = 2> /dev/null
 ECHO_UNBUFFERED = 
 # makefile (from '/Users/noah/theos/makefiles/messages.mk', line 24)
 ECHO_MAKE = +@
- 
 # environment
 USER = noah
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 63)
@@ -655,6 +670,8 @@ _THEOS_TARGET_SWIFTFLAGS := -sdk "/Users/noah/theos/sdks/iPhoneOS14.4.sdk"  -res
 _THEOS_PACKAGE_LAST_FILENAME = $(call __simplify,_THEOS_PACKAGE_LAST_FILENAME,$(shell cat "$(_THEOS_LOCAL_DATA_DIR)/last_package" 2>/dev/null))
 # makefile (from '/Users/noah/theos/makefiles/targets/_common/darwin_head.mk', line 122)
 _LATEST_SDK = $(call __simplify,_LATEST_SDK,$(lastword $(_SORTED_SDKS)))
+# environment
+TERM_SESSION_ID = w2t0p0:24EE6BA7-B2F8-43EB-AD7A-6C64225D8A7E
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 30)
 __clean_pwd = $(shell (unset CDPATH; cd "$(1)"; pwd))
 # makefile (from '/Users/noah/theos/makefiles/targets/_common/iphone.mk', line 80)
@@ -707,10 +724,14 @@ THEOS_STAGING_DIR = $(_THEOS_LOCAL_DATA_DIR)/$(THEOS_STAGING_DIR_NAME)
 _THEOS_TARGET_DEFAULT_PACKAGE_FORMAT = deb
 # makefile (from '/Users/noah/theos/makefiles/package.mk', line 91)
 _THEOS_INSTALL_TYPE := remote
+# environment
+COLORTERM = truecolor
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 119)
 THEOS_LAYOUT_DIR_NAME = layout
 # makefile (from '/Users/noah/theos/makefiles/package/deb.mk', line 25)
 THEOS_PACKAGE_NAME := com.ginsu.ytmusicultimate
+# environment
+LC_CTYPE = UTF-8
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 171)
 _THEOS_TARGET_HAS_LIBRARY_PATH := 
 # makefile (from '/Users/noah/theos/makefiles/targets/_common/iphone.mk', line 16)
@@ -723,6 +744,7 @@ _THEOS_INTERNAL_LDFLAGS = $(foreach path,$(_THEOS_INTERNAL_LIBRARY_PATHS),-L$(pa
 __eval_target = $(eval $(call ___get_target_args,$(3)) $(call ___get_target_args,$(2)) $(call ___get_target_args,$(1)) )
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 134)
 _THEOS_PLATFORM = $(uname_s)
+ 
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 213)
 _THEOS_INTERNAL_LOGOSFLAGS = -c warnings=error
 # environment
@@ -752,9 +774,10 @@ _THEOS_DEB_PACKAGE_CONTROL_PATH := /Users/noah/Projects/OBJC/ytmusicultimate/YTM
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /Users/noah/Library/Application Support/Code/1.70.0-main.sock
+TERM = xterm-256color
+# environment
+VSCODE_IPC_HOOK = /Users/noah/Library/Application Support/Code/1.70.2-main.sock
 # makefile (from '/Users/noah/theos/makefiles/master/rules.mk', line 11)
- 
 VERCMP_FIRST := 4 3
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 186)
 DEBUG.LDFLAGS = -O0
@@ -794,8 +817,12 @@ TARGET_CODESIGN_FLAGS = -S
 TARGET_LIBTOOL = $(call __target_simplify,TARGET_LIBTOOL,$(call __invocation,libtool))
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 26)
 _THEOS_TMP_COMPILE_COMMANDS_FILE := /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/compile_commands.json.tmp
+# environment
+VSCODE_CLI = 1
 # makefile (from '/Users/noah/theos/makefiles/package/deb.mk', line 2)
 _THEOS_PACKAGE_FORMAT_LOADED := 1
+# environment
+ELECTRON_NO_ATTACH_CONSOLE = 1
 # makefile (from '/Users/noah/theos/makefiles/master/tweak.mk', line 15)
 TWEAKS_WITH_SUBPROJECTS = $(strip $(foreach tweak,$(TWEAK_NAME),$(patsubst %,$(tweak),$(call __schema_var_all,$(tweak)_,SUBPROJECTS))))
 # makefile (from '/Users/noah/theos/makefiles/package/deb.mk', line 27)
@@ -830,6 +857,8 @@ __USERVER_FOR_BUILDNUM := 1.1.6
 SHOULD_STRIP := 
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 96)
 _THEOS_ON_SCHEMA := DEFAULT  DEBUG
+# environment
+TERM_PROGRAM_VERSION = 3.4.16
 # makefile (from '/Users/noah/theos/makefiles/package.mk', line 105)
 _THEOS_SUDO_COMMAND = 
 # makefile (from '/Users/noah/theos/makefiles/messages.mk', line 42)
@@ -841,7 +870,7 @@ PRINT_FORMAT_RED = $(PRINT_FORMAT_STAGE) 1
 # makefile (from '/Users/noah/theos/makefiles/common.mk', line 39)
 __simplify = $(2)$(eval $(1):=$(2))
 # variable set hash-table stats:
-# Load=409/1024=40%, Rehash=0, Collisions=749/2149=35%
+# Load=424/1024=41%, Rehash=0, Collisions=850/2164=39%
 
 # Pattern-specific Variable Values
 
@@ -850,6 +879,7 @@ __simplify = $(2)$(eval $(1):=$(2))
 # _INSTANCE := $$(basename $$(basename $$*))
 
 %.variables :
+ 
 # makefile (from '/Users/noah/theos/makefiles/master/rules.mk', line 158)
 # _OPERATION := $$(subst .,,$$(suffix $$(basename $$*)))
 
@@ -926,7 +956,6 @@ fi)
 #  recipe to execute (from '/Users/noah/theos/makefiles/master/rules.mk', line 199):
 	+@ \
 abs_build_dir=$(_THEOS_ABSOLUTE_BUILD_DIR); \
- 
 if [[ "$(__SUBPROJECTS)" != "" ]]; then \
   $(PRINT_FORMAT_MAKING) "Making $(_OPERATION) in subprojects of $(_TYPE) $(_INSTANCE)"; \
   for d in $(__SUBPROJECTS); do \
@@ -997,6 +1026,7 @@ if [[ "$(__SUBPROJECTS)" != "" ]]; then \
 # Files
 
 before-install::
+ 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -1149,6 +1179,7 @@ stage:: all before-stage internal-stage after-stage
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
+ 
 
 do:: all package install
 #  Implicit rule search has not been done.
@@ -1161,7 +1192,6 @@ before-package:: packages
 #  File does not exist.
 #  File has not been updated.
 
- 
 before-package:: /Users/noah/Projects/OBJC/ytmusicultimate/YTMusicUltimate/.theos/_/DEBIAN/control
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
@@ -1311,6 +1341,7 @@ internal-install-check::
 #  File has not been updated.
 #  recipe to execute (from '/Users/noah/theos/makefiles/package.mk', line 79):
 	@if [[ -z "$(_THEOS_PACKAGE_LAST_FILENAME)" ]]; then \
+ 
 		$(PRINT_FORMAT_ERROR) "$(MAKE) install and show require that you build a package before you try to install it." >&2; exit 1; \
 	fi
 	@if [[ ! -f "$(_THEOS_PACKAGE_LAST_FILENAME)" ]]; then \
@@ -1380,7 +1411,6 @@ all::
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has been updated.
- 
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/14=0%
@@ -1468,6 +1498,7 @@ internal-after-install::
 	$(ECHO_UNLOADING)install.exec "killall $(INSTALL_TARGET_PROCESSES) 2>/dev/null || true"$(ECHO_END)
 
 /Users/noah/theos/makefiles/install/deb_remote.mk:
+ 
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'install/deb_remote'
 #  Last modified 2022-03-29 13:47:13.967029156
@@ -1585,7 +1616,6 @@ after-clean-packages::
 /Users/noah/theos/makefiles/platform/Darwin.mk:
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'Darwin'
- 
 #  Last modified 2022-03-29 18:03:48.86551028
 #  File has been updated.
 #  Successfully updated.
@@ -1605,6 +1635,7 @@ after-clean-packages::
 #  recipe to execute (from '/Users/noah/theos/makefiles/rules.mk', line 37):
 	@mkdir -p $(dir $@); touch $@
 
+ 
 .PHONY: stage before-stage internal-stage after-stage package internal-package-check before-package internal-package after-package all before-all internal-all stop-swift-support after-all clean before-clean internal-clean after-clean clean-packages before-clean-packages internal-clean-packages after-clean-packages before-commands commands update-theos spm
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -1670,6 +1701,6 @@ internal-all:: YTMusicUltimate.all.tweak.variables
 # strcache performance: lookups = 333 / hit rate = 57%
 # hash-table stats:
 # Load=141/8192=2%, Rehash=0, Collisions=2/333=1%
-# Finished Make data base on Sun Aug 14 17:03:10 2022
+# Finished Make data base on Sun Aug 21 22:26:39 2022
 
  

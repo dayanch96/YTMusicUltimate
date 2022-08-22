@@ -3,18 +3,28 @@
 
 @implementation YTMUltimateSettingsController
 
--(void)viewDidLoad{
-    
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+- (void)viewDidLoad{
+    [super viewDidLoad];
+
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+    self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     [self.view addSubview:_tableView];
+    //x
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+    //y
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
+    //w
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1 constant:0]];
+    //h
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:1 constant:0]];
 
     self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,self.view.frame.size.width, 100)];
     UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     headerLabel.textColor = [UIColor redColor];
     headerLabel.text = @"YTMusicUltimate";
-    headerLabel.font = [UIFont systemFontOfSize:38];
+    headerLabel.font = [UIFont boldSystemFontOfSize:38];
     headerLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.headerView addSubview:headerLabel];
     //x

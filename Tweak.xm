@@ -44,32 +44,18 @@
 
 #pragma mark - Fix sideloading issues
 %group SideloadingFixes
-%hook GULAppEnvironmentUtil
-- (BOOL)isFromAppStore {
-    NSLog(@"[YTMULT]: %@", (%orig == YES ? @"from appstore" : @"not from appstore"));
-    return YES;
-}
-
-- (void)setIsFromAppStore:(BOOL)appstore {
-    %orig(YES);
-}
-
-- (BOOL)isAppStoreReceiptSandbox {
-    return YES;
-}
-
-- (void)setIsAppStoreReceiptSandbox:(BOOL)appstore {
-    %orig(YES);
-}
-%end
-
-%hook APMIdentity
-- (BOOL)fromAppStore {
-    return YES;
-}
-
-- (void)setFromAppStore:(BOOL)appstore {
-    %orig(YES);
+//Fix login - thanks poomsmart & julioverne
+%hook SSOService
++ (id)fetcherWithRequest:(NSMutableURLRequest *)request configuration:(id)configuration {
+    if ([request isKindOfClass:[NSMutableURLRequest class]] && request.HTTPBody) {
+        NSError *error = nil;
+        NSMutableDictionary *body = [NSJSONSerialization JSONObjectWithData:request.HTTPBody options:NSJSONReadingMutableContainers error:&error];
+        if (!error && [body isKindOfClass:[NSMutableDictionary class]]) {
+            [body removeObjectForKey:@"device_challenge_request"];
+            request.HTTPBody = [NSJSONSerialization dataWithJSONObject:body options:kNilOptions error:&error];
+        }
+    }
+    return %orig;
 }
 %end
 
@@ -109,26 +95,6 @@
     NSString *accessGroup = [(__bridge NSDictionary *)result objectForKey:(__bridge NSString *)kSecAttrAccessGroup];
     
     return accessGroup;
-}
-%end
-
-%hook YTMModularVideoOverlayViewController
-- (BOOL)isAppInBackground {
-    return NO;
-}
-
-- (void)setIsAppInBackground:(BOOL)background {
-    %orig(NO);
-}
-%end
-
-%hook YTMAppDelegate
-- (BOOL)shouldAudioSessionActivateInBackground {
-    return YES;
-}
-
-- (void)setShouldAudioSessionActivateInBackground:(BOOL)activate {
-    %orig(YES);
 }
 %end
 
@@ -426,16 +392,6 @@
 - (void)setAllowsBackgroundPlayback:(BOOL)allow {
     %orig(YES);
 }
-
-- (void)inactivateNonBackgroundableTrackRenderers {
-    return;
-}
-%end
-
-%hook MDXPlaybackController
-- (void)destroyBackgroundPlayer {
-    return;
-}
 %end
 
 %hook YTPlayerStatus
@@ -463,17 +419,6 @@
 %end
 
 %hook YTPlaybackBackgroundTaskController
-- (id)backgroundTaskExpirationTimer {
-    return nil;
-}
-- (void)endBackgroundTask {
-    return;
-}
-
-- (void)endBackgroundTaskAfterDelay {
-    return;
-}
-
 - (BOOL)contentPlayableInBackground {
     return YES;
 }
@@ -481,27 +426,14 @@
 - (void)setContentPlayableInBackground:(BOOL)playable {
     %orig(YES);
 }
-
 %end
 
 %hook YTLocalPlaybackController
-- (BOOL)isAppInBackground {
-    return NO;
-}
-
-- (void)setIsAppInBackground:(BOOL)backgrounded {
-    %orig(NO);
-}
-
 - (void)stopBackgroundPlayback {
     return;
 }
 
 - (void)updateForceDisableBackgroundingForVideo:(id)arg1 {
-    return;
-}
-
-- (void)playbackBackgroundTaskIsExpiring {
     return;
 }
 
@@ -711,6 +643,16 @@
 
 %group RateController
 %hook YTMModularNowPlayingViewController
+- (BOOL)playbackRateButtonEnabled {
+    return YES;
+}
+
+- (void)setPlaybackRateButtonEnabled:(BOOL)enabled {
+    %orig(YES);
+}
+%end
+
+%hook YTMPlayerControlsView
 - (BOOL)playbackRateButtonEnabled {
     return YES;
 }
