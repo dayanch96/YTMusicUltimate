@@ -354,148 +354,42 @@
 
 #pragma mark - Background playback
 %group BackgroundPlayback
-%hook YTColdConfig
-
-- (BOOL)disablePlaybackLockScreenController {
-    return NO;
-}
-
-- (void)setDisablePlaybackLockScreenController:(BOOL)enabled {
-    %orig(NO);
-}
-
-- (BOOL)enableIMPBackgroundableAudio {
-    return YES;
-}
-
-- (void)setEnableIMPBackgroundableAudio:(BOOL)enabled {
-    %orig(YES);
-}
-%end
-
-%hook YTMMusicAppMetadata
-
-- (BOOL)canPlayBackgroundableContent {
-    return YES;
-}
-
-- (void)setCanPlayBackgroundableContent:(BOOL)playable {
-    %orig(YES);
-}
-%end
-
-%hook HAMPlayer
-- (BOOL)allowsBackgroundPlayback {
-    return YES;
-}
-
-- (void)setAllowsBackgroundPlayback:(BOOL)allow {
-    %orig(YES);
-}
-%end
-
-%hook YTPlayerStatus
-- (id)initWithExternalPlayback:(_Bool)arg1 backgroundPlayback:(_Bool)arg2 inlinePlaybackActive:(_Bool)arg3 cardboardModeActive:(_Bool)arg4 layout:(int)arg5 userAudioOnlyModeActive:(_Bool)arg6 blackoutActive:(_Bool)arg7 clipID:(id)arg8 accountLinkState:(id)arg9 muted:(_Bool)arg10 pictureInPicture:(_Bool)arg11 {
-    return %orig(YES, YES, YES, YES, arg5, NO, YES, arg8, arg9, arg10, arg11);
-}
-
-- (BOOL)backgroundPlayback {
-    return YES;
-}
-
-- (void)setBackgroundPlayback:(BOOL)backgroundable {
-    %orig(YES);
-}
-%end
-
 %hook YTPlaybackData
-- (BOOL)playableInBackground {
+- (BOOL)isPlayableInBackground{
     return YES;
 }
 
-- (void)setPlayableInBackground:(BOOL)playable {
+- (void)setIsPlayableInBackground:(BOOL)backgroundable {
     %orig(YES);
 }
-%end
 
-%hook YTPlaybackBackgroundTaskController
-- (BOOL)contentPlayableInBackground {
-    return YES;
-}
-
-- (void)setContentPlayableInBackground:(BOOL)playable {
-    %orig(YES);
-}
-%end
-
-%hook YTLocalPlaybackController
-- (void)stopBackgroundPlayback {
-    return;
-}
-
-- (void)updateForceDisableBackgroundingForVideo:(id)arg1 {
-    return;
-}
-
-- (void)maybeStopBackgroundPlayback {
-    return;
-}
-
-- (BOOL)isPlaybackBackgroundable {
-    return YES;
-}
-
-- (void)setIsPlaybackBackgroundable:(BOOL)playable {
-    %orig(YES);
+- (BOOL)isPlayable {
+ return YES;
 }
 %end
 
 %hook YTIPlayabilityStatus
-- (BOOL)isPlayableInBackground{
-    return YES;
-}
-
-- (void)setIsPlayableInBackground:(BOOL)backgroundable {
-    %orig(YES);
-}
-%end
-
-%hook YTSingleVideo
-- (BOOL)isPlayableInBackground{
-    return YES;
-}
-
-- (void)setIsPlayableInBackground:(BOOL)backgroundable {
-    %orig(YES);
-}
-%end
-
-%hook YTIPlaybackData
-- (BOOL)isPlayableInBackground{
-    return YES;
-}
-
-- (void)setIsPlayableInBackground:(BOOL)backgroundable {
-    %orig(YES);
+- (BOOL)isPlayable {
+ return YES;
 }
 %end
 
 %hook YTIPlayerResponse
-- (BOOL)isPlayableInBackground{
-    return YES;
+- (BOOL)isAudioOnlyAvailabilityBlocked {
+ return NO;
 }
 
-- (void)setIsPlayableInBackground:(BOOL)backgroundable {
-    %orig(YES);
+- (BOOL)isDAIEnabledPlayback {
+ return YES;
 }
 %end
 
-%hook YTMIntentHandler
-- (BOOL)isBackgroundPlaybackEnabled {
+%hook HAMPlayer
+- (BOOL)allowsBackgroundPlayback{
     return YES;
 }
 
-- (void)setIsBackgroundPlaybackEnabled:(BOOL)backgroundable {
+- (void)setAllowsBackgroundPlayback:(BOOL)arg1 {
     %orig(YES);
 }
 %end
