@@ -355,7 +355,7 @@
 #pragma mark - Background playback
 %group BackgroundPlayback
 %hook YTPlaybackData
-- (BOOL)isPlayableInBackground{
+- (bool)isPlayableInBackground{
     return YES;
 }
 
@@ -363,33 +363,33 @@
     %orig(YES);
 }
 
-- (BOOL)isPlayable {
+- (bool)isPlayable {
  return YES;
 }
 %end
 
 %hook YTIPlayabilityStatus
-- (BOOL)isPlayable {
+- (bool)isPlayable {
  return YES;
 }
 %end
 
 %hook YTIPlayerResponse
-- (BOOL)isAudioOnlyAvailabilityBlocked {
+- (bool)isAudioOnlyAvailabilityBlocked {
  return NO;
 }
 
-- (BOOL)isDAIEnabledPlayback {
+- (bool)isDAIEnabledPlayback {
  return YES;
 }
 %end
 
 %hook HAMPlayer
-- (BOOL)allowsBackgroundPlayback{
+- (bool)allowsBackgroundPlayback{
     return YES;
 }
 
-- (void)setAllowsBackgroundPlayback:(BOOL)arg1 {
+- (void)setAllowsBackgroundPlayback:(bool)arg1 {
     %orig(YES);
 }
 %end
