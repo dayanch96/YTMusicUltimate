@@ -7,9 +7,5 @@
 #import <UIKit/UIKit.h>
 
 @interface YTMUltimatePrefs : NSObject
-@property(nonatomic,assign) BOOL isEnabled;
-@property(nonatomic,assign) BOOL oledDarkTheme;
-@property(nonatomic,assign) BOOL oledDarkKeyboard;
-@property(nonatomic,assign) BOOL playbackRateButton;
-+ (instancetype)sharedInstance;
+- (NSMutableArray *)settings;
 @end

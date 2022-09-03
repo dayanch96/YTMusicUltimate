@@ -31,16 +31,8 @@
     [self.headerView addConstraint:[NSLayoutConstraint constraintWithItem:headerLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.headerView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
     //y
     [self.headerView addConstraint:[NSLayoutConstraint constraintWithItem:headerLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.headerView attribute:NSLayoutAttributeTop multiplier:1 constant:20]];
-    
-    UILabel *subtitleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    subtitleLabel.text = @"By @Ginsu";
-    subtitleLabel.font = [UIFont systemFontOfSize:12];
-    subtitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.headerView addSubview:subtitleLabel];
-    //x
-    [self.headerView addConstraint:[NSLayoutConstraint constraintWithItem:subtitleLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.headerView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
-    //y
-    [self.headerView addConstraint:[NSLayoutConstraint constraintWithItem:subtitleLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:headerLabel attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
+
+    _options = [[[YTMUltimatePrefs alloc] init] settings];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -51,13 +43,16 @@
     return 54;
 }
 
-
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     return _headerView;
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    return @"YTMusicUltimate v1.1.9\n\n© Ginsu 2022";
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 6;
+    return 2 + [self.options count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -67,63 +62,38 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
 
-    UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
-    if (indexPath.row != 4 && indexPath.row != 5){
-        cell.accessoryView = switchView;
-    }
-    
-    switch (indexPath.row) {
-        case 0:
-            cell.textLabel.text = @"Enabled";
-            cell.detailTextLabel.text = @"Premium features, no ads, background playback, etc.";
-            switchView.tag = 1;
-            [switchView setOn:[[YTMUltimatePrefs sharedInstance] isEnabled] animated:NO];
-            [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
-            break;
-        case 1:
-            cell.textLabel.text = @"OLED Dark Theme";
-            cell.detailTextLabel.text = @"Enable OLED Dark Theme";
-            switchView.tag = 2;
-            [switchView setOn:[[YTMUltimatePrefs sharedInstance] oledDarkTheme] animated:NO];
-            [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
-            break;
-        case 2:
-            cell.textLabel.text = @"OLED Dark Keyboard";
-            cell.detailTextLabel.text = @"Enable OLED Dark Keyboard";
-            switchView.tag = 3;
-            [switchView setOn:[[YTMUltimatePrefs sharedInstance] oledDarkKeyboard] animated:NO];
-            [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
-            break;
-        case 3:
-            cell.textLabel.text = @"Show playback rate button";
-            cell.detailTextLabel.text = @"Adjust playback speed";
-            switchView.tag = 4;
-            [switchView setOn:[[YTMUltimatePrefs sharedInstance] playbackRateButton] animated:NO];
-            [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
-            break;
-        case 4:
+    if (indexPath.row >= self.options.count) {
+        if (indexPath.row == self.options.count) {
             cell.textLabel.text = @"Apply";
-            cell.detailTextLabel.text = @"Restarts the app to apply changes.";
-            cell.textLabel.textColor = [UIColor systemBlueColor];
-            cell.detailTextLabel.textColor = [UIColor systemBlueColor];
-            break;
-        case 5:
+            cell.detailTextLabel.text = @"Closes the app to apply changes";
+        } else {
             cell.textLabel.text = @"Follow me on Twitter";
-            cell.detailTextLabel.text = @"Tap to follow @ginsudev on Twitter.";
-            cell.textLabel.textColor = [UIColor systemBlueColor];
-            cell.detailTextLabel.textColor = [UIColor systemBlueColor];
-            break;
-        default:
-            break;
+            cell.detailTextLabel.text = @"Follow me for updates";
+        }
+
+        cell.textLabel.textColor = [UIColor systemBlueColor];
+        cell.detailTextLabel.textColor = [UIColor systemBlueColor];
+    } else {
+        NSMutableDictionary *cellMetadata = [self.options objectAtIndex:indexPath.row];
+
+        cell.textLabel.text = [cellMetadata objectForKey:@"title"];
+        cell.detailTextLabel.text = [cellMetadata objectForKey:@"subtitle"];
+
+        UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
+        cell.accessoryView = switchView;
+        switchView.tag = indexPath.row;
+
+        [switchView setOn:[[NSUserDefaults standardUserDefaults] boolForKey:[cellMetadata objectForKey:@"defaultsKey"]] animated:NO];
+        [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
     }
 
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 4){
+    if (indexPath.row == self.options.count){
         @throw NSInternalInconsistencyException;
-    } else if (indexPath.row == 5){
+    } else if (indexPath.row == self.options.count + 1){
         [[UIApplication sharedApplication]
             openURL:[NSURL URLWithString:@"https://twitter.com/ginsudev"]
             options:@{}
@@ -132,26 +102,8 @@
 }
 
 - (void)switchChanged:(UISwitch *)sender{
-    switch (sender.tag) {
-        case 1:
-            [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"YTMUltimateIsEnabled"];
-            [[YTMUltimatePrefs sharedInstance] setIsEnabled:sender.on];
-            break;
-        case 2:
-            [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"oledDarkTheme_enabled"];
-            [[YTMUltimatePrefs sharedInstance] setOledDarkTheme:sender.on];
-            break;
-        case 3:
-            [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"oledDarkKeyboard_enabled"];
-            [[YTMUltimatePrefs sharedInstance] setOledDarkKeyboard:sender.on];
-            break;
-        case 4:
-            [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"playbackRateButton_enabled"];
-            [[YTMUltimatePrefs sharedInstance] setPlaybackRateButton:sender.on];
-            break;
-        default:
-            break;
-    }
+    NSMutableDictionary *cellMetadata = [self.options objectAtIndex:sender.tag];
+    [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:[cellMetadata objectForKey:@"defaultsKey"]];
 }
 
 @end

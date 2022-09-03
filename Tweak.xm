@@ -59,7 +59,7 @@
 }
 %end
 
-%hook SSOKeychain
+%hook SSOKeychainCore
 //Thanks to jawshoeadan for this hook.
 + (id)accessGroup {
     NSDictionary *query = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -72,10 +72,10 @@
     OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)query, (CFTypeRef *)&result);
     if (status == errSecItemNotFound)
         status = SecItemAdd((__bridge CFDictionaryRef)query, (CFTypeRef *)&result);
-        if (status != errSecSuccess)
-            return nil;
+    if (status != errSecSuccess)
+        return nil;
     NSString *accessGroup = [(__bridge NSDictionary *)result objectForKey:(__bridge NSString *)kSecAttrAccessGroup];
-    
+
     return accessGroup;
 }
 
@@ -90,26 +90,22 @@
     OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)query, (CFTypeRef *)&result);
     if (status == errSecItemNotFound)
         status = SecItemAdd((__bridge CFDictionaryRef)query, (CFTypeRef *)&result);
-        if (status != errSecSuccess)
-            return nil;
+    if (status != errSecSuccess)
+        return nil;
     NSString *accessGroup = [(__bridge NSDictionary *)result objectForKey:(__bridge NSString *)kSecAttrAccessGroup];
-    
+
     return accessGroup;
 }
 %end
 
-%hook YTMBackgroundUpsellNotificationController
-- (id)upsellNotificationTriggerOnBackground {
-    return nil;
-}
-
-- (void)appDidEnterBackground:(id)arg1 {
-    return;
-}
-
-- (void)maybeScheduleBackgroundUpsellNotification {
-    %orig;
-    [self removePendingBackgroundNotifications];
+%hook NSFileManager
+- (NSURL *)containerURLForSecurityApplicationGroupIdentifier:(NSString *)groupIdentifier {
+    if (groupIdentifier != nil) {
+        NSArray *paths = [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
+        NSURL *documentsURL = [paths lastObject];
+        return [documentsURL URLByAppendingPathComponent:@"AppGroup"];
+    }
+    return %orig(groupIdentifier);
 }
 %end
 %end
@@ -354,43 +350,218 @@
 
 #pragma mark - Background playback
 %group BackgroundPlayback
+%hook YTMBackgroundUpsellNotificationController
+- (id)upsellNotificationTriggerOnBackground {
+    return nil;
+}
+
+- (void)appDidEnterBackground:(id)arg1 {
+    return;
+}
+
+- (void)maybeScheduleBackgroundUpsellNotification {
+    %orig;
+    [self removePendingBackgroundNotifications];
+}
+%end
+
+%hook YTColdConfig
+- (BOOL)disablePlaybackLockScreenController {
+    return NO;
+}
+
+- (void)setDisablePlaybackLockScreenController:(BOOL)enabled {
+    %orig(NO);
+}
+
+- (BOOL)enableIMPBackgroundableAudio {
+    return YES;
+}
+
+- (void)setEnableIMPBackgroundableAudio:(BOOL)enabled {
+    %orig(YES);
+}
+%end
+
+%hook YTMMusicAppMetadata
+- (BOOL)canPlayBackgroundableContent {
+    return YES;
+}
+
+- (void)setCanPlayBackgroundableContent:(BOOL)playable {
+    %orig(YES);
+}
+%end
+
+%hook HAMPlayer
+- (BOOL)allowsBackgroundPlayback {
+    return YES;
+}
+
+- (void)setAllowsBackgroundPlayback:(BOOL)allow {
+    %orig(YES);
+}
+%end
+
+%hook YTPlayerStatus
+- (id)initWithExternalPlayback:(_Bool)arg1 backgroundPlayback:(_Bool)arg2 inlinePlaybackActive:(_Bool)arg3 cardboardModeActive:(_Bool)arg4 layout:(int)arg5 userAudioOnlyModeActive:(_Bool)arg6 blackoutActive:(_Bool)arg7 clipID:(id)arg8 accountLinkState:(id)arg9 muted:(_Bool)arg10 pictureInPicture:(_Bool)arg11 {
+    return %orig(YES, YES, YES, YES, arg5, NO, YES, arg8, arg9, arg10, arg11);
+}
+
+- (BOOL)backgroundPlayback {
+    return YES;
+}
+
+- (void)setBackgroundPlayback:(BOOL)backgroundable {
+    %orig(YES);
+}
+%end
+
 %hook YTPlaybackData
-- (bool)isPlayableInBackground{
+- (BOOL)isPlayable {
+    return YES;
+}
+
+- (BOOL)isPlayableInBackground {
+    return YES;
+}
+
+- (void)setIsPlayableInBackground:(BOOL)playable {
+    %orig(YES);
+}
+%end
+
+%hook YTPlaybackBackgroundTaskController
+- (BOOL)isContentPlayableInBackground {
+    return YES;
+}
+
+- (void)setIsContentPlayableInBackground:(BOOL)playable {
+    %orig(YES);
+}
+%end
+
+%hook YTLocalPlaybackController
+- (void)stopBackgroundPlayback {
+    return;
+}
+
+- (void)updateForceDisableBackgroundingForVideo:(id)arg1 {
+    return;
+}
+
+- (void)maybeStopBackgroundPlayback {
+    return;
+}
+
+- (BOOL)isPlaybackBackgroundable {
+    return YES;
+}
+
+- (void)setIsPlaybackBackgroundable:(BOOL)playable {
+    %orig(YES);
+}
+%end
+
+%hook YTIPlayabilityStatus
+- (BOOL)isPlayable {
+    return YES;
+}
+
+- (BOOL)isPlayableInBackground{
     return YES;
 }
 
 - (void)setIsPlayableInBackground:(BOOL)backgroundable {
     %orig(YES);
 }
+%end
 
-- (bool)isPlayable {
- return YES;
+%hook YTSingleVideo
+- (BOOL)isPlayableInBackground{
+    return YES;
+}
+
+- (void)setIsPlayableInBackground:(BOOL)backgroundable {
+    %orig(YES);
 }
 %end
 
-%hook YTIPlayabilityStatus
-- (bool)isPlayable {
- return YES;
+%hook YTIBackgroundabilityRenderer
+- (id)backgroundUpsell {
+    return nil;
+}
+
+- (BOOL)backgroundable {
+    return YES;
+}
+
+- (BOOL)hasBackgroundable {
+    return YES;
+}
+
+- (BOOL)hasBackgroundPlaybackControls {
+    return YES;
 }
 %end
 
 %hook YTIPlayerResponse
-- (bool)isAudioOnlyAvailabilityBlocked {
- return NO;
-}
-
-- (bool)isDAIEnabledPlayback {
- return YES;
-}
-%end
-
-%hook HAMPlayer
-- (bool)allowsBackgroundPlayback{
+- (BOOL)hasBackgroundability {
     return YES;
 }
 
-- (void)setAllowsBackgroundPlayback:(bool)arg1 {
+- (BOOL)hasPlayableInBackground {
+    return YES;
+}
+
+- (BOOL)isDAIEnabledPlayback {
+    return YES;
+}
+
+- (BOOL)isPlayableInBackground{
+    return YES;
+}
+
+- (void)setIsPlayableInBackground:(BOOL)backgroundable {
     %orig(YES);
+}
+%end
+
+%hook YTMIntentHandler
+- (BOOL)isBackgroundPlaybackEnabled {
+    return YES;
+}
+
+- (void)setIsBackgroundPlaybackEnabled:(BOOL)backgroundable {
+    %orig(YES);
+}
+%end
+
+%hook YTMSettings
+- (BOOL)backgroundPlaybackModeModified {
+    return NO;
+}
+
+- (void)setBackgroundPlaybackModeModified:(BOOL)modified {
+    %orig(NO);
+}
+
+- (void)setBackgroundPlaybackMode:(long long)mode {
+    %orig(1);
+}
+
+- (long long)backgroundPlaybackMode {
+    return 1;
+}
+%end
+
+%hook YTIMainAppColdConfig
+- (BOOL)iosEnableImpBackgroundableAudio {
+    return YES;
+}
+
+- (BOOL)hasIosEnableImpBackgroundableAudio {
+    return YES;
 }
 %end
 %end
@@ -407,8 +578,24 @@
 #pragma mark - Video/Audio switching
 %group VideoAndAudioModePatches
 %hook YTIPlayerResponse
-- (BOOL)ytm_isAudioOnlyPlayable{
+- (id)ytm_audioOnlyPlayabilityRenderer {
+    return nil;
+}
+
+- (id)ytm_audioOnlyUpsell {
+    return nil;
+}
+
+- (BOOL)ytm_isAudioOnlyPlayable {
     return YES;
+}
+
+- (BOOL)isAudioOnlyAvailabilityBlocked {
+    return NO;
+}
+
+- (void)setIsAudioOnlyAvailabilityBlocked:(BOOL)blocked{
+    %orig(NO);
 }
 
 - (void)setYtm_isAudioOnlyPlayable:(BOOL)playable{
@@ -535,6 +722,7 @@
 %end
 %end
 
+#pragma mark - Playback rate
 %group RateController
 %hook YTMModularNowPlayingViewController
 - (BOOL)playbackRateButtonEnabled {
@@ -560,16 +748,10 @@
 %ctor{
 
     //Get / read values
-    BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
+    BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : NO;
     BOOL oledDarkTheme = ([[NSUserDefaults standardUserDefaults] objectForKey:@"oledDarkTheme_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"oledDarkTheme_enabled"] : NO;
     BOOL oledDarkKeyboard = ([[NSUserDefaults standardUserDefaults] objectForKey:@"oledDarkKeyboard_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"oledDarkKeyboard_enabled"] : NO;
     BOOL playbackRateButton = ([[NSUserDefaults standardUserDefaults] objectForKey:@"playbackRateButton_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"playbackRateButton_enabled"] : NO;
-
-    //Parse values to YTMUltimatePrefs for easy access.
-    [[YTMUltimatePrefs sharedInstance] setIsEnabled:isEnabled];
-    [[YTMUltimatePrefs sharedInstance] setOledDarkTheme:oledDarkTheme];
-    [[YTMUltimatePrefs sharedInstance] setOledDarkKeyboard:oledDarkKeyboard];
-    [[YTMUltimatePrefs sharedInstance] setPlaybackRateButton:playbackRateButton];
 
     //Apply patches
     %init(SideloadingFixes);
