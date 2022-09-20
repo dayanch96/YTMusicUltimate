@@ -5,7 +5,7 @@
 %property(nonatomic,strong) YTMUltimateSettingsController *YTMUltimateController;
 
 - (void)setAccountMenuUpperButtons:(id)arg1 lowerButtons:(id)arg2 {
-
+    
     UIImage *icon;
     if (@available(iOS 13, *)) {
         icon = [UIImage systemImageNamed:@"flame"];
@@ -44,6 +44,26 @@
 
 #pragma mark - Fix sideloading issues
 %group SideloadingFixes
+//Fix login - thanks AhmedBakfir
+%hook SSORPCService
++ (id)URLFromURL:(id)arg1 withAdditionalFragmentParameters:(NSDictionary *)arg2 {
+    NSURL *orig = %orig;
+    NSURLComponents *urlComponents = [[NSURLComponents alloc] initWithURL:orig resolvingAgainstBaseURL:NO];
+    NSMutableArray *newQueryItems = [urlComponents.queryItems mutableCopy];
+    for (NSURLQueryItem *queryItem in urlComponents.queryItems) {
+        if ([queryItem.name isEqualToString:@"system_version"]
+            || [queryItem.name isEqualToString:@"app_version"]
+            || [queryItem.name isEqualToString:@"kdlc"]
+            || [queryItem.name isEqualToString:@"kss"]
+            || [queryItem.name isEqualToString:@"lib_ver"]
+            || [queryItem.name isEqualToString:@"device_model"]) {
+            [newQueryItems removeObject:queryItem];
+        }
+    }
+    urlComponents.queryItems = [newQueryItems copy];
+    return urlComponents.URL;
+}
+%end
 //Fix login - thanks poomsmart & julioverne
 %hook SSOService
 + (id)fetcherWithRequest:(NSMutableURLRequest *)request configuration:(id)configuration {
@@ -745,6 +765,160 @@
 %end
 %end
 
+// %group Offline
+// %hook YTColdConfig
+// - (BOOL)allOfflineContentOnCommuteShelfEnabled {
+//     return YES;
+// }
+
+// - (void)setAllOfflineContentOnCommuteShelfEnabled:(_Bool)arg1 {
+//     %orig(YES);
+// }
+// %end
+
+// %hook YTIBrowseResponse
+// + (BOOL)offlineVideosAreDisplayable:(id)arg1 {
+//     return YES;
+// }
+// %end
+
+// %hook YTMAppResponder
+// - (BOOL)allowsOfflineTransition {
+//     return YES;
+// }
+// %end
+
+// %hook YTHotConfig
+// - (BOOL)isDownloadsPageCommuteEntryPointEnabled {
+//     return YES;
+// }
+
+// - (void)setIsDownloadsPageCommuteEntryPointEnabled:(BOOL)enabled {
+//     %orig(YES);
+// }
+
+// - (BOOL)enableDownloadsPageDRMVideosDecoration {
+//     return NO;
+// }
+
+// - (BOOL)enableOfflineOrchestrationAPIForDRM {
+//     return NO;
+// }
+// %end
+
+// %hook YTMXSDKContentController
+// - (BOOL)prefetchDownloadsEnabled {
+//     return YES;
+// }
+
+// - (void)setPrefetchDownloadsEnabled:(BOOL)enabled {
+//     %orig(YES);
+// }
+// %end
+
+// %hook YTOfflineVideoDownloader
+// - (BOOL)canDownloadVideo {
+//     return YES;
+// }
+// %end
+
+// %hook YTMOfflineContentAvailabilityController
+// + (BOOL)offlineMixtapeEnabled {
+//     return YES;
+// }
+// %end
+
+// %hook YTOfflineVideo
+// - (BOOL)isPlayableForOfflineStateDateSkewCheckForDate:(id)arg1 upsell:(id *)arg2 {
+//     return YES;
+// }
+
+// - (BOOL)isPlayableForOfflineExpiryCheckForDate:(id)arg1 upsell:(id *)arg2 {
+//     return YES;
+// }
+
+// - (BOOL)isPlayableForStatusWithUpsell:(id *)arg1 {
+//     return YES;
+// }
+
+// - (BOOL)isPlayableForPlayabilityStatusWithUpsell:(id *)arg1 {
+//     return YES;
+// }
+
+// - (BOOL)isPlayableForOfflineActionWithUpsell:(id *)arg1 {
+//     return YES;
+// }
+
+// - (BOOL)isPlayableForManualDeletionCheckWithUpsell:(id *)arg1 {
+//     return YES;
+// }
+
+// - (BOOL)isPlayableOfflineWithUpsell:(id *)arg1 {
+//     return YES;
+// }
+
+// - (BOOL)isPlayableOfflineWithReason:(id *)arg1 {
+//     return YES;
+// }
+// %end
+
+// %hook YTIOfflineState
+// - (BOOL)isPlayableOffline {
+//     return YES;
+// }
+
+// - (id)offlineUpsell {
+//     return nil;
+// }
+
+// - (BOOL)hasOfflineUpsell {
+//     return NO;
+// }
+
+// - (BOOL)isOfflineSharingAllowed {
+//     return YES;
+// }
+
+// - (BOOL)hasIsOfflineSharingAllowed {
+//     return YES;
+// }
+
+// - (BOOL)hasOfflineFutureUnplayableInfo {
+//     return NO;
+// }
+
+// - (BOOL)hasOfflinePlaybackDisabledReason {
+//     return NO;
+// }
+// %end
+
+// %hook YTOfflineFutureUnplayableInfoModel
+// - (BOOL)hasUnplayableReason {
+//     return NO;
+// }
+
+// - (BOOL)becomesUnplayableInSeconds {
+//     return NO;
+// }
+
+// - (BOOL)hasBecomesUnplayableInSeconds {
+//     return NO;
+// }
+// %end
+
+// %hook YTOfflineVideoController
+// - (void)reportNotPlayableOfflineWithPlayerResponse:(id)arg1 responseBlock:(id)arg2 {
+//     return;
+// }
+// %end
+
+// %hook YTOfflineVideoPolicyEntityModel
+// - (BOOL)hasOfflinePlaybackDisabledReason {
+//     return NO;
+// }
+// %end
+// %end
+
 %ctor{
 
     //Get / read values
@@ -763,6 +937,7 @@
         %init(EnsurePremiumStatus);
         %init(RemoveAds);
         %init(VideoAndAudioModePatches);
+        //%init(Offline);
 
         if (oledDarkTheme) {
             %init(oledTheme);
