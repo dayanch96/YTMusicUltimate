@@ -44,11 +44,12 @@
 
 #pragma mark - Fix sideloading issues
 %group SideloadingFixes
-//Fix login - thanks AhmedBakfir
-%hook SSORPCService
-+ (id)URLFromURL:(id)arg1 withAdditionalFragmentParameters:(NSDictionary *)arg2 {
-    NSURL *orig = %orig;
-    NSURLComponents *urlComponents = [[NSURLComponents alloc] initWithURL:orig resolvingAgainstBaseURL:NO];
+//Fix login (2) - Ginsu & AhmedBakfir
+%hook SSOSafariSignIn
+- (void)signInWithURL:(id)arg1 presentationAnchor:(id)arg2 completionHandler:(id)arg3 {
+    NSURL *origURL = arg1;
+
+    NSURLComponents *urlComponents = [[NSURLComponents alloc] initWithURL:origURL resolvingAgainstBaseURL:NO];
     NSMutableArray *newQueryItems = [urlComponents.queryItems mutableCopy];
     for (NSURLQueryItem *queryItem in urlComponents.queryItems) {
         if ([queryItem.name isEqualToString:@"system_version"]
@@ -61,10 +62,18 @@
         }
     }
     urlComponents.queryItems = [newQueryItems copy];
-    return urlComponents.URL;
+    %orig(urlComponents.URL, arg2, arg3);
 }
 %end
-//Fix login - thanks poomsmart & julioverne
+
+//Force enable safari sign-in
+%hook SSOConfiguration
+- (BOOL)shouldEnableSafariSignIn {
+    return YES;
+}
+%end
+
+//Fix login (1) - thanks poomsmart & julioverne
 %hook SSOService
 + (id)fetcherWithRequest:(NSMutableURLRequest *)request configuration:(id)configuration {
     if ([request isKindOfClass:[NSMutableURLRequest class]] && request.HTTPBody) {
