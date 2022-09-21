@@ -48,7 +48,7 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    return @"YTMusicUltimate v1.1.10\n\n© Ginsu 2022";
+    return @"YTMusicUltimate v1.1.11\n\n© Ginsu 2022";
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
