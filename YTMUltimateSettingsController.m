@@ -52,7 +52,6 @@ extern NSBundle *YTMusicUltimateBundle();
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    NSBundle *tweakBundle = YTMusicUltimateBundle();
     return @"YTMusicUltimate v1.1.11\n\n© Ginsu 2022";
 }
 
