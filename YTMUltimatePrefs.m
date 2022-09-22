@@ -7,6 +7,10 @@
 
 #import "YTMUltimatePrefs.h"
 
+#define LOC(x) [tweakBundle localizedStringForKey:x value:nil table:nil]
+
+extern NSBundle *YTMusicUltimateBundle();
+
 @implementation YTMUltimatePrefs
 
 -(id)init{
@@ -17,6 +21,7 @@
 }
 
 - (NSMutableArray *)settings {
+    NSBundle *tweakBundle = YTMusicUltimateBundle();
     NSMutableArray *arr = [[NSMutableArray alloc] init];
 
     NSArray *keys = @[
@@ -27,17 +32,17 @@
     ];
 
     NSArray *titles = @[
-        @"Enabled",
-        @"OLED Dark Theme",
-        @"OLED Dark Keyboard",
-        @"Show playback rate button"
+        LOC(@"Enabled"),
+        LOC(@"OLED_Dark_Theme"),
+        LOC(@"OLED_Dark_Keyboard"),
+        LOC(@"Show_playback_rate_button")
     ];
 
     NSArray *subtitles = @[
-        @"Premium features, no ads, background playback, etc.",
-        @"Enable OLED Dark Theme",
-        @"Enable OLED Dark Keyboard",
-        @"Adjust playback speed"
+        LOC(@"Enabled_Desc"),
+        LOC(@"Enable_OLED_Dark_Theme"),
+        LOC(@"Enable_OLED_Dark_Keyboard"),
+        LOC(@"Adjust_playback_speed")
     ];
 
     for (int i = 0; i < keys.count; i++) {
@@ -53,3 +58,16 @@
 }
 
 @end
+
+NSBundle *YTMusicUltimateBundle() {
+    static NSBundle *bundle = nil;
+    static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+        NSString *tweakBundlePath = [[NSBundle mainBundle] pathForResource:@"YTMusicUltimate" ofType:@"bundle"];
+        if (tweakBundlePath)
+            bundle = [NSBundle bundleWithPath:tweakBundlePath];
+        else
+            bundle = [NSBundle bundleWithPath:@"/Library/Application Support/YTMusicUltimate.bundle"];
+    });
+    return bundle;
+}

@@ -1,6 +1,10 @@
 #import "YTMUltimatePrefs.h"
 #import "YTMUltimateSettingsController.h"
 
+#define LOC(x) [tweakBundle localizedStringForKey:x value:nil table:nil]
+
+extern NSBundle *YTMusicUltimateBundle();
+
 @implementation YTMUltimateSettingsController
 
 - (void)viewDidLoad{
@@ -48,6 +52,7 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    NSBundle *tweakBundle = YTMusicUltimateBundle();
     return @"YTMusicUltimate v1.1.11\n\n© Ginsu 2022";
 }
 
@@ -56,6 +61,7 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSBundle *tweakBundle = YTMusicUltimateBundle();
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
     if (cell == nil){
@@ -64,11 +70,11 @@
 
     if (indexPath.row >= self.options.count) {
         if (indexPath.row == self.options.count) {
-            cell.textLabel.text = @"Apply";
-            cell.detailTextLabel.text = @"Closes the app to apply changes";
+            cell.textLabel.text = LOC(@"Apply");
+            cell.detailTextLabel.text = LOC(@"Closes_the_app_to_apply_changes");
         } else {
-            cell.textLabel.text = @"Follow me on Twitter";
-            cell.detailTextLabel.text = @"Follow me for updates";
+            cell.textLabel.text = LOC(@"Follow_me_on_Twitter");
+            cell.detailTextLabel.text = LOC(@"Follow_me_for_updates");
         }
 
         cell.textLabel.textColor = [UIColor systemBlueColor];
