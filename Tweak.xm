@@ -774,6 +774,46 @@
 %end
 %end
 
+%group CarPlay
+%hook YTIMusicColdConfig
+- (BOOL)iosEnableCarplayLastplayedUpdates {
+    return YES;
+}
+
+- (BOOL)hasIosEnableCarplayLastplayedUpdates {
+    return YES;
+}
+%end
+
+%hook YTIMusicIntegrationsColdConfig
+- (BOOL)hasMusicIosCarplayEnableSdkLogic {
+    return YES;
+}
+
+- (BOOL)musicIosCarplayEnableSdkLogic {
+    return YES;
+}
+%end
+
+%hook YTINotificationRegistration_APNSRegistration_EnabledSettings
+- (BOOL)hasCarPlay {
+    return YES;
+}
+%end
+
+%hook YTMModularWatchViewController
+- (BOOL)isCarPlayActive {
+    return YES;
+}
+%end
+
+%hook YTNowPlayingInfoCenterPlaybackObserver
+- (BOOL)isCarPlayActive {
+    return YES;
+}
+%end
+%end
+
 // %group Offline
 // %hook YTColdConfig
 // - (BOOL)allOfflineContentOnCommuteShelfEnabled {
@@ -947,6 +987,7 @@
         %init(EnsurePremiumStatus);
         %init(RemoveAds);
         %init(VideoAndAudioModePatches);
+        %init(CarPlay);
         //%init(Offline);
 
         if (oledDarkTheme) {
