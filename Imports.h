@@ -6,21 +6,12 @@
 - (UIViewController *)_viewControllerForAncestor;
 @end
 
-@interface YTMSettings : NSObject
-@property(nonatomic, getter=isNerdStatsEnabled) _Bool nerdStatsEnabled;
+@interface YTIPivotBarItemRenderer : NSObject
+@property(copy, nonatomic) NSString *pivotIdentifier;
 @end
 
-@interface YTMSettingsCell : UIView
-@end
-
-@interface YTASyncCollectionView : UIView
-@end
-
-@interface YTMNowPlayingView : UIView
-@end
-
-@interface YTPivotBarItemView : UIView
-@property(retain, nonatomic) UIView *navigationButton;
+@interface YTIPivotBarSupportedRenderers : NSObject
+@property(retain, nonatomic) YTIPivotBarItemRenderer *pivotBarItemRenderer;
 @end
 
 @interface YTMAccountButton : UIButton

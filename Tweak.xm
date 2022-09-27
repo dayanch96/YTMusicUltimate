@@ -318,12 +318,27 @@
 }
 %end
 
-%hook YTPivotBarView
--(YTPivotBarItemView *)itemView4{
-    YTPivotBarItemView *view = %orig;
-    view.navigationButton.hidden = YES;
-    return nil;
+%hook YTIPivotBarRenderer
+- (NSMutableArray *)itemsArray
+{
+    NSMutableArray *newItems = [[NSMutableArray alloc] init];
+    for (YTIPivotBarSupportedRenderers *supportedRenderer in %orig) {
+        if ([supportedRenderer.pivotBarItemRenderer.pivotIdentifier isEqualToString:@"SPunlimited"])
+        {
+            continue;
+        }
+
+        [newItems addObject:supportedRenderer];
+    }
+
+    return newItems;
 }
+
+- (NSUInteger)itemsArray_Count
+{
+    return 3;
+}
+
 %end
 
 %hook YTIShowFullscreenInterstitialCommand
