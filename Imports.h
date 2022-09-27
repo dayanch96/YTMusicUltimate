@@ -7,11 +7,20 @@
 @end
 
 @interface YTIPivotBarItemRenderer : NSObject
-@property(copy, nonatomic) NSString *pivotIdentifier;
+- (NSString *)pivotIdentifier;
+@end
+
+@interface YTIPivotBarIconOnlyItemRenderer : GPBMessage
+- (NSString *)pivotIdentifier;
 @end
 
 @interface YTIPivotBarSupportedRenderers : NSObject
-@property(retain, nonatomic) YTIPivotBarItemRenderer *pivotBarItemRenderer;
+- (YTIPivotBarItemRenderer *)pivotBarItemRenderer;
+- (YTIPivotBarIconOnlyItemRenderer *)pivotBarIconOnlyItemRenderer;
+@end
+
+@interface YTIPivotBarRenderer : NSObject
+- (NSMutableArray <YTIPivotBarSupportedRenderers *> *)itemsArray;
 @end
 
 @interface YTMAccountButton : UIButton
