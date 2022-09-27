@@ -316,29 +316,27 @@
 - (id)sidePanelPromo{
     return nil;
 }
+
+-(id)unlimitedSettingsButton {
+    return nil;
+}
+
+- (BOOL)isAudioOnlyButtonVisible {
+    return YES;
+}
+
 %end
 
-%hook YTIPivotBarRenderer
-- (NSMutableArray *)itemsArray
-{
-    NSMutableArray *newItems = [[NSMutableArray alloc] init];
-    for (YTIPivotBarSupportedRenderers *supportedRenderer in %orig) {
-        if ([supportedRenderer.pivotBarItemRenderer.pivotIdentifier isEqualToString:@"SPunlimited"])
-        {
-            continue;
-        }
+%hook YTPivotBarView
+- (void)setRenderer:(YTIPivotBarRenderer *)renderer {
+    NSMutableArray <YTIPivotBarSupportedRenderers *> *items = [renderer itemsArray];
 
-        [newItems addObject:supportedRenderer];
-    }
-
-    return newItems;
+    NSUInteger index = [items indexOfObjectPassingTest:^BOOL(YTIPivotBarSupportedRenderers *renderers, NSUInteger idx, BOOL *stop) {
+        return [[[renderers pivotBarItemRenderer] pivotIdentifier] isEqualToString:@"SPunlimited"];
+    }];
+    if (index != NSNotFound) [items removeObjectAtIndex:index];
+    %orig;
 }
-
-- (NSUInteger)itemsArray_Count
-{
-    return 3;
-}
-
 %end
 
 %hook YTIShowFullscreenInterstitialCommand
