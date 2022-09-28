@@ -6,6 +6,15 @@
 - (UIViewController *)_viewControllerForAncestor;
 @end
 
+@interface YTFormattedStringLabel: UILabel
+@property (nonatomic, strong) UITextView *lyricsTextView;
+- (BOOL)isLyricsView;
+@end
+
+// @interface YTMLightweightMusicDescriptionShelfCell: UIView
+// @property (nonatomic, strong) UITextView *lyricsTextView;
+// @end
+
 @interface YTIPivotBarItemRenderer : NSObject
  @property(copy, nonatomic) NSString *pivotIdentifier;
  - (NSString *)pivotIdentifier;

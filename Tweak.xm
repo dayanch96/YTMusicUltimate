@@ -787,199 +787,73 @@
 %end
 %end
 
-%group CarPlay
-%hook YTIMusicColdConfig
-- (BOOL)iosEnableCarplayLastplayedUpdates {
-    return YES;
+#pragma mark - Selectable lyrics
+%group SelectableLyrics
+%hook YTFormattedStringLabel
+%property (nonatomic, strong) UITextView *lyricsTextView;
+
+%new
+- (BOOL)isLyricsView
+{
+    if ([[[self superview] superview] superview] == nil)
+    {
+        return false;
+    }
+
+    if ([self.superview.superview.superview isKindOfClass:objc_getClass("YTMLightweightMusicDescriptionShelfCell")])
+    {
+        YTFormattedStringLabel *label = MSHookIvar<YTFormattedStringLabel *>([[[self superview] superview] superview], "_descriptionLabel");
+        return [self isEqual:label];
+    }
+
+    return false;
 }
 
-- (BOOL)hasIosEnableCarplayLastplayedUpdates {
-    return YES;
+- (void)layoutSubviews
+{
+    %orig;
+    if (![self isLyricsView]) { return; }
+
+    if (self.lyricsTextView != nil) {
+        self.lyricsTextView.frame = self.bounds;
+    }
+}
+
+- (void)setFont:(UIFont *)font
+{
+    %orig(font);
+    if (![self isLyricsView]) { return; }
+
+    [self.lyricsTextView setFont:[UIFont systemFontOfSize:14]];
+}
+
+- (void)setAttributedText:(NSAttributedString *)text
+{
+    %orig(text);
+    if (![self isLyricsView]) { return; }
+
+    [self setTextColor:[UIColor clearColor]];
+    [self.lyricsTextView setAttributedText:text];
+}
+
+- (void)didAddSubview:(UIView *)view
+{
+    %orig;
+    if (![self isLyricsView]) { return; }
+
+    if ([view isKindOfClass:objc_getClass("MDCInkView")])
+    {
+        self.lyricsTextView = [[UITextView alloc] init];
+        [self.lyricsTextView setBackgroundColor:[UIColor clearColor]];
+        [self.lyricsTextView setTextColor:[UIColor whiteColor]];
+        [self.lyricsTextView setEditable:NO];
+        
+        [self addSubview:self.lyricsTextView];
+        [view removeFromSuperview];
+    }
 }
 %end
-
-%hook YTIMusicIntegrationsColdConfig
-- (BOOL)hasMusicIosCarplayEnableSdkLogic {
-    return YES;
-}
-
-- (BOOL)musicIosCarplayEnableSdkLogic {
-    return YES;
-}
 %end
-
-%hook YTINotificationRegistration_APNSRegistration_EnabledSettings
-- (BOOL)hasCarPlay {
-    return YES;
-}
-%end
-
-%hook YTMModularWatchViewController
-- (BOOL)isCarPlayActive {
-    return YES;
-}
-%end
-
-%hook YTNowPlayingInfoCenterPlaybackObserver
-- (BOOL)isCarPlayActive {
-    return YES;
-}
-%end
-%end
-
-// %group Offline
-// %hook YTColdConfig
-// - (BOOL)allOfflineContentOnCommuteShelfEnabled {
-//     return YES;
-// }
-
-// - (void)setAllOfflineContentOnCommuteShelfEnabled:(_Bool)arg1 {
-//     %orig(YES);
-// }
-// %end
-
-// %hook YTIBrowseResponse
-// + (BOOL)offlineVideosAreDisplayable:(id)arg1 {
-//     return YES;
-// }
-// %end
-
-// %hook YTMAppResponder
-// - (BOOL)allowsOfflineTransition {
-//     return YES;
-// }
-// %end
-
-// %hook YTHotConfig
-// - (BOOL)isDownloadsPageCommuteEntryPointEnabled {
-//     return YES;
-// }
-
-// - (void)setIsDownloadsPageCommuteEntryPointEnabled:(BOOL)enabled {
-//     %orig(YES);
-// }
-
-// - (BOOL)enableDownloadsPageDRMVideosDecoration {
-//     return NO;
-// }
-
-// - (BOOL)enableOfflineOrchestrationAPIForDRM {
-//     return NO;
-// }
-// %end
-
-// %hook YTMXSDKContentController
-// - (BOOL)prefetchDownloadsEnabled {
-//     return YES;
-// }
-
-// - (void)setPrefetchDownloadsEnabled:(BOOL)enabled {
-//     %orig(YES);
-// }
-// %end
-
-// %hook YTOfflineVideoDownloader
-// - (BOOL)canDownloadVideo {
-//     return YES;
-// }
-// %end
-
-// %hook YTMOfflineContentAvailabilityController
-// + (BOOL)offlineMixtapeEnabled {
-//     return YES;
-// }
-// %end
-
-// %hook YTOfflineVideo
-// - (BOOL)isPlayableForOfflineStateDateSkewCheckForDate:(id)arg1 upsell:(id *)arg2 {
-//     return YES;
-// }
-
-// - (BOOL)isPlayableForOfflineExpiryCheckForDate:(id)arg1 upsell:(id *)arg2 {
-//     return YES;
-// }
-
-// - (BOOL)isPlayableForStatusWithUpsell:(id *)arg1 {
-//     return YES;
-// }
-
-// - (BOOL)isPlayableForPlayabilityStatusWithUpsell:(id *)arg1 {
-//     return YES;
-// }
-
-// - (BOOL)isPlayableForOfflineActionWithUpsell:(id *)arg1 {
-//     return YES;
-// }
-
-// - (BOOL)isPlayableForManualDeletionCheckWithUpsell:(id *)arg1 {
-//     return YES;
-// }
-
-// - (BOOL)isPlayableOfflineWithUpsell:(id *)arg1 {
-//     return YES;
-// }
-
-// - (BOOL)isPlayableOfflineWithReason:(id *)arg1 {
-//     return YES;
-// }
-// %end
-
-// %hook YTIOfflineState
-// - (BOOL)isPlayableOffline {
-//     return YES;
-// }
-
-// - (id)offlineUpsell {
-//     return nil;
-// }
-
-// - (BOOL)hasOfflineUpsell {
-//     return NO;
-// }
-
-// - (BOOL)isOfflineSharingAllowed {
-//     return YES;
-// }
-
-// - (BOOL)hasIsOfflineSharingAllowed {
-//     return YES;
-// }
-
-// - (BOOL)hasOfflineFutureUnplayableInfo {
-//     return NO;
-// }
-
-// - (BOOL)hasOfflinePlaybackDisabledReason {
-//     return NO;
-// }
-// %end
-
-// %hook YTOfflineFutureUnplayableInfoModel
-// - (BOOL)hasUnplayableReason {
-//     return NO;
-// }
-
-// - (BOOL)becomesUnplayableInSeconds {
-//     return NO;
-// }
-
-// - (BOOL)hasBecomesUnplayableInSeconds {
-//     return NO;
-// }
-// %end
-
-// %hook YTOfflineVideoController
-// - (void)reportNotPlayableOfflineWithPlayerResponse:(id)arg1 responseBlock:(id)arg2 {
-//     return;
-// }
-// %end
-
-// %hook YTOfflineVideoPolicyEntityModel
-// - (BOOL)hasOfflinePlaybackDisabledReason {
-//     return NO;
-// }
-// %end
-// %end
 
 %ctor{
     %init;
@@ -989,6 +863,7 @@
     BOOL oledDarkTheme = ([[NSUserDefaults standardUserDefaults] objectForKey:@"oledDarkTheme_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"oledDarkTheme_enabled"] : NO;
     BOOL oledDarkKeyboard = ([[NSUserDefaults standardUserDefaults] objectForKey:@"oledDarkKeyboard_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"oledDarkKeyboard_enabled"] : NO;
     BOOL playbackRateButton = ([[NSUserDefaults standardUserDefaults] objectForKey:@"playbackRateButton_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"playbackRateButton_enabled"] : NO;
+    BOOL selectableLyrics = ([[NSUserDefaults standardUserDefaults] objectForKey:@"selectableLyrics_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"selectableLyrics_enabled"] : NO;
 
     //Apply patches
     %init(SideloadingFixes);
@@ -1000,8 +875,6 @@
         %init(EnsurePremiumStatus);
         %init(RemoveAds);
         %init(VideoAndAudioModePatches);
-        %init(CarPlay);
-        //%init(Offline);
 
         if (oledDarkTheme) {
             %init(oledTheme);
@@ -1013,6 +886,10 @@
 
         if (playbackRateButton) {
             %init(RateController);
+        }
+
+        if (selectableLyrics) {
+            %init(SelectableLyrics);
         }
     }
 }

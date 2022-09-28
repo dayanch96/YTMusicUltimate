@@ -24,25 +24,31 @@ extern NSBundle *YTMusicUltimateBundle();
     NSBundle *tweakBundle = YTMusicUltimateBundle();
     NSMutableArray *arr = [[NSMutableArray alloc] init];
 
+    /* To add an entry to the YTMusicUltimate settings, you need to add a key, 
+    title and subtitle to the respected arrays below. */
+
     NSArray *keys = @[
         @"YTMUltimateIsEnabled", 
         @"oledDarkTheme_enabled", 
         @"oledDarkKeyboard_enabled", 
-        @"playbackRateButton_enabled"
+        @"playbackRateButton_enabled",
+        @"selectableLyrics_enabled"
     ];
 
     NSArray *titles = @[
         LOC(@"Enabled"),
         LOC(@"OLED_Dark_Theme"),
         LOC(@"OLED_Dark_Keyboard"),
-        LOC(@"Show_playback_rate_button")
+        LOC(@"Show_playback_rate_button"),
+        LOC(@"Selectable_lyrics")
     ];
 
     NSArray *subtitles = @[
         LOC(@"Enabled_Desc"),
         LOC(@"Enable_OLED_Dark_Theme"),
         LOC(@"Enable_OLED_Dark_Keyboard"),
-        LOC(@"Adjust_playback_speed")
+        LOC(@"Adjust_playback_speed"),
+        LOC(@"Selectable_lyrics_Desc")
     ];
 
     for (int i = 0; i < keys.count; i++) {
