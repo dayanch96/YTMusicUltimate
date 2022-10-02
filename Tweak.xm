@@ -849,6 +849,7 @@
         [self.lyricsTextView setEditable:NO];
         
         [self addSubview:self.lyricsTextView];
+        self.userInteractionEnabled = YES;
         [view removeFromSuperview];
     }
 }
