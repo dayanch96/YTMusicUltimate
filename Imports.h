@@ -11,10 +11,6 @@
 - (BOOL)isLyricsView;
 @end
 
-// @interface YTMLightweightMusicDescriptionShelfCell: UIView
-// @property (nonatomic, strong) UITextView *lyricsTextView;
-// @end
-
 @interface YTIPivotBarItemRenderer : NSObject
  @property(copy, nonatomic) NSString *pivotIdentifier;
  - (NSString *)pivotIdentifier;
@@ -48,6 +44,9 @@
 
 @interface YTMAvatarAccountView : UIView
 @property(nonatomic,strong) YTMUltimateSettingsController *YTMUltimateController;
+@end
+
+@interface SSOConfiguration : NSObject
 @end
 
 // Color

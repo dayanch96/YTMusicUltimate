@@ -1,4 +1,8 @@
+#import <dlfcn.h>
 #import "Imports.h"
+
+#define YT_BUNDLE_ID @"com.google.ios.youtubemusic"
+#define YT_NAME @"YouTube Music"
 
 %group SettingsPage
 %hook YTMAvatarAccountView
@@ -73,21 +77,6 @@
 }
 %end
 
-//Fix login (1) - thanks poomsmart & julioverne
-%hook SSOService
-+ (id)fetcherWithRequest:(NSMutableURLRequest *)request configuration:(id)configuration {
-    if ([request isKindOfClass:[NSMutableURLRequest class]] && request.HTTPBody) {
-        NSError *error = nil;
-        NSMutableDictionary *body = [NSJSONSerialization JSONObjectWithData:request.HTTPBody options:NSJSONReadingMutableContainers error:&error];
-        if (!error && [body isKindOfClass:[NSMutableDictionary class]]) {
-            [body removeObjectForKey:@"device_challenge_request"];
-            request.HTTPBody = [NSJSONSerialization dataWithJSONObject:body options:kNilOptions error:&error];
-        }
-    }
-    return %orig;
-}
-%end
-
 %hook SSOKeychainCore
 //Thanks to jawshoeadan for this hook.
 + (id)accessGroup {
@@ -137,6 +126,103 @@
     return %orig(groupIdentifier);
 }
 %end
+
+#pragma mark - Thanks PoomSmart for the following hooks
+//IAmYouTube start
+%hook YTVersionUtils
++ (NSString *)appName 
+{
+    return YT_NAME;
+}
+
++ (NSString *)appID 
+{
+    return YT_BUNDLE_ID;
+}
+%end
+
+%hook GCKBUtils
++ (NSString *)appIdentifier 
+{
+    return YT_BUNDLE_ID;
+}
+%end
+
+%hook GPCDeviceInfo
++ (NSString *)bundleId 
+{
+    return YT_BUNDLE_ID;
+}
+%end
+
+%hook OGLBundle
++ (NSString *)shortAppName 
+{
+    return YT_NAME;
+}
+%end
+
+%hook GVROverlayView
++ (NSString *)appName 
+{
+    return YT_NAME;
+}
+%end
+
+%hook OGLPhenotypeFlagServiceImpl
+- (NSString *)bundleId 
+{
+    return YT_BUNDLE_ID;
+}
+%end
+
+%hook APMAEU
++ (BOOL)isFAS 
+{
+    return YES;
+}
+%end
+
+%hook GULAppEnvironmentUtil
++ (BOOL)isFromAppStore 
+{
+    return YES;
+}
+%end
+
+%hook SSOConfiguration
+- (id)initWithClientID:(id)clientID supportedAccountServices:(id)supportedAccountServices 
+{
+    self = %orig;
+    [self setValue:YT_NAME forKey:@"_shortAppName"];
+    [self setValue:YT_BUNDLE_ID forKey:@"_applicationIdentifier"];
+    return self;
+}
+%end
+
+%hook NSBundle
+- (NSString *)bundleIdentifier 
+{
+    NSArray *address = [NSThread callStackReturnAddresses];
+    Dl_info info = {0};
+    if (dladdr((void *)[address[2] longLongValue], &info) == 0)
+        return %orig;
+    NSString *path = [NSString stringWithUTF8String:info.dli_fname];
+    if ([path hasPrefix:NSBundle.mainBundle.bundlePath])
+        return YT_BUNDLE_ID;
+    return %orig;
+}
+
+- (id)objectForInfoDictionaryKey:(NSString *)key 
+{
+    if ([key isEqualToString:@"CFBundleIdentifier"])
+        return YT_BUNDLE_ID;
+    if ([key isEqualToString:@"CFBundleDisplayName"] || [key isEqualToString:@"CFBundleName"])
+        return YT_NAME;
+    return %orig;
+}
+%end
+//IAmYouTube end
 %end
 
 #pragma mark - Enabling cast
@@ -849,6 +935,7 @@
         [self.lyricsTextView setEditable:NO];
         
         [self addSubview:self.lyricsTextView];
+        self.userInteractionEnabled = YES;
         [view removeFromSuperview];
     }
 }
