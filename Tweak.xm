@@ -18,7 +18,7 @@
     }
     
     //Create the YTMusicUltimate button
-    YTMAccountButton *button = [[%c(YTMAccountButton) alloc] initWithTitle:@"YTMusicUltimate" identifier:@"ytmult" icon:icon actionBlock:^(BOOL arg4){
+    YTMAccountButton *button = [[%c(YTMAccountButton) alloc] initWithTitle:@"YTMusicUltimate" identifier:@"ytmult" icon:icon actionBlock:^(BOOL arg4) {
         //Push YTMusicUltimate view controller.
 
         self.YTMUltimateController = [[YTMUltimateSettingsController alloc] init];
@@ -130,69 +130,59 @@
 #pragma mark - Thanks PoomSmart for the following hooks
 //IAmYouTube start
 %hook YTVersionUtils
-+ (NSString *)appName 
-{
++ (NSString *)appName {
     return YT_NAME;
 }
 
-+ (NSString *)appID 
-{
++ (NSString *)appID {
     return YT_BUNDLE_ID;
 }
 %end
 
 %hook GCKBUtils
-+ (NSString *)appIdentifier 
-{
++ (NSString *)appIdentifier {
     return YT_BUNDLE_ID;
 }
 %end
 
 %hook GPCDeviceInfo
-+ (NSString *)bundleId 
-{
++ (NSString *)bundleId {
     return YT_BUNDLE_ID;
 }
 %end
 
 %hook OGLBundle
-+ (NSString *)shortAppName 
-{
++ (NSString *)shortAppName {
     return YT_NAME;
 }
 %end
 
 %hook GVROverlayView
-+ (NSString *)appName 
-{
++ (NSString *)appName {
     return YT_NAME;
 }
 %end
 
 %hook OGLPhenotypeFlagServiceImpl
-- (NSString *)bundleId 
-{
+- (NSString *)bundleId {
     return YT_BUNDLE_ID;
 }
 %end
 
 %hook APMAEU
-+ (BOOL)isFAS 
-{
++ (BOOL)isFAS {
     return YES;
 }
 %end
 
 %hook GULAppEnvironmentUtil
-+ (BOOL)isFromAppStore 
-{
++ (BOOL)isFromAppStore {
     return YES;
 }
 %end
 
 %hook SSOConfiguration
-- (id)initWithClientID:(id)clientID supportedAccountServices:(id)supportedAccountServices 
-{
+- (id)initWithClientID:(id)clientID supportedAccountServices:(id)supportedAccountServices {
     self = %orig;
     [self setValue:YT_NAME forKey:@"_shortAppName"];
     [self setValue:YT_BUNDLE_ID forKey:@"_applicationIdentifier"];
@@ -201,8 +191,7 @@
 %end
 
 %hook NSBundle
-- (NSString *)bundleIdentifier 
-{
+- (NSString *)bundleIdentifier {
     NSArray *address = [NSThread callStackReturnAddresses];
     Dl_info info = {0};
     if (dladdr((void *)[address[2] longLongValue], &info) == 0)
@@ -213,8 +202,7 @@
     return %orig;
 }
 
-- (id)objectForInfoDictionaryKey:(NSString *)key 
-{
+- (id)objectForInfoDictionaryKey:(NSString *)key {
     if ([key isEqualToString:@"CFBundleIdentifier"])
         return YT_BUNDLE_ID;
     if ([key isEqualToString:@"CFBundleDisplayName"] || [key isEqualToString:@"CFBundleName"])
@@ -813,6 +801,39 @@
     %orig;
 }
 %end
+
+%hook YTMPlayerPageColorScheme
+- (void)setMiniPlayerColor:(UIColor *)color {
+    %orig([UIColor blackColor]);
+}
+
+- (void)setQueueBackgroundColor:(UIColor *)color {
+    %orig([UIColor blackColor]);
+}
+
+- (void)setQueueCurrentlyPlayingBackgroundColor:(UIColor *)color {
+    %orig([UIColor blackColor]);
+}
+
+- (void)setTabViewColor:(UIColor *)color {
+    %orig([UIColor blackColor]);
+}
+
+- (void)setAVSwitchBackgroundColor:(UIColor *)color {
+    %orig(color);
+    [self setPlayButtonColor:color];
+}
+
+- (void)setBackgroundColor:(UIColor *)color {
+    %orig([UIColor blackColor]);
+}
+%end
+
+%hook YTLightweightBrowseBackgroundView
+- (id)imageView {
+    return nil;
+}
+%end
 %end
 
 #pragma mark - OLED Keyboard
@@ -881,13 +902,11 @@
 %new
 - (BOOL)isLyricsView
 {
-    if ([[[self superview] superview] superview] == nil)
-    {
+    if ([[[self superview] superview] superview] == nil) {
         return false;
     }
 
-    if ([self.superview.superview.superview isKindOfClass:objc_getClass("YTMLightweightMusicDescriptionShelfCell")])
-    {
+    if ([self.superview.superview.superview isKindOfClass:objc_getClass("YTMLightweightMusicDescriptionShelfCell")]) {
         YTFormattedStringLabel *label = MSHookIvar<YTFormattedStringLabel *>([[[self superview] superview] superview], "_descriptionLabel");
         return [self isEqual:label];
     }
@@ -922,13 +941,11 @@
     [self.lyricsTextView setAttributedText:text];
 }
 
-- (void)didAddSubview:(UIView *)view
-{
+- (void)didAddSubview:(UIView *)view {
     %orig;
     if (![self isLyricsView]) { return; }
 
-    if ([view isKindOfClass:objc_getClass("MDCInkView")])
-    {
+    if ([view isKindOfClass:objc_getClass("MDCInkView")]) {
         self.lyricsTextView = [[UITextView alloc] init];
         [self.lyricsTextView setBackgroundColor:[UIColor clearColor]];
         [self.lyricsTextView setTextColor:[UIColor whiteColor]];

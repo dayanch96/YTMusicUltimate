@@ -50,6 +50,10 @@
 @end
 
 // Color
+@interface YTMPlayerPageColorScheme : NSObject
+- (void)setPlayButtonColor:(UIColor *)color;
+@end
+
 @interface UIKeyboardDockView : UIView
 @end
 
