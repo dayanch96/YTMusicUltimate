@@ -1,5 +1,5 @@
-#import "YTMUltimatePrefs.h"
-#import "YTMUltimateSettingsController.h"
+#include "Prefs/YTMUltimatePrefs.h"
+#include "Prefs/YTMUltimateSettingsController.h"
 #import <UIKit/UIKit.h>
 
 @interface UIView (Private)
