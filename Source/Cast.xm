@@ -79,11 +79,11 @@
 }
 
 - (BOOL)isFreeTierAudioCastEnabled {
-    return YES;
+    return NO;
 }
 
 - (void)setIsFreeTierAudioCastEnabled:(BOOL)enabled {
-    %orig(YES);
+    %orig(NO);
 }
 
 - (void)openMusicPremiumLandingPage {

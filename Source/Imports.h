@@ -50,6 +50,9 @@
 @end
 
 // Color
+@interface YTCommonColorPalette : NSObject
+@property(readonly, nonatomic) long long pageStyle;
+@end
 @interface YTMPlayerPageColorScheme : NSObject
 - (void)setPlayButtonColor:(UIColor *)color;
 @end

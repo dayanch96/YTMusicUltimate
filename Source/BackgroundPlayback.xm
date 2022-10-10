@@ -7,10 +7,6 @@
     return nil;
 }
 
-- (void)appDidEnterBackground:(id)arg1 {
-    return;
-}
-
 - (void)maybeScheduleBackgroundUpsellNotification {
     %orig;
     [self removePendingBackgroundNotifications];
@@ -213,6 +209,12 @@
 }
 
 - (BOOL)hasIosEnableImpBackgroundableAudio {
+    return YES;
+}
+%end
+
+%hook YTDataUtils
+- (BOOL)isPlayableInBackground {
     return YES;
 }
 %end

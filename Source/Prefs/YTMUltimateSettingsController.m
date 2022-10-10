@@ -52,7 +52,7 @@ extern NSBundle *YTMusicUltimateBundle();
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    return @"YTMusicUltimate v1.2.3\n\n© Ginsu 2022";
+    return @"YTMusicUltimate v1.2.4\n\n© Ginsu 2022";
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -85,8 +85,10 @@ extern NSBundle *YTMusicUltimateBundle();
         cell.detailTextLabel.text = [cellMetadata objectForKey:@"subtitle"];
 
         UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
-        cell.accessoryView = switchView;
         switchView.tag = indexPath.row;
+
+        [cell setAccessoryView:switchView];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
 
         [switchView setOn:[[NSUserDefaults standardUserDefaults] boolForKey:[cellMetadata objectForKey:@"defaultsKey"]] animated:NO];
         [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
@@ -104,6 +106,8 @@ extern NSBundle *YTMusicUltimateBundle();
             options:@{}
             completionHandler:nil];
     }
+
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)switchChanged:(UISwitch *)sender{

@@ -1,6 +1,5 @@
 #import <Foundation/Foundation.h>
-#include "YTMUltimatePrefs.h"
-#include "YTMUltimateSettingsController.h"
+#include "Imports.h"
 
 %group SettingsPage
 %hook YTMAvatarAccountView
