@@ -8,4 +8,5 @@
 
 @interface YTMUltimatePrefs : NSObject
 - (NSMutableArray *)settings;
+- (NSMutableArray *)links;
 @end

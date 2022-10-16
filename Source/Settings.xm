@@ -1,9 +1,19 @@
-#import <Foundation/Foundation.h>
-#include "Imports.h"
+#import <UIKit/UIKit.h>
+#include "Prefs/YTMUltimateSettingsController.h"
+
+@interface YTMAccountButton : UIButton
+- (id)initWithTitle:(id)arg1 identifier:(id)arg2 icon:(id)arg3 actionBlock:(void (^)(BOOL finished))arg4;
+@end
+
+@interface YTMAvatarAccountView : UIView
+@end
+
+@interface UIView (Private)
+- (id)_viewControllerForAncestor;
+@end
 
 %group SettingsPage
 %hook YTMAvatarAccountView
-%property(nonatomic,strong) YTMUltimateSettingsController *YTMUltimateController;
 
 - (void)setAccountMenuUpperButtons:(id)arg1 lowerButtons:(id)arg2 {
     
@@ -17,9 +27,9 @@
     //Create the YTMusicUltimate button
     YTMAccountButton *button = [[%c(YTMAccountButton) alloc] initWithTitle:@"YTMusicUltimate" identifier:@"ytmult" icon:icon actionBlock:^(BOOL arg4) {
         //Push YTMusicUltimate view controller.
-
-        self.YTMUltimateController = [[YTMUltimateSettingsController alloc] init];
-        [self._viewControllerForAncestor presentViewController:self.YTMUltimateController animated:YES completion:nil];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[YTMUltimateSettingsController alloc] init]];
+        [nav setModalPresentationStyle: UIModalPresentationFullScreen];
+        [self._viewControllerForAncestor presentViewController:nav animated:YES completion:nil];
     }];
 
     button.tintColor = [UIColor redColor];

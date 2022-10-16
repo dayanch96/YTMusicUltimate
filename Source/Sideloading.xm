@@ -1,9 +1,11 @@
 #import <Foundation/Foundation.h>
 #import <dlfcn.h>
-#include "Imports.h"
 
 #define YT_BUNDLE_ID @"com.google.ios.youtubemusic"
 #define YT_NAME @"YouTube Music"
+
+@interface SSOConfiguration : NSObject
+@end
 
 %group SideloadingFixes
 //Fix login (2) - Ginsu & AhmedBakfir
@@ -86,7 +88,7 @@
 %end
 
 #pragma mark - Thanks PoomSmart for the following hooks
-//IAmYouTube start
+//IAmYouTube + Extra hooks for ytmusic
 %hook YTVersionUtils
 + (NSString *)appName {
     return YT_NAME;
@@ -169,6 +171,22 @@
 }
 %end
 //IAmYouTube end
+
+%hook ASWUtilities
++ (NSString *)productionBundleIdentifier {
+    return YT_BUNDLE_ID;
+}
+
++ (NSString *)lowercaseProductionBundleIdentifier {
+    return YT_BUNDLE_ID;
+}
+%end
+
+%hook GAZAppInfo
+- (NSString *)currentBundleIdentifier {
+    return YT_BUNDLE_ID;
+}
+%end
 %end
 
 %ctor {

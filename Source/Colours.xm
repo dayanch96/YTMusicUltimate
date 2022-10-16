@@ -1,6 +1,31 @@
-#import <Foundation/Foundation.h>
-#include "Imports.h"
+#import <UIKit/UIKit.h>
 
+@interface YTMPlayerPageColorScheme : NSObject
+- (void)setPlayButtonColor:(UIColor *)color;
+@end
+
+@interface UIKeyboardDockView : UIView
+@end
+
+@interface UIKeyboardLayoutStar : UIView
+@end
+
+@interface YTPivotBarView : UIView
+@end
+
+@interface YTMMusicMenuTitleView : UIView
+@end
+
+@interface MDCSnackbarMessageView : UIView
+@end
+
+@interface UIPredictionViewController : UIViewController
+@end
+
+@interface UICandidateViewController : UIViewController
+@end
+
+#pragma mark - OLED Dark mode
 %group oledTheme
 %hook YTCommonColorPalette
 - (UIColor *)brandBackgroundSolid { return [UIColor blackColor]; }
@@ -62,7 +87,7 @@
 %end
 %end
 
-#pragma mark - OLED Keyboard
+#pragma mark - OLED Dark Keyboard
 %group oledKB
 %hook UIPredictionViewController // support prediction bar - @ichitaso: http://gist.github.com/ichitaso/935100fd53a26f18a9060f7195a1be0e
 - (void)loadView {
@@ -97,13 +122,30 @@
 %end
 %end
 
-%ctor {
+#pragma mark - Low contrast mode
+%group lowContrast
+%hook YTCommonColorPalette
+- (UIColor *)textPrimary { 
+    return [UIColor colorWithWhite:0.565 alpha:1];
+}
+- (UIColor *)textSecondary { 
+    return [UIColor colorWithWhite:0.565 alpha:1]; 
+}
+%end
 
-    //Get / read values
+%hook UIColor
++ (UIColor *)whiteColor {
+    return [UIColor colorWithWhite:0.565 alpha:1];
+}
+%end
+%end
+
+%ctor {
     BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
     BOOL oledDarkTheme = ([[NSUserDefaults standardUserDefaults] objectForKey:@"oledDarkTheme_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"oledDarkTheme_enabled"] : NO;
     BOOL oledDarkKeyboard = ([[NSUserDefaults standardUserDefaults] objectForKey:@"oledDarkKeyboard_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"oledDarkKeyboard_enabled"] : NO;    
-    
+    BOOL contrast = ([[NSUserDefaults standardUserDefaults] objectForKey:@"oledDarkKeyboard_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"Low_contrast_enabled"] : NO;
+
     if (isEnabled){
 
         if (oledDarkTheme) {
@@ -112,6 +154,10 @@
 
         if (oledDarkKeyboard) {
             %init(oledKB);
+        }
+
+        if (contrast) {
+            %init(lowContrast);
         }
     }
 }

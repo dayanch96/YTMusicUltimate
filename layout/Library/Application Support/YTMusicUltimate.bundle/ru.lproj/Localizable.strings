@@ -8,7 +8,15 @@
 "Adjust_playback_speed" = "Позволяет регулировать скорость воспроизведения";
 "Selectable_lyrics" = "Lyrics text selection";
 "Selectable_lyrics_Desc" = "Enables text selection for lyrics";
+"Low_contrast" = "Low contrast";
+"Low_contrast_Desc" = "Lower contrast for text and buttons";
 "Apply" = "Применить";
 "Closes_the_app_to_apply_changes" = "Закроет приложение для применения настроек";
 "Follow_me_on_Twitter" = "Мой Twitter аккаунт";
 "Follow_me_for_updates" = "Подпишитесь, чтобы быть в курсе новостей";
+"Discord" = "Join the Discord";
+"Discord_desc" = "Report bugs and request features"
+"Source_code" = "Source code";
+"View_source_code" = "Take a look at the code";
+"Settings" = "Settings";
+"Links" =  "Links";

@@ -7,56 +7,57 @@ extern NSBundle *YTMusicUltimateBundle();
 
 @implementation YTMUltimateSettingsController
 
-- (void)viewDidLoad{
+- (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+    self.navigationItem.leftBarButtonItem = [self closeButton];
+
+    UITableViewStyle style;
+    if (@available(iOS 13, *)) {
+        style = UITableViewStyleInsetGrouped;
+    } else {
+        style = UITableViewStyleGrouped;
+    }
+
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:style];
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     [self.view addSubview:_tableView];
-    //x
+    
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
-    //y
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
-    //w
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1 constant:0]];
-    //h
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:1 constant:0]];
 
-    self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,self.view.frame.size.width, 120)];
-    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    headerLabel.textColor = [UIColor redColor];
-    headerLabel.text = @"YTMusicUltimate";
-    headerLabel.font = [UIFont boldSystemFontOfSize:38];
-    headerLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.headerView addSubview:headerLabel];
-    //x
-    [self.headerView addConstraint:[NSLayoutConstraint constraintWithItem:headerLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.headerView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
-    //y
-    [self.headerView addConstraint:[NSLayoutConstraint constraintWithItem:headerLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.headerView attribute:NSLayoutAttributeTop multiplier:1 constant:45]];
-
     _options = [[[YTMUltimatePrefs alloc] init] settings];
+    _links = [[[YTMUltimatePrefs alloc] init] links];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 120;
-}
-
+#pragma mark - Table view stuff
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 54;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    return _headerView;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    NSBundle *tweakBundle = YTMusicUltimateBundle();
+    return section == 0 ? LOC(@"Settings") : LOC(@"Links");
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    return @"YTMusicUltimate v1.2.4\n\n© Ginsu 2022";
+    if (section == 1) {
+        return @"YTMusicUltimate v1.2.5\n\n© Ginsu (@ginsudev) 2021-2022";
+    }
+
+    return nil;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 2 + [self.options count];
+    return section == 0 ? [self.options count] + 1 : [self.links count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -67,42 +68,44 @@ extern NSBundle *YTMusicUltimateBundle();
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
 
-    if (indexPath.row >= self.options.count) {
+    if (indexPath.section == 0) {
         if (indexPath.row == self.options.count) {
             cell.textLabel.text = LOC(@"Apply");
             cell.detailTextLabel.text = LOC(@"Closes_the_app_to_apply_changes");
+            cell.textLabel.textColor = [UIColor systemBlueColor];
+            cell.detailTextLabel.textColor = [UIColor systemBlueColor];
         } else {
-            cell.textLabel.text = LOC(@"Follow_me_on_Twitter");
-            cell.detailTextLabel.text = LOC(@"Follow_me_for_updates");
+            NSMutableDictionary *cellMetadata = [self.options objectAtIndex:indexPath.row];
+            cell.textLabel.text = [cellMetadata objectForKey:@"title"];
+            cell.detailTextLabel.text = [cellMetadata objectForKey:@"subtitle"];
+            
+            UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
+            switchView.tag = indexPath.row;
+            [cell setAccessoryView:switchView];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            [switchView setOn:[[NSUserDefaults standardUserDefaults] boolForKey:[cellMetadata objectForKey:@"defaultsKey"]] animated:NO];
+            [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
         }
-
-        cell.textLabel.textColor = [UIColor systemBlueColor];
-        cell.detailTextLabel.textColor = [UIColor systemBlueColor];
-    } else {
-        NSMutableDictionary *cellMetadata = [self.options objectAtIndex:indexPath.row];
-
+    } else if (indexPath.section == 1) {
+        NSMutableDictionary *cellMetadata = [self.links objectAtIndex:indexPath.row];
         cell.textLabel.text = [cellMetadata objectForKey:@"title"];
         cell.detailTextLabel.text = [cellMetadata objectForKey:@"subtitle"];
-
-        UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
-        switchView.tag = indexPath.row;
-
-        [cell setAccessoryView:switchView];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-
-        [switchView setOn:[[NSUserDefaults standardUserDefaults] boolForKey:[cellMetadata objectForKey:@"defaultsKey"]] animated:NO];
-        [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
+        cell.textLabel.textColor = [UIColor systemBlueColor];
+        cell.detailTextLabel.textColor = [UIColor systemBlueColor];
     }
 
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == self.options.count){
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0 && indexPath.row == self.options.count) {
         @throw NSInternalInconsistencyException;
-    } else if (indexPath.row == self.options.count + 1){
+    } else if (indexPath.section == 1) {
+        NSMutableDictionary *cellMetadata = [self.links objectAtIndex:indexPath.row];
+        NSString *url = [cellMetadata objectForKey:@"url"];
+
         [[UIApplication sharedApplication]
-            openURL:[NSURL URLWithString:@"https://twitter.com/ginsudev"]
+            openURL:[NSURL URLWithString:url]
             options:@{}
             completionHandler:nil];
     }
@@ -113,6 +116,33 @@ extern NSBundle *YTMusicUltimateBundle();
 - (void)switchChanged:(UISwitch *)sender{
     NSMutableDictionary *cellMetadata = [self.options objectAtIndex:sender.tag];
     [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:[cellMetadata objectForKey:@"defaultsKey"]];
+}
+
+#pragma mark - Nav bar stuff
+- (NSString *)title {
+    return @"YTMusicUltimate";
+}
+
+- (UIBarButtonItem *)closeButton {
+    UIBarButtonItem *item;
+
+    if (@available(iOS 13, *)) {
+        item = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"xmark"] 
+                            style:UIBarButtonItemStylePlain 
+                            target:self 
+                            action:@selector(close)];
+    } else {
+        item = [[UIBarButtonItem alloc] initWithTitle:@"Close" 
+                            style:UIBarButtonItemStylePlain 
+                            target:self 
+                            action:@selector(close)];
+    }
+
+    return item;
+}
+
+- (void)close {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

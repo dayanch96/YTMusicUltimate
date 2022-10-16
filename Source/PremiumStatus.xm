@@ -1,5 +1,18 @@
 #import <Foundation/Foundation.h>
-#include "Imports.h"
+
+@interface YTIPivotBarItemRenderer : NSObject
+ @property(copy, nonatomic) NSString *pivotIdentifier;
+ - (NSString *)pivotIdentifier;
+ @end
+
+ @interface YTIPivotBarSupportedRenderers : NSObject
+ @property(retain, nonatomic) YTIPivotBarItemRenderer *pivotBarItemRenderer;
+ - (YTIPivotBarItemRenderer *)pivotBarItemRenderer;
+ @end
+
+ @interface YTIPivotBarRenderer : NSObject
+ - (NSMutableArray <YTIPivotBarSupportedRenderers *> *)itemsArray;
+ @end
 
 %group EnsurePremiumStatus
 %hook MDXFeatureFlags

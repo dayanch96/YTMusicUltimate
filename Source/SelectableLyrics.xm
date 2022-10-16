@@ -1,67 +1,47 @@
-#import <Foundation/Foundation.h>
-#include "Imports.h"
+#import <UIKit/UIKit.h>
+
+@interface YTFormattedStringLabel : UILabel
+@end
+
+@interface YTMLightweightMusicDescriptionShelfCell : UIView
+@property (retain, nonatomic) UITextView *lyrics;
+@end
 
 %group SelectableLyrics
-%hook YTFormattedStringLabel
-%property (nonatomic, strong) UITextView *lyricsTextView;
+%hook YTMLightweightMusicDescriptionShelfCell
 
-%new
-- (BOOL)isLyricsView
-{
-    if ([[[self superview] superview] superview] == nil) {
-        return false;
+%property (retain, nonatomic) UITextView *lyrics;
+
+- (id)initWithFrame:(CGRect)frame {
+    self = %orig;
+    if (self) {
+        UIView *container = [self valueForKey:@"_descriptionContainer"];
+        self.lyrics = [[UITextView alloc] init];
+        self.lyrics.backgroundColor = [UIColor clearColor];
+        self.lyrics.editable = NO;
+        self.lyrics.scrollEnabled = NO;
+        self.lyrics.showsVerticalScrollIndicator = NO;
+        [container addSubview:self.lyrics];
     }
-
-    if ([self.superview.superview.superview isKindOfClass:objc_getClass("YTMLightweightMusicDescriptionShelfCell")]) {
-        YTFormattedStringLabel *label = MSHookIvar<YTFormattedStringLabel *>([[[self superview] superview] superview], "_descriptionLabel");
-        return [self isEqual:label];
-    }
-
-    return false;
+    return self;
 }
 
-- (void)layoutSubviews
-{
+- (void)setRenderer:(id)renderer {
     %orig;
-    if (![self isLyricsView]) { return; }
-
-    if (self.lyricsTextView != nil) {
-        self.lyricsTextView.frame = self.bounds;
-    }
+    YTFormattedStringLabel *lyrics = [self valueForKey:@"_descriptionLabel"];
+    lyrics.userInteractionEnabled = YES;
+    lyrics.hidden = YES;
+    self.lyrics.font = lyrics.font;
+    self.lyrics.textColor = lyrics.textColor;
+    self.lyrics.attributedText = lyrics.attributedText;
 }
 
-- (void)setFont:(UIFont *)font
-{
-    %orig(font);
-    if (![self isLyricsView]) { return; }
-
-    [self.lyricsTextView setFont:[UIFont systemFontOfSize:14]];
-}
-
-- (void)setAttributedText:(NSAttributedString *)text
-{
-    %orig(text);
-    if (![self isLyricsView]) { return; }
-
-    [self setTextColor:[UIColor clearColor]];
-    [self.lyricsTextView setAttributedText:text];
-}
-
-- (void)didAddSubview:(UIView *)view {
+- (void)layoutSubviews {
     %orig;
-    if (![self isLyricsView]) { return; }
-
-    if ([view isKindOfClass:objc_getClass("MDCInkView")]) {
-        self.lyricsTextView = [[UITextView alloc] init];
-        [self.lyricsTextView setBackgroundColor:[UIColor clearColor]];
-        [self.lyricsTextView setTextColor:[UIColor whiteColor]];
-        [self.lyricsTextView setEditable:NO];
-        
-        [self addSubview:self.lyricsTextView];
-        self.userInteractionEnabled = YES;
-        [view removeFromSuperview];
-    }
+    YTFormattedStringLabel *lyrics = [self valueForKey:@"_descriptionLabel"];
+    self.lyrics.frame = lyrics.frame;
 }
+
 %end
 %end
 

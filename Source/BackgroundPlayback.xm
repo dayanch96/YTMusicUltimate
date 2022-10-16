@@ -1,5 +1,8 @@
 #import <Foundation/Foundation.h>
-#include "Imports.h"
+
+@interface YTMBackgroundUpsellNotificationController : NSObject
+- (void)removePendingBackgroundNotifications;
+@end
 
 %group BackgroundPlayback
 %hook YTMBackgroundUpsellNotificationController
