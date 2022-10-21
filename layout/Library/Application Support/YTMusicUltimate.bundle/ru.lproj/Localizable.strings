@@ -8,8 +8,8 @@
 "Adjust_playback_speed" = "Позволяет регулировать скорость воспроизведения";
 "Selectable_lyrics" = "Выделение текста";
 "Selectable_lyrics_Desc" = "Позволяет выделять текста песен";
-"Low_contrast" = "Понизить контраст";
-"Low_contrast_Desc" = "Понижает контраст текста и кнопок";
+"Low_contrast" = "Понизить контрастность";
+"Low_contrast_Desc" = "Понижает контрастность текста и кнопок";
 "iPad_style" = "Режим iPad (бета)";
 "iPad_style_Desc" = "Активирует стиль iPad на iPhone";
 "Apply" = "Применить";
