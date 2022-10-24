@@ -33,7 +33,8 @@ extern NSBundle *YTMusicUltimateBundle();
         @"oledDarkKeyboard_enabled", 
         @"playbackRateButton_enabled",
         @"selectableLyrics_enabled",
-        @"Low_contrast_enabled"
+        @"Low_contrast_enabled",
+        @"iPadStyle_enabled"
     ];
 
     NSArray *titles = @[
@@ -42,7 +43,8 @@ extern NSBundle *YTMusicUltimateBundle();
         LOC(@"OLED_Dark_Keyboard"),
         LOC(@"Show_playback_rate_button"),
         LOC(@"Selectable_lyrics"),
-        LOC(@"Low_contrast")
+        LOC(@"Low_contrast"),
+        LOC(@"iPad_style")
     ];
 
     NSArray *subtitles = @[
