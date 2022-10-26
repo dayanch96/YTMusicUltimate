@@ -34,7 +34,7 @@ extern NSBundle *YTMusicUltimateBundle();
         @"playbackRateButton_enabled",
         @"selectableLyrics_enabled",
         @"Low_contrast_enabled",
-        @"iPadStyle_enabled"
+        @"VolBar_Enabled"
     ];
 
     NSArray *titles = @[
@@ -44,7 +44,7 @@ extern NSBundle *YTMusicUltimateBundle();
         LOC(@"Show_playback_rate_button"),
         LOC(@"Selectable_lyrics"),
         LOC(@"Low_contrast"),
-        LOC(@"iPad_style")
+        LOC(@"VolBar")
     ];
 
     NSArray *subtitles = @[
@@ -53,7 +53,8 @@ extern NSBundle *YTMusicUltimateBundle();
         LOC(@"Enable_OLED_Dark_Keyboard"),
         LOC(@"Adjust_playback_speed"),
         LOC(@"Selectable_lyrics_Desc"),
-        LOC(@"Low_contrast_Desc")
+        LOC(@"Low_contrast_Desc"),
+        LOC(@"VolBar_Desc")
     ];
 
     for (int i = 0; i < keys.count; i++) {

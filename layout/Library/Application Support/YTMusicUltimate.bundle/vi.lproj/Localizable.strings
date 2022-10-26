@@ -10,6 +10,8 @@
 "Selectable_lyrics_Desc" = "Enables text selection for lyrics";
 "Low_contrast" = "Low contrast";
 "Low_contrast_Desc" = "Lower contrast for text and buttons";
+"VolBar" = "Volume bar";
+"VolBar_Desc" = "Adds a volume bar to the player";
 "Apply" = "Áp dụng";
 "Closes_the_app_to_apply_changes" = "Đóng ứng dụng để áp dụng các thay đổi";
 "Follow_me_on_Twitter" = "Theo dõi tôi trên Twitter";

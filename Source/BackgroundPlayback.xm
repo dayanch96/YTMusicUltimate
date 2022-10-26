@@ -17,14 +17,6 @@
 %end
 
 %hook YTColdConfig
-- (BOOL)disablePlaybackLockScreenController {
-    return NO;
-}
-
-- (void)setDisablePlaybackLockScreenController:(BOOL)enabled {
-    %orig(NO);
-}
-
 - (BOOL)enableIMPBackgroundableAudio {
     return YES;
 }
@@ -56,7 +48,7 @@
 
 %hook YTPlayerStatus
 - (id)initWithExternalPlayback:(_Bool)arg1 backgroundPlayback:(_Bool)arg2 inlinePlaybackActive:(_Bool)arg3 cardboardModeActive:(_Bool)arg4 layout:(int)arg5 userAudioOnlyModeActive:(_Bool)arg6 blackoutActive:(_Bool)arg7 clipID:(id)arg8 accountLinkState:(id)arg9 muted:(_Bool)arg10 pictureInPicture:(_Bool)arg11 {
-    return %orig(YES, YES, YES, YES, arg5, NO, YES, arg8, arg9, arg10, arg11);
+    return %orig(YES, YES, YES, YES, arg5, YES, YES, arg8, arg9, arg10, arg11);
 }
 
 - (BOOL)backgroundPlayback {
@@ -93,18 +85,6 @@
 %end
 
 %hook YTLocalPlaybackController
-- (void)stopBackgroundPlayback {
-    return;
-}
-
-- (void)updateForceDisableBackgroundingForVideo:(id)arg1 {
-    return;
-}
-
-- (void)maybeStopBackgroundPlayback {
-    return;
-}
-
 - (BOOL)isPlaybackBackgroundable {
     return YES;
 }
@@ -189,14 +169,6 @@
 %end
 
 %hook YTMSettings
-- (BOOL)backgroundPlaybackModeModified {
-    return NO;
-}
-
-- (void)setBackgroundPlaybackModeModified:(BOOL)modified {
-    %orig(NO);
-}
-
 - (void)setBackgroundPlaybackMode:(long long)mode {
     %orig(1);
 }

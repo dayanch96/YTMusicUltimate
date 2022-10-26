@@ -10,6 +10,8 @@
 "Selectable_lyrics_Desc" = "Şarkı sözleri için metin seçimini etkinleştirir";
 "Low_contrast" = "Düşük kontrast";
 "Low_contrast_Desc" = "Metin ve düğmeler için daha düşük kontrast";
+"VolBar" = "Volume bar";
+"VolBar_Desc" = "Adds a volume bar to the player";
 "Apply" = "Uygula";
 "Closes_the_app_to_apply_changes" = "Değişiklikleri uygulamak için uygulamayı kapatır.";
 "Follow_me_on_Twitter" = "Twitter'da beni takip et";

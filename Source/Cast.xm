@@ -100,6 +100,16 @@
     %orig(YES);
 }
 %end
+
+%hook YTMSettings
+- (BOOL)isAudioCastEnabled {
+    return YES;
+}
+
+- (BOOL)isGcmEnabled {
+    return YES;
+}
+%end
 %end
 
 %ctor {

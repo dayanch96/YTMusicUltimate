@@ -50,7 +50,7 @@ extern NSBundle *YTMusicUltimateBundle();
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (section == 1) {
-        return @"YTMusicUltimate v1.2.5\n\n© Ginsu (@ginsudev) 2021-2022";
+        return @"YTMusicUltimate v1.2.6\n\n© Ginsu (@ginsudev) 2021-2022";
     }
 
     return nil;

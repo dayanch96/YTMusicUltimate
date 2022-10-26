@@ -159,6 +159,25 @@
     %orig(YES);
 }
 %end
+
+%hook YTUserDefaults
+- (BOOL)hasOnboarded {
+    return YES;
+}
+%end
+
+// %hook YTIMusicPassSubscribedInfoSupportedRenderers
+// - (BOOL)hasMusicPassSubscribedInfoRenderer {
+
+// }
+// %end
+
+%hook YTIMusicPassSubscribedInfoRenderer
+- (NSData *)trackingParams {
+    NSLog(@"[YTMULT]: %@", %orig);
+    return %orig;
+}
+%end
 %end
 
 %ctor {

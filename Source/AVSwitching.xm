@@ -27,26 +27,6 @@
 }
 %end
 
-%hook YTMSettings
-- (BOOL)noVideoModeEnabled{
-    return NO;
-}
-
-- (void)setNoVideoModeEnabled:(BOOL)enabled {
-    %orig(NO);
-}
-%end
-
-%hook YTUserDefaults
-- (BOOL)noVideoModeEnabled{
-    return NO;
-}
-
-- (void)setNoVideoModeEnabled:(BOOL)enabled {
-    %orig(NO);
-}
-%end
-
 %hook YTMAudioVideoModeController
 - (BOOL)isAudioOnlyBlocked {
     return NO;
@@ -69,6 +49,10 @@
 - (void)setIsAudioVideoModeSupported:(BOOL)supported {
     %orig(YES);
 }
+
+- (BOOL)noVideoModeEnabled {
+    return YES;
+}
 %end
 
 %hook YTDefaultQueueConfig
@@ -78,6 +62,106 @@
 
 - (void)setIsAudioVideoModeSupported:(BOOL)supported {
     %orig(YES);
+}
+%end
+
+%hook YTMSettings
+- (BOOL)allowAudioOnlyManualQualitySelection {
+    return YES;
+}
+
+- (BOOL)initialFormatAudioOnly {
+    return YES;
+}
+
+- (BOOL)noVideoModeEnabled{
+    return YES;
+}
+
+- (void)setNoVideoModeEnabled:(BOOL)enabled {
+    %orig(YES);
+}
+%end
+
+%hook YTIAudioConfig
+- (BOOL)hasPlayAudioOnly {
+    return YES;
+}
+
+- (BOOL)playAudioOnly {
+    return YES;
+}
+%end
+
+%hook YTIAudioOnlyPlayabilityRenderer
+- (BOOL)audioOnlyPlayability {
+    return YES;
+}
+%end
+
+%hook YTIAudioOnlyPlayabilityRenderer_AudioOnlyPlayabilityInfoSupportedRenderers
+- (id)upsellDialogRenderer {
+    return nil;
+}
+%end
+
+%hook YTUserDefaults
+- (BOOL)noVideoModeEnabled {
+    return YES;
+}
+
+- (void)setNoVideoModeEnabled:(BOOL)enabled {
+    %orig(YES);
+}
+%end
+
+%hook YTQueueItem
+- (BOOL)supportsAudioVideoSwitching {
+    return YES;
+}
+%end
+
+%hook YTIMusicHotConfig
+- (BOOL)enableAudioVideoSwitching {
+    return YES;
+}
+
+- (BOOL)hasEnableAudioVideoSwitching {
+    return YES;
+}
+%end
+
+%hook YTVideoQualitySwitchRedesignedController
+- (BOOL)isQualitySwitchEnabled {
+    return YES;
+}
+
+- (BOOL)isQualitySwitchAvailable {
+    return YES;
+}
+
+- (BOOL)allowAudioOnlyManualQualitySelection {
+    return YES;
+}
+%end
+
+%hook YTVideoQualitySwitchOriginalController
+- (BOOL)isQualitySwitchEnabled {
+    return YES;
+}
+
+- (BOOL)isQualitySwitchAvailable {
+    return YES;
+}
+
+- (BOOL)allowAudioOnlyManualQualitySelection {
+    return YES;
+}
+%end
+
+%hook YTPlayerViewControllerConfig
+- (BOOL)allowAudioOnlyManualQualitySelection {
+    return YES;
 }
 %end
 %end
