@@ -134,7 +134,7 @@
 %end
 
 %hook UIColor
-+ (UIColor *)whiteColor {
++ (UIColor *)whiteColor { // Deprecated
     return [UIColor colorWithWhite:0.565 alpha:1];
 }
 %end
