@@ -1,8 +1,5 @@
 #import <Foundation/Foundation.h>
 
-@interface MDXFeatureFlags : NSObject
-@end
-
 %group Cast
 %hook MDXFeatureFlags
 
