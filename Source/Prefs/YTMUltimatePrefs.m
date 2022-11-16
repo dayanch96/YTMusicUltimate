@@ -66,6 +66,11 @@ extern NSBundle *YTMusicUltimateBundle();
         [arr addObject:dict];
     }
 
+    //Init isEnabled for first time
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:keys[0]] == nil) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:keys[0]];
+    }
+
     return arr;
 }
 

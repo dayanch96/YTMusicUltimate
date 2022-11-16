@@ -99,6 +99,14 @@
 - (void)setIsAudioCastEnabled:(BOOL)enabled {
     %orig(YES);
 }
+
+- (BOOL)isMATScreenedCastEnabled {
+    return YES;
+}
+
+- (void)setIsMATScreenedCastEnabled:(BOOL)enabled {
+    %orig(YES);
+}
 %end
 
 %hook YTMSettings
@@ -107,6 +115,22 @@
 }
 
 - (BOOL)isGcmEnabled {
+    return YES;
+}
+%end
+
+%hook YTGlobalConfig
+- (BOOL)isAudioCastEnabled {
+    return YES;
+}
+
+- (BOOL)isGcmEnabled {
+    return YES;
+}
+%end
+
+%hook YTMQueueConfig
+- (BOOL)isMobileAudioTierScreenedCastEnabled {
     return YES;
 }
 %end

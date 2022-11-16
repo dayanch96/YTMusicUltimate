@@ -14,6 +14,9 @@
  - (NSMutableArray <YTIPivotBarSupportedRenderers *> *)itemsArray;
  @end
 
+ @interface YTMWatchViewController : NSObject
+ @end
+
 %group EnsurePremiumStatus
 %hook MDXFeatureFlags
 - (BOOL)areMementoPromotionsEnabled {
@@ -32,6 +35,10 @@
 
 - (void)setIsPassiveSignInUniquePremiumValuePropEnabled:(BOOL)enabled {
     %orig(YES);
+}
+
+- (BOOL)musicClientConfigIosEnableMobileAudioTierLockscreenControls {
+    return YES;
 }
 %end
 
@@ -88,14 +95,13 @@
     return nil;
 }
 
--(id)unlimitedSettingsButton {
+- (id)unlimitedSettingsButton {
     return nil;
 }
 
-- (BOOL)isAudioOnlyButtonVisible {
+- (BOOL)isMobileAudioTier {
     return YES;
 }
-
 %end
 
 %hook YTPivotBarView
@@ -111,7 +117,7 @@
 %end
 
 %hook YTIShowFullscreenInterstitialCommand
--(BOOL)shouldThrottleInterstitial{
+- (BOOL)shouldThrottleInterstitial{
     return YES;
 }
 
@@ -160,8 +166,28 @@
 }
 %end
 
-%hook YTUserDefaults
-- (BOOL)hasOnboarded {
+%hook YTMWAWatchAppConfig
+- (BOOL)isCurrentUserPremium {
+    return YES;
+}
+
+- (BOOL)isCurrentUserMobileAudioTier {
+    return YES;
+}
+%end
+
+%hook YTMWatchViewController
+- (id)init {
+    self = %orig;
+    if (self) {
+        [self setValue:[NSNumber numberWithBool:YES] forKey:@"_isMobileAudioTierMode"];
+    }
+    return self;
+}
+%end
+
+%hook YTMQueueCollectionViewController
+- (BOOL)isMobileAudioTierQueue {
     return YES;
 }
 %end

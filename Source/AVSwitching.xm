@@ -2,10 +2,6 @@
 
 %group VideoAndAudioModePatches
 %hook YTIPlayerResponse
-- (id)ytm_audioOnlyPlayabilityRenderer {
-    return nil;
-}
-
 - (id)ytm_audioOnlyUpsell {
     return nil;
 }
@@ -53,6 +49,10 @@
 - (BOOL)noVideoModeEnabled {
     return YES;
 }
+
+- (void)setNoVideoModeEnabled:(BOOL)enabled {
+    %orig(YES);
+}
 %end
 
 %hook YTDefaultQueueConfig
@@ -97,11 +97,31 @@
 - (BOOL)audioOnlyPlayability {
     return YES;
 }
+
+- (int)audioOnlyAvailability {
+    return 1;
+}
+
+- (void)setAudioOnlyPlayability:(BOOL)playability {
+    %orig(YES);
+}
+
+- (id)infoRenderer {
+    return nil;
+}
+
+- (BOOL)hasInfoRenderer {
+    return NO;
+}
 %end
 
 %hook YTIAudioOnlyPlayabilityRenderer_AudioOnlyPlayabilityInfoSupportedRenderers
 - (id)upsellDialogRenderer {
     return nil;
+}
+
+- (void)setUpsellDialogRenderer:(id)renderer {
+    return;
 }
 %end
 
@@ -121,46 +141,8 @@
 }
 %end
 
-%hook YTIMusicHotConfig
-- (BOOL)enableAudioVideoSwitching {
-    return YES;
-}
-
-- (BOOL)hasEnableAudioVideoSwitching {
-    return YES;
-}
-%end
-
-%hook YTVideoQualitySwitchRedesignedController
-- (BOOL)isQualitySwitchEnabled {
-    return YES;
-}
-
-- (BOOL)isQualitySwitchAvailable {
-    return YES;
-}
-
-- (BOOL)allowAudioOnlyManualQualitySelection {
-    return YES;
-}
-%end
-
-%hook YTVideoQualitySwitchOriginalController
-- (BOOL)isQualitySwitchEnabled {
-    return YES;
-}
-
-- (BOOL)isQualitySwitchAvailable {
-    return YES;
-}
-
-- (BOOL)allowAudioOnlyManualQualitySelection {
-    return YES;
-}
-%end
-
-%hook YTPlayerViewControllerConfig
-- (BOOL)allowAudioOnlyManualQualitySelection {
+%hook YTMMusicAppMetadata
+- (BOOL)isAudioOnlyButtonVisible {
     return YES;
 }
 %end

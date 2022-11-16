@@ -1,8 +1,9 @@
 #import "YTMUltimatePrefs.h"
 #import "YTMUltimateSettingsController.h"
 
-#define LOC(x) [tweakBundle localizedStringForKey:x value:nil table:nil]
+const NSString *version = @"1.2.7";
 
+#define LOC(x) [tweakBundle localizedStringForKey:x value:nil table:nil]
 extern NSBundle *YTMusicUltimateBundle();
 
 @implementation YTMUltimateSettingsController
@@ -45,19 +46,34 @@ extern NSBundle *YTMusicUltimateBundle();
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSBundle *tweakBundle = YTMusicUltimateBundle();
-    return section == 0 ? LOC(@"Settings") : LOC(@"Links");
+
+    switch (section) {
+        case 0:
+            return LOC(@"Settings");
+        case 1:
+            return LOC(@"Links");
+        default:
+            return @"Section";
+    }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (section == 1) {
-        return @"YTMusicUltimate v1.2.6\n\n© Ginsu (@ginsudev) 2021-2022";
+        return [NSString stringWithFormat:@"YTMusicUltimate %@\n\n© Ginsu (@ginsudev) 2021-2022", version];
     }
 
     return nil;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return section == 0 ? [self.options count] + 1 : [self.links count];
+    switch (section) {
+        case 0:
+            return [self.options count] + 1;
+        case 1:
+            return [self.links count];
+        default:
+            return 0;
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
