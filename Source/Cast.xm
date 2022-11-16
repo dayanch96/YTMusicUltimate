@@ -1,7 +1,11 @@
 #import <Foundation/Foundation.h>
 
+@interface MDXFeatureFlags : NSObject
+@end
+
 %group Cast
 %hook MDXFeatureFlags
+
 - (BOOL)isCastCloudDiscoveryEnabled {
     return YES;
 }
@@ -131,6 +135,24 @@
 
 %hook YTMQueueConfig
 - (BOOL)isMobileAudioTierScreenedCastEnabled {
+    return YES;
+}
+%end
+
+%hook GHCCDeviceCapabilities
+- (BOOL)audioSupported {
+    return YES;
+}
+
+- (BOOL)hasAudioSupported {
+    return YES;
+}
+
+- (BOOL)hasVideoSupported {
+    return YES;
+}
+
+- (BOOL)videoSupported {
     return YES;
 }
 %end
