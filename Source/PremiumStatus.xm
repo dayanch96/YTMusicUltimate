@@ -191,6 +191,14 @@
     return YES;
 }
 %end
+
+%hook YTUserDefaults
+
+- (BOOL)hasOnboarded {
+    return YES;
+}
+
+%end
 %end
 
 %ctor {
