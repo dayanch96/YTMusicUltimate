@@ -1,7 +1,7 @@
 #import "YTMUltimatePrefs.h"
 #import "YTMUltimateSettingsController.h"
 
-const NSString *version = @"1.2.7";
+const NSString *version = @"1.2.8";
 
 #define LOC(x) [tweakBundle localizedStringForKey:x value:nil table:nil]
 extern NSBundle *YTMusicUltimateBundle();
@@ -59,7 +59,7 @@ extern NSBundle *YTMusicUltimateBundle();
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (section == 1) {
-        return [NSString stringWithFormat:@"YTMusicUltimate %@\n\n© Ginsu (@ginsudev) 2021-2022", version];
+        return [NSString stringWithFormat:@"YTMusicUltimate %@\n\n© Ginsu (@ginsudev) 2021-2023", version];
     }
 
     return nil;
