@@ -7,6 +7,24 @@
 @interface SSOConfiguration : NSObject
 @end
 
+static NSString *accessGroupID() {
+    NSDictionary *query = [NSDictionary dictionaryWithObjectsAndKeys:
+                           (__bridge NSString *)kSecClassGenericPassword, (__bridge NSString *)kSecClass,
+                           @"bundleSeedID", kSecAttrAccount,
+                           @"", kSecAttrService,
+                           (id)kCFBooleanTrue, kSecReturnAttributes,
+                           nil];
+    CFDictionaryRef result = nil;
+    OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)query, (CFTypeRef *)&result);
+    if (status == errSecItemNotFound)
+        status = SecItemAdd((__bridge CFDictionaryRef)query, (CFTypeRef *)&result);
+        if (status != errSecSuccess)
+            return nil;
+    NSString *accessGroup = [(__bridge NSDictionary *)result objectForKey:(__bridge NSString *)kSecAttrAccessGroup];
+
+    return accessGroup;
+}
+
 %group SideloadingFixes
 //Fix login (2) - Ginsu & AhmedBakfir
 %hook SSOSafariSignIn
@@ -37,42 +55,24 @@
 }
 %end
 
-%hook SSOKeychainCore
-//Thanks to jawshoeadan for this hook.
+%hook SSOKeychainHelper
 + (id)accessGroup {
-    NSDictionary *query = [NSDictionary dictionaryWithObjectsAndKeys:
-                           (__bridge NSString *)kSecClassGenericPassword, (__bridge NSString *)kSecClass,
-                           @"bundleSeedID", kSecAttrAccount,
-                           @"", kSecAttrService,
-                           (id)kCFBooleanTrue, kSecReturnAttributes,
-                           nil];
-    CFDictionaryRef result = nil;
-    OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)query, (CFTypeRef *)&result);
-    if (status == errSecItemNotFound)
-        status = SecItemAdd((__bridge CFDictionaryRef)query, (CFTypeRef *)&result);
-    if (status != errSecSuccess)
-        return nil;
-    NSString *accessGroup = [(__bridge NSDictionary *)result objectForKey:(__bridge NSString *)kSecAttrAccessGroup];
-
-    return accessGroup;
+    return accessGroupID();
 }
 
 + (id)sharedAccessGroup {
-    NSDictionary *query = [NSDictionary dictionaryWithObjectsAndKeys:
-                           (__bridge NSString *)kSecClassGenericPassword, (__bridge NSString *)kSecClass,
-                           @"bundleSeedID", kSecAttrAccount,
-                           @"", kSecAttrService,
-                           (id)kCFBooleanTrue, kSecReturnAttributes,
-                           nil];
-    CFDictionaryRef result = nil;
-    OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)query, (CFTypeRef *)&result);
-    if (status == errSecItemNotFound)
-        status = SecItemAdd((__bridge CFDictionaryRef)query, (CFTypeRef *)&result);
-    if (status != errSecSuccess)
-        return nil;
-    NSString *accessGroup = [(__bridge NSDictionary *)result objectForKey:(__bridge NSString *)kSecAttrAccessGroup];
+    return accessGroupID();
+}
+%end
 
-    return accessGroup;
+%hook SSOKeychainCore
+//Thanks to jawshoeadan for this hook.
++ (id)accessGroup {
+    return accessGroupID();
+}
+
++ (id)sharedAccessGroup {
+    return accessGroupID();
 }
 %end
 
@@ -88,7 +88,7 @@
 %end
 
 #pragma mark - Thanks PoomSmart for the following hooks
-//IAmYouTube + Extra hooks for ytmusic
+/* IAmYouTube + Extra hooks for ytmusic */
 %hook YTVersionUtils
 + (NSString *)appName {
     return YT_NAME;
@@ -170,7 +170,7 @@
     return %orig;
 }
 %end
-//IAmYouTube end
+/*IAmYouTube end */
 
 %hook ASWUtilities
 + (NSString *)productionBundleIdentifier {

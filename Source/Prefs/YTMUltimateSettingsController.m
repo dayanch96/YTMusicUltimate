@@ -1,7 +1,7 @@
 #import "YTMUltimatePrefs.h"
 #import "YTMUltimateSettingsController.h"
 
-const NSString *version = @"1.2.7";
+const NSString *version = @(OS_STRINGIFY(TWEAK_VERSION));
 
 #define LOC(x) [tweakBundle localizedStringForKey:x value:nil table:nil]
 extern NSBundle *YTMusicUltimateBundle();
