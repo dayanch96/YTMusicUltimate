@@ -4,8 +4,8 @@
 "Enable_OLED_Dark_Theme" = "Активирует OLED-режим для темной темы";
 "OLED_Dark_Keyboard" = "OLED-клавиатура";
 "Enable_OLED_Dark_Keyboard" = "Активирует OLED-режим для клавиатуры темной темы";
-"Show_playback_rate_button" = "Кнопка скорости воспроизведения";
-"Adjust_playback_speed" = "Позволяет регулировать скорость воспроизведения";
+"Show_playback_rate_button" = "Скорость воспроизведения";
+"Adjust_playback_speed" = "Добавляет иконку, позволяющую регулировать скорость воспроизведения";
 "Selectable_lyrics" = "Выделение текста";
 "Selectable_lyrics_Desc" = "Позволяет выделять текста песен";
 "Low_contrast" = "Понизить контрастность";

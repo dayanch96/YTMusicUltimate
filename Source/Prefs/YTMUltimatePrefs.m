@@ -5,6 +5,7 @@
 //  Created by Noah Little on 17/8/21.
 //
 
+#import <rootless.h>
 #import "YTMUltimatePrefs.h"
 
 #define LOC(x) [tweakBundle localizedStringForKey:x value:nil table:nil]
@@ -121,7 +122,7 @@ NSBundle *YTMusicUltimateBundle() {
         if (tweakBundlePath)
             bundle = [NSBundle bundleWithPath:tweakBundlePath];
         else
-            bundle = [NSBundle bundleWithPath:@"/Library/Application Support/YTMusicUltimate.bundle"];
+            bundle = [NSBundle bundleWithPath:ROOT_PATH_NS("/Library/Application Support/YTMusicUltimate.bundle")];
     });
     return bundle;
 }
