@@ -11,7 +11,7 @@
 %hook YTMWatchView
 %property (nonatomic, strong) GSVolBar *volumeBar;
 
-- (instancetype)initWithColorScheme:(id)scheme miniPlayerCastButtonShown:(BOOL)castButtonShown {
+- (instancetype)initWithColorScheme:(id)scheme {
     self = %orig;
     if (self) {
         UIView *container = [self valueForKey:@"_centerContentContainerView"];
@@ -24,7 +24,7 @@
 - (void)layoutSubviews {
     %orig;
     UIView *container = [self valueForKey:@"_centerContentContainerView"];
-    self.volumeBar.frame = CGRectMake(self.frame.size.width / 2 - (self.frame.size.width / 2) / 2, container.frame.size.height - 25, self.frame.size.width / 2, 25);
+    self.volumeBar.frame = CGRectMake(self.frame.size.width / 2 - (self.frame.size.width / 2) / 2, container.frame.size.height - 27, self.frame.size.width / 2, 25);
 }
 
 - (void)updateColorsAfterLayoutChangeTo:(long long)arg1 {
