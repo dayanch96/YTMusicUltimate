@@ -59,7 +59,7 @@ extern NSBundle *YTMusicUltimateBundle();
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (section == 1) {
-        return [NSString stringWithFormat:@"YTMusicUltimate %@\n\n© Ginsu (@ginsudev) 2021-2022", version];
+        return [NSString stringWithFormat:@"YTMusicUltimate %@\n\n© Ginsu (@ginsudev) 2021-2023", version];
     }
 
     return nil;
@@ -93,7 +93,9 @@ extern NSBundle *YTMusicUltimateBundle();
         } else {
             NSMutableDictionary *cellMetadata = [self.options objectAtIndex:indexPath.row];
             cell.textLabel.text = [cellMetadata objectForKey:@"title"];
+            cell.textLabel.adjustsFontSizeToFitWidth = YES;
             cell.detailTextLabel.text = [cellMetadata objectForKey:@"subtitle"];
+            cell.detailTextLabel.numberOfLines = 0;
             
             UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
             switchView.tag = indexPath.row;

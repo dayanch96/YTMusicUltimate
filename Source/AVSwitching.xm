@@ -1,6 +1,13 @@
 #import <Foundation/Foundation.h>
 
 %group VideoAndAudioModePatches
+// Remove popup reminder 
+%hook YTMPlayerHeaderViewController
+- (bool)shouldDisplayHintForAudioVideoSwitch {
+	return 0;
+}
+%end
+
 %hook YTIPlayerResponse
 - (id)ytm_audioOnlyUpsell {
     return nil;
@@ -46,12 +53,28 @@
     %orig(YES);
 }
 
+- (bool)noVideoModeEnabledForMusic {
+	return 1;
+}
+
+- (bool)noVideoModeEnabledForPodcasts {
+	return 1;
+}
+
+/*
 - (BOOL)noVideoModeEnabled {
     return YES;
 }
 
 - (void)setNoVideoModeEnabled:(BOOL)enabled {
     %orig(YES);
+}
+*/
+%end
+
+%hook YTQueueController
+- (bool)noVideoModeEnabled:(id)arg1 {
+	return 1;
 }
 %end
 
@@ -62,6 +85,14 @@
 
 - (void)setIsAudioVideoModeSupported:(BOOL)supported {
     %orig(YES);
+}
+
+- (bool)noVideoModeEnabledForMusic {
+	return 1;
+}
+
+- (bool)noVideoModeEnabledForPodcasts {
+	return 1;
 }
 %end
 
