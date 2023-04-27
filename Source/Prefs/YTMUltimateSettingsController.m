@@ -1,4 +1,3 @@
-#import <rootless.h>
 #import "YTMUltimatePrefs.h"
 #import "YTMUltimateSettingsController.h"
 
@@ -95,6 +94,12 @@ extern NSBundle *YTMusicUltimateBundle();
             cell.textLabel.adjustsFontSizeToFitWidth = YES;
             cell.detailTextLabel.text = [cellMetadata objectForKey:@"subtitle"];
             cell.detailTextLabel.numberOfLines = 0;
+
+            if (@available(iOS 13, *)) {
+                cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
+            } else {
+                cell.detailTextLabel.textColor = [UIColor systemGrayColor];
+            }
             
             UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
             switchView.tag = indexPath.row;
