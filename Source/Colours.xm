@@ -144,7 +144,7 @@
     BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
     BOOL oledDarkTheme = ([[NSUserDefaults standardUserDefaults] objectForKey:@"oledDarkTheme_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"oledDarkTheme_enabled"] : NO;
     BOOL oledDarkKeyboard = ([[NSUserDefaults standardUserDefaults] objectForKey:@"oledDarkKeyboard_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"oledDarkKeyboard_enabled"] : NO;    
-    BOOL contrast = ([[NSUserDefaults standardUserDefaults] objectForKey:@"Low_contrast_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"Low_contrast_enabled"] : NO;
+    BOOL contrast = ([[NSUserDefaults standardUserDefaults] objectForKey:@"lowContrast_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"lowContrast_enabled"] : NO;
 
     if (isEnabled){
 

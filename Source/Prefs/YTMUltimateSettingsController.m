@@ -1,3 +1,4 @@
+#import <rootless.h>
 #import "YTMUltimatePrefs.h"
 #import "YTMUltimateSettingsController.h"
 
@@ -47,9 +48,9 @@ extern NSBundle *YTMusicUltimateBundle();
 
     switch (section) {
         case 0:
-            return LOC(@"Settings");
+            return LOC(@"SETTINGS");
         case 1:
-            return LOC(@"Links");
+            return LOC(@"LINKS");
         default:
             return @"Section";
     }
@@ -84,8 +85,8 @@ extern NSBundle *YTMusicUltimateBundle();
 
     if (indexPath.section == 0) {
         if (indexPath.row == self.options.count) {
-            cell.textLabel.text = LOC(@"Apply");
-            cell.detailTextLabel.text = LOC(@"Closes_the_app_to_apply_changes");
+            cell.textLabel.text = LOC(@"APPLY");
+            cell.detailTextLabel.text = LOC(@"APPLY_DESC");
             cell.textLabel.textColor = [UIColor systemBlueColor];
             cell.detailTextLabel.textColor = [UIColor systemBlueColor];
         } else {
@@ -143,14 +144,15 @@ extern NSBundle *YTMusicUltimateBundle();
     UIBarButtonItem *item;
 
     if (@available(iOS 13, *)) {
-        item = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"xmark"] 
-                            style:UIBarButtonItemStylePlain 
-                            target:self 
+        item = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"xmark"]
+                            style:UIBarButtonItemStylePlain
+                            target:self
                             action:@selector(close)];
     } else {
-        item = [[UIBarButtonItem alloc] initWithTitle:@"Close" 
-                            style:UIBarButtonItemStylePlain 
-                            target:self 
+        NSBundle *tweakBundle = YTMusicUltimateBundle();
+        item = [[UIBarButtonItem alloc] initWithTitle:LOC(@"CLOSE")
+                            style:UIBarButtonItemStylePlain
+                            target:self
                             action:@selector(close)];
     }
 

@@ -34,28 +34,28 @@ extern NSBundle *YTMusicUltimateBundle();
         @"oledDarkKeyboard_enabled", 
         @"playbackRateButton_enabled",
         @"selectableLyrics_enabled",
-        @"Low_contrast_enabled",
-        @"VolBar_Enabled"
+        @"lowContrast_enabled",
+        @"volBar_enabled"
     ];
 
     NSArray *titles = @[
-        LOC(@"Enabled"),
-        LOC(@"OLED_Dark_Theme"),
-        LOC(@"OLED_Dark_Keyboard"),
-        LOC(@"Show_playback_rate_button"),
-        LOC(@"Selectable_lyrics"),
-        LOC(@"Low_contrast"),
-        LOC(@"VolBar")
+        LOC(@"ENABLED"),
+        LOC(@"OLED_DARK_THEME"),
+        LOC(@"OLED_DARK_KEYBOARD"),
+        LOC(@"PLAYBACK_RATE_BUTTON"),
+        LOC(@"SELECTABLE_LYRICS"),
+        LOC(@"LOW_CONTRAST"),
+        LOC(@"VOLBAR")
     ];
 
     NSArray *subtitles = @[
-        LOC(@"Enabled_Desc"),
-        LOC(@"Enable_OLED_Dark_Theme"),
-        LOC(@"Enable_OLED_Dark_Keyboard"),
-        LOC(@"Adjust_playback_speed"),
-        LOC(@"Selectable_lyrics_Desc"),
-        LOC(@"Low_contrast_Desc"),
-        LOC(@"VolBar_Desc")
+        LOC(@"ENABLED_DESC"),
+        LOC(@"OLED_DARK_THEME_DESC"),
+        LOC(@"OLED_DARK_KEYBOARD_DESC"),
+        LOC(@"PLAYBACK_RATE_BUTTON_DESC"),
+        LOC(@"SELECTABLE_LYRICS_DESC"),
+        LOC(@"LOW_CONTRAST_DESC"),
+        LOC(@"VOLBAR_DESC")
     ];
 
     for (int i = 0; i < keys.count; i++) {
@@ -89,15 +89,15 @@ extern NSBundle *YTMusicUltimateBundle();
     ];
 
     NSArray *titles = @[
-        LOC(@"Follow_me_on_Twitter"),
-        LOC(@"Discord"),
-        LOC(@"Source_code"),
+        LOC(@"TWITTER"),
+        LOC(@"DISCORD"),
+        LOC(@"SOURCE_CODE"),
     ];
 
     NSArray *subtitles = @[
-        LOC(@"Follow_me_for_updates"),
-        LOC(@"Discord_desc"),
-        LOC(@"View_source_code"),
+        LOC(@"TWITTER_DESC"),
+        LOC(@"DISCORD_DESC"),
+        LOC(@"SOURCE_CODE_DESC"),
     ];
 
     for (int i = 0; i < urls.count; i++) {

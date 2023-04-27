@@ -49,7 +49,7 @@
 
 %ctor {
     BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
-    BOOL volBar = ([[NSUserDefaults standardUserDefaults] objectForKey:@"VolBar_Enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"VolBar_Enabled"] : NO;
+    BOOL volBar = ([[NSUserDefaults standardUserDefaults] objectForKey:@"volBar_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"volBar_enabled"] : NO;
     
     if (isEnabled){
         if (volBar) {
