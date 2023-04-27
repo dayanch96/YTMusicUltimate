@@ -12,6 +12,10 @@
 - (id)_viewControllerForAncestor;
 @end
 
+extern NSBundle *YTMusicUltimateBundle();
+
+static NSString *YTMUltimateIcon;
+
 %group SettingsPage
 %hook YTMAvatarAccountView
 
@@ -19,7 +23,7 @@
     
     UIImage *icon;
     if (@available(iOS 13, *)) {
-        icon = [UIImage systemImageNamed:@"flame"];
+        icon = [UIImage imageWithContentsOfFile:YTMUltimateIcon];
     } else {
         icon = nil;
     }
@@ -32,7 +36,7 @@
         [self._viewControllerForAncestor presentViewController:nav animated:YES completion:nil];
     }];
 
-    button.tintColor = [UIColor redColor];
+    // button.tintColor = [UIColor redColor];
 
     //Add our custom button to the list.
     NSMutableArray *arrDown = [[NSMutableArray alloc] init];
@@ -54,5 +58,7 @@
 %end
 
 %ctor {
+    NSBundle *tweakBundle = YTMusicUltimateBundle();
+    YTMUltimateIcon = [tweakBundle pathForResource:@"ytmicon-24@2x" ofType:@"png"];
     %init(SettingsPage);
 }
