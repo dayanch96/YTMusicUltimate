@@ -35,7 +35,10 @@ extern NSBundle *YTMusicUltimateBundle();
         @"playbackRateButton_enabled",
         @"selectableLyrics_enabled",
         @"lowContrast_enabled",
-        @"volBar_enabled"
+        @"volBar_enabled",
+        @"disableAutoRadio_enabled",
+        @"hideHistoryButton_enabled",
+        @"hideCastButton_enabled"
     ];
 
     NSArray *titles = @[
@@ -45,7 +48,10 @@ extern NSBundle *YTMusicUltimateBundle();
         LOC(@"PLAYBACK_RATE_BUTTON"),
         LOC(@"SELECTABLE_LYRICS"),
         LOC(@"LOW_CONTRAST"),
-        LOC(@"VOLBAR")
+        LOC(@"VOLBAR"),
+        LOC(@"NO_AUTORADIO"),
+        LOC(@"HIDE_HISTORY_BUTTON"),
+        LOC(@"HIDE_CAST_BUTTON")
     ];
 
     NSArray *subtitles = @[
@@ -55,7 +61,10 @@ extern NSBundle *YTMusicUltimateBundle();
         LOC(@"PLAYBACK_RATE_BUTTON_DESC"),
         LOC(@"SELECTABLE_LYRICS_DESC"),
         LOC(@"LOW_CONTRAST_DESC"),
-        LOC(@"VOLBAR_DESC")
+        LOC(@"VOLBAR_DESC"),
+        LOC(@"NO_AUTORADIO_DESC"),
+        LOC(@"HIDE_HISTORY_BUTTON_DESC"),
+        LOC(@"HIDE_CAST_BUTTON_DESC")
     ];
 
     for (int i = 0; i < keys.count; i++) {

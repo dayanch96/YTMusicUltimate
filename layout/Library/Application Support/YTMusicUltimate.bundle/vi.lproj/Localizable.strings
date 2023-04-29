@@ -13,6 +13,12 @@
 "LOW_CONTRAST_DESC" = "Giảm độ tương phản của chữ và các nút ấn";
 "VOLBAR" = "Thanh âm lượng";
 "VOLBAR_DESC" = "Thêm thanh âm lượng vào trình phát nhạc";
+"NO_AUTORADIO" = "Disable radio";
+"NO_AUTORADIO_DESC" = "Disables endless music feature";
+"HIDE_HISTORY_BUTTON" = "Hide history button";
+"HIDE_HISTORY_BUTTON_DESC" = "Hides history button in the navigation bar";
+"HIDE_CAST_BUTTON" = "Hide cast button";
+"HIDE_CAST_BUTTON_DESC" = "Hides cast button in the navigation bar";
 "APPLY" = "Áp dụng";
 "APPLY_DESC" = "Đóng ứng dụng để áp dụng các thay đổi";
 

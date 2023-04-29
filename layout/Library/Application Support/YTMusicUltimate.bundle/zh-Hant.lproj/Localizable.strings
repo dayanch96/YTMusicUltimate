@@ -13,6 +13,12 @@
 "LOW_CONTRAST_DESC" = "降低文字和按鈕的對比度";
 "VOLBAR" = "音量條";
 "VOLBAR_DESC" = "在播放器增加音量控制條";
+"NO_AUTORADIO" = "Disable radio";
+"NO_AUTORADIO_DESC" = "Disables endless music feature";
+"HIDE_HISTORY_BUTTON" = "Hide history button";
+"HIDE_HISTORY_BUTTON_DESC" = "Hides history button in the navigation bar";
+"HIDE_CAST_BUTTON" = "Hide cast button";
+"HIDE_CAST_BUTTON_DESC" = "Hides cast button in the navigation bar";
 "APPLY" = "套用";
 "APPLY_DESC" = "按下套用會關閉 APP 讓變更生效";
 

@@ -13,6 +13,12 @@
 "LOW_CONTRAST_DESC" = "Metin ve düğmeler için daha düşük kontrast";
 "VOLBAR" = "Ses çubuğu";
 "VOLBAR_DESC" = "Oynatıcıya bir ses çubuğu ekler";
+"NO_AUTORADIO" = "Radyoyu devre dışı bırak";
+"NO_AUTORADIO_DESC" = "Kesintisiz müzik özelliğini kaldırır";
+"HIDE_HISTORY_BUTTON" = "Geçmiş düğmesini gizle";
+"HIDE_HISTORY_BUTTON_DESC" = "Gezinme çubuğundaki geçmiş düğmesini gizler";
+"HIDE_CAST_BUTTON" = "Yayınla düğmesini gizle";
+"HIDE_CAST_BUTTON_DESC" = "Gezinme çubuğundaki yayınlama düğmesini gizler";
 "APPLY" = "Uygula";
 "APPLY_DESC" = "Değişiklikleri uygulamak için uygulamayı kapatır.";
 

@@ -13,6 +13,12 @@
 "LOW_CONTRAST_DESC" = "انخفاض تباين النص والأزرار";
 "VOLBAR" = "شريط الصوت";
 "VOLBAR_DESC" = "يضيف شريط الصوت إلى المشغل";
+"NO_AUTORADIO" = "Disable radio";
+"NO_AUTORADIO_DESC" = "Disables endless music feature";
+"HIDE_HISTORY_BUTTON" = "Hide history button";
+"HIDE_HISTORY_BUTTON_DESC" = "Hides history button in the navigation bar";
+"HIDE_CAST_BUTTON" = "Hide cast button";
+"HIDE_CAST_BUTTON_DESC" = "Hides cast button in the navigation bar";
 "APPLY" = "تنفيذ التغييرات";
 "APPLY_DESC" = "اغلق التطبيق لتنفيذ التغييرات";
 

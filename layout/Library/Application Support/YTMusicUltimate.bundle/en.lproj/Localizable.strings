@@ -13,6 +13,12 @@
 "LOW_CONTRAST_DESC" = "Lower contrast for text and buttons";
 "VOLBAR" = "Volume bar";
 "VOLBAR_DESC" = "Adds a volume bar to the player";
+"NO_AUTORADIO" = "Disable radio";
+"NO_AUTORADIO_DESC" = "Disables endless music feature";
+"HIDE_HISTORY_BUTTON" = "Hide history button";
+"HIDE_HISTORY_BUTTON_DESC" = "Hides history button in the navigation bar";
+"HIDE_CAST_BUTTON" = "Hide cast button";
+"HIDE_CAST_BUTTON_DESC" = "Hides cast button in the navigation bar";
 "APPLY" = "Apply";
 "APPLY_DESC" = "Closes the app to apply changes";
 

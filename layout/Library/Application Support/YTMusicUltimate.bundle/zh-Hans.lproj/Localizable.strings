@@ -13,6 +13,12 @@
 "LOW_CONTRAST_DESC" = "降低所有按钮和文字对比度";
 "VOLBAR" = "音量条";
 "VOLBAR_DESC" = "添加音量条";
+"NO_AUTORADIO" = "Disable radio";
+"NO_AUTORADIO_DESC" = "Disables endless music feature";
+"HIDE_HISTORY_BUTTON" = "Hide history button";
+"HIDE_HISTORY_BUTTON_DESC" = "Hides history button in the navigation bar";
+"HIDE_CAST_BUTTON" = "Hide cast button";
+"HIDE_CAST_BUTTON_DESC" = "Hides cast button in the navigation bar";
 "APPLY" = "应用";
 "APPLY_DESC" = "关闭APP来运用所有调整";
 
