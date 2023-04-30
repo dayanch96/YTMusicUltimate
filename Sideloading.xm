@@ -170,25 +170,6 @@ static NSString *accessGroupID() {
     return %orig;
 }
 %end
-
-static const CFStringRef CFSTR_YT_BUNDLE_ID = CFSTR("com.google.ios.youtubemusic");
-static const CFStringRef CFSTR_YT_NAME = CFSTR("YouTube Music");
-
-%hookf(CFMutableDictionaryRef, CFBundleGetInfoDictionary, CFBundleRef bundle) {
-    CFMutableDictionaryRef dict = %orig(bundle);
-    if (dict != NULL) {
-        CFStringRef packageType = (CFStringRef)CFDictionaryGetValue(dict, CFSTR("CFBundlePackageType"));
-        if (packageType != NULL && CFStringCompare(packageType, CFSTR("APPL"), kCFCompareCaseInsensitive) == kCFCompareEqualTo) {
-            CFStringRef currentBundleIdentifier = (CFStringRef)CFDictionaryGetValue(dict, kCFBundleIdentifierKey);
-            if (currentBundleIdentifier != NULL && CFStringHasPrefix(currentBundleIdentifier, CFSTR_YT_BUNDLE_ID)) {
-                CFDictionarySetValue(dict, kCFBundleIdentifierKey, CFSTR_YT_BUNDLE_ID);
-                CFDictionarySetValue(dict, kCFBundleNameKey, CFSTR_YT_NAME);
-                CFDictionarySetValue(dict, CFSTR("CFBundleDisplayName"), CFSTR_YT_NAME);
-            }
-        }
-    }
-    return dict;
-}
 /*IAmYouTube end */
 
 %hook ASWUtilities

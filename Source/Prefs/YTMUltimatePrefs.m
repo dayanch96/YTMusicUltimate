@@ -37,6 +37,7 @@ extern NSBundle *YTMusicUltimateBundle();
         @"lowContrast_enabled",
         @"volBar_enabled",
         @"disableAutoRadio_enabled",
+        @"sponsorBlock_enabled",
         @"hideHistoryButton_enabled",
         @"hideCastButton_enabled"
     ];
@@ -50,6 +51,7 @@ extern NSBundle *YTMusicUltimateBundle();
         LOC(@"LOW_CONTRAST"),
         LOC(@"VOLBAR"),
         LOC(@"NO_AUTORADIO"),
+        LOC(@"SKIP_NONMUSIC_PARTS"),
         LOC(@"HIDE_HISTORY_BUTTON"),
         LOC(@"HIDE_CAST_BUTTON")
     ];
@@ -63,6 +65,7 @@ extern NSBundle *YTMusicUltimateBundle();
         LOC(@"LOW_CONTRAST_DESC"),
         LOC(@"VOLBAR_DESC"),
         LOC(@"NO_AUTORADIO_DESC"),
+        LOC(@"SKIP_NONMUSIC_PARTS_DESC"),
         LOC(@"HIDE_HISTORY_BUTTON_DESC"),
         LOC(@"HIDE_CAST_BUTTON_DESC")
     ];

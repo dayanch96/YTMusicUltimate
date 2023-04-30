@@ -15,6 +15,8 @@
 "VOLBAR_DESC" = "Oynatıcıya bir ses çubuğu ekler";
 "NO_AUTORADIO" = "Radyoyu devre dışı bırak";
 "NO_AUTORADIO_DESC" = "Kesintisiz müzik özelliğini kaldırır";
+"SKIP_NONMUSIC_PARTS" = "Müzik olmayan bölümleri atla (SponsorBlock)";
+"SKIP_NONMUSIC_PARTS_DESC" = "Müzik videolarında müzik olmayan bölümleri atlar";
 "HIDE_HISTORY_BUTTON" = "Geçmiş düğmesini gizle";
 "HIDE_HISTORY_BUTTON_DESC" = "Gezinme çubuğundaki geçmiş düğmesini gizler";
 "HIDE_CAST_BUTTON" = "Yayınla düğmesini gizle";

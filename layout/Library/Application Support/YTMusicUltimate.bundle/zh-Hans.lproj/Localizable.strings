@@ -15,6 +15,8 @@
 "VOLBAR_DESC" = "添加音量条";
 "NO_AUTORADIO" = "Disable radio";
 "NO_AUTORADIO_DESC" = "Disables endless music feature";
+"SKIP_NONMUSIC_PARTS" = "Skip Non-music section (SponsorBlock)";
+"SKIP_NONMUSIC_PARTS_DESC" = "Skips non-music sections in music videos";
 "HIDE_HISTORY_BUTTON" = "Hide history button";
 "HIDE_HISTORY_BUTTON_DESC" = "Hides history button in the navigation bar";
 "HIDE_CAST_BUTTON" = "Hide cast button";
