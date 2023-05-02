@@ -2,6 +2,7 @@
 #import <dlfcn.h>
 
 #define YT_BUNDLE_ID @"com.google.ios.youtubemusic"
+#define YT_BUNDLE_NAME @"YouTubeMusic"
 #define YT_NAME @"YouTube Music"
 
 @interface SSOConfiguration : NSObject
@@ -165,8 +166,10 @@ static NSString *accessGroupID() {
 - (id)objectForInfoDictionaryKey:(NSString *)key {
     if ([key isEqualToString:@"CFBundleIdentifier"])
         return YT_BUNDLE_ID;
-    if ([key isEqualToString:@"CFBundleDisplayName"] || [key isEqualToString:@"CFBundleName"])
+    if ([key isEqualToString:@"CFBundleDisplayName"])
         return YT_NAME;
+    if ([key isEqualToString:@"CFBundleName"])
+        return YT_BUNDLE_NAME;
     return %orig;
 }
 %end

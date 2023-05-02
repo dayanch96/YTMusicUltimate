@@ -1,31 +1,48 @@
 "SETTINGS" = "Settings";
-"ENABLED" = "Enabled";
+"ENABLED" = "Enable YTMusicUltimate";
 "ENABLED_DESC" = "Premium features, no ads, background playback, etc.";
-"OLED_DARK_THEME" = "OLED Dark Theme";
-"OLED_DARK_THEME_DESC" = "Enables OLED Dark Theme";
-"OLED_DARK_KEYBOARD" = "OLED Dark Keyboard";
-"OLED_DARK_KEYBOARD_DESC" = "Enables OLED Dark Keyboard";
+"RESTART_FOOTER" = "Restart the app to apply changes";
+
+"PREMIUM_SETTINGS" = "Premium options";
+"NO_ADS" = "No ads";
+"NO_ADS_DESC" = "Removes ads in the app";
+"BACKGROUND_PLAYBACK" = "Background playback";
+"BACKGROUND_PLAYBACK_DESC" = "Activates background playback";
+
+"PLAYER_SETTINGS" = "Player options";
 "PLAYBACK_RATE_BUTTON" = "Show playback rate button";
 "PLAYBACK_RATE_BUTTON_DESC" = "Adjust playback speed";
 "SELECTABLE_LYRICS" = "Lyrics text selection";
 "SELECTABLE_LYRICS_DESC" = "Enables text selection for lyrics";
-"LOW_CONTRAST" = "Low contrast";
-"LOW_CONTRAST_DESC" = "Lower contrast for text and buttons";
 "VOLBAR" = "Volume bar";
 "VOLBAR_DESC" = "Adds a volume bar to the player";
 "NO_AUTORADIO" = "Disable radio";
 "NO_AUTORADIO_DESC" = "Disables endless music feature";
-"SKIP_NONMUSIC_PARTS" = "Skip Non-music section (SponsorBlock)";
+"SKIP_NONMUSIC_PARTS" = "Skip non-music section (SponsorBlock)";
 "SKIP_NONMUSIC_PARTS_DESC" = "Skips non-music sections in music videos";
+"AV_DEFAULT_MODE" = "Default playback mode";
+"AUDIO" = "Audio";
+"VIDEO" = "Video";
+
+"THEME_SETTINGS" = "Theme options";
+"OLED_DARK_THEME" = "OLED Dark Theme";
+"OLED_DARK_THEME_DESC" = "Enables OLED Dark Theme";
+"OLED_DARK_KEYBOARD" = "OLED Dark Keyboard";
+"OLED_DARK_KEYBOARD_DESC" = "Enables OLED Dark Keyboard";
+"LOW_CONTRAST" = "Low contrast";
+"LOW_CONTRAST_DESC" = "Lower contrast for text and buttons";
+
+"NAVBAR_SETTINGS" = "Navigation bar options";
 "HIDE_HISTORY_BUTTON" = "Hide history button";
 "HIDE_HISTORY_BUTTON_DESC" = "Hides history button in the navigation bar";
 "HIDE_CAST_BUTTON" = "Hide cast button";
 "HIDE_CAST_BUTTON_DESC" = "Hides cast button in the navigation bar";
+
 "APPLY" = "Apply";
 "APPLY_DESC" = "Closes the app to apply changes";
 
 "LINKS" = "Links";
-"TWITTER" = "Follow me on Twitter";
+"TWITTER" = "Follow %@ on Twitter";
 "TWITTER_DESC" = "Follow me for updates";
 "DISCORD" = "Join the Discord";
 "DISCORD_DESC" = "Report bugs and request features";
@@ -33,3 +50,7 @@
 "SOURCE_CODE_DESC" = "Take a look at the code";
 
 "CLOSE" = "Close";
+"WARNING" = "Warning";
+"APPLY_MESSAGE" = "This action will close YouTube Music to apply changes. Are you sure?";
+"CANCEL" = "Cancel";
+"YES" = "Yes";

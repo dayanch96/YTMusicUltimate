@@ -1,31 +1,48 @@
 "SETTINGS" = "Cài đặt";
 "ENABLED" = "Kích hoạt";
 "ENABLED_DESC" = "Kích hoạt năng của tài khoản Premium: không quảng cáo, phát trong nền...";
-"OLED_DARK_THEME" = "Chế độ tối OLED";
-"OLED_DARK_THEME_DESC" = "Kích hoạt chế độ tối OLED";
-"OLED_DARK_KEYBOARD" = "Bàn phím tối OLED";
-"OLED_DARK_KEYBOARD_DESC" = "Kích hoạt bàn phím tối OLED";
+"RESTART_FOOTER" = "Restart the app to apply changes";
+
+"PREMIUM_SETTINGS" = "Premium options";
+"NO_ADS" = "No ads";
+"NO_ADS_DESC" = "Removes ads in the app";
+"BACKGROUND_PLAYBACK" = "Background playback";
+"BACKGROUND_PLAYBACK_DESC" = "Activates background playback";
+
+"PLAYER_SETTINGS" = "Player options";
 "PLAYBACK_RATE_BUTTON" = "Hiện nút chỉnh tốc độ phát";
 "PLAYBACK_RATE_BUTTON_DESC" = "Tùy chỉnh tốc độ phát";
 "SELECTABLE_LYRICS" = "Lựa chọn lời bài hát";
 "SELECTABLE_LYRICS_DESC" = "Kích hoạt khả năng lựa chọn và sao chép lời bài hát";
-"LOW_CONTRAST" = "Độ tương phản thấp";
-"LOW_CONTRAST_DESC" = "Giảm độ tương phản của chữ và các nút ấn";
 "VOLBAR" = "Thanh âm lượng";
 "VOLBAR_DESC" = "Thêm thanh âm lượng vào trình phát nhạc";
 "NO_AUTORADIO" = "Disable radio";
 "NO_AUTORADIO_DESC" = "Disables endless music feature";
 "SKIP_NONMUSIC_PARTS" = "Skip Non-music section (SponsorBlock)";
 "SKIP_NONMUSIC_PARTS_DESC" = "Skips non-music sections in music videos";
+"AV_DEFAULT_MODE" = "Default playback mode";
+"AUDIO" = "Audio";
+"VIDEO" = "Video";
+
+"THEME_SETTINGS" = "Theme options";
+"OLED_DARK_THEME" = "Chế độ tối OLED";
+"OLED_DARK_THEME_DESC" = "Kích hoạt chế độ tối OLED";
+"OLED_DARK_KEYBOARD" = "Bàn phím tối OLED";
+"OLED_DARK_KEYBOARD_DESC" = "Kích hoạt bàn phím tối OLED";
+"LOW_CONTRAST" = "Độ tương phản thấp";
+"LOW_CONTRAST_DESC" = "Giảm độ tương phản của chữ và các nút ấn";
+
+"NAVBAR_SETTINGS" = "Navigation bar options";
 "HIDE_HISTORY_BUTTON" = "Hide history button";
 "HIDE_HISTORY_BUTTON_DESC" = "Hides history button in the navigation bar";
 "HIDE_CAST_BUTTON" = "Hide cast button";
 "HIDE_CAST_BUTTON_DESC" = "Hides cast button in the navigation bar";
+
 "APPLY" = "Áp dụng";
 "APPLY_DESC" = "Đóng ứng dụng để áp dụng các thay đổi";
 
 "LINKS" = "Link";
-"TWITTER" = "Theo dõi tôi trên Twitter";
+"TWITTER" = "Follow %@ on Twitter";
 "TWITTER_DESC" = "Theo dõi tôi để cập nhật các thay đổi";
 "DISCORD" = "Vào Discord";
 "DISCORD_DESC" = "Báo cáo lỗi và yêu cầu tính năng mới";
@@ -33,3 +50,7 @@
 "SOURCE_CODE_DESC" = "Kiểm tra mã nguồn";
 
 "CLOSE" = "Close";
+"WARNING" = "Warning";
+"APPLY_MESSAGE" = "This action will close YouTube Music to apply changes. Are you sure?";
+"CANCEL" = "Cancel";
+"YES" = "Yes";

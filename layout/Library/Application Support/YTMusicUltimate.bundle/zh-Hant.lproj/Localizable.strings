@@ -1,31 +1,48 @@
 "SETTINGS" = "設定";
 "ENABLED" = "啟用";
 "ENABLED_DESC" = "會員功能：去廣告和背景播放等";
-"OLED_DARK_THEME" = "OLED 深色主題";
-"OLED_DARK_THEME_DESC" = "啟用 OLED 深色主題";
-"OLED_DARK_KEYBOARD" = "OLED 深色鍵盤";
-"OLED_DARK_KEYBOARD_DESC" = "啟用 OLED 深色鍵盤";
+"RESTART_FOOTER" = "Restart the app to apply changes";
+
+"PREMIUM_SETTINGS" = "Premium options";
+"NO_ADS" = "No ads";
+"NO_ADS_DESC" = "Removes ads in the app";
+"BACKGROUND_PLAYBACK" = "Background playback";
+"BACKGROUND_PLAYBACK_DESC" = "Activates background playback";
+
+"PLAYER_SETTINGS" = "Player options";
 "PLAYBACK_RATE_BUTTON" = "顯示播放速度按鈕";
 "PLAYBACK_RATE_BUTTON_DESC" = "調整播放速度";
 "SELECTABLE_LYRICS" = "複製歌詞";
 "SELECTABLE_LYRICS_DESC" = "可以複製歌詞";
-"LOW_CONTRAST" = "低對比度";
-"LOW_CONTRAST_DESC" = "降低文字和按鈕的對比度";
 "VOLBAR" = "音量條";
 "VOLBAR_DESC" = "在播放器增加音量控制條";
 "NO_AUTORADIO" = "Disable radio";
 "NO_AUTORADIO_DESC" = "Disables endless music feature";
 "SKIP_NONMUSIC_PARTS" = "Skip Non-music section (SponsorBlock)";
 "SKIP_NONMUSIC_PARTS_DESC" = "Skips non-music sections in music videos";
+"AV_DEFAULT_MODE" = "Default playback mode";
+"AUDIO" = "Audio";
+"VIDEO" = "Video";
+
+"THEME_SETTINGS" = "Theme options";
+"OLED_DARK_THEME" = "OLED 深色主題";
+"OLED_DARK_THEME_DESC" = "啟用 OLED 深色主題";
+"OLED_DARK_KEYBOARD" = "OLED 深色鍵盤";
+"OLED_DARK_KEYBOARD_DESC" = "啟用 OLED 深色鍵盤";
+"LOW_CONTRAST" = "低對比度";
+"LOW_CONTRAST_DESC" = "降低文字和按鈕的對比度";
+
+"NAVBAR_SETTINGS" = "Navigation bar options";
 "HIDE_HISTORY_BUTTON" = "Hide history button";
 "HIDE_HISTORY_BUTTON_DESC" = "Hides history button in the navigation bar";
 "HIDE_CAST_BUTTON" = "Hide cast button";
 "HIDE_CAST_BUTTON_DESC" = "Hides cast button in the navigation bar";
+
 "APPLY" = "套用";
 "APPLY_DESC" = "按下套用會關閉 APP 讓變更生效";
 
 "LINKS" = "相關連結";
-"TWITTER" = "跟隨我的推特";
+"TWITTER" = "Follow %@ on Twitter";
 "TWITTER_DESC" = "關注更新訊息";
 "DISCORD" = "加入 Discord";
 "DISCORD_DESC" = "回報問題和請求新功能";
@@ -33,3 +50,7 @@
 "SOURCE_CODE_DESC" = "查看開源代碼";
 
 "CLOSE" =  "Close";
+"WARNING" = "Warning";
+"APPLY_MESSAGE" = "This action will close YouTube Music to apply changes. Are you sure?";
+"CANCEL" = "Cancel";
+"YES" = "Yes";

@@ -1,31 +1,48 @@
 "SETTINGS" = "إعدادات";
 "ENABLED" = "تفعيل";
 "ENABLED_DESC" = ".مميزات البريميوم، بدون اعلانات، تشغيل بالخلفية، مميزات اخرى";
-"OLED_DARK_THEME" = "الوضع الداكن";
-"OLED_DARK_THEME_DESC" = "تفعيل الوضع الداكن";
-"OLED_DARK_KEYBOARD" = "الوضع الداكن في لوحة المفاتيح";
-"OLED_DARK_KEYBOARD_DESC" = "تفعيل الوضع الداكن في لوحة المفاتيح";
+"RESTART_FOOTER" = "Restart the app to apply changes";
+
+"PREMIUM_SETTINGS" = "Premium options";
+"NO_ADS" = "No ads";
+"NO_ADS_DESC" = "Removes ads in the app";
+"BACKGROUND_PLAYBACK" = "Background playback";
+"BACKGROUND_PLAYBACK_DESC" = "Activates background playback";
+
+"PLAYER_SETTINGS" = "Player options";
 "PLAYBACK_RATE_BUTTON" = "إظهار زر تقييم التشغيل";
 "PLAYBACK_RATE_BUTTON_DESC" = "التحكم بسرعة التشغيل";
 "SELECTABLE_LYRICS" = "تحديد كلمات الاغنية ";
 "SELECTABLE_LYRICS_DESC" = "تمكين تحديد كلمات الاغنية";
-"LOW_CONTRAST" = "تباين منخفض";
-"LOW_CONTRAST_DESC" = "انخفاض تباين النص والأزرار";
 "VOLBAR" = "شريط الصوت";
 "VOLBAR_DESC" = "يضيف شريط الصوت إلى المشغل";
 "NO_AUTORADIO" = "Disable radio";
 "NO_AUTORADIO_DESC" = "Disables endless music feature";
 "SKIP_NONMUSIC_PARTS" = "Skip Non-music section (SponsorBlock)";
 "SKIP_NONMUSIC_PARTS_DESC" = "Skips non-music sections in music videos";
+"AV_DEFAULT_MODE" = "Default playback mode";
+"AUDIO" = "Audio";
+"VIDEO" = "Video";
+
+"THEME_SETTINGS" = "Theme options";
+"OLED_DARK_THEME" = "الوضع الداكن";
+"OLED_DARK_THEME_DESC" = "تفعيل الوضع الداكن";
+"OLED_DARK_KEYBOARD" = "الوضع الداكن في لوحة المفاتيح";
+"OLED_DARK_KEYBOARD_DESC" = "تفعيل الوضع الداكن في لوحة المفاتيح";
+"LOW_CONTRAST" = "تباين منخفض";
+"LOW_CONTRAST_DESC" = "انخفاض تباين النص والأزرار";
+
+"NAVBAR_SETTINGS" = "Navigation bar options";
 "HIDE_HISTORY_BUTTON" = "Hide history button";
 "HIDE_HISTORY_BUTTON_DESC" = "Hides history button in the navigation bar";
 "HIDE_CAST_BUTTON" = "Hide cast button";
 "HIDE_CAST_BUTTON_DESC" = "Hides cast button in the navigation bar";
+
 "APPLY" = "تنفيذ التغييرات";
 "APPLY_DESC" = "اغلق التطبيق لتنفيذ التغييرات";
 
 "LINKS" = "الروابط";
-"TWITTER" = "تابعني على تويتر";
+"TWITTER" = "Follow %@ on Twitter"; 
 "TWITTER_DESC" = "تابعني للحصول على التحديثات";
 "DISCORD" = "انضم الينا في ديسكورد";
 "DISCORD_DESC" = "الإبلاغ عن الأخطاء وطلب الميزات";
@@ -33,3 +50,7 @@
 "SOURCE_CODE_DESC" = "ألق نظرة على الكود";
 
 "CLOSE" = "يغلق";
+"WARNING" = "Warning";
+"APPLY_MESSAGE" = "This action will close YouTube Music to apply changes. Are you sure?";
+"CANCEL" = "Cancel";
+"YES" = "Yes";

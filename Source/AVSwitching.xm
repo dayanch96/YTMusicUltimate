@@ -53,14 +53,6 @@
     %orig(YES);
 }
 
-- (bool)noVideoModeEnabledForMusic {
-	return 1;
-}
-
-- (bool)noVideoModeEnabledForPodcasts {
-	return 1;
-}
-
 /*
 - (BOOL)noVideoModeEnabled {
     return YES;
@@ -72,12 +64,6 @@
 */
 %end
 
-%hook YTQueueController
-- (bool)noVideoModeEnabled:(id)arg1 {
-	return 1;
-}
-%end
-
 %hook YTDefaultQueueConfig
 - (BOOL)isAudioVideoModeSupported {
     return YES;
@@ -85,14 +71,6 @@
 
 - (void)setIsAudioVideoModeSupported:(BOOL)supported {
     %orig(YES);
-}
-
-- (bool)noVideoModeEnabledForMusic {
-	return 1;
-}
-
-- (bool)noVideoModeEnabledForPodcasts {
-	return 1;
 }
 %end
 
@@ -179,10 +157,42 @@
 %end
 %end
 
+%group audioVideoSelection
+%hook YTMQueueConfig
+- (bool)noVideoModeEnabledForMusic {
+	return 1;
+}
+
+- (bool)noVideoModeEnabledForPodcasts {
+	return 1;
+}
+%end
+
+%hook YTQueueController
+- (bool)noVideoModeEnabled:(id)arg1 {
+	return 1;
+}
+%end
+
+%hook YTDefaultQueueConfig
+- (bool)noVideoModeEnabledForMusic {
+	return 1;
+}
+
+- (bool)noVideoModeEnabledForPodcasts {
+	return 1;
+}
+%end
+%end
+
 %ctor {
     BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
+    BOOL audioVideoSelection = ([[NSUserDefaults standardUserDefaults] objectForKey:@"AudioVideoMode"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"AudioVideoMode"] : YES;
 
-    if (isEnabled){
+    if (isEnabled) {
         %init(VideoAndAudioModePatches);
+        if (audioVideoSelection) {
+            %init(audioVideoSelection);
+        }
     }
 }

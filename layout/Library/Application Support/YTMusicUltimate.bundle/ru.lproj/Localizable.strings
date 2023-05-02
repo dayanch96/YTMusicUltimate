@@ -1,31 +1,48 @@
 "SETTINGS" = "Настройки";
-"ENABLED" = "Активировать";
+"ENABLED" = "Включить YTMusicUltimate";
 "ENABLED_DESC" = "Премиум, нет рекламы, работает в фоне и т.д.";
-"OLED_DARK_THEME" = "OLED-режим";
-"OLED_DARK_THEME_DESC" = "Активирует OLED-режим для темной темы";
-"OLED_DARK_KEYBOARD" = "OLED-клавиатура";
-"OLED_DARK_KEYBOARD_DESC" = "Активирует OLED-режим для клавиатуры темной темы";
+"RESTART_FOOTER" = "Для применения настроек потребуется перезапуск";
+
+"PREMIUM_SETTINGS" = "Премиум настройки";
+"NO_ADS" = "Отключение рекламы";
+"NO_ADS_DESC" = "Убирает рекламу в приложении";
+"BACKGROUND_PLAYBACK" = "Фоновое воспроизведение";
+"BACKGROUND_PLAYBACK_DESC" = "Позволяет воспроизводить медиаконтент в фоне";
+
+"PLAYER_SETTINGS" = "Настройки плеера";
 "PLAYBACK_RATE_BUTTON" = "Скорость воспроизведения";
 "PLAYBACK_RATE_BUTTON_DESC" = "Добавляет иконку, позволяющую регулировать скорость воспроизведения";
 "SELECTABLE_LYRICS" = "Выделение текста";
 "SELECTABLE_LYRICS_DESC" = "Позволяет выделять текста песен";
-"LOW_CONTRAST" = "Понизить контрастность";
-"LOW_CONTRAST_DESC" = "Понижает контрастность текста и кнопок";
 "VOLBAR" = "Регулировка громкости";
 "VOLBAR_DESC" = "Добавляет полосу регулировки громкости в окне плеера";
 "NO_AUTORADIO" = "Отключить радио";
 "NO_AUTORADIO_DESC" = "Отключает список автовоспроизведения похожих композиций";
 "SKIP_NONMUSIC_PARTS" = "Пропускать оффтопы (SponsorBlock)";
 "SKIP_NONMUSIC_PARTS_DESC" = "Перематывает немузыкальные сегменты";
+"AV_DEFAULT_MODE" = "Режим воспроизведения";
+"AUDIO" = "Аудио";
+"VIDEO" = "Видео";
+
+"THEME_SETTINGS" = "Тема";
+"OLED_DARK_THEME" = "OLED-режим";
+"OLED_DARK_THEME_DESC" = "Активирует OLED-режим для темной темы";
+"OLED_DARK_KEYBOARD" = "OLED-клавиатура";
+"OLED_DARK_KEYBOARD_DESC" = "Активирует OLED-режим для клавиатуры темной темы";
+"LOW_CONTRAST" = "Понизить контрастность";
+"LOW_CONTRAST_DESC" = "Понижает контрастность текста и кнопок";
+
+"NAVBAR_SETTINGS" = "Панель навигации";
 "HIDE_HISTORY_BUTTON" = "Скрыть кнопку «История»";
 "HIDE_HISTORY_BUTTON_DESC" = "Убирает кнопку «История» с панели навигации";
 "HIDE_CAST_BUTTON" = "Скрыть кнопку «Транслировать»";
 "HIDE_CAST_BUTTON_DESC" = "Убирает кнопку «Транслировать» с панели навигации";
+
 "APPLY" = "Применить";
 "APPLY_DESC" = "Закроет приложение для применения настроек";
 
 "LINKS" = "Ссылки";
-"TWITTER" = "Мой Twitter аккаунт";
+"TWITTER" = "Twitter аккаунт %@";
 "TWITTER_DESC" = "Подпишитесь, чтобы быть в курсе новостей";
 "DISCORD" = "Наш Discord";
 "DISCORD_DESC" = "Место для отчета об ошибках и запросе функций";
@@ -33,3 +50,7 @@
 "SOURCE_CODE_DESC" = "Можете взглянуть на исходник";
 
 "CLOSE" = "Закрыть";
+"WARNING" = "Внимание";
+"APPLY_MESSAGE" = "Данное действие приведет к закрытию YouTube Music для применения настроек. Продолжить?";
+"CANCEL" = "Отмена";
+"YES" = "Да";

@@ -1,31 +1,48 @@
 "SETTINGS" = "Ayarlar";
-"ENABLED" = "Etkinleştir";
+"ENABLED" = "YTMusicUltimate'i etkinleştir";
 "ENABLED_DESC" = "Premium özellikler, reklam engelleme, arka planda oynatma vb.";
-"OLED_DARK_THEME" = "OLED Koyu Tema";
-"OLED_DARK_THEME_DESC" = "OLED Koyu Temasını Etkinleştirir";
-"OLED_DARK_KEYBOARD" = "OLED Koyu Klavye";
-"OLED_DARK_KEYBOARD_DESC" = "OLED Koyu Klavyeyi Etkinleştirir";
+"RESTART_FOOTER" = "Değişiklikleri uygulamak için uygulamayı yeniden başlatın";
+
+"PREMIUM_SETTINGS" = "Premium ayarları";
+"NO_ADS" = "Reklam engelleme";
+"NO_ADS_DESC" = "Uygulama içi reklamları kaldırır";
+"BACKGROUND_PLAYBACK" = "Arka planda oynatma";
+"BACKGROUND_PLAYBACK_DESC" = "Arka planda oynatma özelliğini etkinleştirir";
+
+"PLAYER_SETTINGS" = "Oynatıcı ayarları";
 "PLAYBACK_RATE_BUTTON" = "Oynatma hızı düğmesini göster";
 "PLAYBACK_RATE_BUTTON_DESC" = "Oynatma hızını ayarla";
 "SELECTABLE_LYRICS" = "Şarkı sözleri metin seçimi";
 "SELECTABLE_LYRICS_DESC" = "Şarkı sözleri için metin seçimini etkinleştirir";
-"LOW_CONTRAST" = "Düşük kontrast";
-"LOW_CONTRAST_DESC" = "Metin ve düğmeler için daha düşük kontrast";
 "VOLBAR" = "Ses çubuğu";
 "VOLBAR_DESC" = "Oynatıcıya bir ses çubuğu ekler";
 "NO_AUTORADIO" = "Radyoyu devre dışı bırak";
 "NO_AUTORADIO_DESC" = "Kesintisiz müzik özelliğini kaldırır";
 "SKIP_NONMUSIC_PARTS" = "Müzik olmayan bölümleri atla (SponsorBlock)";
 "SKIP_NONMUSIC_PARTS_DESC" = "Müzik videolarında müzik olmayan bölümleri atlar";
+"AV_DEFAULT_MODE" = "Varsayılan oynatma modu";
+"AUDIO" = "Şarkı";
+"VIDEO" = "Video";
+
+"THEME_SETTINGS" = "Tema ayarları";
+"OLED_DARK_THEME" = "OLED Koyu Tema";
+"OLED_DARK_THEME_DESC" = "OLED Koyu Temasını Etkinleştirir";
+"OLED_DARK_KEYBOARD" = "OLED Koyu Klavye";
+"OLED_DARK_KEYBOARD_DESC" = "OLED Koyu Klavyeyi Etkinleştirir";
+"LOW_CONTRAST" = "Düşük kontrast";
+"LOW_CONTRAST_DESC" = "Metin ve düğmeler için daha düşük kontrast";
+
+"NAVBAR_SETTINGS" = "Gezinme çubuğu ayarları";
 "HIDE_HISTORY_BUTTON" = "Geçmiş düğmesini gizle";
 "HIDE_HISTORY_BUTTON_DESC" = "Gezinme çubuğundaki geçmiş düğmesini gizler";
 "HIDE_CAST_BUTTON" = "Yayınla düğmesini gizle";
 "HIDE_CAST_BUTTON_DESC" = "Gezinme çubuğundaki yayınlama düğmesini gizler";
+
 "APPLY" = "Uygula";
 "APPLY_DESC" = "Değişiklikleri uygulamak için uygulamayı kapatır.";
 
 "LINKS" = "Bağlantılar";
-"TWITTER" = "Twitter'da beni takip edin";
+"TWITTER" = "Twitter'da %@'i takip edin";
 "TWITTER_DESC" = "Güncellemeler için beni takip edin";
 "DISCORD" = "Discord'a Katılın";
 "DISCORD_DESC" = "Hataları bildirin ve özellikler talep edin";
@@ -33,3 +50,7 @@
 "SOURCE_CODE_DESC" = "Koda bir göz atın";
 
 "CLOSE" = "Kapat";
+"WARNING" = "Uyarı";
+"APPLY_MESSAGE" = "Bu eylem, değişikliklerin uygulanması için YouTube Music'i kapatacak. Devam etmek istediğine emin misin?";
+"CANCEL" = "İptal";
+"YES" = "Evet";

@@ -47,8 +47,14 @@
 
 %ctor {
     BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
+    BOOL backgroundPlayback = ([[NSUserDefaults standardUserDefaults] objectForKey:@"backgroundPlayback_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"backgroundPlayback_enabled"] : YES;
 
-    if (isEnabled){
+    // To turn on by default
+    if (![[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"backgroundPlayback_enabled"]) { 
+       [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"backgroundPlayback_enabled"]; 
+    }
+
+    if (isEnabled && backgroundPlayback) {
         %init(BackgroundPlayback);
     }
 }

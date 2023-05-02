@@ -29,45 +29,15 @@ extern NSBundle *YTMusicUltimateBundle();
     title and subtitle to the respected arrays below. */
 
     NSArray *keys = @[
-        @"YTMUltimateIsEnabled", 
-        @"oledDarkTheme_enabled", 
-        @"oledDarkKeyboard_enabled", 
-        @"playbackRateButton_enabled",
-        @"selectableLyrics_enabled",
-        @"lowContrast_enabled",
-        @"volBar_enabled",
-        @"disableAutoRadio_enabled",
-        @"sponsorBlock_enabled",
-        @"hideHistoryButton_enabled",
-        @"hideCastButton_enabled"
+        @"YTMUltimateIsEnabled"
     ];
 
     NSArray *titles = @[
-        LOC(@"ENABLED"),
-        LOC(@"OLED_DARK_THEME"),
-        LOC(@"OLED_DARK_KEYBOARD"),
-        LOC(@"PLAYBACK_RATE_BUTTON"),
-        LOC(@"SELECTABLE_LYRICS"),
-        LOC(@"LOW_CONTRAST"),
-        LOC(@"VOLBAR"),
-        LOC(@"NO_AUTORADIO"),
-        LOC(@"SKIP_NONMUSIC_PARTS"),
-        LOC(@"HIDE_HISTORY_BUTTON"),
-        LOC(@"HIDE_CAST_BUTTON")
+        LOC(@"ENABLED")
     ];
 
     NSArray *subtitles = @[
-        LOC(@"ENABLED_DESC"),
-        LOC(@"OLED_DARK_THEME_DESC"),
-        LOC(@"OLED_DARK_KEYBOARD_DESC"),
-        LOC(@"PLAYBACK_RATE_BUTTON_DESC"),
-        LOC(@"SELECTABLE_LYRICS_DESC"),
-        LOC(@"LOW_CONTRAST_DESC"),
-        LOC(@"VOLBAR_DESC"),
-        LOC(@"NO_AUTORADIO_DESC"),
-        LOC(@"SKIP_NONMUSIC_PARTS_DESC"),
-        LOC(@"HIDE_HISTORY_BUTTON_DESC"),
-        LOC(@"HIDE_CAST_BUTTON_DESC")
+        LOC(@"ENABLED_DESC")
     ];
 
     for (int i = 0; i < keys.count; i++) {
@@ -95,18 +65,20 @@ extern NSBundle *YTMusicUltimateBundle();
     title and subtitle to the respected arrays below. */
 
     NSArray *urls = @[
-        @"https://twitter.com/ginsudev", 
+        @"https://twitter.com/ginsudev",
+        @"https://twitter.com/dayanch96",
         @"https://discord.com/invite/BhdUyCbgkZ", 
         @"https://github.com/ginsudev/YTMusicUltimate"
     ];
-
     NSArray *titles = @[
-        LOC(@"TWITTER"),
+        [NSString stringWithFormat:LOC(@"TWITTER"), @"Ginsu"],
+        [NSString stringWithFormat:LOC(@"TWITTER"), @"Dayanch96"],
         LOC(@"DISCORD"),
         LOC(@"SOURCE_CODE"),
     ];
 
     NSArray *subtitles = @[
+        LOC(@"TWITTER_DESC"),
         LOC(@"TWITTER_DESC"),
         LOC(@"DISCORD_DESC"),
         LOC(@"SOURCE_CODE_DESC"),

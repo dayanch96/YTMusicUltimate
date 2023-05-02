@@ -34,8 +34,14 @@
 
 %ctor {
     BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
+    BOOL noAds = ([[NSUserDefaults standardUserDefaults] objectForKey:@"noAds_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"noAds_enabled"] : YES;
 
-    if (isEnabled){
+    // To turn on by default    
+    if (![[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"noAds_enabled"]) { 
+       [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"noAds_enabled"]; 
+    }
+
+    if (isEnabled && noAds) {
         %init(RemoveAds);
     }
 }

@@ -1,31 +1,48 @@
 "SETTINGS" = "设置";
 "ENABLED" = "启动";
 "ENABLED_DESC" = "免费使用会员功能、去广告和后台播放等";
-"OLED_DARK_THEME" = "OLED深色主题";
-"OLED_DARK_THEME_DESC" = "开OLED深色主题";
-"OLED_DARK_KEYBOARD" = "OLED深色键盘";
-"OLED_DARK_KEYBOARD_DESC" = "开OLED深色键盘";
+"RESTART_FOOTER" = "Restart the app to apply changes";
+
+"PREMIUM_SETTINGS" = "Premium options";
+"NO_ADS" = "No ads";
+"NO_ADS_DESC" = "Removes ads in the app";
+"BACKGROUND_PLAYBACK" = "Background playback";
+"BACKGROUND_PLAYBACK_DESC" = "Activates background playback";
+
+"PLAYER_SETTINGS" = "Player options";
 "PLAYBACK_RATE_BUTTON" = "显示播放速度按钮";
 "PLAYBACK_RATE_BUTTON_DESC" = "调整播放速度";
 "SELECTABLE_LYRICS" = "复制歌词";
 "SELECTABLE_LYRICS_DESC" = "打开可以复制歌词";
-"LOW_CONTRAST" = "低对比度";
-"LOW_CONTRAST_DESC" = "降低所有按钮和文字对比度";
 "VOLBAR" = "音量条";
 "VOLBAR_DESC" = "添加音量条";
 "NO_AUTORADIO" = "Disable radio";
 "NO_AUTORADIO_DESC" = "Disables endless music feature";
 "SKIP_NONMUSIC_PARTS" = "Skip Non-music section (SponsorBlock)";
 "SKIP_NONMUSIC_PARTS_DESC" = "Skips non-music sections in music videos";
+"AV_DEFAULT_MODE" = "Default playback mode";
+"AUDIO" = "Audio";
+"VIDEO" = "Video";
+
+"THEME_SETTINGS" = "Theme options";
+"OLED_DARK_THEME" = "OLED深色主题";
+"OLED_DARK_THEME_DESC" = "开OLED深色主题";
+"OLED_DARK_KEYBOARD" = "OLED深色键盘";
+"OLED_DARK_KEYBOARD_DESC" = "开OLED深色键盘";
+"LOW_CONTRAST" = "低对比度";
+"LOW_CONTRAST_DESC" = "降低所有按钮和文字对比度";
+
+"NAVBAR_SETTINGS" = "Navigation bar options";
 "HIDE_HISTORY_BUTTON" = "Hide history button";
 "HIDE_HISTORY_BUTTON_DESC" = "Hides history button in the navigation bar";
 "HIDE_CAST_BUTTON" = "Hide cast button";
 "HIDE_CAST_BUTTON_DESC" = "Hides cast button in the navigation bar";
+
 "APPLY" = "应用";
 "APPLY_DESC" = "关闭APP来运用所有调整";
 
 "LINKS" = "链接";
-"TWITTER" = "关注我的推特";
+"TWITTER" = "Follow %@ on Twitter";
 "TWITTER_DESC" = "关注更新信息";
 "DISCORD" = "加入Discord服务器";
 "DISCORD_DESC" = "问题报告与新功能要求";
@@ -33,3 +50,7 @@
 "SOURCE_CODE_DESC" = "点击查看代码";
 
 "CLOSE" =  "Close";
+"WARNING" = "Warning";
+"APPLY_MESSAGE" = "This action will close YouTube Music to apply changes. Are you sure?";
+"CANCEL" = "Cancel";
+"YES" = "Yes";

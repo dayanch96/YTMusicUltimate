@@ -1,31 +1,48 @@
 "SETTINGS" = "設定";
 "ENABLED" = "有効";
 "ENABLED_DESC" = "プレミアム機能、広告非表示、バックグラウンド再生など";
-"OLED_DARK_THEME" = "有機ELダークテーマ";
-"OLED_DARK_THEME_DESC" = "有機ELダークテーマを有効にします";
-"OLED_DARK_KEYBOARD" = "有機ELダークキーボード";
-"OLED_DARK_KEYBOARD_DESC" = "有機ELダークキーボードを有効にします";
+"RESTART_FOOTER" = "Restart the app to apply changes";
+
+"PREMIUM_SETTINGS" = "Premium options";
+"NO_ADS" = "No ads";
+"NO_ADS_DESC" = "Removes ads in the app";
+"BACKGROUND_PLAYBACK" = "Background playback";
+"BACKGROUND_PLAYBACK_DESC" = "Activates background playback";
+
+"PLAYER_SETTINGS" = "Player options";
 "PLAYBACK_RATE_BUTTON" = "再生速度ボタンを表示";
 "PLAYBACK_RATE_BUTTON_DESC" = "再生速度を変更できます";
 "SELECTABLE_LYRICS" = "歌詞のテキスト選択";
 "SELECTABLE_LYRICS_DESC" = "歌詞のテキスト選択を有効にします";
-"LOW_CONTRAST" = "コントラストを下げる";
-"LOW_CONTRAST_DESC" = "テキストとボタンのコントラストを下げます";
 "VOLBAR" = "Volume bar";
 "VOLBAR_DESC" = "Adds a volume bar to the player";
 "NO_AUTORADIO" = "Disable radio";
 "NO_AUTORADIO_DESC" = "Disables endless music feature";
 "SKIP_NONMUSIC_PARTS" = "Skip Non-music section (SponsorBlock)";
 "SKIP_NONMUSIC_PARTS_DESC" = "Skips non-music sections in music videos";
+"AV_DEFAULT_MODE" = "Default playback mode";
+"AUDIO" = "Audio";
+"VIDEO" = "Video";
+
+"THEME_SETTINGS" = "Theme options";
+"OLED_DARK_THEME" = "有機ELダークテーマ";
+"OLED_DARK_THEME_DESC" = "有機ELダークテーマを有効にします";
+"OLED_DARK_KEYBOARD" = "有機ELダークキーボード";
+"OLED_DARK_KEYBOARD_DESC" = "有機ELダークキーボードを有効にします";
+"LOW_CONTRAST" = "コントラストを下げる";
+"LOW_CONTRAST_DESC" = "テキストとボタンのコントラストを下げます";
+
+"NAVBAR_SETTINGS" = "Navigation bar options";
 "HIDE_HISTORY_BUTTON" = "Hide history button";
 "HIDE_HISTORY_BUTTON_DESC" = "Hides history button in the navigation bar";
 "HIDE_CAST_BUTTON" = "Hide cast button";
 "HIDE_CAST_BUTTON_DESC" = "Hides cast button in the navigation bar";
+
 "APPLY" = "適用";
 "APPLY_DESC" = "アプリを終了して変更を適用します";
 
 "LINKS" = "リンク";
-"TWITTER" = "Twitterをフォロー";
+"TWITTER" = "Follow %@ on Twitter";
 "TWITTER_DESC" = "更新情報を入手する";
 "DISCORD" = "Discordサーバーに参加";
 "DISCORD_DESC" = "バグの報告と機能のリクエスト";
@@ -33,3 +50,7 @@
 "SOURCE_CODE_DESC" = "コードを表示する";
 
 "CLOSE" = "Close";
+"WARNING" = "Warning";
+"APPLY_MESSAGE" = "This action will close YouTube Music to apply changes. Are you sure?";
+"CANCEL" = "Cancel";
+"YES" = "Yes";
