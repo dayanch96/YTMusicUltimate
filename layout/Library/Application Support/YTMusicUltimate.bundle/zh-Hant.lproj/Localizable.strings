@@ -2,20 +2,13 @@
 "ENABLED" = "啟用";
 "ENABLED_DESC" = "會員功能：去廣告和背景播放等";
 "RESTART_FOOTER" = "重新啟動App以套用設定變更";
-"RESTART_FOOTER" = "重新啟動App以套用設定變更";
 
 "PREMIUM_SETTINGS" = "Premium功能選項";
 "NO_ADS" = "去除廣告";
 "NO_ADS_DESC" = "去除App中的廣告";
 "BACKGROUND_PLAYBACK" = "背景播放";
 "BACKGROUND_PLAYBACK_DESC" = "啟用背景播放功能";
-"PREMIUM_SETTINGS" = "Premium功能選項";
-"NO_ADS" = "去除廣告";
-"NO_ADS_DESC" = "去除App中的廣告";
-"BACKGROUND_PLAYBACK" = "背景播放";
-"BACKGROUND_PLAYBACK_DESC" = "啟用背景播放功能";
 
-"PLAYER_SETTINGS" = "播放介面選項";
 "PLAYER_SETTINGS" = "播放介面選項";
 "PLAYBACK_RATE_BUTTON" = "顯示播放速度按鈕";
 "PLAYBACK_RATE_BUTTON_DESC" = "調整播放速度";
@@ -30,15 +23,7 @@
 "AV_DEFAULT_MODE" = "預設播放速度";
 "AUDIO" = "音訊";
 "VIDEO" = "影片";
-"NO_AUTORADIO" = "關閉電台功能";
-"NO_AUTORADIO_DESC" = "關閉無限接續播放的電台功能";
-"SKIP_NONMUSIC_PARTS" = "跳過非音樂的片段(SponsorBlock)";
-"SKIP_NONMUSIC_PARTS_DESC" = "跳過音樂影片中不為樂曲本身的片段";
-"AV_DEFAULT_MODE" = "預設播放速度";
-"AUDIO" = "音訊";
-"VIDEO" = "影片";
 
-"THEME_SETTINGS" = "介面主題選項";
 "THEME_SETTINGS" = "介面主題選項";
 "OLED_DARK_THEME" = "OLED 深色主題";
 "OLED_DARK_THEME_DESC" = "啟用 OLED 深色主題";
@@ -47,11 +32,6 @@
 "LOW_CONTRAST" = "低對比度";
 "LOW_CONTRAST_DESC" = "降低文字和按鈕的對比度";
 
-"NAVBAR_SETTINGS" = "頂部導航欄選項";
-"HIDE_HISTORY_BUTTON" = "隱藏播放歷史按鈕";
-"HIDE_HISTORY_BUTTON_DESC" = "在頂部導航欄隱藏播放歷史按鈕";
-"HIDE_CAST_BUTTON" = "隱藏投放按鈕";
-"HIDE_CAST_BUTTON_DESC" = "在頂部導航欄隱藏投放按鈕";
 "NAVBAR_SETTINGS" = "頂部導航欄選項";
 "HIDE_HISTORY_BUTTON" = "隱藏播放歷史按鈕";
 "HIDE_HISTORY_BUTTON_DESC" = "在頂部導航欄隱藏播放歷史按鈕";
