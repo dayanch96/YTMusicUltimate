@@ -1,30 +1,30 @@
 "SETTINGS" = "設定";
 "ENABLED" = "啟用";
 "ENABLED_DESC" = "會員功能：去廣告和背景播放等";
-"RESTART_FOOTER" = "Restart the app to apply changes";
+"RESTART_FOOTER" = "重新啟動App以套用設定變更";
 
-"PREMIUM_SETTINGS" = "Premium options";
-"NO_ADS" = "No ads";
-"NO_ADS_DESC" = "Removes ads in the app";
-"BACKGROUND_PLAYBACK" = "Background playback";
-"BACKGROUND_PLAYBACK_DESC" = "Activates background playback";
+"PREMIUM_SETTINGS" = "Premium功能選項";
+"NO_ADS" = "去除廣告";
+"NO_ADS_DESC" = "去除App中的廣告";
+"BACKGROUND_PLAYBACK" = "背景播放";
+"BACKGROUND_PLAYBACK_DESC" = "啟用背景播放功能";
 
-"PLAYER_SETTINGS" = "Player options";
+"PLAYER_SETTINGS" = "播放介面選項";
 "PLAYBACK_RATE_BUTTON" = "顯示播放速度按鈕";
 "PLAYBACK_RATE_BUTTON_DESC" = "調整播放速度";
 "SELECTABLE_LYRICS" = "複製歌詞";
 "SELECTABLE_LYRICS_DESC" = "可以複製歌詞";
 "VOLBAR" = "音量條";
 "VOLBAR_DESC" = "在播放器增加音量控制條";
-"NO_AUTORADIO" = "Disable radio";
-"NO_AUTORADIO_DESC" = "Disables endless music feature";
-"SKIP_NONMUSIC_PARTS" = "Skip Non-music section (SponsorBlock)";
-"SKIP_NONMUSIC_PARTS_DESC" = "Skips non-music sections in music videos";
-"AV_DEFAULT_MODE" = "Default playback mode";
-"AUDIO" = "Audio";
-"VIDEO" = "Video";
+"NO_AUTORADIO" = "關閉電台功能";
+"NO_AUTORADIO_DESC" = "關閉無限接續播放的電台功能";
+"SKIP_NONMUSIC_PARTS" = "跳過非音樂的片段(SponsorBlock)";
+"SKIP_NONMUSIC_PARTS_DESC" = "跳過音樂影片中不為樂曲本身的片段";
+"AV_DEFAULT_MODE" = "預設播放速度";
+"AUDIO" = "音訊";
+"VIDEO" = "影片";
 
-"THEME_SETTINGS" = "Theme options";
+"THEME_SETTINGS" = "介面主題選項";
 "OLED_DARK_THEME" = "OLED 深色主題";
 "OLED_DARK_THEME_DESC" = "啟用 OLED 深色主題";
 "OLED_DARK_KEYBOARD" = "OLED 深色鍵盤";
@@ -32,11 +32,11 @@
 "LOW_CONTRAST" = "低對比度";
 "LOW_CONTRAST_DESC" = "降低文字和按鈕的對比度";
 
-"NAVBAR_SETTINGS" = "Navigation bar options";
-"HIDE_HISTORY_BUTTON" = "Hide history button";
-"HIDE_HISTORY_BUTTON_DESC" = "Hides history button in the navigation bar";
-"HIDE_CAST_BUTTON" = "Hide cast button";
-"HIDE_CAST_BUTTON_DESC" = "Hides cast button in the navigation bar";
+"NAVBAR_SETTINGS" = "頂部導航欄選項";
+"HIDE_HISTORY_BUTTON" = "隱藏播放歷史按鈕";
+"HIDE_HISTORY_BUTTON_DESC" = "在頂部導航欄隱藏播放歷史按鈕";
+"HIDE_CAST_BUTTON" = "隱藏投放按鈕";
+"HIDE_CAST_BUTTON_DESC" = "在頂部導航欄隱藏投放按鈕";
 
 "APPLY" = "套用";
 "APPLY_DESC" = "按下套用會關閉 APP 讓變更生效";
@@ -49,8 +49,8 @@
 "SOURCE_CODE" = "開源代碼";
 "SOURCE_CODE_DESC" = "查看開源代碼";
 
-"CLOSE" =  "Close";
-"WARNING" = "Warning";
-"APPLY_MESSAGE" = "This action will close YouTube Music to apply changes. Are you sure?";
-"CANCEL" = "Cancel";
-"YES" = "Yes";
+"CLOSE" =  "關閉";
+"WARNING" = "警告";
+"APPLY_MESSAGE" = "此操作將會關閉YouTube Music以套用變更，您確定要繼續嗎？";
+"CANCEL" = "取消";
+"YES" = "是的";
