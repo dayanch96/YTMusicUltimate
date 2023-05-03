@@ -9,6 +9,10 @@ extern NSBundle *YTMusicUltimateBundle();
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    swipeRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.view addGestureRecognizer:swipeRecognizer];
+
     self.navigationItem.leftBarButtonItem = [self backButton];
 
     UITableViewStyle style;
@@ -119,8 +123,14 @@ extern NSBundle *YTMusicUltimateBundle();
 
 @implementation NavBarSettingsController (Privates)
 
+- (void)handleSwipe:(UISwipeGestureRecognizer *)gesture {
+    if (gesture.direction == UISwipeGestureRecognizerDirectionRight) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 - (void)back {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)toggleHideHistoryButton:(UISwitch *)sender {

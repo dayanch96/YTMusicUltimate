@@ -32,12 +32,6 @@
 }
 %end
 
-%hook YTIPlayerResponse
-- (BOOL)isDAIEnabledPlayback {
-    return YES;
-}
-%end
-
 %hook YTMMusicAppMetadata
 - (BOOL)canPlayBackgroundableContent {
     return YES;

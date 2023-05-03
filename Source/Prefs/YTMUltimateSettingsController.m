@@ -221,28 +221,16 @@ static NSString *GithubPath;
     if (indexPath.section == 1) {
         if (indexPath.row == 0) {
         PremiumSettingsController *premiumSettingsController = [[PremiumSettingsController alloc] init];
-        UINavigationController *premiumSettingsControllerView = [[UINavigationController alloc] initWithRootViewController:premiumSettingsController];
-        premiumSettingsControllerView.modalPresentationStyle = UIModalPresentationFullScreen;
-
-        [self presentViewController:premiumSettingsControllerView animated:YES completion:nil];
+        [self.navigationController pushViewController:premiumSettingsController animated:YES];        
         } else if (indexPath.row == 1) {
         PlayerSettingsController *playerSettingsController = [[PlayerSettingsController alloc] init];
-        UINavigationController *playerSettingsControllerView = [[UINavigationController alloc] initWithRootViewController:playerSettingsController];
-        playerSettingsControllerView.modalPresentationStyle = UIModalPresentationFullScreen;
-
-        [self presentViewController:playerSettingsControllerView animated:YES completion:nil];
+        [self.navigationController pushViewController:playerSettingsController animated:YES];
         } else if (indexPath.row == 2) {
         ThemeSettingsController *themeSettingsController = [[ThemeSettingsController alloc] init];
-        UINavigationController *themeSettingsControllerView = [[UINavigationController alloc] initWithRootViewController:themeSettingsController];
-        themeSettingsControllerView.modalPresentationStyle = UIModalPresentationFullScreen;
-
-        [self presentViewController:themeSettingsControllerView animated:YES completion:nil];
+        [self.navigationController pushViewController:themeSettingsController animated:YES];
         } else if (indexPath.row == 3) {
         NavBarSettingsController *navBarSettingsController = [[NavBarSettingsController alloc] init];
-        UINavigationController *navBarSettingsControllerView = [[UINavigationController alloc] initWithRootViewController:navBarSettingsController];
-        navBarSettingsControllerView.modalPresentationStyle = UIModalPresentationFullScreen;
-
-        [self presentViewController:navBarSettingsControllerView animated:YES completion:nil];
+        [self.navigationController pushViewController:navBarSettingsController animated:YES];
         }
     } else if (indexPath.section == 2) {
         NSMutableDictionary *cellMetadata = [self.links objectAtIndex:indexPath.row];

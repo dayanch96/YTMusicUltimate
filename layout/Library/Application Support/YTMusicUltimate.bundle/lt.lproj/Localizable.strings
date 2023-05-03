@@ -1,0 +1,56 @@
+"SETTINGS" = "Nustatymai";
+"ENABLED" = "Įjungti \"YTMusicUltimate\"";
+"ENABLED_DESC" = "\"Premium\" funkcijos, reklamų panaikinimas, foninis atkūrimas ir kt.";
+"RESTART_FOOTER" = "Iš naujo paleiskite programą, kad pritaikytumėte pakeitimus";
+
+"PREMIUM_SETTINGS" = "\"Premium\" parinktys";
+"NO_ADS" = "Reklamų panaikinimas";
+"NO_ADS_DESC" = "Pašalinti programoje esančias reklamas";
+"BACKGROUND_PLAYBACK" = "Foninis atkūrimas";
+"BACKGROUND_PLAYBACK_DESC" = "Įjungti foninį atkūrimą";
+
+"PLAYER_SETTINGS" = "Grotuvo nustatymai";
+"PLAYBACK_RATE_BUTTON" = "Rodyti atkūrimo sparta";
+"PLAYBACK_RATE_BUTTON_DESC" = "Reguliuoti atkūrimo greiti";
+"SELECTABLE_LYRICS" = "Teksto pasirinkimas";
+"SELECTABLE_LYRICS_DESC" = "Įgalinti teksto pasirinkimą dainų žodžiams";
+"VOLBAR" = "Garsumo juosta";
+"VOLBAR_DESC" = "Įtraukti garsumo juosta grotuve";
+"NO_AUTORADIO" = "Išjungti radija";
+"NO_AUTORADIO_DESC" = "Išjungti begalinės muzikos funkcija";
+"SKIP_NONMUSIC_PARTS" = "Praleisti ne muzikos skyrius \"SponsorBlock\"";
+"SKIP_NONMUSIC_PARTS_DESC" = "Muzikiniuose vaizdo klipuose praleidžiami su muzika nesusiję skyriai";
+"AV_DEFAULT_MODE" = "Numatytasis atkūrimo režimas";
+"AUDIO" = "Garsas";
+"VIDEO" = "Vaizdas";
+
+"THEME_SETTINGS" = "Temos parinktys";
+"OLED_DARK_THEME" = "\"OLED\" tamsi tema";
+"OLED_DARK_THEME_DESC" = "Įgalina \"OLED\" tamsiąją temą";
+"OLED_DARK_KEYBOARD" = "\"OLED\" tamsioji klaviatūra";
+"OLED_DARK_KEYBOARD_DESC" = "Įjungiama \"OLED\" tamsioji klaviatūra";
+"LOW_CONTRAST" = "Žemas kontrastas";
+"LOW_CONTRAST_DESC" = "Mažesnis teksto ir mygtukų kontrastingumas";
+
+"NAVBAR_SETTINGS" = "Navigacijos juostos parinktys";
+"HIDE_HISTORY_BUTTON" = "Paslėpti istorijos mygtuką";
+"HIDE_HISTORY_BUTTON_DESC" = "Naršymo juostoje paslepia istorijos mygtuką";
+"HIDE_CAST_BUTTON" = "Paslėpti \"Cast\" mygtuką";
+"HIDE_CAST_BUTTON_DESC" = "Naršymo juostoje paslepia mygtuką \"Cast\"";
+
+"APPLY" = "Taikyti";
+"APPLY_DESC" = "Uždaro programėlę, kad pritaikytu pakeitimus";
+
+"LINKS" = "Nuorodos";
+"TWITTER" = "Sekite %@ \"Twitter\"";
+"TWITTER_DESC" = "Sekite mane dėl atnaujinimų";
+"DISCORD" = "Prisijungti prie \"Discord\"";
+"DISCORD_DESC" = "Pranešti apie klaidas ir papildomu funkcijų užklausas";
+"SOURCE_CODE" = "Šaltinio kodas";
+"SOURCE_CODE_DESC" = "Peržiūrėkite kodą";
+
+"CLOSE" = "Uždaryti";
+"WARNING" = "Įspėjimas";
+"APPLY_MESSAGE" = "Atlikus šį veiksmą \"YouTube Music\" bus uždaryta, kad būtų galima taikyti pakeitimus. Ar esate tikri?";
+"CANCEL" = "Atšaukti";
+"YES" = "Taip";

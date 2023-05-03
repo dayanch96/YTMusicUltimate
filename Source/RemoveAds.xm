@@ -29,6 +29,10 @@
 - (id)adIntroRenderer {
     return nil;
 }
+
+- (BOOL)isDAIEnabledPlayback {
+    return YES;
+}
 %end
 %end
 

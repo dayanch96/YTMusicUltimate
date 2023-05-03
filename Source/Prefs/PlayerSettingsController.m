@@ -9,6 +9,10 @@ extern NSBundle *YTMusicUltimateBundle();
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    swipeRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.view addGestureRecognizer:swipeRecognizer];
+
     self.navigationItem.leftBarButtonItem = [self backButton];
 
     UITableViewStyle style;
@@ -144,31 +148,20 @@ extern NSBundle *YTMusicUltimateBundle();
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell2"];
             BOOL audioVideoMode = [[NSUserDefaults standardUserDefaults] boolForKey:@"AudioVideoMode"];
             cell.textLabel.text = LOC(@"AV_DEFAULT_MODE");
+
+            UISegmentedControl *control;
             if (@available(iOS 13, *)) {
-            UISegmentedControl *control = [[UISegmentedControl alloc] initWithItems:@[[UIImage systemImageNamed:@"music.note"], [UIImage systemImageNamed:@"film"]]];
-            if (audioVideoMode) {
-                control.selectedSegmentIndex = 0;
+                control = [[UISegmentedControl alloc] initWithItems:@[[UIImage systemImageNamed:@"music.note"], [UIImage systemImageNamed:@"film"]]];
             } else {
-                control.selectedSegmentIndex = 1;
+                control = [[UISegmentedControl alloc] initWithItems:@[LOC(@"AUDIO"), LOC(@"VIDEO")]];
             }
+
+            control.selectedSegmentIndex = audioVideoMode ? 0 : 1;
             [control addTarget:self action:@selector(controlSelect:) forControlEvents:UIControlEventValueChanged];
             [cell.contentView addSubview:control];
             control.translatesAutoresizingMaskIntoConstraints = NO;
             [control.centerYAnchor constraintEqualToAnchor:cell.contentView.centerYAnchor].active = YES;
             [control.trailingAnchor constraintEqualToAnchor:cell.contentView.trailingAnchor constant:-6].active = YES;
-            } else {
-            UISegmentedControl *control = [[UISegmentedControl alloc] initWithItems:@[LOC(@"AUDIO"), LOC(@"VIDEO")]];
-            if (audioVideoMode) {
-                control.selectedSegmentIndex = 0;
-            } else {
-                control.selectedSegmentIndex = 1;
-            }
-            [control addTarget:self action:@selector(controlSelect:) forControlEvents:UIControlEventValueChanged];
-            [cell.contentView addSubview:control];
-            control.translatesAutoresizingMaskIntoConstraints = NO;
-            [control.centerYAnchor constraintEqualToAnchor:cell.contentView.centerYAnchor].active = YES;
-            [control.trailingAnchor constraintEqualToAnchor:cell.contentView.trailingAnchor constant:-6].active = YES;
-            }
             
         }
         return cell;
@@ -206,8 +199,14 @@ extern NSBundle *YTMusicUltimateBundle();
 
 @implementation PlayerSettingsController (Privates)
 
+- (void)handleSwipe:(UISwipeGestureRecognizer *)gesture {
+    if (gesture.direction == UISwipeGestureRecognizerDirectionRight) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 - (void)back {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)togglePlaybackRateButton:(UISwitch *)sender {

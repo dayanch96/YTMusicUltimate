@@ -187,11 +187,11 @@
 
 %ctor {
     BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
-    BOOL audioVideoSelection = ([[NSUserDefaults standardUserDefaults] objectForKey:@"AudioVideoMode"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"AudioVideoMode"] : YES;
+    BOOL audioVideoMode = ([[NSUserDefaults standardUserDefaults] objectForKey:@"AudioVideoMode"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"AudioVideoMode"] : YES;
 
     if (isEnabled) {
         %init(VideoAndAudioModePatches);
-        if (audioVideoSelection) {
+        if (audioVideoMode) {
             %init(audioVideoSelection);
         }
     }
