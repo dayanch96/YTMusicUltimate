@@ -20,7 +20,7 @@
 "NO_AUTORADIO_DESC" = "關閉無限接續播放的電台功能";
 "SKIP_NONMUSIC_PARTS" = "跳過非音樂的片段(SponsorBlock)";
 "SKIP_NONMUSIC_PARTS_DESC" = "跳過音樂影片中不為樂曲本身的片段";
-"AV_DEFAULT_MODE" = "預設播放速度";
+"AV_DEFAULT_MODE" = "預設播放模式";
 "AUDIO" = "音訊";
 "VIDEO" = "影片";
 
