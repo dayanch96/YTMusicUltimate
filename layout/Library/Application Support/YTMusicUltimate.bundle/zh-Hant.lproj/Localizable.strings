@@ -18,7 +18,7 @@
 "VOLBAR_DESC" = "在播放器增加音量控制條";
 "NO_AUTORADIO" = "關閉電台功能";
 "NO_AUTORADIO_DESC" = "關閉無限接續播放的電台功能";
-"SKIP_NONMUSIC_PARTS" = "跳過非MV廣告片段(SponsorBlock)";
+"SKIP_NONMUSIC_PARTS" = "跳過MV廣告片段(SponsorBlock)";
 "SKIP_NONMUSIC_PARTS_DESC" = "跳過MV中的廣告片段";
 "AV_DEFAULT_MODE" = "預設播放模式";
 "AUDIO" = "音訊";
