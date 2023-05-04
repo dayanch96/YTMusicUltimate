@@ -13,13 +13,13 @@
 "PLAYBACK_RATE_BUTTON" = "顯示播放速度按鈕";
 "PLAYBACK_RATE_BUTTON_DESC" = "調整播放速度";
 "SELECTABLE_LYRICS" = "複製歌詞";
-"SELECTABLE_LYRICS_DESC" = "可以複製歌詞";
+"SELECTABLE_LYRICS_DESC" = "允許複製歌詞";
 "VOLBAR" = "音量條";
 "VOLBAR_DESC" = "在播放器增加音量控制條";
 "NO_AUTORADIO" = "關閉電台功能";
 "NO_AUTORADIO_DESC" = "關閉無限接續播放的電台功能";
-"SKIP_NONMUSIC_PARTS" = "跳過非音樂的片段(SponsorBlock)";
-"SKIP_NONMUSIC_PARTS_DESC" = "跳過音樂影片中不為樂曲本身的片段";
+"SKIP_NONMUSIC_PARTS" = "跳過MV廣告片段(SponsorBlock)";
+"SKIP_NONMUSIC_PARTS_DESC" = "跳過MV中的廣告片段";
 "AV_DEFAULT_MODE" = "預設播放模式";
 "AUDIO" = "音訊";
 "VIDEO" = "影片";
@@ -33,8 +33,8 @@
 "LOW_CONTRAST_DESC" = "降低文字和按鈕的對比度";
 
 "NAVBAR_SETTINGS" = "頂部導航欄選項";
-"HIDE_HISTORY_BUTTON" = "隱藏播放歷史按鈕";
-"HIDE_HISTORY_BUTTON_DESC" = "在頂部導航欄隱藏播放歷史按鈕";
+"HIDE_HISTORY_BUTTON" = "隱藏播放紀錄按鈕";
+"HIDE_HISTORY_BUTTON_DESC" = "在頂部導航欄隱藏播放紀錄按鈕";
 "HIDE_CAST_BUTTON" = "隱藏投放按鈕";
 "HIDE_CAST_BUTTON_DESC" = "在頂部導航欄隱藏投放按鈕";
 
@@ -46,11 +46,11 @@
 "TWITTER_DESC" = "關注更新訊息";
 "DISCORD" = "加入 Discord";
 "DISCORD_DESC" = "回報問題和請求新功能";
-"SOURCE_CODE" = "開源代碼";
-"SOURCE_CODE_DESC" = "查看開源代碼";
+"SOURCE_CODE" = "原始碼";
+"SOURCE_CODE_DESC" = "查看原始碼";
 
 "CLOSE" =  "關閉";
 "WARNING" = "警告";
-"APPLY_MESSAGE" = "此操作將會關閉YouTube Music以套用變更，您確定要繼續嗎？";
+"APPLY_MESSAGE" = "此行為將會關閉YouTube Music以套用變更，您確定要繼續嗎？";
 "CANCEL" = "取消";
-"YES" = "是的";
+"YES" = "是";
