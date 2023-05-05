@@ -42,7 +42,6 @@
 "APPLY_DESC" = "アプリを終了して変更を適用します";
 
 "LINKS" = "リンク";
-"TWITTER" = "Follow  on Twitter";
 "TWITTER" = "ツイッターで %@ をフォロー";
 "TWITTER_DESC" = "更新情報を入手する";
 "DISCORD" = "Discordサーバーに参加";
