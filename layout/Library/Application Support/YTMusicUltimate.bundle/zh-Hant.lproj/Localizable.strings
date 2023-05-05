@@ -3,13 +3,13 @@
 "ENABLED_DESC" = "會員功能：去廣告和背景播放等";
 "RESTART_FOOTER" = "重新啟動App以套用設定變更";
 
-"PREMIUM_SETTINGS" = "Premium功能選項";
-"NO_ADS" = "去除廣告";
-"NO_ADS_DESC" = "去除App中的廣告";
+"PREMIUM_SETTINGS" = "Premium功能";
+"NO_ADS" = "移除廣告";
+"NO_ADS_DESC" = "移除App中的廣告";
 "BACKGROUND_PLAYBACK" = "背景播放";
 "BACKGROUND_PLAYBACK_DESC" = "啟用背景播放功能";
 
-"PLAYER_SETTINGS" = "播放介面選項";
+"PLAYER_SETTINGS" = "播放器介面";
 "PLAYBACK_RATE_BUTTON" = "顯示播放速度按鈕";
 "PLAYBACK_RATE_BUTTON_DESC" = "調整播放速度";
 "SELECTABLE_LYRICS" = "複製歌詞";
@@ -21,10 +21,10 @@
 "SKIP_NONMUSIC_PARTS" = "跳過MV廣告片段(SponsorBlock)";
 "SKIP_NONMUSIC_PARTS_DESC" = "跳過MV中的廣告片段";
 "AV_DEFAULT_MODE" = "預設播放模式";
-"AUDIO" = "音訊";
+"AUDIO" = "歌曲";
 "VIDEO" = "影片";
 
-"THEME_SETTINGS" = "介面主題選項";
+"THEME_SETTINGS" = "介面主題";
 "OLED_DARK_THEME" = "OLED 深色主題";
 "OLED_DARK_THEME_DESC" = "啟用 OLED 深色主題";
 "OLED_DARK_KEYBOARD" = "OLED 深色鍵盤";
@@ -32,19 +32,19 @@
 "LOW_CONTRAST" = "低對比度";
 "LOW_CONTRAST_DESC" = "降低文字和按鈕的對比度";
 
-"NAVBAR_SETTINGS" = "頂部導航欄選項";
+"NAVBAR_SETTINGS" = "上方導覽列";
 "HIDE_HISTORY_BUTTON" = "隱藏播放紀錄按鈕";
-"HIDE_HISTORY_BUTTON_DESC" = "在頂部導航欄隱藏播放紀錄按鈕";
+"HIDE_HISTORY_BUTTON_DESC" = "在媒體庫隱藏播放紀錄按鈕";
 "HIDE_CAST_BUTTON" = "隱藏投放按鈕";
-"HIDE_CAST_BUTTON_DESC" = "在頂部導航欄隱藏投放按鈕";
+"HIDE_CAST_BUTTON_DESC" = "在上方導覽列隱藏投放按鈕";
 
 "APPLY" = "套用";
 "APPLY_DESC" = "按下套用會關閉 APP 讓變更生效";
 
 "LINKS" = "相關連結";
 "TWITTER" = "在推特上跟隨%@";
-"TWITTER_DESC" = "關注更新訊息";
-"DISCORD" = "加入 Discord";
+"TWITTER_DESC" = "跟隨我獲取更新資訊";
+"DISCORD" = "加入Discord";
 "DISCORD_DESC" = "回報問題和請求新功能";
 "SOURCE_CODE" = "原始碼";
 "SOURCE_CODE_DESC" = "查看原始碼";
