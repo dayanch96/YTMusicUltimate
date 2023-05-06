@@ -78,28 +78,6 @@
 - (BOOL)allowAudioOnlyManualQualitySelection {
     return YES;
 }
-
-- (BOOL)initialFormatAudioOnly {
-    return YES;
-}
-
-- (BOOL)noVideoModeEnabled{
-    return YES;
-}
-
-- (void)setNoVideoModeEnabled:(BOOL)enabled {
-    %orig(YES);
-}
-%end
-
-%hook YTIAudioConfig
-- (BOOL)hasPlayAudioOnly {
-    return YES;
-}
-
-- (BOOL)playAudioOnly {
-    return YES;
-}
 %end
 
 %hook YTIAudioOnlyPlayabilityRenderer
@@ -134,16 +112,6 @@
 }
 %end
 
-%hook YTUserDefaults
-- (BOOL)noVideoModeEnabled {
-    return YES;
-}
-
-- (void)setNoVideoModeEnabled:(BOOL)enabled {
-    %orig(YES);
-}
-%end
-
 %hook YTQueueItem
 - (BOOL)supportsAudioVideoSwitching {
     return YES;
@@ -173,7 +141,9 @@
 	return 1;
 }
 %end
+%end
 
+%group AVSwitchForAds
 %hook YTDefaultQueueConfig
 - (bool)noVideoModeEnabledForMusic {
 	return 1;
@@ -183,16 +153,53 @@
 	return 1;
 }
 %end
+
+%hook YTUserDefaults
+- (BOOL)noVideoModeEnabled {
+    return YES;
+}
+
+- (void)setNoVideoModeEnabled:(BOOL)enabled {
+    %orig(YES);
+}
+%end
+
+%hook YTIAudioConfig
+- (BOOL)hasPlayAudioOnly {
+    return YES;
+}
+
+- (BOOL)playAudioOnly {
+    return YES;
+}
+%end
+
+%hook YTMSettings
+- (BOOL)initialFormatAudioOnly {
+    return YES;
+}
+
+- (BOOL)noVideoModeEnabled{
+    return YES;
+}
+
+- (void)setNoVideoModeEnabled:(BOOL)enabled {
+    %orig(YES);
+}
+%end
 %end
 
 %ctor {
     BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
     BOOL audioVideoMode = ([[NSUserDefaults standardUserDefaults] objectForKey:@"AudioVideoMode"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"AudioVideoMode"] : YES;
+    BOOL noAds = ([[NSUserDefaults standardUserDefaults] objectForKey:@"noAds_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"noAds_enabled"] : YES;
 
     if (isEnabled) {
         %init(VideoAndAudioModePatches);
         if (audioVideoMode) {
             %init(audioVideoSelection);
+        } if (noAds) {
+            %init(AVSwitchForAds);
         }
     }
 }
