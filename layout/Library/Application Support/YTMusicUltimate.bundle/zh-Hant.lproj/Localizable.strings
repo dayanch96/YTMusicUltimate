@@ -23,9 +23,9 @@
 "AV_DEFAULT_MODE" = "預設播放模式";
 "AUDIO" = "歌曲";
 "VIDEO" = "影片";
-"SEEK_BUTTONS" = "Replace like/dislike with forward and backward buttons";
-"SEEK_TIME_FOOTER" = "Select a seek time in seconds\n\nDefaults:\nSeek backward = 10 sec.\nSeek forward = 30 sec.";
-"DEFAULT" = "Default";
+"SEEK_BUTTONS" = "將「喜歡/不喜歡」替換為「快轉/倒轉」按鈕";
+"SEEK_TIME_FOOTER" = "選擇一個「快轉/倒轉」時間/秒\n\n預設值:\n倒轉 = 10秒\n快轉 = 30秒";
+"DEFAULT" = "預設";
 
 "THEME_SETTINGS" = "介面主題";
 "OLED_DARK_THEME" = "深色主題";
@@ -40,8 +40,8 @@
 "HIDE_HISTORY_BUTTON_DESC" = "在媒體庫隱藏播放紀錄按鈕";
 "HIDE_CAST_BUTTON" = "隱藏投放按鈕";
 "HIDE_CAST_BUTTON_DESC" = "在上方導覽列隱藏投放按鈕";
-"HIDE_FILTER_BUTTON" = "Remove sort filter button";
-"HIDE_FILTER_BUTTON_DESC" = "Removes Library/Downloads filter button from the navigation bar";
+"HIDE_FILTER_BUTTON" = "移除分類按鈕";
+"HIDE_FILTER_BUTTON_DESC" = "從導覽列中移除「媒體庫/下載內容」分類按鈕";
 
 "APPLY" = "套用";
 "APPLY_DESC" = "按下套用會關閉 APP 讓變更生效";
