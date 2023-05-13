@@ -23,6 +23,9 @@
 "AV_DEFAULT_MODE" = "Numatytasis atkūrimo režimas";
 "AUDIO" = "Garsas";
 "VIDEO" = "Vaizdas";
+"SEEK_BUTTONS" = "Replace like/dislike with forward and backward buttons";
+"SEEK_TIME_FOOTER" = "Select a seek time in seconds\n\nDefaults:\nSeek backward = 10 sec.\nSeek forward = 30 sec.";
+"DEFAULT" = "Default";
 
 "THEME_SETTINGS" = "Temos parinktys";
 "OLED_DARK_THEME" = "\"OLED\" tamsi tema";
@@ -37,6 +40,8 @@
 "HIDE_HISTORY_BUTTON_DESC" = "Naršymo juostoje paslepia istorijos mygtuką";
 "HIDE_CAST_BUTTON" = "Paslėpti \"Cast\" mygtuką";
 "HIDE_CAST_BUTTON_DESC" = "Naršymo juostoje paslepia mygtuką \"Cast\"";
+"HIDE_FILTER_BUTTON" = "Remove sort filter button";
+"HIDE_FILTER_BUTTON_DESC" = "Removes Library/Downloads filter button from the navigation bar";
 
 "APPLY" = "Taikyti";
 "APPLY_DESC" = "Uždaro programėlę, kad pritaikytu pakeitimus";

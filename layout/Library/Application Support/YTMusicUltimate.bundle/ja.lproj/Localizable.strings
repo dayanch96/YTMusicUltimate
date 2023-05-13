@@ -23,6 +23,9 @@
 "AV_DEFAULT_MODE" = "デフォルトの再生モード";
 "AUDIO" = "音楽";
 "VIDEO" = "映像";
+"SEEK_BUTTONS" = "Replace like/dislike with forward and backward buttons";
+"SEEK_TIME_FOOTER" = "Select a seek time in seconds\n\nDefaults:\nSeek backward = 10 sec.\nSeek forward = 30 sec.";
+"DEFAULT" = "Default";
 
 "THEME_SETTINGS" = "テーマオプション";
 "OLED_DARK_THEME" = "有機ELダークテーマ";
@@ -37,6 +40,8 @@
 "HIDE_HISTORY_BUTTON_DESC" = "ナビゲーションバーの履歴ボタンを非表示にします";
 "HIDE_CAST_BUTTON" = "キャストボタンを非表示";
 "HIDE_CAST_BUTTON_DESC" = "ナビゲーションバーのキャストボタンを非表示にします";
+"HIDE_FILTER_BUTTON" = "Remove sort filter button";
+"HIDE_FILTER_BUTTON_DESC" = "Removes Library/Downloads filter button from the navigation bar";
 
 "APPLY" = "適用";
 "APPLY_DESC" = "アプリを終了して変更を適用します";

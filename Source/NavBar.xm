@@ -5,6 +5,9 @@ static BOOL buttonEnabled(NSString *key) {
     return [[NSUserDefaults standardUserDefaults] boolForKey:key];
 }
 
+@interface YTMNavigationBarView : UIView
+@end
+
 @interface QTMButton : UIButton
 @property (nonatomic, copy, readwrite) NSString *accessibilityIdentifier;
 @end
@@ -28,11 +31,34 @@ static BOOL buttonEnabled(NSString *key) {
     }
 }
 %end
+
+%hook YTMNavigationBarView
+- (void)layoutSubviews {
+    %orig;
+
+    NSArray *subviews = [self subviews];
+
+    UIView *sortFilterButton = nil;
+    for (UIView *subview in subviews) {
+        if ([subview isKindOfClass:NSClassFromString(@"YTMSortFilterButton")]) {
+            sortFilterButton = subview;
+            break;
+        }
+    }
+
+    if (buttonEnabled(@"hideFilterButton_enabled")) {
+        if (sortFilterButton != nil) {
+            [sortFilterButton removeFromSuperview];
+        }
+    }
+}
+%end
 %end
 
 %ctor {
     BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
 
+    %init;
     if (isEnabled) {
         %init(NavBarItems);
     }

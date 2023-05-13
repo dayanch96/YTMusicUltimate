@@ -59,6 +59,6 @@ static NSString *YTMUltimateIcon;
 
 %ctor {
     NSBundle *tweakBundle = YTMusicUltimateBundle();
-    YTMUltimateIcon = [tweakBundle pathForResource:@"ytmicon-24@2x" ofType:@"png"];
+    YTMUltimateIcon = [tweakBundle pathForResource:@"ytmicon-24@2x" ofType:@"png" inDirectory:@"icons"];
     %init(SettingsPage);
 }
