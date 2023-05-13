@@ -168,15 +168,15 @@ static NSString *GithubPath;
     NSString *tweakBundlePath = [[NSBundle mainBundle] pathForResource:@"YTMusicUltimate" ofType:@"bundle"];
     if (tweakBundlePath) {
         NSBundle *tweakBundle = [NSBundle bundleWithPath:tweakBundlePath];
-        GinsuPath = [tweakBundle pathForResource:@"ginsu-24@2x" ofType:@"png"];
-        Dayanch96Path = [tweakBundle pathForResource:@"dayanch96-24@2x" ofType:@"png"];
-        DiscordPath = [tweakBundle pathForResource:@"discord-24@2x" ofType:@"png"];
-        GithubPath = [tweakBundle pathForResource:@"github-24@2x" ofType:@"png"];
+        GinsuPath = [tweakBundle pathForResource:@"ginsu-24@2x" ofType:@"png" inDirectory:@"icons"];
+        Dayanch96Path = [tweakBundle pathForResource:@"dayanch96-24@2x" ofType:@"png" inDirectory:@"icons"];
+        DiscordPath = [tweakBundle pathForResource:@"discord-24@2x" ofType:@"png" inDirectory:@"icons"];
+        GithubPath = [tweakBundle pathForResource:@"github-24@2x" ofType:@"png" inDirectory:@"icons"];
     } else {
-        GinsuPath = ROOT_PATH_NS("/Library/Application Support/YTMusicUltimate.bundle/ginsu-24@2x.png");
-        Dayanch96Path = ROOT_PATH_NS("/Library/Application Support/YTMusicUltimate.bundle/dayanch96-24@2x.png");
-        DiscordPath = ROOT_PATH_NS("/Library/Application Support/YTMusicUltimate.bundle/discord-24@2x.png");
-        GithubPath = ROOT_PATH_NS("/Library/Application Support/YTMusicUltimate.bundle/github-24@2x.png");
+        GinsuPath = ROOT_PATH_NS("/Library/Application Support/YTMusicUltimate.bundle/icons/ginsu-24@2x.png");
+        Dayanch96Path = ROOT_PATH_NS("/Library/Application Support/YTMusicUltimate.bundle/icons/dayanch96-24@2x.png");
+        DiscordPath = ROOT_PATH_NS("/Library/Application Support/YTMusicUltimate.bundle/icons/discord-24@2x.png");
+        GithubPath = ROOT_PATH_NS("/Library/Application Support/YTMusicUltimate.bundle/icons/github-24@2x.png");
     }
 
     NSMutableDictionary *cellMetadata = [self.links objectAtIndex:indexPath.row];
@@ -304,7 +304,7 @@ static NSString *GithubPath;
     [alert addAction:[UIAlertAction actionWithTitle:LOC(@"CANCEL") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     }]];
 
-    [alert addAction:[UIAlertAction actionWithTitle:LOC(@"YES") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [alert addAction:[UIAlertAction actionWithTitle:LOC(@"YES") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
         exit(0);
     }]];
 

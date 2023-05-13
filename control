@@ -7,4 +7,5 @@ Maintainer: Ginsu
 Author: Ginsu
 Section: Tweaks
 Depends: mobilesubstrate (>= 0.9.5000)
+Icon: https://raw.githubusercontent.com/dayanch96/icons/main/icon.png
 Depiction: https://ginsudev.github.io/repo/depictions/YTMusicUltimate/index.html

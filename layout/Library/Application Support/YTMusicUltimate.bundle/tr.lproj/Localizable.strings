@@ -23,6 +23,9 @@
 "AV_DEFAULT_MODE" = "Varsayılan oynatma modu";
 "AUDIO" = "Şarkı";
 "VIDEO" = "Video";
+"SEEK_BUTTONS" = "Beğenme ve Beğenmeme düğmelerini Hızlı ileri ve Geri Sar düğmeleriyle değiştir";
+"SEEK_TIME_FOOTER" = "Sarma süresini seçiniz\n\Varsayılanlar:\nGeri Sar = 10 sn.\nHızlı ileri = 30 sn.";
+"DEFAULT" = "Varsayılan";
 
 "THEME_SETTINGS" = "Tema ayarları";
 "OLED_DARK_THEME" = "OLED Koyu Tema";
@@ -37,6 +40,8 @@
 "HIDE_HISTORY_BUTTON_DESC" = "Gezinme çubuğundaki geçmiş düğmesini gizler";
 "HIDE_CAST_BUTTON" = "Yayınla düğmesini gizle";
 "HIDE_CAST_BUTTON_DESC" = "Gezinme çubuğundaki yayınlama düğmesini gizler";
+"HIDE_FILTER_BUTTON" = "\"Filtrele\" düğmesini gizle";
+"HIDE_FILTER_BUTTON_DESC" = "Gezinme çubuğundaki Kitaplık/İndirilenler düğmesini gizler";
 
 "APPLY" = "Uygula";
 "APPLY_DESC" = "Değişiklikleri uygulamak için uygulamayı kapatır.";

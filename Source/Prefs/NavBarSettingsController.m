@@ -44,7 +44,7 @@ extern NSBundle *YTMusicUltimateBundle();
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return 3;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -88,6 +88,21 @@ extern NSBundle *YTMusicUltimateBundle();
             [hideCastButton addTarget:self action:@selector(toggleHideCastButton:) forControlEvents:UIControlEventValueChanged];
             hideCastButton.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"hideCastButton_enabled"];
             cell.accessoryView = hideCastButton;
+        } if (indexPath.row == 2) {
+            cell.textLabel.text = LOC(@"HIDE_FILTER_BUTTON");
+            cell.textLabel.adjustsFontSizeToFitWidth = YES;
+            cell.detailTextLabel.text = LOC(@"HIDE_FILTER_BUTTON_DESC");
+            cell.detailTextLabel.numberOfLines = 0;
+
+            if (@available(iOS 13, *)) {
+                cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
+            } else {
+                cell.detailTextLabel.textColor = [UIColor systemGrayColor];
+            }
+            UISwitch *hideFilterButton = [[UISwitch alloc] initWithFrame:CGRectZero];
+            [hideFilterButton addTarget:self action:@selector(toggleHideFilterButton:) forControlEvents:UIControlEventValueChanged];
+            hideFilterButton.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"hideFilterButton_enabled"];
+            cell.accessoryView = hideFilterButton;
         }
     }
 
@@ -149,6 +164,16 @@ extern NSBundle *YTMusicUltimateBundle();
         [[NSUserDefaults standardUserDefaults] synchronize];
     } else {
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"hideCastButton_enabled"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+}
+
+- (void)toggleHideFilterButton:(UISwitch *)sender {
+    if ([sender isOn]) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hideFilterButton_enabled"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    } else {
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"hideFilterButton_enabled"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }

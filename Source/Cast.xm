@@ -158,7 +158,7 @@
 %ctor {
     BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
 
-    if (isEnabled){
+    if (isEnabled) {
         %init(Cast);
     }
 }

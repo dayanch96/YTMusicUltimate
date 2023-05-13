@@ -39,21 +39,32 @@ extern NSBundle *YTMusicUltimateBundle();
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         return 60;
+    } if (indexPath.section == 2 && indexPath.row == 0) {
+        return 70;
     } else {
         return 45;
     }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
         return 5;
+    } if (section == 2) {
+        return 2;
     } else {
         return 1;
     }
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    NSBundle *tweakBundle = YTMusicUltimateBundle();
+    if (section == 2) {
+        return LOC(@"SEEK_TIME_FOOTER");
+    } return nil;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -165,6 +176,39 @@ extern NSBundle *YTMusicUltimateBundle();
             
         }
         return cell;
+    } if (indexPath.section == 2) {
+        if (indexPath.row == 0) {
+            cell.textLabel.text = LOC(@"SEEK_BUTTONS");
+            cell.textLabel.numberOfLines = 0;
+
+            UISwitch *seekButtons = [[UISwitch alloc] initWithFrame:CGRectZero];
+            [seekButtons addTarget:self action:@selector(toggleSeekButtons:) forControlEvents:UIControlEventValueChanged];
+            seekButtons.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"seekButtons_enabled"];
+            cell.accessoryView = seekButtons;
+        } if (indexPath.row == 1) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell3"];
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+            UISegmentedControl *seekTime = [[UISegmentedControl alloc] initWithItems:@[LOC(@"DEFAULT"), @"10", @"20", @"30", @"60"]];
+
+            for (UIView *segmentView in seekTime.subviews) {
+                for (UIView *subview in segmentView.subviews) {
+                    if ([subview isKindOfClass:[UILabel class]]) {
+                        UILabel *label = (UILabel *)subview;
+                        label.adjustsFontSizeToFitWidth = YES;
+                    }
+                }
+            }
+
+            seekTime.selectedSegmentIndex = [defaults integerForKey:@"seekTime"];
+            [seekTime addTarget:self action:@selector(seekTimeSelect:) forControlEvents:UIControlEventValueChanged];
+            [cell.contentView addSubview:seekTime];
+            seekTime.translatesAutoresizingMaskIntoConstraints = NO;
+            [seekTime.centerYAnchor constraintEqualToAnchor:cell.contentView.centerYAnchor].active = YES;
+            [seekTime.centerXAnchor constraintEqualToAnchor:cell.contentView.centerXAnchor].active = YES;
+            [seekTime.leadingAnchor constraintEqualToAnchor:cell.contentView.leadingAnchor constant:5.0].active = YES;
+            [seekTime.trailingAnchor constraintEqualToAnchor:cell.contentView.trailingAnchor constant:-5.0].active = YES;
+}
     }
 
     return cell;
@@ -259,6 +303,16 @@ extern NSBundle *YTMusicUltimateBundle();
     }
 }
 
+- (void)toggleSeekButtons:(UISwitch *)sender {
+    if ([sender isOn]) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"seekButtons_enabled"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    } else {
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"seekButtons_enabled"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+}
+
 - (void)controlSelect:(UISegmentedControl *)sender {
     NSInteger selectedIndex = sender.selectedSegmentIndex;
     NSString *selectedSegment = [sender titleForSegmentAtIndex:selectedIndex];
@@ -268,6 +322,28 @@ extern NSBundle *YTMusicUltimateBundle();
         [[NSUserDefaults standardUserDefaults] synchronize];
     } else if (selectedIndex == 1) {
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"AudioVideoMode"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+}
+
+- (void)seekTimeSelect:(UISegmentedControl *)sender {
+    NSInteger selectedIndex = sender.selectedSegmentIndex;
+    NSString *selectedSegment = [sender titleForSegmentAtIndex:selectedIndex];
+    NSLog(@"Selected segment: %@", selectedSegment);
+    if (selectedIndex == 0) {
+        [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"seekTime"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    } else if (selectedIndex == 1) {
+        [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"seekTime"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    } else if (selectedIndex == 2) {
+        [[NSUserDefaults standardUserDefaults] setInteger:2 forKey:@"seekTime"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    } else if (selectedIndex == 3) {
+        [[NSUserDefaults standardUserDefaults] setInteger:3 forKey:@"seekTime"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    } else if (selectedIndex == 4) {
+        [[NSUserDefaults standardUserDefaults] setInteger:4 forKey:@"seekTime"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
