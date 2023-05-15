@@ -70,6 +70,7 @@ extern NSBundle *YTMusicUltimateBundle();
             }
 
             UISwitch *oledDarkTheme = [[UISwitch alloc] initWithFrame:CGRectZero];
+            oledDarkTheme.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
             [oledDarkTheme addTarget:self action:@selector(toggleOledDarkTheme:) forControlEvents:UIControlEventValueChanged];
             oledDarkTheme.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"oledDarkTheme_enabled"];
             cell.accessoryView = oledDarkTheme;
@@ -85,6 +86,7 @@ extern NSBundle *YTMusicUltimateBundle();
                 cell.detailTextLabel.textColor = [UIColor systemGrayColor];
             }
             UISwitch *oledDarkKeyboard = [[UISwitch alloc] initWithFrame:CGRectZero];
+            oledDarkKeyboard.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
             [oledDarkKeyboard addTarget:self action:@selector(toggleOledDarkKeyboard:) forControlEvents:UIControlEventValueChanged];
             oledDarkKeyboard.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"oledDarkKeyboard_enabled"];
             cell.accessoryView = oledDarkKeyboard;
@@ -100,6 +102,7 @@ extern NSBundle *YTMusicUltimateBundle();
                 cell.detailTextLabel.textColor = [UIColor systemGrayColor];
             }
             UISwitch *lowContrast = [[UISwitch alloc] initWithFrame:CGRectZero];
+            lowContrast.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
             [lowContrast addTarget:self action:@selector(toggleLowContrast:) forControlEvents:UIControlEventValueChanged];
             lowContrast.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"lowContrast_enabled"];
             cell.accessoryView = lowContrast;

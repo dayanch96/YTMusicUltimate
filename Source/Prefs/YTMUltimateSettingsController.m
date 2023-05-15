@@ -118,6 +118,7 @@ static NSString *GithubPath;
         switchView.tag = indexPath.row;
         [cell setAccessoryView:switchView];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        switchView.onTintColor = [UIColor colorWithRed:230/255.0 green:75/255.0 blue:75/255.0 alpha:255/255.0];
         [switchView setOn:[[NSUserDefaults standardUserDefaults] boolForKey:[cellMetadata objectForKey:@"defaultsKey"]] animated:NO];
         [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
     } if (indexPath.section == 1) {

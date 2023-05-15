@@ -70,6 +70,7 @@ extern NSBundle *YTMusicUltimateBundle();
             }
 
             UISwitch *hideHistoryButton = [[UISwitch alloc] initWithFrame:CGRectZero];
+            hideHistoryButton.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
             [hideHistoryButton addTarget:self action:@selector(toggleHideHistoryButton:) forControlEvents:UIControlEventValueChanged];
             hideHistoryButton.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"hideHistoryButton_enabled"];
             cell.accessoryView = hideHistoryButton;
@@ -85,6 +86,7 @@ extern NSBundle *YTMusicUltimateBundle();
                 cell.detailTextLabel.textColor = [UIColor systemGrayColor];
             }
             UISwitch *hideCastButton = [[UISwitch alloc] initWithFrame:CGRectZero];
+            hideCastButton.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
             [hideCastButton addTarget:self action:@selector(toggleHideCastButton:) forControlEvents:UIControlEventValueChanged];
             hideCastButton.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"hideCastButton_enabled"];
             cell.accessoryView = hideCastButton;
@@ -100,6 +102,7 @@ extern NSBundle *YTMusicUltimateBundle();
                 cell.detailTextLabel.textColor = [UIColor systemGrayColor];
             }
             UISwitch *hideFilterButton = [[UISwitch alloc] initWithFrame:CGRectZero];
+            hideFilterButton.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
             [hideFilterButton addTarget:self action:@selector(toggleHideFilterButton:) forControlEvents:UIControlEventValueChanged];
             hideFilterButton.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"hideFilterButton_enabled"];
             cell.accessoryView = hideFilterButton;

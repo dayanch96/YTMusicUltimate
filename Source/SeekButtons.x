@@ -110,9 +110,9 @@ static BOOL seekTime60sec() {
 
 %ctor {
     BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
-    BOOL seekButtons = ([[NSUserDefaults standardUserDefaults] objectForKey:@"seekButtons_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"seekButtons_enabled"] : YES;
+    BOOL seekButtons = [[NSUserDefaults standardUserDefaults] boolForKey:@"seekButtons_enabled"];
 
-    if (isEnabled & seekButtons){
+    if (isEnabled && seekButtons){
         %init(gSeekButtons);
     }
 }

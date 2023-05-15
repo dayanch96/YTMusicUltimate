@@ -70,6 +70,7 @@ extern NSBundle *YTMusicUltimateBundle();
             }
 
             UISwitch *noAds = [[UISwitch alloc] initWithFrame:CGRectZero];
+            noAds.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
             [noAds addTarget:self action:@selector(toggleNoAds:) forControlEvents:UIControlEventValueChanged];
             noAds.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"noAds_enabled"];
             cell.accessoryView = noAds;
@@ -85,6 +86,7 @@ extern NSBundle *YTMusicUltimateBundle();
                 cell.detailTextLabel.textColor = [UIColor systemGrayColor];
             }
             UISwitch *backgroundPlayback = [[UISwitch alloc] initWithFrame:CGRectZero];
+            backgroundPlayback.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
             [backgroundPlayback addTarget:self action:@selector(toggleBackgroundPlayback:) forControlEvents:UIControlEventValueChanged];
             backgroundPlayback.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"backgroundPlayback_enabled"];
             cell.accessoryView = backgroundPlayback;
@@ -152,5 +154,4 @@ extern NSBundle *YTMusicUltimateBundle();
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
-
 @end

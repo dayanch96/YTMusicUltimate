@@ -90,6 +90,7 @@ extern NSBundle *YTMusicUltimateBundle();
             }
 
             UISwitch *playbackRateButton = [[UISwitch alloc] initWithFrame:CGRectZero];
+            playbackRateButton.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
             [playbackRateButton addTarget:self action:@selector(togglePlaybackRateButton:) forControlEvents:UIControlEventValueChanged];
             playbackRateButton.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"playbackRateButton_enabled"];
             cell.accessoryView = playbackRateButton;
@@ -105,6 +106,7 @@ extern NSBundle *YTMusicUltimateBundle();
                 cell.detailTextLabel.textColor = [UIColor systemGrayColor];
             }
             UISwitch *selectableLyrics = [[UISwitch alloc] initWithFrame:CGRectZero];
+            selectableLyrics.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
             [selectableLyrics addTarget:self action:@selector(toggleSelectableLyrics:) forControlEvents:UIControlEventValueChanged];
             selectableLyrics.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"selectableLyrics_enabled"];
             cell.accessoryView = selectableLyrics;
@@ -120,6 +122,7 @@ extern NSBundle *YTMusicUltimateBundle();
                 cell.detailTextLabel.textColor = [UIColor systemGrayColor];
             }
             UISwitch *volBar = [[UISwitch alloc] initWithFrame:CGRectZero];
+            volBar.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
             [volBar addTarget:self action:@selector(toggleVolBar:) forControlEvents:UIControlEventValueChanged];
             volBar.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"volBar_enabled"];
             cell.accessoryView = volBar;
@@ -135,6 +138,7 @@ extern NSBundle *YTMusicUltimateBundle();
                 cell.detailTextLabel.textColor = [UIColor systemGrayColor];
             }
             UISwitch *disableAutoRadio = [[UISwitch alloc] initWithFrame:CGRectZero];
+            disableAutoRadio.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
             [disableAutoRadio addTarget:self action:@selector(toggleDisableAutoRadio:) forControlEvents:UIControlEventValueChanged];
             disableAutoRadio.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"disableAutoRadio_enabled"];
             cell.accessoryView = disableAutoRadio;
@@ -150,6 +154,7 @@ extern NSBundle *YTMusicUltimateBundle();
                 cell.detailTextLabel.textColor = [UIColor systemGrayColor];
             }
             UISwitch *sponsorBlock = [[UISwitch alloc] initWithFrame:CGRectZero];
+            sponsorBlock.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
             [sponsorBlock addTarget:self action:@selector(toggleSponsorBlock:) forControlEvents:UIControlEventValueChanged];
             sponsorBlock.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"sponsorBlock_enabled"];
             cell.accessoryView = sponsorBlock;
@@ -182,6 +187,7 @@ extern NSBundle *YTMusicUltimateBundle();
             cell.textLabel.numberOfLines = 0;
 
             UISwitch *seekButtons = [[UISwitch alloc] initWithFrame:CGRectZero];
+            seekButtons.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
             [seekButtons addTarget:self action:@selector(toggleSeekButtons:) forControlEvents:UIControlEventValueChanged];
             seekButtons.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"seekButtons_enabled"];
             cell.accessoryView = seekButtons;
