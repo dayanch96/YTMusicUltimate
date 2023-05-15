@@ -56,19 +56,29 @@ static BOOL seekTime60sec() {
     NSBundle *tweakBundle = YTMusicUltimateBundle();
     if (seekTimeDef()) {
         [dislikeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"b10" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateNormal];
+        [dislikeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"b10" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateSelected];
         [likeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"f30" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateNormal];
+        [likeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"f30" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateSelected];
     } else if (seekTime10sec()) {
         [dislikeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"b10" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateNormal];
+        [dislikeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"b10" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateSelected];
         [likeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"f10" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateNormal];
+        [likeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"f10" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateSelected];
     } else if (seekTime20sec()) {
         [dislikeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"b20" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateNormal];
+        [dislikeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"b20" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateSelected];
         [likeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"f20" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateNormal];
+        [likeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"f20" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateSelected];
     } else if (seekTime30sec()) {
         [dislikeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"b30" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateNormal];
+        [dislikeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"b30" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateSelected];
         [likeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"f30" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateNormal];
+        [likeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"f30" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateSelected];
     } else if (seekTime60sec()) {
         [dislikeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"b60" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateNormal];
+        [dislikeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"b60" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateSelected];
         [likeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"f60" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateNormal];
+        [likeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"f60" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateSelected];
     }
 }
 
