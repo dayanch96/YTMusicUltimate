@@ -4,6 +4,9 @@
 @property (nonatomic, strong) UIColor *backgroundColor;
 @end
 
+@interface YTPivotBarView : UIView
+@end
+
 @interface YTPivotBarItemView : UIView
 @end
 

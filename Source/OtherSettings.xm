@@ -47,7 +47,17 @@ static BOOL LibraryTabStartup() {
 %end
 
 // Tab bar stuff
+BOOL hasHomeBar = NO;
+CGFloat pivotBarViewHeight;
+
 %group RemoveTabBarLabels
+%hook YTPivotBarView
+- (void)layoutSubviews {
+    %orig;
+    pivotBarViewHeight = self.frame.size.height;
+}
+%end
+
 %hook YTPivotBarItemView
 - (void)layoutSubviews {
     %orig;
@@ -71,9 +81,27 @@ static BOOL LibraryTabStartup() {
 
             if (imageView) {
                 CGFloat imageViewHeight = imageView.intrinsicContentSize.height;
+                CGRect imageViewFrame = imageView.frame;
+                imageViewFrame.size.height = imageViewHeight;
+                imageViewFrame.size.width = imageViewHeight;
+                imageView.frame = imageViewFrame;
 
                 CGRect buttonFrame = subview.frame;
-                buttonFrame.origin.y = (self.frame.size.height - imageViewHeight) / 2.0;
+
+                if (@available(iOS 13.0, *)) {
+                    UIWindowScene *mainWindowScene = (UIWindowScene *)[[[UIApplication sharedApplication] connectedScenes] anyObject];
+                    if (mainWindowScene) {
+                        UIEdgeInsets safeAreaInsets = mainWindowScene.windows.firstObject.safeAreaInsets;
+                        if (safeAreaInsets.bottom > 0) {
+                            hasHomeBar = YES;
+                        }
+                    }
+                }
+                if (hasHomeBar) {
+                    buttonFrame.origin.y = (pivotBarViewHeight - imageViewHeight - 15.0) / 2.0;
+                } else {
+                    buttonFrame.origin.y = (pivotBarViewHeight - imageViewHeight) / 2.0;
+                }
                 buttonFrame.size.height = imageViewHeight;
                 subview.frame = buttonFrame;
             }
