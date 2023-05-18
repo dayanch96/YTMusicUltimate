@@ -43,6 +43,16 @@
 "HIDE_FILTER_BUTTON" = "\"Filtrele\" düğmesini gizle";
 "HIDE_FILTER_BUTTON_DESC" = "Gezinme çubuğundaki Kitaplık/İndirilenler düğmesini gizler";
 
+"OTHER_SETTINGS" = "Diğer ayarlar";
+"DONT_STICK_HEADERS" = "Başlıkları sabitleme";
+"DONT_STICK_HEADERS_DESC" = "Sekmelerin üst kısmına sabitlenmiş çubukları ayırır";
+"REMOVE_TABBAR_LABELS" = "Etiketsiz sekme çubukları";
+"REMOVE_TABBAR_LABELS_DESC" = "Sekme çubuğu etiketlerini kaldırır";
+"STARTUP_TAB" = "Başlangıç sekmesi";
+"HOME" = "Ana Sayfa";
+"EXPLORE" = "Keşfet";
+"LIBRARY" = "Kitaplık";
+
 "APPLY" = "Uygula";
 "APPLY_DESC" = "Değişiklikleri uygulamak için uygulamayı kapatır.";
 

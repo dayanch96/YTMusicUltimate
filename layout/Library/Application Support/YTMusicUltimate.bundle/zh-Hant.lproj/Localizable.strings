@@ -43,6 +43,16 @@
 "HIDE_FILTER_BUTTON" = "移除分類按鈕";
 "HIDE_FILTER_BUTTON_DESC" = "從導覽列中移除「媒體庫/下載內容」分類按鈕";
 
+"OTHER_SETTINGS" = "Other options";
+"DONT_STICK_HEADERS" = "Dont stick headers";
+"DONT_STICK_HEADERS_DESC" = "Unsticks pinned at the top of the screen panels";
+"REMOVE_TABBAR_LABELS" = "No tab bar labels";
+"REMOVE_TABBAR_LABELS_DESC" = "Removes tab bar labels";
+"STARTUP_TAB" = "Startup tab";
+"HOME" = "Home";
+"EXPLORE" = "Explore";
+"LIBRARY" = "Library";
+
 "APPLY" = "套用";
 "APPLY_DESC" = "按下套用會關閉 APP 讓變更生效";
 

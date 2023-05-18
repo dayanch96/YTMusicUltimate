@@ -4,6 +4,7 @@
 #import "PlayerSettingsController.h"
 #import "ThemeSettingsController.h"
 #import "NavBarSettingsController.h"
+#import "OtherSettingsController.h"
 #import <rootless.h>
 
 #define LOC(x) [tweakBundle localizedStringForKey:x value:nil table:nil]
@@ -73,10 +74,19 @@ static NSString *GithubPath;
     if (section == 0) {
         return LOC(@"RESTART_FOOTER");
     } if (section == 2) {
-        return [NSString stringWithFormat:@"YTMusicUltimate %@\n\n© Ginsu (@ginsudev) 2021-2023", @(OS_STRINGIFY(TWEAK_VERSION))];
+        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        NSString *appVersion = infoDictionary[@"CFBundleShortVersionString"];
+        return [NSString stringWithFormat:@"\nYouTubeMusic: v%@\nYTMusicUltimate: v%@\n\n© Ginsu (@ginsudev) 2021-2023", appVersion, @(OS_STRINGIFY(TWEAK_VERSION))];
     }
 
     return nil;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
+    if (section == 2) {
+        UITableViewHeaderFooterView *footer = (UITableViewHeaderFooterView *)view;
+        footer.textLabel.textAlignment = NSTextAlignmentCenter;
+    }
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -84,7 +94,7 @@ static NSString *GithubPath;
         case 0:
             return [self.options count];
         case 1:
-            return 4;
+            return 5;
         case 2:
             return [self.links count];
         default:
@@ -162,6 +172,16 @@ static NSString *GithubPath;
             cell.imageView.image = nil;
         }
 
+        } else if (indexPath.row == 4) {
+        cell.textLabel.text = LOC(@"OTHER_SETTINGS");
+        cell.detailTextLabel.numberOfLines = 0;
+
+        if (@available(iOS 13, *)) {
+            cell.imageView.image = [UIImage systemImageNamed:@"ellipsis"];
+        } else {
+            cell.imageView.image = nil;
+        }
+
         }
     } if (indexPath.section == 2) {
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell2"];
@@ -232,6 +252,9 @@ static NSString *GithubPath;
         } else if (indexPath.row == 3) {
         NavBarSettingsController *navBarSettingsController = [[NavBarSettingsController alloc] init];
         [self.navigationController pushViewController:navBarSettingsController animated:YES];
+        } else if (indexPath.row == 4) {
+        OtherSettingsController *otherSettingsController = [[OtherSettingsController alloc] init];
+        [self.navigationController pushViewController:otherSettingsController animated:YES];
         }
     } else if (indexPath.section == 2) {
         NSMutableDictionary *cellMetadata = [self.links objectAtIndex:indexPath.row];

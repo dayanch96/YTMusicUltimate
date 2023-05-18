@@ -43,6 +43,16 @@
 "HIDE_FILTER_BUTTON" = "Remove sort filter button";
 "HIDE_FILTER_BUTTON_DESC" = "Removes Library/Downloads filter button from the navigation bar";
 
+"OTHER_SETTINGS" = "Other options";
+"DONT_STICK_HEADERS" = "Dont stick headers";
+"DONT_STICK_HEADERS_DESC" = "Unsticks pinned at the top of the screen panels";
+"REMOVE_TABBAR_LABELS" = "No tab bar labels";
+"REMOVE_TABBAR_LABELS_DESC" = "Removes tab bar labels";
+"STARTUP_TAB" = "Startup tab";
+"HOME" = "Home";
+"EXPLORE" = "Explore";
+"LIBRARY" = "Library";
+
 "APPLY" = "Áp dụng";
 "APPLY_DESC" = "Đóng ứng dụng để áp dụng các thay đổi";
 
