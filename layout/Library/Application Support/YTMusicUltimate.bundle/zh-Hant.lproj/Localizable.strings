@@ -43,15 +43,15 @@
 "HIDE_FILTER_BUTTON" = "移除分類按鈕";
 "HIDE_FILTER_BUTTON_DESC" = "從導覽列中移除「媒體庫/下載內容」分類按鈕";
 
-"OTHER_SETTINGS" = "Other options";
-"DONT_STICK_HEADERS" = "Dont stick headers";
-"DONT_STICK_HEADERS_DESC" = "Unsticks pinned at the top of the screen panels";
-"REMOVE_TABBAR_LABELS" = "No tab bar labels";
-"REMOVE_TABBAR_LABELS_DESC" = "Removes tab bar labels";
-"STARTUP_TAB" = "Startup tab";
-"HOME" = "Home";
-"EXPLORE" = "Explore";
-"LIBRARY" = "Library";
+"OTHER_SETTINGS" = "其它選項";
+"DONT_STICK_HEADERS" = "不要固定頁首";
+"DONT_STICK_HEADERS_DESC" = "解除固定在螢幕上方";
+"REMOVE_TABBAR_LABELS" = "沒有標籤文字";
+"REMOVE_TABBAR_LABELS_DESC" = "移除功能標籤文字";
+"STARTUP_TAB" = "預設開啟畫面";
+"HOME" = "首頁";
+"EXPLORE" = "探索";
+"LIBRARY" = "媒體庫";
 
 "APPLY" = "套用";
 "APPLY_DESC" = "按下套用會關閉 APP 讓變更生效";
@@ -66,6 +66,6 @@
 
 "CLOSE" =  "關閉";
 "WARNING" = "警告";
-"APPLY_MESSAGE" = "此行為將會關閉YouTube Music以套用變更，您確定要繼續嗎？";
+"APPLY_MESSAGE" = "這個操作將關閉YouTube Music以套用變更，您確定要繼續嗎？";
 "CANCEL" = "取消";
 "YES" = "是";
