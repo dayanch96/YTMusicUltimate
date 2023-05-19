@@ -6,7 +6,7 @@ ARCHS = arm64
 THEOS_DEVICE_IP = localhost -p 2222
 INSTALL_TARGET_PROCESSES = SpringBoard YouTubeMusic
 TARGET = iphone:clang:15.5:12.1.2
-PACKAGE_VERSION = 1.3.9
+PACKAGE_VERSION = 1.4.0
 
 include $(THEOS)/makefiles/common.mk
 

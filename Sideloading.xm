@@ -1,9 +1,33 @@
+#import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <dlfcn.h>
+#import <rootless.h>
 
 #define YT_BUNDLE_ID @"com.google.ios.youtubemusic"
 #define YT_BUNDLE_NAME @"YouTubeMusic"
 #define YT_NAME @"YouTube Music"
+#define YTMULoginAlert @"YTMULoginAlert"
+#define LOC(x) [tweakBundle localizedStringForKey:x value:nil table:nil]
+
+NSBundle *YTMusicUltimateBundle() {
+    static NSBundle *bundle = nil;
+    static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+        NSString *tweakBundlePath = [[NSBundle mainBundle] pathForResource:@"YTMusicUltimate" ofType:@"bundle"];
+        if (tweakBundlePath)
+            bundle = [NSBundle bundleWithPath:tweakBundlePath];
+        else
+            bundle = [NSBundle bundleWithPath:ROOT_PATH_NS("/Library/Application Support/YTMusicUltimate.bundle")];
+    });
+    return bundle;
+}
+
+@interface YTAlertView : UIView
+@property (nonatomic, copy, readwrite) NSString *title;
+@property (nonatomic, copy, readwrite) NSString *subtitle;
++ (instancetype)infoDialog;
+- (void)show;
+@end
 
 @interface SSOConfiguration : NSObject
 @end
@@ -192,6 +216,36 @@ static NSString *accessGroupID() {
 %end
 %end
 
+%group gWhyNot
+%hook NSBundle
+- (NSDictionary *)infoDictionary {
+    NSDictionary *originalInfoDictionary = %orig;
+
+    NSMutableDictionary *newInfoDictionary = [NSMutableDictionary dictionaryWithDictionary:originalInfoDictionary];
+    [newInfoDictionary setValue:YT_BUNDLE_ID forKey:@"CFBundleIdentifier"];
+
+    return newInfoDictionary;
+}
+%end
+%end
+
+%hook YTMFirstTimeSignInViewController
++ (void)initialize {
+    %orig;
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        %init(gWhyNot);
+
+        NSBundle *tweakBundle = YTMusicUltimateBundle();
+        YTAlertView *alertView = [%c(YTAlertView) infoDialog];
+        alertView.title = LOC(@"WARNING");
+        alertView.subtitle = LOC(@"LOGIN_INFO");
+        [alertView show];
+    });
+}
+%end
+
 %ctor {
+    %init;
     %init(SideloadingFixes);
 }

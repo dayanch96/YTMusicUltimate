@@ -66,6 +66,7 @@
 
 "CLOSE" = "Close";
 "WARNING" = "Warning";
+"LOGIN_INFO" = "App restart required after successful signing into Google account";
 "APPLY_MESSAGE" = "This action will close YouTube Music to apply changes. Are you sure?";
 "CANCEL" = "Cancel";
 "YES" = "Yes";

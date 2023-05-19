@@ -66,6 +66,7 @@
 
 "CLOSE" = "Kapat";
 "WARNING" = "Uyarı";
+"LOGIN_INFO" = "Google hesabına başarılı girişten sonra uygulamanın yeniden başlatılması gerekir";
 "APPLY_MESSAGE" = "Bu eylem, değişikliklerin uygulanması için YouTube Music'i kapatacak. Devam etmek istediğine emin misin?";
 "CANCEL" = "İptal";
 "YES" = "Evet";

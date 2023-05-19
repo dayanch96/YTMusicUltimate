@@ -66,6 +66,7 @@
 
 "CLOSE" = "Uždaryti";
 "WARNING" = "Įspėjimas";
+"LOGIN_INFO" = "App restart required after successful signing into Google account";
 "APPLY_MESSAGE" = "Atlikus šį veiksmą \"YouTube Music\" bus uždaryta, kad būtų galima taikyti pakeitimus. Ar esate tikri?";
 "CANCEL" = "Atšaukti";
 "YES" = "Taip";
