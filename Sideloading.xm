@@ -234,13 +234,13 @@ static NSString *accessGroupID() {
     %orig;
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        %init(gWhyNot);
-
         NSBundle *tweakBundle = YTMusicUltimateBundle();
         YTAlertView *alertView = [%c(YTAlertView) infoDialog];
         alertView.title = LOC(@"WARNING");
         alertView.subtitle = LOC(@"LOGIN_INFO");
         [alertView show];
+
+        %init(gWhyNot);
     });
 }
 %end
