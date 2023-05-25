@@ -16,10 +16,10 @@ The best tweak for the YouTube Music on iOS.
 * **Jailbreak:**
 Add __[https://ginsu.dev/repo](https://ginsu.dev/repo)__ to your favorite installer and download latest version from there, or from __[Releases](https://github.com/ginsudev/YTMusicUltimate/releases)__ page.
 
-(arm.deb version for Rootless and arm64.deb version for Rootless devices)
+(arm.deb version for Rootful and arm64.deb version for Rootless devices)
 
 * **Sideloading (Without jailbreak):** 
-Download IPA file __[Releases](https://github.com/ginsudev/YTMusicUltimate/releases)__ page and install the using signer such as __[Sideloadly](https://www.idownloadblog.com/2022/03/28/sideload-apps-iphone-ipad-apple-silicon-macs-sideloady/)__/__[AltStore](https://faq.altstore.io/)__
+Download IPA file from the __[Releases](https://github.com/ginsudev/YTMusicUltimate/releases)__ page and install using signer such as __[Sideloadly](https://www.idownloadblog.com/2022/03/28/sideload-apps-iphone-ipad-apple-silicon-macs-sideloady/)__/__[AltStore](https://faq.altstore.io/)__
 
     Or sign the app with a paid certificate.
 
