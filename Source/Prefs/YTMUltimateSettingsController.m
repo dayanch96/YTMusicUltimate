@@ -7,13 +7,20 @@
 #import "OtherSettingsController.h"
 #import <rootless.h>
 
-#define LOC(x) [tweakBundle localizedStringForKey:x value:nil table:nil]
-extern NSBundle *YTMusicUltimateBundle();
+NSBundle *YTMusicUltimateBundle() {
+    static NSBundle *bundle = nil;
+    static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+        NSString *tweakBundlePath = [[NSBundle mainBundle] pathForResource:@"YTMusicUltimate" ofType:@"bundle"];
+        if (tweakBundlePath)
+            bundle = [NSBundle bundleWithPath:tweakBundlePath];
+        else
+            bundle = [NSBundle bundleWithPath:ROOT_PATH_NS("/Library/Application Support/YTMusicUltimate.bundle")];
+    });
+    return bundle;
+}
 
-static NSString *GinsuPath;
-static NSString *Dayanch96Path;
-static NSString *DiscordPath;
-static NSString *GithubPath;
+#define LOC(x) [tweakBundle localizedStringForKey:x value:nil table:nil]
 
 @implementation YTMUltimateSettingsController
 
@@ -71,6 +78,7 @@ static NSString *GithubPath;
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     NSBundle *tweakBundle = YTMusicUltimateBundle();
+
     if (section == 0) {
         return LOC(@"RESTART_FOOTER");
     } if (section == 2) {
@@ -103,9 +111,8 @@ static NSString *GithubPath;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-
     NSBundle *tweakBundle = YTMusicUltimateBundle();
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
 
     if (cell == nil){
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
@@ -186,20 +193,6 @@ static NSString *GithubPath;
     } if (indexPath.section == 2) {
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell2"];
 
-    NSString *tweakBundlePath = [[NSBundle mainBundle] pathForResource:@"YTMusicUltimate" ofType:@"bundle"];
-    if (tweakBundlePath) {
-        NSBundle *tweakBundle = [NSBundle bundleWithPath:tweakBundlePath];
-        GinsuPath = [tweakBundle pathForResource:@"ginsu-24@2x" ofType:@"png" inDirectory:@"icons"];
-        Dayanch96Path = [tweakBundle pathForResource:@"dayanch96-24@2x" ofType:@"png" inDirectory:@"icons"];
-        DiscordPath = [tweakBundle pathForResource:@"discord-24@2x" ofType:@"png" inDirectory:@"icons"];
-        GithubPath = [tweakBundle pathForResource:@"github-24@2x" ofType:@"png" inDirectory:@"icons"];
-    } else {
-        GinsuPath = ROOT_PATH_NS("/Library/Application Support/YTMusicUltimate.bundle/icons/ginsu-24@2x.png");
-        Dayanch96Path = ROOT_PATH_NS("/Library/Application Support/YTMusicUltimate.bundle/icons/dayanch96-24@2x.png");
-        DiscordPath = ROOT_PATH_NS("/Library/Application Support/YTMusicUltimate.bundle/icons/discord-24@2x.png");
-        GithubPath = ROOT_PATH_NS("/Library/Application Support/YTMusicUltimate.bundle/icons/github-24@2x.png");
-    }
-
     NSMutableDictionary *cellMetadata = [self.links objectAtIndex:indexPath.row];
     cell.textLabel.text = [cellMetadata objectForKey:@"title"];
     cell.detailTextLabel.text = [cellMetadata objectForKey:@"subtitle"];
@@ -207,28 +200,28 @@ static NSString *GithubPath;
 
     if (indexPath.row == 0) {
         if (@available(iOS 13, *)) {
-            cell.imageView.image = [UIImage imageWithContentsOfFile:GinsuPath];
+            cell.imageView.image = [UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"ginsu-24@2x" ofType:@"png" inDirectory:@"icons"]];
             cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
         } else {
             cell.detailTextLabel.textColor = [UIColor systemGrayColor];
         }
     } else if (indexPath.row == 1) {
         if (@available(iOS 13, *)) {
-            cell.imageView.image = [UIImage imageWithContentsOfFile:Dayanch96Path];
+            cell.imageView.image = [UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"dayanch96-24@2x" ofType:@"png" inDirectory:@"icons"]];
             cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
         } else {
             cell.detailTextLabel.textColor = [UIColor systemGrayColor];
         }
     } else if (indexPath.row == 2) {
         if (@available(iOS 13, *)) {
-            cell.imageView.image = [UIImage imageWithContentsOfFile:DiscordPath];
+            cell.imageView.image = [UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"discord-24@2x" ofType:@"png" inDirectory:@"icons"]];
             cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
         } else {
             cell.detailTextLabel.textColor = [UIColor systemGrayColor];
         }
     } else if (indexPath.row == 3) {
         if (@available(iOS 13, *)) {
-            cell.imageView.image = [UIImage imageWithContentsOfFile:GithubPath];
+            cell.imageView.image = [UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"github-24@2x" ofType:@"png" inDirectory:@"icons"]];
             cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
         } else {
             cell.detailTextLabel.textColor = [UIColor systemGrayColor];

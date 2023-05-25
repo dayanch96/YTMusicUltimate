@@ -221,27 +221,36 @@ static NSString *accessGroupID() {
 - (NSDictionary *)infoDictionary {
     NSDictionary *originalInfoDictionary = %orig;
 
-    NSMutableDictionary *newInfoDictionary = [NSMutableDictionary dictionaryWithDictionary:originalInfoDictionary];
-    [newInfoDictionary setValue:YT_BUNDLE_ID forKey:@"CFBundleIdentifier"];
-
-    return newInfoDictionary;
+    NSString *bundleIdentifier = originalInfoDictionary[@"CFBundleIdentifier"];
+    if (![bundleIdentifier isEqualToString:YT_BUNDLE_ID]) {
+        if ([bundleIdentifier hasPrefix:@"com.google.ios.youtube."] || ![bundleIdentifier hasPrefix:@"com.google"]) {
+            NSMutableDictionary *newInfoDictionary = [NSMutableDictionary dictionaryWithDictionary:originalInfoDictionary];
+            [newInfoDictionary setValue:YT_BUNDLE_ID forKey:@"CFBundleIdentifier"];
+            return newInfoDictionary;
+        }
+    } return originalInfoDictionary;
 }
 %end
 %end
 
-%hook YTMFirstTimeSignInViewController
+%hook SSOSafariSignIn
 + (void)initialize {
     %orig;
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSBundle *tweakBundle = YTMusicUltimateBundle();
-        YTAlertView *alertView = [%c(YTAlertView) infoDialog];
-        alertView.title = LOC(@"WARNING");
-        alertView.subtitle = LOC(@"LOGIN_INFO");
-        [alertView show];
-
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         %init(gWhyNot);
     });
+}
+%end
+
+%hook YTMFirstTimeSignInViewController
+- (void)viewDidDisappear:(bool)arg1 {
+    %orig;
+
+    NSBundle *tweakBundle = YTMusicUltimateBundle();
+    YTAlertView *alertView = [%c(YTAlertView) infoDialog];
+    alertView.title = LOC(@"WARNING");
+    alertView.subtitle = LOC(@"LOGIN_INFO");
+    [alertView show];
 }
 %end
 

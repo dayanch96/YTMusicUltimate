@@ -62,6 +62,15 @@ CGFloat pivotBarViewHeight;
 - (void)layoutSubviews {
     %orig;
 
+    CGFloat pivotBarAccessibilityControlWidth;
+
+    for (UIView *subview in self.subviews) {
+        if ([subview isKindOfClass:NSClassFromString(@"YTPivotBarItemViewAccessibilityControl")]) {
+            pivotBarAccessibilityControlWidth = CGRectGetWidth(subview.frame);
+            break;
+        }
+    }
+
     for (UIView *subview in self.subviews) {
         if ([subview isKindOfClass:NSClassFromString(@"YTQTMButton")]) {
             for (UIView *buttonSubview in subview.subviews) {
@@ -80,12 +89,8 @@ CGFloat pivotBarViewHeight;
             }
 
             if (imageView) {
-                CGFloat imageViewHeight = imageView.intrinsicContentSize.height;
-                CGRect imageViewFrame = imageView.frame;
-                imageViewFrame.size.height = imageViewHeight;
-                imageViewFrame.size.width = imageViewHeight;
-                imageView.frame = imageViewFrame;
-
+                CGFloat imageViewHeight = imageView.image.size.height;
+                CGFloat imageViewWidth = imageView.image.size.width;
                 CGRect buttonFrame = subview.frame;
 
                 if (@available(iOS 13.0, *)) {
@@ -97,13 +102,18 @@ CGFloat pivotBarViewHeight;
                         }
                     }
                 }
-                if (hasHomeBar) {
-                    buttonFrame.origin.y = (pivotBarViewHeight - imageViewHeight - 15.0) / 2.0;
-                } else {
-                    buttonFrame.origin.y = (pivotBarViewHeight - imageViewHeight) / 2.0;
-                }
+
+                CGFloat yOffset = hasHomeBar ? 15.0 : 0.0;
+                CGFloat xOffset = (pivotBarAccessibilityControlWidth - imageViewWidth) / 2.0;
+
+                buttonFrame.origin.y = (pivotBarViewHeight - imageViewHeight - yOffset) / 2.0;
+                buttonFrame.origin.x = xOffset;
+
                 buttonFrame.size.height = imageViewHeight;
+                buttonFrame.size.width = imageViewWidth;
+
                 subview.frame = buttonFrame;
+                subview.bounds = CGRectMake(0, 0, imageViewWidth, imageViewHeight);
             }
         }
     }

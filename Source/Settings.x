@@ -14,19 +14,12 @@
 
 extern NSBundle *YTMusicUltimateBundle();
 
-static NSString *YTMUltimateIcon;
-
 %group SettingsPage
 %hook YTMAvatarAccountView
 
 - (void)setAccountMenuUpperButtons:(id)arg1 lowerButtons:(id)arg2 {
-    
-    UIImage *icon;
-    if (@available(iOS 13, *)) {
-        icon = [UIImage imageWithContentsOfFile:YTMUltimateIcon];
-    } else {
-        icon = nil;
-    }
+    NSBundle *tweakBundle = YTMusicUltimateBundle();
+    UIImage *icon = [UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"ytmicon-24@2x" ofType:@"png" inDirectory:@"icons"]];
     
     //Create the YTMusicUltimate button
     YTMAccountButton *button = [[%c(YTMAccountButton) alloc] initWithTitle:@"YTMusicUltimate" identifier:@"ytmult" icon:icon actionBlock:^(BOOL arg4) {
@@ -58,7 +51,5 @@ static NSString *YTMUltimateIcon;
 %end
 
 %ctor {
-    NSBundle *tweakBundle = YTMusicUltimateBundle();
-    YTMUltimateIcon = [tweakBundle pathForResource:@"ytmicon-24@2x" ofType:@"png" inDirectory:@"icons"];
     %init(SettingsPage);
 }
