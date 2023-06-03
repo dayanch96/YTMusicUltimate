@@ -124,18 +124,53 @@
 
 #pragma mark - Low contrast mode
 %group lowContrast
-%hook YTCommonColorPalette
-- (UIColor *)textPrimary { 
-    return [UIColor colorWithWhite:0.565 alpha:1];
-}
-- (UIColor *)textSecondary { 
-    return [UIColor colorWithWhite:0.565 alpha:1]; 
-}
-%end
-
 %hook UIColor
 + (UIColor *)whiteColor {
     return [UIColor colorWithWhite:0.565 alpha:1];
+}
+%end
+
+%hook YTCommonColorPalette
+- (UIColor *)textPrimary { 
+    return [UIColor whiteColor];
+}
+- (UIColor *)textSecondary { 
+    return [UIColor whiteColor]; 
+}
+%end
+
+%hook UIButton 
+- (void)setTitleColor:(UIColor *)color forState:(UIControlState)state {
+    %log;
+    color = [UIColor whiteColor];
+    %orig(color, state);
+}
+%end
+
+%hook UILabel
+- (void)setTextColor:(UIColor *)textColor {
+    %log;
+    textColor = [UIColor whiteColor];
+    %orig(textColor);
+}
+%end
+
+%hook UITextView
+- (void)setTextColor:(UIColor *)textColor {
+    %log;
+    textColor = [UIColor whiteColor];
+    %orig(textColor);
+}
+%end
+
+%hook ASTextNode
+- (NSAttributedString *)attributedString {
+    NSAttributedString *originalAttributedString = %orig;
+
+    NSMutableAttributedString *newAttributedString = [originalAttributedString mutableCopy];
+    [newAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, newAttributedString.length)];
+
+    return newAttributedString;
 }
 %end
 %end
