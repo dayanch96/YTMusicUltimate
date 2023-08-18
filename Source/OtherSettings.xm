@@ -1,19 +1,11 @@
 #import "OtherSettings.h"
 
-static int selectedTab() {
+static BOOL removeTab(NSString *key) {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:key];
+}
+
+static NSInteger selectedTab() {
     return [[NSUserDefaults standardUserDefaults] integerForKey:@"startupPage"];
-}
-
-static BOOL HomeTabStartup() {
-    return selectedTab() == 0;
-}
-
-static BOOL ExploreTabStartup() {
-    return selectedTab() == 1;
-}
-
-static BOOL LibraryTabStartup() {
-    return selectedTab() == 2;
 }
 
 // Headers stuff
@@ -121,26 +113,58 @@ CGFloat pivotBarViewHeight;
 %end
 %end
 
+// Remove tabs
+%hook YTPivotBarView
+- (void)setRenderer:(YTIPivotBarRenderer *)renderer {
+    NSMutableArray <YTIPivotBarSupportedRenderers *> *items = [renderer itemsArray];
+
+    NSDictionary *identifiersToRemove = @{
+        @"FEmusic_home": @(removeTab(@"hideHomeTab")),
+        @"FEmusic_immersive": @(removeTab(@"hideSamplesTab")),
+        @"FEmusic_explore": @(removeTab(@"hideExploreTab")),
+        @"FEmusic_library_landing": @(removeTab(@"hideLibraryTab"))
+    };
+
+    for (NSString *identifier in identifiersToRemove) {
+        BOOL shouldRemoveItem = [identifiersToRemove[identifier] boolValue];
+        NSUInteger index = [items indexOfObjectPassingTest:^BOOL(YTIPivotBarSupportedRenderers *renderers, NSUInteger idx, BOOL *stop) {
+            return shouldRemoveItem && [[[renderers pivotBarItemRenderer] pivotIdentifier] isEqualToString:identifier];
+        }];
+
+        if (index != NSNotFound) {
+            [items removeObjectAtIndex:index];
+        }
+    } %orig;
+}
+%end
+
 // Startup bar
 BOOL isTabSelected = NO;
 
 %hook YTPivotBarViewController
 - (void)viewDidAppear:(BOOL)animated {
     %orig();
-    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"startupPage"]) {
-        [[NSUserDefaults standardUserDefaults] integerForKey:@"startupPage"];
-        if (HomeTabStartup()) {
-            [self selectItemWithPivotIdentifier:@"FEmusic_home"];
-            isTabSelected = YES;
+
+    if (!isTabSelected) {
+        NSString *pivotIdentifier;
+        switch (selectedTab()) {
+            case 0:
+                pivotIdentifier = @"FEmusic_home";
+                break;
+            case 1:
+                pivotIdentifier = @"FEmusic_immersive";
+                break;
+            case 2:
+                pivotIdentifier = @"FEmusic_explore";
+                break;
+            case 3:
+                pivotIdentifier = @"FEmusic_library_landing";
+                break;
+            default:
+                return;
         }
-        if (ExploreTabStartup()) {
-            [self selectItemWithPivotIdentifier:@"FEmusic_explore"];
-            isTabSelected = YES;
-        }
-        if (LibraryTabStartup()) {
-            [self selectItemWithPivotIdentifier:@"FEmusic_library_landing"];
-            isTabSelected = YES;
-        }
+        [self selectItemWithPivotIdentifier:pivotIdentifier];
+        isTabSelected = YES;
     }
 }
 %end

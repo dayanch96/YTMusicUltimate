@@ -16,3 +16,17 @@
 @interface YTPivotBarViewController : UIViewController
 - (void)selectItemWithPivotIdentifier:(id)pivotIndentifier;
 @end
+
+@interface YTIPivotBarItemRenderer : NSObject
+ @property(copy, nonatomic) NSString *pivotIdentifier;
+ - (NSString *)pivotIdentifier;
+ @end
+
+ @interface YTIPivotBarSupportedRenderers : NSObject
+ @property(retain, nonatomic) YTIPivotBarItemRenderer *pivotBarItemRenderer;
+ - (YTIPivotBarItemRenderer *)pivotBarItemRenderer;
+ @end
+
+ @interface YTIPivotBarRenderer : NSObject
+ - (NSMutableArray <YTIPivotBarSupportedRenderers *> *)itemsArray;
+ @end

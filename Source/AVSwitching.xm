@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import "UIKit/UIKit.h"
 
 %group VideoAndAudioModePatches
 // Remove popup reminder 
@@ -144,49 +145,49 @@
 %end
 
 %group AVSwitchForAds
-%hook YTDefaultQueueConfig
-- (bool)noVideoModeEnabledForMusic {
-	return 1;
-}
+// %hook YTDefaultQueueConfig
+// - (bool)noVideoModeEnabledForMusic {
+// 	return 1;
+// }
 
-- (bool)noVideoModeEnabledForPodcasts {
-	return 1;
-}
-%end
+// - (bool)noVideoModeEnabledForPodcasts {
+// 	return 1;
+// }
+// %end
 
-%hook YTUserDefaults
-- (BOOL)noVideoModeEnabled {
-    return YES;
-}
+// %hook YTUserDefaults
+// - (BOOL)noVideoModeEnabled {
+//     return YES;
+// }
 
-- (void)setNoVideoModeEnabled:(BOOL)enabled {
-    %orig(YES);
-}
-%end
+// - (void)setNoVideoModeEnabled:(BOOL)enabled {
+//     %orig(YES);
+// }
+// %end
 
-%hook YTIAudioConfig
-- (BOOL)hasPlayAudioOnly {
-    return YES;
-}
+// %hook YTIAudioConfig
+// - (BOOL)hasPlayAudioOnly {
+//     return YES;
+// }
 
-- (BOOL)playAudioOnly {
-    return YES;
-}
-%end
+// - (BOOL)playAudioOnly {
+//     return YES;
+// }
+// %end
 
-%hook YTMSettings
-- (BOOL)initialFormatAudioOnly {
-    return YES;
-}
+// %hook YTMSettings
+// - (BOOL)initialFormatAudioOnly {
+//     return YES;
+// }
 
-- (BOOL)noVideoModeEnabled{
-    return YES;
-}
+// - (BOOL)noVideoModeEnabled{
+//     return YES;
+// }
 
-- (void)setNoVideoModeEnabled:(BOOL)enabled {
-    %orig(YES);
-}
-%end
+// - (void)setNoVideoModeEnabled:(BOOL)enabled {
+//     %orig(YES);
+// }
+// %end
 %end
 
 %ctor {

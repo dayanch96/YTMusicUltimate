@@ -1,7 +1,10 @@
-#import "UIKit/UIKit.h"
+#import <UIKit/UIKit.h>
+#import "PremiumSettingsController.h"
+#import "PlayerSettingsController.h"
+#import "ThemeSettingsController.h"
+#import "NavBarSettingsController.h"
+#import "TabBarSettingsController.h"
 
-@interface YTMUltimateSettingsController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface YTMUltimateSettingsController : UIViewController <UITableViewDelegate, UITableViewDataSource> 
 @property (nonatomic, strong) UITableView* tableView;
-@property (nonatomic, strong) NSMutableArray<NSMutableDictionary *>* options;
-@property (nonatomic, strong) NSMutableArray<NSMutableDictionary *>* links;
 @end

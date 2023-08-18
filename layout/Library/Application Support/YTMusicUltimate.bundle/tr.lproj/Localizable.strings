@@ -36,6 +36,8 @@
 "LOW_CONTRAST_DESC" = "Metin ve düğmeler için daha düşük kontrast";
 
 "NAVBAR_SETTINGS" = "Gezinme çubuğu ayarları";
+"DONT_STICK_HEADERS" = "Başlıkları sabitleme";
+"DONT_STICK_HEADERS_DESC" = "Sekmelerin üst kısmına sabitlenmiş çubukları ayırır";
 "HIDE_HISTORY_BUTTON" = "Geçmiş düğmesini gizle";
 "HIDE_HISTORY_BUTTON_DESC" = "Gezinme çubuğundaki geçmiş düğmesini gizler";
 "HIDE_CAST_BUTTON" = "Yayınla düğmesini gizle";
@@ -43,15 +45,19 @@
 "HIDE_FILTER_BUTTON" = "\"Filtrele\" düğmesini gizle";
 "HIDE_FILTER_BUTTON_DESC" = "Gezinme çubuğundaki Kitaplık/İndirilenler düğmesini gizler";
 
-"OTHER_SETTINGS" = "Diğer ayarlar";
-"DONT_STICK_HEADERS" = "Başlıkları sabitleme";
-"DONT_STICK_HEADERS_DESC" = "Sekmelerin üst kısmına sabitlenmiş çubukları ayırır";
-"REMOVE_TABBAR_LABELS" = "Etiketsiz sekme çubukları";
-"REMOVE_TABBAR_LABELS_DESC" = "Sekme çubuğu etiketlerini kaldırır";
+"TABBAR_SETTINGS" = "Sekme çubuğu ayarları";
 "STARTUP_TAB" = "Başlangıç sekmesi";
 "HOME" = "Ana Sayfa";
+"SAMPLES" = "Sana Özel";
 "EXPLORE" = "Keşfet";
 "LIBRARY" = "Kitaplık";
+
+"TAB_SETTINGS" = "Sekme çubuğu";
+"REMOVE_TABBAR_LABELS" = "Etiketsiz sekme çubukları";
+"HIDE_HOME" = "Ana Sayfa Sekmesini Gizle";
+"HIDE_SAMPLES" = "Sana Özel Sekmesini Gizle";
+"HIDE_EXPLORE" = "Keşfet Sekmesini Gizle";
+"HIDE_LIBRARY" = "Kitaplık Sekmesini Gizle";
 
 "APPLY" = "Uygula";
 "APPLY_DESC" = "Değişiklikleri uygulamak için uygulamayı kapatır.";

@@ -1,19 +1,12 @@
 #import "ThemeSettingsController.h"
-
-#define LOC(x) [tweakBundle localizedStringForKey:x value:nil table:nil]
-
-extern NSBundle *YTMusicUltimateBundle();
+#import "Localization.h"
 
 @implementation ThemeSettingsController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
-    swipeRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
-    [self.view addGestureRecognizer:swipeRecognizer];
-
-    self.navigationItem.leftBarButtonItem = [self backButton];
+    self.title = LOC(@"THEME_SETTINGS");
 
     UITableViewStyle style;
     if (@available(iOS 13, *)) {
@@ -26,12 +19,14 @@ extern NSBundle *YTMusicUltimateBundle();
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    [self.view addSubview:_tableView];
+    [self.view addSubview:self.tableView];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1 constant:0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:1 constant:0]];
+    [NSLayoutConstraint activateConstraints:@[
+        [self.tableView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [self.tableView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor],
+        [self.tableView.widthAnchor constraintEqualToAnchor:self.view.widthAnchor],
+        [self.tableView.heightAnchor constraintEqualToAnchor:self.view.heightAnchor]
+    ]];
 }
 
 #pragma mark - Table view stuff
@@ -50,135 +45,59 @@ extern NSBundle *YTMusicUltimateBundle();
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
 
-    NSBundle *tweakBundle = YTMusicUltimateBundle();
-    
-    if (cell == nil){
+    if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
 
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            cell.textLabel.text = LOC(@"OLED_DARK_THEME");
-            cell.textLabel.adjustsFontSizeToFitWidth = YES;
-            cell.detailTextLabel.text = LOC(@"OLED_DARK_THEME_DESC");
-            cell.detailTextLabel.numberOfLines = 0;
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell1"];
+        
+        NSArray *settingsData = @[
+            @{@"title": LOC(@"OLED_DARK_THEME"), @"desc": LOC(@"OLED_DARK_THEME_DESC"), @"selector": @"toggleOledDarkTheme:", @"key": @"oledDarkTheme_enabled"},
+            @{@"title": LOC(@"OLED_DARK_KEYBOARD"), @"desc": LOC(@"OLED_DARK_KEYBOARD_DESC"), @"selector": @"toggleOledDarkKeyboard:", @"key": @"oledDarkKeyboard_enabled"},
+            @{@"title": LOC(@"LOW_CONTRAST"), @"desc": LOC(@"LOW_CONTRAST_DESC"), @"selector": @"toggleLowContrast:", @"key": @"lowContrast_enabled"}
+        ];
 
-            if (@available(iOS 13, *)) {
-                cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
-            } else {
-                cell.detailTextLabel.textColor = [UIColor systemGrayColor];
-            }
+        NSDictionary *data = settingsData[indexPath.row];
 
-            UISwitch *oledDarkTheme = [[UISwitch alloc] initWithFrame:CGRectZero];
-            oledDarkTheme.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
-            [oledDarkTheme addTarget:self action:@selector(toggleOledDarkTheme:) forControlEvents:UIControlEventValueChanged];
-            oledDarkTheme.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"oledDarkTheme_enabled"];
-            cell.accessoryView = oledDarkTheme;
-        } if (indexPath.row == 1) {
-            cell.textLabel.text = LOC(@"OLED_DARK_KEYBOARD");
-            cell.textLabel.adjustsFontSizeToFitWidth = YES;
-            cell.detailTextLabel.text = LOC(@"OLED_DARK_KEYBOARD_DESC");
-            cell.detailTextLabel.numberOfLines = 0;
+        cell.textLabel.text = data[@"title"];
+        cell.textLabel.adjustsFontSizeToFitWidth = YES;
+        cell.detailTextLabel.text = data[@"desc"];
+        cell.detailTextLabel.numberOfLines = 0;
 
-            if (@available(iOS 13, *)) {
-                cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
-            } else {
-                cell.detailTextLabel.textColor = [UIColor systemGrayColor];
-            }
-            UISwitch *oledDarkKeyboard = [[UISwitch alloc] initWithFrame:CGRectZero];
-            oledDarkKeyboard.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
-            [oledDarkKeyboard addTarget:self action:@selector(toggleOledDarkKeyboard:) forControlEvents:UIControlEventValueChanged];
-            oledDarkKeyboard.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"oledDarkKeyboard_enabled"];
-            cell.accessoryView = oledDarkKeyboard;
-        } if (indexPath.row == 2) {
-            cell.textLabel.text = LOC(@"LOW_CONTRAST");
-            cell.textLabel.adjustsFontSizeToFitWidth = YES;
-            cell.detailTextLabel.text = LOC(@"LOW_CONTRAST_DESC");
-            cell.detailTextLabel.numberOfLines = 0;
-
-            if (@available(iOS 13, *)) {
-                cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
-            } else {
-                cell.detailTextLabel.textColor = [UIColor systemGrayColor];
-            }
-            UISwitch *lowContrast = [[UISwitch alloc] initWithFrame:CGRectZero];
-            lowContrast.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
-            [lowContrast addTarget:self action:@selector(toggleLowContrast:) forControlEvents:UIControlEventValueChanged];
-            lowContrast.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"lowContrast_enabled"];
-            cell.accessoryView = lowContrast;
+        if (@available(iOS 13, *)) {
+            cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
+        } else {
+            cell.detailTextLabel.textColor = [UIColor systemGrayColor];
         }
+
+        UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectZero];
+        switchControl.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
+        [switchControl addTarget:self action:NSSelectorFromString(data[@"selector"]) forControlEvents:UIControlEventValueChanged];
+        switchControl.on = [[NSUserDefaults standardUserDefaults] boolForKey:data[@"key"]];
+        cell.accessoryView = switchControl;
     }
 
     return cell;
-}
-
-#pragma mark - Nav bar stuff
-- (NSString *)title {
-    NSBundle *tweakBundle = YTMusicUltimateBundle();
-    return LOC(@"THEME_SETTINGS");
-}
-
-- (UIBarButtonItem *)backButton {
-    UIBarButtonItem *item;
-
-    if (@available(iOS 13, *)) {
-        item = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"chevron.left"]
-                            style:UIBarButtonItemStylePlain
-                            target:self
-                            action:@selector(back)];
-    } else {
-        NSBundle *tweakBundle = YTMusicUltimateBundle();
-        item = [[UIBarButtonItem alloc] initWithTitle:LOC(@"BACK")
-                            style:UIBarButtonItemStylePlain
-                            target:self
-                            action:@selector(back)];
-    }
-
-    return item;
 }
 
 @end
 
 @implementation ThemeSettingsController (Privates)
 
-- (void)handleSwipe:(UISwipeGestureRecognizer *)gesture {
-    if (gesture.direction == UISwipeGestureRecognizerDirectionRight) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-}
-
-- (void)back {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (void)toggleOledDarkTheme:(UISwitch *)sender {
-    if ([sender isOn]) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"oledDarkTheme_enabled"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    } else {
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"oledDarkTheme_enabled"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
+    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:@"oledDarkTheme_enabled"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)toggleOledDarkKeyboard:(UISwitch *)sender {
-    if ([sender isOn]) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"oledDarkKeyboard_enabled"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    } else {
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"oledDarkKeyboard_enabled"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
+    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:@"oledDarkKeyboard_enabled"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)toggleLowContrast:(UISwitch *)sender {
-    if ([sender isOn]) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"lowContrast_enabled"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    } else {
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"lowContrast_enabled"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
+    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:@"lowContrast_enabled"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

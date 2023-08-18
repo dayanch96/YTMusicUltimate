@@ -36,6 +36,8 @@
 "LOW_CONTRAST_DESC" = "Mažesnis teksto ir mygtukų kontrastingumas";
 
 "NAVBAR_SETTINGS" = "Navigacijos juostos parinktys";
+"DONT_STICK_HEADERS" = "Dont stick headers";
+"DONT_STICK_HEADERS_DESC" = "Unsticks pinned at the top of the screen panels";
 "HIDE_HISTORY_BUTTON" = "Paslėpti istorijos mygtuką";
 "HIDE_HISTORY_BUTTON_DESC" = "Naršymo juostoje paslepia istorijos mygtuką";
 "HIDE_CAST_BUTTON" = "Paslėpti \"Cast\" mygtuką";
@@ -43,15 +45,19 @@
 "HIDE_FILTER_BUTTON" = "Remove sort filter button";
 "HIDE_FILTER_BUTTON_DESC" = "Removes Library/Downloads filter button from the navigation bar";
 
-"OTHER_SETTINGS" = "Other options";
-"DONT_STICK_HEADERS" = "Dont stick headers";
-"DONT_STICK_HEADERS_DESC" = "Unsticks pinned at the top of the screen panels";
-"REMOVE_TABBAR_LABELS" = "No tab bar labels";
-"REMOVE_TABBAR_LABELS_DESC" = "Removes tab bar labels";
+"TABBAR_SETTINGS" = "Tab bar options";
 "STARTUP_TAB" = "Startup tab";
+"SAMPLES" = "Samples";
 "HOME" = "Home";
 "EXPLORE" = "Explore";
 "LIBRARY" = "Library";
+
+"TAB_SETTINGS" = "Tab settings";
+"REMOVE_TABBAR_LABELS" = "No tab bar labels";
+"HIDE_HOME" = "Hide Home tab";
+"HIDE_SAMPLES" = "Hide Samples tab";
+"HIDE_EXPLORE" = "Hide Explore tab";
+"HIDE_LIBRARY" = "Hide Library tab";
 
 "APPLY" = "Taikyti";
 "APPLY_DESC" = "Uždaro programėlę, kad pritaikytu pakeitimus";

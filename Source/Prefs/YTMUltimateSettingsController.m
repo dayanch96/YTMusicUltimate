@@ -1,26 +1,5 @@
-#import "YTMUltimatePrefs.h"
 #import "YTMUltimateSettingsController.h"
-#import "PremiumSettingsController.h"
-#import "PlayerSettingsController.h"
-#import "ThemeSettingsController.h"
-#import "NavBarSettingsController.h"
-#import "OtherSettingsController.h"
-#import <rootless.h>
-
-NSBundle *YTMusicUltimateBundle() {
-    static NSBundle *bundle = nil;
-    static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-        NSString *tweakBundlePath = [[NSBundle mainBundle] pathForResource:@"YTMusicUltimate" ofType:@"bundle"];
-        if (tweakBundlePath)
-            bundle = [NSBundle bundleWithPath:tweakBundlePath];
-        else
-            bundle = [NSBundle bundleWithPath:ROOT_PATH_NS("/Library/Application Support/YTMusicUltimate.bundle")];
-    });
-    return bundle;
-}
-
-#define LOC(x) [tweakBundle localizedStringForKey:x value:nil table:nil]
+#import "Localization.h"
 
 @implementation YTMUltimateSettingsController
 
@@ -41,15 +20,20 @@ NSBundle *YTMusicUltimateBundle() {
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    [self.view addSubview:_tableView];
-    
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1 constant:0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:1 constant:0]];
+    [self.view addSubview:self.tableView];
 
-    _options = [[[YTMUltimatePrefs alloc] init] settings];
-    _links = [[[YTMUltimatePrefs alloc] init] links];
+    [NSLayoutConstraint activateConstraints:@[
+        [self.tableView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [self.tableView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor],
+        [self.tableView.widthAnchor constraintEqualToAnchor:self.view.widthAnchor],
+        [self.tableView.heightAnchor constraintEqualToAnchor:self.view.heightAnchor]
+    ]];
+
+    //Init isEnabled for first time
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] == nil) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"YTMUltimateIsEnabled"];
+    }
+
 }
 
 #pragma mark - Table view stuff
@@ -62,8 +46,6 @@ NSBundle *YTMusicUltimateBundle() {
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    NSBundle *tweakBundle = YTMusicUltimateBundle();
-
     switch (section) {
         case 0:
             return @"";
@@ -77,8 +59,6 @@ NSBundle *YTMusicUltimateBundle() {
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    NSBundle *tweakBundle = YTMusicUltimateBundle();
-
     if (section == 0) {
         return LOC(@"RESTART_FOOTER");
     } if (section == 2) {
@@ -100,27 +80,31 @@ NSBundle *YTMusicUltimateBundle() {
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     switch (section) {
         case 0:
-            return [self.options count];
+            return 1;
         case 1:
             return 5;
         case 2:
-            return [self.links count];
+            return 4;
         default:
             return 0;
     }
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSBundle *tweakBundle = YTMusicUltimateBundle();
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-
-    if (cell == nil){
+    if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+    } else {
+        for (UIView *subview in cell.contentView.subviews) {
+            [subview removeFromSuperview];
+        }
     }
 
+    NSBundle *tweakBundle = YTMusicUltimateBundle();
+
     if (indexPath.section == 0) {
-        NSMutableDictionary *cellMetadata = [self.options objectAtIndex:indexPath.row];
-        cell.textLabel.text = [cellMetadata objectForKey:@"title"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell0"];
+        cell.textLabel.text = LOC(@"ENABLED");
         cell.textLabel.adjustsFontSizeToFitWidth = YES;
 
         if (@available(iOS 13, *)) {
@@ -130,141 +114,97 @@ NSBundle *YTMusicUltimateBundle() {
         } else {
             cell.textLabel.textColor = [UIColor systemRedColor];
         }
+
+        UISwitch *masterSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+        masterSwitch.onTintColor = [UIColor colorWithRed:230/255.0 green:75/255.0 blue:75/255.0 alpha:255/255.0];
+        [masterSwitch addTarget:self action:@selector(toggleMasterSwitch:) forControlEvents:UIControlEventValueChanged];
+        masterSwitch.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"];
+        cell.accessoryView = masterSwitch;
+    } else if (indexPath.section == 1) {
+        NSArray *sectionTitles = @[LOC(@"PREMIUM_SETTINGS"), LOC(@"PLAYER_SETTINGS"), LOC(@"THEME_SETTINGS"), LOC(@"NAVBAR_SETTINGS"), LOC(@"TABBAR_SETTINGS")];
+        NSArray *sectionImages = @[@"flame", @"play.rectangle", @"paintbrush", @"sidebar.trailing", @"dock.rectangle"];
+        
+        if (indexPath.row >= 0 && indexPath.row < sectionTitles.count) {
+            cell.textLabel.text = sectionTitles[indexPath.row];
+            cell.detailTextLabel.numberOfLines = 0;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             
-        UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
-        switchView.tag = indexPath.row;
-        [cell setAccessoryView:switchView];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        switchView.onTintColor = [UIColor colorWithRed:230/255.0 green:75/255.0 blue:75/255.0 alpha:255/255.0];
-        [switchView setOn:[[NSUserDefaults standardUserDefaults] boolForKey:[cellMetadata objectForKey:@"defaultsKey"]] animated:NO];
-        [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
-    } if (indexPath.section == 1) {
-        if (indexPath.row == 0) {
-        cell.textLabel.text = LOC(@"PREMIUM_SETTINGS");
+            if (@available(iOS 13, *)) {
+                NSString *imageName = sectionImages[indexPath.row];
+                cell.imageView.image = [UIImage systemImageNamed:imageName];
+            } else {
+                cell.imageView.image = nil;
+            }
+        }
+    } else if (indexPath.section == 2) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell3"];
+        
+        NSArray *settingsData = @[
+            @{@"text": [NSString stringWithFormat:LOC(@"TWITTER"), @"Ginsu"],  @"detail": LOC(@"TWITTER_DESC"), @"image": @"ginsu-24@2x"},
+            @{@"text": [NSString stringWithFormat:LOC(@"TWITTER"), @"Dayanch96"], @"detail": LOC(@"TWITTER_DESC"), @"image": @"dayanch96-24@2x"},
+            @{@"text": LOC(@"DISCORD"), @"detail": LOC(@"DISCORD_DESC"), @"image": @"discord-24@2x"},
+            @{@"text": LOC(@"SOURCE_CODE"), @"detail": LOC(@"SOURCE_CODE_DESC"), @"image": @"github-24@2x"}
+        ];
+
+        NSDictionary *settingData = settingsData[indexPath.row];
+
+        cell.textLabel.text = settingData[@"text"];
+        cell.textLabel.textColor = [UIColor systemBlueColor];
+        cell.textLabel.adjustsFontSizeToFitWidth = YES;
+        cell.detailTextLabel.text = settingData[@"detail"];
         cell.detailTextLabel.numberOfLines = 0;
 
-        if (@available(iOS 13, *)) {
-            cell.imageView.image = [UIImage systemImageNamed:@"flame"];
-        } else {
-            cell.imageView.image = nil;
-        }
-
-        } else if (indexPath.row == 1) {
-        cell.textLabel.text = LOC(@"PLAYER_SETTINGS");
-        cell.detailTextLabel.numberOfLines = 0;
+        NSString *imageName = settingData[@"image"];
+        UIImage *image = [UIImage imageWithContentsOfFile:[tweakBundle pathForResource:imageName ofType:@"png" inDirectory:@"icons"]];
 
         if (@available(iOS 13, *)) {
-            cell.imageView.image = [UIImage systemImageNamed:@"ipad.landscape.badge.play"];
-        } else {
-            cell.imageView.image = nil;
-        }
-
-        } else if (indexPath.row == 2) {
-        cell.textLabel.text = LOC(@"THEME_SETTINGS");
-        cell.detailTextLabel.numberOfLines = 0;
-
-        if (@available(iOS 13, *)) {
-            cell.imageView.image = [UIImage systemImageNamed:@"photo.on.rectangle.angled"];
-        } else {
-            cell.imageView.image = nil;
-        }
-
-        } else if (indexPath.row == 3) {
-        cell.textLabel.text = LOC(@"NAVBAR_SETTINGS");
-        cell.detailTextLabel.numberOfLines = 0;
-
-        if (@available(iOS 13, *)) {
-            cell.imageView.image = [UIImage systemImageNamed:@"sidebar.trailing"];
-        } else {
-            cell.imageView.image = nil;
-        }
-
-        } else if (indexPath.row == 4) {
-        cell.textLabel.text = LOC(@"OTHER_SETTINGS");
-        cell.detailTextLabel.numberOfLines = 0;
-
-        if (@available(iOS 13, *)) {
-            cell.imageView.image = [UIImage systemImageNamed:@"ellipsis"];
-        } else {
-            cell.imageView.image = nil;
-        }
-
-        }
-    } if (indexPath.section == 2) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell2"];
-
-    NSMutableDictionary *cellMetadata = [self.links objectAtIndex:indexPath.row];
-    cell.textLabel.text = [cellMetadata objectForKey:@"title"];
-    cell.detailTextLabel.text = [cellMetadata objectForKey:@"subtitle"];
-    cell.textLabel.textColor = [UIColor systemBlueColor];
-
-    if (indexPath.row == 0) {
-        if (@available(iOS 13, *)) {
-            cell.imageView.image = [UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"ginsu-24@2x" ofType:@"png" inDirectory:@"icons"]];
+            cell.imageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
             cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
         } else {
             cell.detailTextLabel.textColor = [UIColor systemGrayColor];
+            cell.imageView.image = nil;
         }
-    } else if (indexPath.row == 1) {
-        if (@available(iOS 13, *)) {
-            cell.imageView.image = [UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"dayanch96-24@2x" ofType:@"png" inDirectory:@"icons"]];
-            cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
-        } else {
-            cell.detailTextLabel.textColor = [UIColor systemGrayColor];
-        }
-    } else if (indexPath.row == 2) {
-        if (@available(iOS 13, *)) {
-            cell.imageView.image = [UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"discord-24@2x" ofType:@"png" inDirectory:@"icons"]];
-            cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
-        } else {
-            cell.detailTextLabel.textColor = [UIColor systemGrayColor];
-        }
-    } else if (indexPath.row == 3) {
-        if (@available(iOS 13, *)) {
-            cell.imageView.image = [UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"github-24@2x" ofType:@"png" inDirectory:@"icons"]];
-            cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
-        } else {
-            cell.detailTextLabel.textColor = [UIColor systemGrayColor];
-        }
-    }
+    } return cell;
 }
-    return cell;
+
+#pragma mark - UITableViewDelegate
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 1 || indexPath.section == 2) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 1) {
-        if (indexPath.row == 0) {
-        PremiumSettingsController *premiumSettingsController = [[PremiumSettingsController alloc] init];
-        [self.navigationController pushViewController:premiumSettingsController animated:YES];        
-        } else if (indexPath.row == 1) {
-        PlayerSettingsController *playerSettingsController = [[PlayerSettingsController alloc] init];
-        [self.navigationController pushViewController:playerSettingsController animated:YES];
-        } else if (indexPath.row == 2) {
-        ThemeSettingsController *themeSettingsController = [[ThemeSettingsController alloc] init];
-        [self.navigationController pushViewController:themeSettingsController animated:YES];
-        } else if (indexPath.row == 3) {
-        NavBarSettingsController *navBarSettingsController = [[NavBarSettingsController alloc] init];
-        [self.navigationController pushViewController:navBarSettingsController animated:YES];
-        } else if (indexPath.row == 4) {
-        OtherSettingsController *otherSettingsController = [[OtherSettingsController alloc] init];
-        [self.navigationController pushViewController:otherSettingsController animated:YES];
-        }
-    } else if (indexPath.section == 2) {
-        NSMutableDictionary *cellMetadata = [self.links objectAtIndex:indexPath.row];
-        NSString *url = [cellMetadata objectForKey:@"url"];
+        NSArray *controllers = @[[PremiumSettingsController class],
+                                 [PlayerSettingsController class],
+                                 [ThemeSettingsController class],
+                                 [NavBarSettingsController class],
+                                 [OtherSettingsController class]];
 
-        [[UIApplication sharedApplication]
-            openURL:[NSURL URLWithString:url]
-            options:@{}
-            completionHandler:nil];
+        if (indexPath.row >= 0 && indexPath.row < controllers.count) {
+            UIViewController *controller = [[controllers[indexPath.row] alloc] init];
+            [self.navigationController pushViewController:controller animated:YES];
+        }
+    }
+
+    if (indexPath.section == 2) {
+        NSArray *urls = @[@"https://twitter.com/ginsudev",
+                        @"https://twitter.com/dayanch96",
+                        @"https://discord.com/invite/BhdUyCbgkZ",
+                        @"https://github.com/ginsudev/YTMusicUltimate"];
+
+        if (indexPath.row >= 0 && indexPath.row < urls.count) {
+            NSURL *url = [NSURL URLWithString:urls[indexPath.row]];
+            if ([[UIApplication sharedApplication] canOpenURL:url]) {
+                [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
+            }
+        }
     }
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-- (void)switchChanged:(UISwitch *)sender{
-    NSMutableDictionary *cellMetadata = [self.options objectAtIndex:sender.tag];
-    [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:[cellMetadata objectForKey:@"defaultsKey"]];
 }
 
 #pragma mark - Nav bar stuff
@@ -281,7 +221,6 @@ NSBundle *YTMusicUltimateBundle() {
                             target:self
                             action:@selector(close)];
     } else {
-        NSBundle *tweakBundle = YTMusicUltimateBundle();
         item = [[UIBarButtonItem alloc] initWithTitle:LOC(@"CLOSE")
                             style:UIBarButtonItemStylePlain
                             target:self
@@ -300,7 +239,6 @@ NSBundle *YTMusicUltimateBundle() {
                             target:self
                             action:@selector(apply)];
     } else {
-        NSBundle *tweakBundle = YTMusicUltimateBundle();
         item = [[UIBarButtonItem alloc] initWithTitle:LOC(@"APPLY")
                              style:UIBarButtonItemStylePlain
                              target:self
@@ -315,7 +253,6 @@ NSBundle *YTMusicUltimateBundle() {
 }
 
 - (void)apply {
-    NSBundle *tweakBundle = YTMusicUltimateBundle();
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:LOC(@"WARNING") message:LOC(@"APPLY_MESSAGE") preferredStyle:UIAlertControllerStyleAlert];
 
     [alert addAction:[UIAlertAction actionWithTitle:LOC(@"CANCEL") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -326,6 +263,15 @@ NSBundle *YTMusicUltimateBundle() {
     }]];
 
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+@end
+
+@implementation YTMUltimateSettingsController (Privates)
+
+- (void)toggleMasterSwitch:(UISwitch *)sender {
+    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:@"YTMUltimateIsEnabled"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

@@ -1,19 +1,12 @@
 #import "PlayerSettingsController.h"
-
-#define LOC(x) [tweakBundle localizedStringForKey:x value:nil table:nil]
-
-extern NSBundle *YTMusicUltimateBundle();
+#import "Localization.h"
 
 @implementation PlayerSettingsController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
-    swipeRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
-    [self.view addGestureRecognizer:swipeRecognizer];
-
-    self.navigationItem.leftBarButtonItem = [self backButton];
+    self.title = LOC(@"PLAYER_SETTINGS");
 
     UITableViewStyle style;
     if (@available(iOS 13, *)) {
@@ -26,13 +19,14 @@ extern NSBundle *YTMusicUltimateBundle();
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    [self.view addSubview:_tableView];
+    [self.view addSubview:self.tableView];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1 constant:0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:1 constant:0]];
-
+    [NSLayoutConstraint activateConstraints:@[
+        [self.tableView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [self.tableView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor],
+        [self.tableView.widthAnchor constraintEqualToAnchor:self.view.widthAnchor],
+        [self.tableView.heightAnchor constraintEqualToAnchor:self.view.heightAnchor]
+    ]];
 }
 
 #pragma mark - Table view stuff
@@ -61,7 +55,6 @@ extern NSBundle *YTMusicUltimateBundle();
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    NSBundle *tweakBundle = YTMusicUltimateBundle();
     if (section == 2) {
         return LOC(@"SEEK_TIME_FOOTER");
     } return nil;
@@ -70,95 +63,39 @@ extern NSBundle *YTMusicUltimateBundle();
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
 
-    NSBundle *tweakBundle = YTMusicUltimateBundle();
-    
-    if (cell == nil){
+    if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
 
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            cell.textLabel.text = LOC(@"PLAYBACK_RATE_BUTTON");
-            cell.textLabel.adjustsFontSizeToFitWidth = YES;
-            cell.detailTextLabel.text = LOC(@"PLAYBACK_RATE_BUTTON_DESC");
-            cell.detailTextLabel.numberOfLines = 0;
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell1"];
+        
+        NSArray *settingsData = @[
+            @{@"title": LOC(@"PLAYBACK_RATE_BUTTON"), @"desc": LOC(@"PLAYBACK_RATE_BUTTON_DESC"), @"selector": @"togglePlaybackRateButton:", @"key": @"playbackRateButton_enabled"},
+            @{@"title": LOC(@"SELECTABLE_LYRICS"), @"desc": LOC(@"SELECTABLE_LYRICS_DESC"), @"selector": @"toggleSelectableLyrics:", @"key": @"selectableLyrics_enabled"},
+            @{@"title": LOC(@"VOLBAR"), @"desc": LOC(@"VOLBAR_DESC"), @"selector": @"toggleVolBar:", @"key": @"volBar_enabled"},
+            @{@"title": LOC(@"NO_AUTORADIO"), @"desc": LOC(@"NO_AUTORADIO_DESC"), @"selector": @"toggleDisableAutoRadio:", @"key": @"disableAutoRadio_enabled"},
+            @{@"title": LOC(@"SKIP_NONMUSIC_PARTS"), @"desc": LOC(@"SKIP_NONMUSIC_PARTS_DESC"), @"selector": @"toggleSponsorBlock:", @"key": @"sponsorBlock_enabled"}
+        ];
 
-            if (@available(iOS 13, *)) {
-                cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
-            } else {
-                cell.detailTextLabel.textColor = [UIColor systemGrayColor];
-            }
+        NSDictionary *data = settingsData[indexPath.row];
 
-            UISwitch *playbackRateButton = [[UISwitch alloc] initWithFrame:CGRectZero];
-            playbackRateButton.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
-            [playbackRateButton addTarget:self action:@selector(togglePlaybackRateButton:) forControlEvents:UIControlEventValueChanged];
-            playbackRateButton.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"playbackRateButton_enabled"];
-            cell.accessoryView = playbackRateButton;
-        } if (indexPath.row == 1) {
-            cell.textLabel.text = LOC(@"SELECTABLE_LYRICS");
-            cell.textLabel.adjustsFontSizeToFitWidth = YES;
-            cell.detailTextLabel.text = LOC(@"SELECTABLE_LYRICS_DESC");
-            cell.detailTextLabel.numberOfLines = 0;
+        cell.textLabel.text = data[@"title"];
+        cell.textLabel.adjustsFontSizeToFitWidth = YES;
+        cell.detailTextLabel.text = data[@"desc"];
+        cell.detailTextLabel.numberOfLines = 0;
 
-            if (@available(iOS 13, *)) {
-                cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
-            } else {
-                cell.detailTextLabel.textColor = [UIColor systemGrayColor];
-            }
-            UISwitch *selectableLyrics = [[UISwitch alloc] initWithFrame:CGRectZero];
-            selectableLyrics.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
-            [selectableLyrics addTarget:self action:@selector(toggleSelectableLyrics:) forControlEvents:UIControlEventValueChanged];
-            selectableLyrics.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"selectableLyrics_enabled"];
-            cell.accessoryView = selectableLyrics;
-        } if (indexPath.row == 2) {
-            cell.textLabel.text = LOC(@"VOLBAR");
-            cell.textLabel.adjustsFontSizeToFitWidth = YES;
-            cell.detailTextLabel.text = LOC(@"VOLBAR_DESC");
-            cell.detailTextLabel.numberOfLines = 0;
-
-            if (@available(iOS 13, *)) {
-                cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
-            } else {
-                cell.detailTextLabel.textColor = [UIColor systemGrayColor];
-            }
-            UISwitch *volBar = [[UISwitch alloc] initWithFrame:CGRectZero];
-            volBar.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
-            [volBar addTarget:self action:@selector(toggleVolBar:) forControlEvents:UIControlEventValueChanged];
-            volBar.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"volBar_enabled"];
-            cell.accessoryView = volBar;
-        } if (indexPath.row == 3) {
-            cell.textLabel.text = LOC(@"NO_AUTORADIO");
-            cell.textLabel.adjustsFontSizeToFitWidth = YES;
-            cell.detailTextLabel.text = LOC(@"NO_AUTORADIO_DESC");
-            cell.detailTextLabel.numberOfLines = 0;
-
-            if (@available(iOS 13, *)) {
-                cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
-            } else {
-                cell.detailTextLabel.textColor = [UIColor systemGrayColor];
-            }
-            UISwitch *disableAutoRadio = [[UISwitch alloc] initWithFrame:CGRectZero];
-            disableAutoRadio.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
-            [disableAutoRadio addTarget:self action:@selector(toggleDisableAutoRadio:) forControlEvents:UIControlEventValueChanged];
-            disableAutoRadio.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"disableAutoRadio_enabled"];
-            cell.accessoryView = disableAutoRadio;
-        } if (indexPath.row == 4) {
-            cell.textLabel.text = LOC(@"SKIP_NONMUSIC_PARTS");
-            cell.textLabel.adjustsFontSizeToFitWidth = YES;
-            cell.detailTextLabel.text = LOC(@"SKIP_NONMUSIC_PARTS_DESC");
-            cell.detailTextLabel.numberOfLines = 0;
-
-            if (@available(iOS 13, *)) {
-                cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
-            } else {
-                cell.detailTextLabel.textColor = [UIColor systemGrayColor];
-            }
-            UISwitch *sponsorBlock = [[UISwitch alloc] initWithFrame:CGRectZero];
-            sponsorBlock.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
-            [sponsorBlock addTarget:self action:@selector(toggleSponsorBlock:) forControlEvents:UIControlEventValueChanged];
-            sponsorBlock.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"sponsorBlock_enabled"];
-            cell.accessoryView = sponsorBlock;
+        if (@available(iOS 13, *)) {
+            cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
+        } else {
+            cell.detailTextLabel.textColor = [UIColor systemGrayColor];
         }
+
+        UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectZero];
+        switchControl.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
+        [switchControl addTarget:self action:NSSelectorFromString(data[@"selector"]) forControlEvents:UIControlEventValueChanged];
+        switchControl.on = [[NSUserDefaults standardUserDefaults] boolForKey:data[@"key"]];
+        cell.accessoryView = switchControl;
     } if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell2"];
@@ -179,8 +116,7 @@ extern NSBundle *YTMusicUltimateBundle();
             [control.centerYAnchor constraintEqualToAnchor:cell.contentView.centerYAnchor].active = YES;
             [control.trailingAnchor constraintEqualToAnchor:cell.contentView.trailingAnchor constant:-6].active = YES;
             
-        }
-        return cell;
+        } return cell;
     } if (indexPath.section == 2) {
         if (indexPath.row == 0) {
             cell.textLabel.text = LOC(@"SEEK_BUTTONS");
@@ -214,109 +150,44 @@ extern NSBundle *YTMusicUltimateBundle();
             [seekTime.centerXAnchor constraintEqualToAnchor:cell.contentView.centerXAnchor].active = YES;
             [seekTime.leadingAnchor constraintEqualToAnchor:cell.contentView.leadingAnchor constant:5.0].active = YES;
             [seekTime.trailingAnchor constraintEqualToAnchor:cell.contentView.trailingAnchor constant:-5.0].active = YES;
-}
+        }
     }
 
     return cell;
-}
-
-#pragma mark - Nav bar stuff
-- (NSString *)title {
-    NSBundle *tweakBundle = YTMusicUltimateBundle();
-    return LOC(@"PLAYER_SETTINGS");
-}
-
-- (UIBarButtonItem *)backButton {
-    UIBarButtonItem *item;
-
-    if (@available(iOS 13, *)) {
-        item = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"chevron.left"]
-                            style:UIBarButtonItemStylePlain
-                            target:self
-                            action:@selector(back)];
-    } else {
-        NSBundle *tweakBundle = YTMusicUltimateBundle();
-        item = [[UIBarButtonItem alloc] initWithTitle:LOC(@"BACK")
-                            style:UIBarButtonItemStylePlain
-                            target:self
-                            action:@selector(back)];
-    }
-
-    return item;
 }
 
 @end
 
 @implementation PlayerSettingsController (Privates)
 
-- (void)handleSwipe:(UISwipeGestureRecognizer *)gesture {
-    if (gesture.direction == UISwipeGestureRecognizerDirectionRight) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-}
-
-- (void)back {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (void)togglePlaybackRateButton:(UISwitch *)sender {
-    if ([sender isOn]) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"playbackRateButton_enabled"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    } else {
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"playbackRateButton_enabled"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
+    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:@"playbackRateButton_enabled"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)toggleSelectableLyrics:(UISwitch *)sender {
-    if ([sender isOn]) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"selectableLyrics_enabled"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    } else {
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"selectableLyrics_enabled"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
+    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:@"selectableLyrics_enabled"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)toggleVolBar:(UISwitch *)sender {
-    if ([sender isOn]) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"volBar_enabled"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    } else {
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"volBar_enabled"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
+    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:@"volBar_enabled"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)toggleDisableAutoRadio:(UISwitch *)sender {
-    if ([sender isOn]) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"disableAutoRadio_enabled"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    } else {
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"disableAutoRadio_enabled"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
+    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:@"disableAutoRadio_enabled"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)toggleSponsorBlock:(UISwitch *)sender {
-    if ([sender isOn]) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"sponsorBlock_enabled"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    } else {
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"sponsorBlock_enabled"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
+    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:@"sponsorBlock_enabled"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)toggleSeekButtons:(UISwitch *)sender {
-    if ([sender isOn]) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"seekButtons_enabled"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    } else {
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"seekButtons_enabled"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
+    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:@"seekButtons_enabled"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)controlSelect:(UISegmentedControl *)sender {
@@ -334,24 +205,10 @@ extern NSBundle *YTMusicUltimateBundle();
 
 - (void)seekTimeSelect:(UISegmentedControl *)sender {
     NSInteger selectedIndex = sender.selectedSegmentIndex;
-    NSString *selectedSegment = [sender titleForSegmentAtIndex:selectedIndex];
-    NSLog(@"Selected segment: %@", selectedSegment);
-    if (selectedIndex == 0) {
-        [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"seekTime"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    } else if (selectedIndex == 1) {
-        [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"seekTime"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    } else if (selectedIndex == 2) {
-        [[NSUserDefaults standardUserDefaults] setInteger:2 forKey:@"seekTime"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    } else if (selectedIndex == 3) {
-        [[NSUserDefaults standardUserDefaults] setInteger:3 forKey:@"seekTime"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    } else if (selectedIndex == 4) {
-        [[NSUserDefaults standardUserDefaults] setInteger:4 forKey:@"seekTime"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
+    NSLog(@"Selected segment: %@", [sender titleForSegmentAtIndex:selectedIndex]);
+    
+    [[NSUserDefaults standardUserDefaults] setInteger:selectedIndex forKey:@"seekTime"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end
