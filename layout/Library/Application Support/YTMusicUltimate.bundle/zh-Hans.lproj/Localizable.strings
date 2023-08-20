@@ -23,9 +23,9 @@
 "AV_DEFAULT_MODE" = "默认播放模式";
 "AUDIO" = "歌曲";
 "VIDEO" = "视频";
-"SEEK_BUTTONS" = "Replace like/dislike with forward and backward buttons";
-"SEEK_TIME_FOOTER" = "Select a seek time in seconds\n\nDefaults:\nSeek backward = 10 sec.\nSeek forward = 30 sec.";
-"DEFAULT" = "Default";
+"SEEK_BUTTONS" = "用快进/快退按钮替换喜欢/不喜欢";
+"SEEK_TIME_FOOTER" = "选择跳过时间(秒)\n\n默认:\n快退 = 10秒\n快进 = 30秒";
+"DEFAULT" = "默认";
 
 "THEME_SETTINGS" = "主题选项";
 "OLED_DARK_THEME" = "深色主题";
@@ -36,28 +36,28 @@
 "LOW_CONTRAST_DESC" = "降低文字和按钮的对比度";
 
 "NAVBAR_SETTINGS" = "导航栏选项";
-"DONT_STICK_HEADERS" = "Dont stick headers";
-"DONT_STICK_HEADERS_DESC" = "Unsticks pinned at the top of the screen panels";
+"DONT_STICK_HEADERS" = "不固定标题";
+"DONT_STICK_HEADERS_DESC" = "不固定在屏幕顶部的标题";
 "HIDE_HISTORY_BUTTON" = "隐藏播放历史按钮";
 "HIDE_HISTORY_BUTTON_DESC" = "在导航栏中隐藏播放历史按钮";
 "HIDE_CAST_BUTTON" = "隐藏投屏按钮";
 "HIDE_CAST_BUTTON_DESC" = "在导航栏中隐藏投屏按钮";
-"HIDE_FILTER_BUTTON" = "Remove sort filter button";
-"HIDE_FILTER_BUTTON_DESC" = "Removes Library/Downloads filter button from the navigation bar";
+"HIDE_FILTER_BUTTON" = "隐藏分类按钮";
+"HIDE_FILTER_BUTTON_DESC" = "在导航栏中隐藏库\/下载分类按钮";
 
-"TABBAR_SETTINGS" = "Tab bar options";
-"STARTUP_TAB" = "Startup tab";
-"SAMPLES" = "Samples";
-"HOME" = "Home";
-"EXPLORE" = "Explore";
-"LIBRARY" = "Library";
+"TABBAR_SETTINGS" = "选项卡选项";
+"STARTUP_TAB" = "启动页";
+"SAMPLES" = "选段";
+"HOME" = "首页";
+"EXPLORE" = "探索";
+"LIBRARY" = "媒体库";
 
-"TAB_SETTINGS" = "Tab settings";
-"REMOVE_TABBAR_LABELS" = "No tab bar labels";
-"HIDE_HOME" = "Hide Home tab";
-"HIDE_SAMPLES" = "Hide Samples tab";
-"HIDE_EXPLORE" = "Hide Explore tab";
-"HIDE_LIBRARY" = "Hide Library tab";
+"TAB_SETTINGS" = "选项卡设置";
+"REMOVE_TABBAR_LABELS" = "隐藏底栏标签";
+"HIDE_HOME" = "隐藏首页选项";
+"HIDE_SAMPLES" = "隐藏选段选项";
+"HIDE_EXPLORE" = "隐藏探索选项";
+"HIDE_LIBRARY" = "隐藏媒体库选项";
 
 "APPLY" = "应用";
 "APPLY_DESC" = "按下应用会关闭APP以应用变更";
@@ -72,7 +72,7 @@
 
 "CLOSE" = "关闭";
 "WARNING" = "警告";
-"LOGIN_INFO" = "App restart required after successful signing into Google account";
+"LOGIN_INFO" = "成功登录谷歌帐户后需要重新启动应用程序";
 "APPLY_MESSAGE" = "此操作将关闭YouTube Music以应用变更，确定继续吗？";
 "CANCEL" = "取消";
 "YES" = "是";
