@@ -1,33 +1,33 @@
 "SETTINGS" = "Cài đặt";
 "ENABLED" = "Kích hoạt";
 "ENABLED_DESC" = "Kích hoạt năng của tài khoản Premium: không quảng cáo, phát trong nền...";
-"RESTART_FOOTER" = "Restart the app to apply changes";
+"RESTART_FOOTER" = "Khởi động lại ứng dụng để áp dụng các thay đổi";
 
-"PREMIUM_SETTINGS" = "Premium options";
-"NO_ADS" = "No ads";
-"NO_ADS_DESC" = "Removes ads in the app";
-"BACKGROUND_PLAYBACK" = "Background playback";
-"BACKGROUND_PLAYBACK_DESC" = "Activates background playback";
+"PREMIUM_SETTINGS" = "Tuỳ chọn Premium";
+"NO_ADS" = "Không quảng cáo";
+"NO_ADS_DESC" = "Loại bỏ quảng cáo trong ứng dụng";
+"BACKGROUND_PLAYBACK" = "Phát nhạc trong nền";
+"BACKGROUND_PLAYBACK_DESC" = "Kích hoạt phát nhạc trong nền";
 
-"PLAYER_SETTINGS" = "Player options";
+"PLAYER_SETTINGS" = "Tuỳ chọn trình phát nhạc";
 "PLAYBACK_RATE_BUTTON" = "Hiện nút chỉnh tốc độ phát";
 "PLAYBACK_RATE_BUTTON_DESC" = "Tùy chỉnh tốc độ phát";
 "SELECTABLE_LYRICS" = "Lựa chọn lời bài hát";
 "SELECTABLE_LYRICS_DESC" = "Kích hoạt khả năng lựa chọn và sao chép lời bài hát";
 "VOLBAR" = "Thanh âm lượng";
 "VOLBAR_DESC" = "Thêm thanh âm lượng vào trình phát nhạc";
-"NO_AUTORADIO" = "Disable radio";
-"NO_AUTORADIO_DESC" = "Disables endless music feature";
-"SKIP_NONMUSIC_PARTS" = "Skip Non-music section (SponsorBlock)";
-"SKIP_NONMUSIC_PARTS_DESC" = "Skips non-music sections in music videos";
-"AV_DEFAULT_MODE" = "Default playback mode";
+"NO_AUTORADIO" = "Vô hiệu hoá Radio";
+"NO_AUTORADIO_DESC" = "Vô hiệu hóa tính năng âm nhạc Radio";
+"SKIP_NONMUSIC_PARTS" = "Bỏ qua phần không phải âm nhạc (SponsorBlock)";
+"SKIP_NONMUSIC_PARTS_DESC" = "Bỏ qua các phần không phải âm nhạc trong videos";
+"AV_DEFAULT_MODE" = "Chế độ phát lại mặc định";
 "AUDIO" = "Audio";
 "VIDEO" = "Video";
-"SEEK_BUTTONS" = "Replace like/dislike with forward and backward buttons";
-"SEEK_TIME_FOOTER" = "Select a seek time in seconds\n\nDefaults:\nSeek backward = 10 sec.\nSeek forward = 30 sec.";
-"DEFAULT" = "Default";
+"SEEK_BUTTONS" = "Thay thế các nút Like/Dislike bằng các nút Forward và Backward";
+"SEEK_TIME_FOOTER" = "Chọn thời gian tua nhanh tính bằng giây\n\nMặc định\nVề sau = 10 giây.\nVề trước = 30 giây.";
+"DEFAULT" = "Mặc định";
 
-"THEME_SETTINGS" = "Theme options";
+"THEME_SETTINGS" = "Tuỳ chọn giao diện";
 "OLED_DARK_THEME" = "Chế độ tối OLED";
 "OLED_DARK_THEME_DESC" = "Kích hoạt chế độ tối OLED";
 "OLED_DARK_KEYBOARD" = "Bàn phím tối OLED";
@@ -35,29 +35,29 @@
 "LOW_CONTRAST" = "Độ tương phản thấp";
 "LOW_CONTRAST_DESC" = "Giảm độ tương phản của chữ và các nút ấn";
 
-"NAVBAR_SETTINGS" = "Navigation bar options";
-"DONT_STICK_HEADERS" = "Dont stick headers";
-"DONT_STICK_HEADERS_DESC" = "Unsticks pinned at the top of the screen panels";
-"HIDE_HISTORY_BUTTON" = "Hide history button";
-"HIDE_HISTORY_BUTTON_DESC" = "Hides history button in the navigation bar";
-"HIDE_CAST_BUTTON" = "Hide cast button";
-"HIDE_CAST_BUTTON_DESC" = "Hides cast button in the navigation bar";
-"HIDE_FILTER_BUTTON" = "Remove sort filter button";
-"HIDE_FILTER_BUTTON_DESC" = "Removes Library/Downloads filter button from the navigation bar";
+"NAVBAR_SETTINGS" = "Tuỳ chọn thanh điều hướng";
+"DONT_STICK_HEADERS" = "Không gắn tiêu đề";
+"DONT_STICK_HEADERS_DESC" = "Không gắn tiêu đề ở trên cùng của màn hình";
+"HIDE_HISTORY_BUTTON" = "Ẩn nút lịch sử";
+"HIDE_HISTORY_BUTTON_DESC" = "Ẩn nút lịch sử trong thanh điều hướng";
+"HIDE_CAST_BUTTON" = "Ẩn nút Cast";
+"HIDE_CAST_BUTTON_DESC" = "Ẩn nút Cast trong thanh điều hướng";
+"HIDE_FILTER_BUTTON" = "Xóa nút bộ lọc sắp xếp";
+"HIDE_FILTER_BUTTON_DESC" = "Xóa nút bộ lọc Library/Downloads";
 
-"TABBAR_SETTINGS" = "Tab bar options";
+"TABBAR_SETTINGS" = "Tuỳ Chọn Tab Bar";
 "STARTUP_TAB" = "Startup tab";
 "SAMPLES" = "Samples";
 "HOME" = "Home";
 "EXPLORE" = "Explore";
 "LIBRARY" = "Library";
 
-"TAB_SETTINGS" = "Tab settings";
-"REMOVE_TABBAR_LABELS" = "No tab bar labels";
-"HIDE_HOME" = "Hide Home tab";
-"HIDE_SAMPLES" = "Hide Samples tab";
-"HIDE_EXPLORE" = "Hide Explore tab";
-"HIDE_LIBRARY" = "Hide Library tab";
+"TAB_SETTINGS" = "Cài đặt Tab";
+"REMOVE_TABBAR_LABELS" = "Không nhãn Tab bar";
+"HIDE_HOME" = "Ẩn Tab Home";
+"HIDE_SAMPLES" = "Ẩn Tab Samples";
+"HIDE_EXPLORE" = "Ẩn Tab Explore";
+"HIDE_LIBRARY" = "Ẩn Tab Library";
 
 "APPLY" = "Áp dụng";
 "APPLY_DESC" = "Đóng ứng dụng để áp dụng các thay đổi";
@@ -70,9 +70,9 @@
 "SOURCE_CODE" = "Mã nguồn";
 "SOURCE_CODE_DESC" = "Kiểm tra mã nguồn";
 
-"CLOSE" = "Close";
-"WARNING" = "Warning";
-"LOGIN_INFO" = "App restart required after successful signing into Google account";
-"APPLY_MESSAGE" = "This action will close YouTube Music to apply changes. Are you sure?";
-"CANCEL" = "Cancel";
-"YES" = "Yes";
+"CLOSE" = "Đóng";
+"WARNING" = "Thông báo";
+"LOGIN_INFO" = "Yêu cầu khởi động lại ứng dụng sau khi đăng nhập thành công vào tài khoản Google";
+"APPLY_MESSAGE" = "Hành động này sẽ đóng YouTube Music để áp dụng các thay đổi. Bạn có chắc không?";
+"CANCEL" = "Huỷ";
+"YES" = "Có";
