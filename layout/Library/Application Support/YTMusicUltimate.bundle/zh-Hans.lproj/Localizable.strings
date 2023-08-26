@@ -53,11 +53,11 @@
 "LIBRARY" = "媒体库";
 
 "TAB_SETTINGS" = "选项卡设置";
-"REMOVE_TABBAR_LABELS" = "隐藏底栏标签";
-"HIDE_HOME" = "隐藏首页选项";
-"HIDE_SAMPLES" = "隐藏选段选项";
-"HIDE_EXPLORE" = "隐藏探索选项";
-"HIDE_LIBRARY" = "隐藏媒体库选项";
+"REMOVE_TABBAR_LABELS" = "隐藏选项卡标签";
+"HIDE_HOME" = "隐藏首页选项卡";
+"HIDE_SAMPLES" = "隐藏选段选项卡";
+"HIDE_EXPLORE" = "隐藏探索选项卡";
+"HIDE_LIBRARY" = "隐藏媒体库选项卡";
 
 "APPLY" = "应用";
 "APPLY_DESC" = "按下应用会关闭APP以应用变更";
