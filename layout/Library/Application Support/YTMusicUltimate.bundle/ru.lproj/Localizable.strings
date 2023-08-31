@@ -77,3 +77,4 @@
 "APPLY_MESSAGE" = "Данное действие приведет к закрытию YouTube Music для применения настроек. Продолжить?";
 "CANCEL" = "Отмена";
 "YES" = "Да";
+"REGIONAL_RESTRICTION" = "Кажется, YouTube Music ограничен в вашей стране.\n\nПодключитесь к VPN для полноценного доступа к YouTube Music.";

@@ -12,7 +12,7 @@
 NSBundle *YTMusicUltimateBundle() {
     static NSBundle *bundle = nil;
     static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
+    dispatch_once(&onceToken, ^{
         NSString *tweakBundlePath = [[NSBundle mainBundle] pathForResource:@"YTMusicUltimate" ofType:@"bundle"];
         if (tweakBundlePath)
             bundle = [NSBundle bundleWithPath:tweakBundlePath];
@@ -22,10 +22,12 @@ NSBundle *YTMusicUltimateBundle() {
     return bundle;
 }
 
+NSBundle *tweakBundle = YTMusicUltimateBundle();
+
 @interface YTAlertView : UIView
 @property (nonatomic, copy, readwrite) NSString *title;
 @property (nonatomic, copy, readwrite) NSString *subtitle;
-+ (instancetype)infoDialog;
++ (instancetype)confirmationDialogWithAction:(void (^)(void))action actionTitle:(NSString *)actionTitle;
 - (void)show;
 @end
 
@@ -75,9 +77,9 @@ static NSString *accessGroupID() {
 
 //Force enable safari sign-in
 %hook SSOConfiguration
-- (BOOL)shouldEnableSafariSignIn {
-    return YES;
-}
+- (BOOL)shouldEnableSafariSignIn { return YES; }
+- (BOOL)temporarilyDisableSafariSignIn { return NO; }
+- (void)setTemporarilyDisableSafariSignIn:(BOOL)arg1 { return %orig(NO); }
 %end
 
 %hook SSOKeychainHelper
@@ -223,11 +225,9 @@ static NSString *accessGroupID() {
 
     NSString *bundleIdentifier = originalInfoDictionary[@"CFBundleIdentifier"];
     if (![bundleIdentifier isEqualToString:YT_BUNDLE_ID]) {
-        if ([bundleIdentifier hasPrefix:@"com.google.ios.youtube."] || ![bundleIdentifier hasPrefix:@"com.google"]) {
-            NSMutableDictionary *newInfoDictionary = [NSMutableDictionary dictionaryWithDictionary:originalInfoDictionary];
-            [newInfoDictionary setValue:YT_BUNDLE_ID forKey:@"CFBundleIdentifier"];
-            return newInfoDictionary;
-        }
+        NSMutableDictionary *newInfoDictionary = [NSMutableDictionary dictionaryWithDictionary:originalInfoDictionary];
+        [newInfoDictionary setValue:YT_BUNDLE_ID forKey:@"CFBundleIdentifier"];
+        return newInfoDictionary;
     } return originalInfoDictionary;
 }
 %end
@@ -246,8 +246,9 @@ static NSString *accessGroupID() {
 - (void)viewDidDisappear:(bool)arg1 {
     %orig;
 
-    NSBundle *tweakBundle = YTMusicUltimateBundle();
-    YTAlertView *alertView = [%c(YTAlertView) infoDialog];
+    YTAlertView *alertView = [%c(YTAlertView) confirmationDialogWithAction:^{
+        exit(0);
+    } actionTitle:@"OK"];
     alertView.title = LOC(@"WARNING");
     alertView.subtitle = LOC(@"LOGIN_INFO");
     [alertView show];

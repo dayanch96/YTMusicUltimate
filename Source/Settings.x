@@ -1,5 +1,6 @@
 #import <UIKit/UIKit.h>
 #include "Prefs/YTMUltimateSettingsController.h"
+#include "Prefs/Localization.h"
 
 @interface YTMAccountButton : UIButton
 - (id)initWithTitle:(id)arg1 identifier:(id)arg2 icon:(id)arg3 actionBlock:(void (^)(BOOL finished))arg4;
@@ -11,8 +12,6 @@
 @interface UIView (Private)
 - (id)_viewControllerForAncestor;
 @end
-
-extern NSBundle *YTMusicUltimateBundle();
 
 %group SettingsPage
 %hook YTMAvatarAccountView
@@ -58,6 +57,14 @@ extern NSBundle *YTMusicUltimateBundle();
 
     //Continue the function with our own parameters.
     %orig(arrUp, arrDown);
+}
+%end
+
+%hook YTMMessageView
+- (void)setMessageText:(id)arg1 {
+    if ([arg1 containsString:@"Premium"]) {
+        arg1 = LOC(@"REGIONAL_RESTRICTION");
+    } %orig(arg1);
 }
 %end
 %end

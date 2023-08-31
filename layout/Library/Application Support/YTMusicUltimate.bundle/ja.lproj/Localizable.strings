@@ -76,3 +76,4 @@
 "APPLY_MESSAGE" = "この操作でYouTube Musicを終了し、変更を適用します。本当にいいですか？";
 "CANCEL" = "キャンセル";
 "YES" = "はい";
+"REGIONAL_RESTRICTION" = "Looks like YouTube Music restricted in your country.\n\n Please use VPN to get access to YouTube Music.";
