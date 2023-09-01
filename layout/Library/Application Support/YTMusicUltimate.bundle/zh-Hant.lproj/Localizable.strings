@@ -76,4 +76,4 @@
 "APPLY_MESSAGE" = "這個操作將關閉YouTube Music以套用變更，您確定要繼續嗎？";
 "CANCEL" = "取消";
 "YES" = "是";
-"REGIONAL_RESTRICTION" = "Looks like YouTube Music restricted in your country.\n\n Please use VPN to get access to YouTube Music.";
+"REGIONAL_RESTRICTION" = "YouTube Music 似乎在您的國家/地區受到限制，請使用 VPN 後再次執行 YouTube Music";
