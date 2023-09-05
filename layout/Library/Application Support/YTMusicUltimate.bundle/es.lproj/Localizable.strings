@@ -76,3 +76,4 @@
 "APPLY_MESSAGE" = "Esta acción cerrará YouTube Music para aplicar los cambios. ¿Estás seguro?";
 "CANCEL" = "Cancelar";
 "YES" = "Sí";
+"REGIONAL_RESTRICTION" = "Parece que YouTube Music está restringido en tu país. Utiliza una VPN para acceder a YouTube Music.";
