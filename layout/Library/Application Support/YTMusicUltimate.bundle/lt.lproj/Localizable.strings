@@ -23,7 +23,7 @@
 "AV_DEFAULT_MODE" = "Numatytasis atkūrimo režimas";
 "AUDIO" = "Garsas";
 "VIDEO" = "Vaizdas";
-"SEEK_BUTTONS" = "Replace like/dislike with forward and backward buttons";
+"SEEK_BUTTONS" = "Replace next/previous with forward and backward buttons";
 "SEEK_TIME_FOOTER" = "Select a seek time in seconds\n\nDefaults:\nSeek backward = 10 sec.\nSeek forward = 30 sec.";
 "DEFAULT" = "Default";
 

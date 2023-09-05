@@ -23,7 +23,7 @@
 "AV_DEFAULT_MODE" = "Varsayılan oynatma modu";
 "AUDIO" = "Şarkı";
 "VIDEO" = "Video";
-"SEEK_BUTTONS" = "Beğenme ve Beğenmeme düğmelerini Hızlı ileri ve Geri Sar düğmeleriyle değiştir";
+"SEEK_BUTTONS" = "Önceki ve Sonraki düğmelerini Hızlı ileri ve Geri Sar düğmeleriyle değiştir";
 "SEEK_TIME_FOOTER" = "Sarma süresini seçiniz\n\Varsayılanlar:\nGeri Sar = 10 sn.\nHızlı ileri = 30 sn.";
 "DEFAULT" = "Varsayılan";
 
@@ -76,4 +76,4 @@
 "APPLY_MESSAGE" = "Bu eylem, değişikliklerin uygulanması için YouTube Music'i kapatacak. Devam etmek istediğine emin misin?";
 "CANCEL" = "İptal";
 "YES" = "Evet";
-"REGIONAL_RESTRICTION" = "Looks like YouTube Music restricted in your country.\n\n Please use VPN to get access to YouTube Music.";
+"REGIONAL_RESTRICTION" = "YouTube Music, ülkende kısıtlanmış gibi görünüyor.\n\nYouTube Music'e erişim sağlamak için lütfen VPN kullan.";

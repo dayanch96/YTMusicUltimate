@@ -23,7 +23,7 @@
 "AV_DEFAULT_MODE" = "預設播放模式";
 "AUDIO" = "歌曲";
 "VIDEO" = "影片";
-"SEEK_BUTTONS" = "將「喜歡/不喜歡」替換為「快轉/倒轉」按鈕";
+"SEEK_BUTTONS" = "Replace next/previous with forward and backward buttons";
 "SEEK_TIME_FOOTER" = "選擇一個「快轉/倒轉」時間/秒\n\n預設值:\n倒轉 = 10秒\n快轉 = 30秒";
 "DEFAULT" = "預設";
 
@@ -76,4 +76,4 @@
 "APPLY_MESSAGE" = "這個操作將關閉YouTube Music以套用變更，您確定要繼續嗎？";
 "CANCEL" = "取消";
 "YES" = "是";
-"REGIONAL_RESTRICTION" = "Looks like YouTube Music restricted in your country.\n\n Please use VPN to get access to YouTube Music.";
+"REGIONAL_RESTRICTION" = "YouTube Music 似乎在您的國家/地區受到限制，請使用 VPN 後再次執行 YouTube Music";

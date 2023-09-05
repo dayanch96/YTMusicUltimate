@@ -1,85 +1,64 @@
 #import "SeekButtons.h"
 
-extern NSBundle *YTMusicUltimateBundle();
-
-static BOOL seekTimeDef() {
-    return ([[NSUserDefaults standardUserDefaults] integerForKey:@"seekTime"] == 0);
-}
-
-static BOOL seekTime10sec() {
-    return ([[NSUserDefaults standardUserDefaults] integerForKey:@"seekTime"] == 1);
-}
-
-static BOOL seekTime20sec() {
-    return ([[NSUserDefaults standardUserDefaults] integerForKey:@"seekTime"] == 2);
-}
-
-static BOOL seekTime30sec() {
-    return ([[NSUserDefaults standardUserDefaults] integerForKey:@"seekTime"] == 3);
-}
-
-static BOOL seekTime60sec() {
-    return ([[NSUserDefaults standardUserDefaults] integerForKey:@"seekTime"] == 4);
+static NSInteger currentSeekTime() {
+    return [[NSUserDefaults standardUserDefaults] integerForKey:@"seekTime"];
 }
 
 %group gSeekButtons
-%hook YTMNowPlayingView
+%hook YTMPlayerControlsView
 - (void)layoutSubviews {
     %orig;
 
-    UIButton *dislikeButton = [self dislikeButton];
-    UIButton *likeButton = [self likeButton];
+    UIButton *prevButton = [self prevButton];
+    UIButton *nextButton = [self nextButton];
 
-    NSSet *dislikeTargets = [dislikeButton allTargets];
-    for (id dislikeTarget in dislikeTargets) {
-        NSArray *actions = [dislikeButton actionsForTarget:dislikeTarget forControlEvent:UIControlEventTouchUpInside];
+    NSSet *prevTargets = [prevButton allTargets];
+    for (id prevTarget in prevTargets) {
+        NSArray *actions = [prevButton actionsForTarget:prevTarget forControlEvent:UIControlEventTouchUpInside];
         for (NSString *action in actions) {
-            if ([action isEqualToString:@"didTapDislikeButton"]) {
-                [dislikeButton removeTarget:dislikeTarget action:NSSelectorFromString(action) forControlEvents:UIControlEventTouchUpInside];
-                [dislikeButton addTarget:dislikeTarget action:@selector(didTapSeekBackwardButton) forControlEvents:UIControlEventTouchUpInside];
+            if ([action isEqualToString:@"didTapPrevButton"]) {
+                [prevButton removeTarget:prevTarget action:NSSelectorFromString(action) forControlEvents:UIControlEventTouchUpInside];
+                [prevButton addTarget:prevTarget action:@selector(didTapSeekBackwardButton) forControlEvents:UIControlEventTouchUpInside];
             }
         }
     }
 
-    NSSet *likeTargets = [likeButton allTargets];
-    for (id likeTarget in likeTargets) {
-        NSArray *actions = [likeButton actionsForTarget:likeTarget forControlEvent:UIControlEventTouchUpInside];
+    NSSet *nextTargets = [nextButton allTargets];
+    for (id nextTarget in nextTargets) {
+        NSArray *actions = [nextButton actionsForTarget:nextTarget forControlEvent:UIControlEventTouchUpInside];
         for (NSString *action in actions) {
-            if ([action isEqualToString:@"didTapLikeButton"]) {
-                [likeButton removeTarget:likeTarget action:NSSelectorFromString(action) forControlEvents:UIControlEventTouchUpInside];
-                [likeButton addTarget:likeTarget action:@selector(didTapSeekForwardButton) forControlEvents:UIControlEventTouchUpInside];
+            if ([action isEqualToString:@"didTapNextButton"]) {
+                [nextButton removeTarget:nextTarget action:NSSelectorFromString(action) forControlEvents:UIControlEventTouchUpInside];
+                [nextButton addTarget:nextTarget action:@selector(didTapSeekForwardButton) forControlEvents:UIControlEventTouchUpInside];
             }
         }
     }
 
-    //Temporary solution
-    NSBundle *tweakBundle = YTMusicUltimateBundle();
-    if (seekTimeDef()) {
-        [dislikeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"b10" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateNormal];
-        [dislikeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"b10" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateSelected];
-        [likeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"f30" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateNormal];
-        [likeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"f30" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateSelected];
-    } else if (seekTime10sec()) {
-        [dislikeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"b10" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateNormal];
-        [dislikeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"b10" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateSelected];
-        [likeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"f10" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateNormal];
-        [likeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"f10" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateSelected];
-    } else if (seekTime20sec()) {
-        [dislikeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"b20" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateNormal];
-        [dislikeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"b20" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateSelected];
-        [likeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"f20" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateNormal];
-        [likeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"f20" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateSelected];
-    } else if (seekTime30sec()) {
-        [dislikeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"b30" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateNormal];
-        [dislikeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"b30" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateSelected];
-        [likeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"f30" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateNormal];
-        [likeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"f30" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateSelected];
-    } else if (seekTime60sec()) {
-        [dislikeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"b60" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateNormal];
-        [dislikeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"b60" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateSelected];
-        [likeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"f60" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateNormal];
-        [likeButton setImage:[UIImage imageWithContentsOfFile:[tweakBundle pathForResource:@"f60" ofType:@"png" inDirectory:@"icons"]] forState:UIControlStateSelected];
+    NSString *backValue = @"10";
+    NSString *forwardValue = @"30";
+
+    if (currentSeekTime() == 1) {
+        backValue = @"10";
+        forwardValue = @"10";
+    } else if (currentSeekTime() == 2) {
+        backValue = @"20";
+        forwardValue = @"20";
+    } else if (currentSeekTime() == 3) {
+        backValue = @"30";
+        forwardValue = @"30";
+    } else if (currentSeekTime() == 4) {
+        backValue = @"60";
+        forwardValue = @"60";
     }
+
+    NSString *appBundle = [[NSBundle mainBundle] bundlePath];
+    UIImage *backImage = [UIImage imageNamed:[NSString stringWithFormat:@"ic_seek_back_%@_40", backValue] inBundle:[NSBundle bundleWithPath:appBundle] compatibleWithTraitCollection:nil];
+    UIImage *forwardImage = [UIImage imageNamed:[NSString stringWithFormat:@"ic_seek_forward_%@_40", forwardValue] inBundle:[NSBundle bundleWithPath:appBundle] compatibleWithTraitCollection:nil];
+
+    [prevButton setImage:backImage forState:UIControlStateNormal];
+    [prevButton setImage:backImage forState:UIControlStateSelected];
+    [nextButton setImage:forwardImage forState:UIControlStateNormal];
+    [nextButton setImage:forwardImage forState:UIControlStateSelected];
 }
 
 - (void)didTapSeekBackwardButton {
@@ -93,25 +72,25 @@ static BOOL seekTime60sec() {
 
 %hook YTColdConfig
 - (long long)iosPlayerClientSharedConfigTransportControlsSeekForwardTime {
-    if (seekTime10sec()) {
+    if (currentSeekTime() == 1) {
         return 10;
-    } else if (seekTime20sec()) {
+    } else if (currentSeekTime() == 2) {
         return 20;
-    } else if (seekTime30sec()) {
+    } else if (currentSeekTime() == 3) {
         return 30;
-    } else if (seekTime60sec()) {
+    } else if (currentSeekTime() == 4) {
         return 60;
     } return %orig;
 }
 
 - (long long)iosPlayerClientSharedConfigTransportControlsSeekBackwardTime {
-    if (seekTime10sec()) {
+    if (currentSeekTime() == 1) {
         return 10;
-    } else if (seekTime20sec()) {
+    } else if (currentSeekTime() == 2) {
         return 20;
-    } else if (seekTime30sec()) {
+    } else if (currentSeekTime() == 3) {
         return 30;
-    } else if (seekTime60sec()) {
+    } else if (currentSeekTime() == 4) {
         return 60;
     } return %orig;
 }
