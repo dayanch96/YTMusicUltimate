@@ -24,7 +24,8 @@
 "AUDIO" = "歌曲";
 "VIDEO" = "视频";
 "SEEK_BUTTONS" = "Replace next/previous with forward and backward buttons";
-"SEEK_TIME_FOOTER" = "选择跳过时间(秒)\n\n默认:\n快退 = 10秒\n快进 = 30秒";
+//选择跳过时间(秒)\n\n默认:\n快退 = 10秒\n快进 = 30秒
+"SEEK_TIME_FOOTER" = "Select a seek time in seconds\n\nDefaults:\nSeek backward = 10 sec.\nSeek forward = 30 sec.\n\nSkip to the next and previous tracks available by long-pressing the buttons.";
 "DEFAULT" = "默认";
 
 "THEME_SETTINGS" = "主题选项";

@@ -5,6 +5,17 @@ static NSInteger currentSeekTime() {
 }
 
 %group gSeekButtons
+@implementation UIView (NearestViewController)
+- (UIViewController *)nearestViewController {
+    UIResponder *responder = self.nextResponder;
+    while (responder) {
+        if ([responder isKindOfClass:[UIViewController class]]) {
+            return (UIViewController *)responder;
+        } responder = responder.nextResponder;
+    } return nil;
+}
+@end
+
 %hook YTMPlayerControlsView
 - (void)layoutSubviews {
     %orig;
@@ -34,21 +45,23 @@ static NSInteger currentSeekTime() {
         }
     }
 
+    UILongPressGestureRecognizer *longPressPrev = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressPrev:)];
+    [longPressPrev setMinimumPressDuration:0.5];
+    [prevButton addGestureRecognizer:longPressPrev];
+
+    UILongPressGestureRecognizer *longPressNext = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressNext:)];
+    [longPressNext setMinimumPressDuration:0.5];
+    [nextButton addGestureRecognizer:longPressNext];
+
+
     NSString *backValue = @"10";
     NSString *forwardValue = @"30";
 
-    if (currentSeekTime() == 1) {
-        backValue = @"10";
-        forwardValue = @"10";
-    } else if (currentSeekTime() == 2) {
-        backValue = @"20";
-        forwardValue = @"20";
-    } else if (currentSeekTime() == 3) {
-        backValue = @"30";
-        forwardValue = @"30";
-    } else if (currentSeekTime() == 4) {
-        backValue = @"60";
-        forwardValue = @"60";
+    if (currentSeekTime() != 0) {
+        NSArray *values = @[@"10", @"20", @"30", @"60"];
+        NSInteger seekTime = currentSeekTime() - 1;
+        backValue = values[seekTime];
+        forwardValue = values[seekTime];
     }
 
     NSString *appBundle = [[NSBundle mainBundle] bundlePath];
@@ -68,31 +81,36 @@ static NSInteger currentSeekTime() {
 - (void)didTapSeekForwardButton {
     [self didTapSeekForwardButton];
 }
+
+%new - (void)longPressPrev:(UILongPressGestureRecognizer *)gesture {
+    if (gesture.state == UIGestureRecognizerStateBegan) {
+        YTMNowPlayingViewController *parentVC = (YTMNowPlayingViewController *)[self nearestViewController];
+        if (parentVC) [parentVC didTapPrevButton];
+    }
+}
+
+%new - (void)longPressNext:(UILongPressGestureRecognizer *)gesture {
+    if (gesture.state == UIGestureRecognizerStateBegan) {
+        YTMNowPlayingViewController *parentVC = (YTMNowPlayingViewController *)[self nearestViewController];
+        if (parentVC) [parentVC didTapNextButton];
+    }
+}
+
 %end
 
 %hook YTColdConfig
-- (long long)iosPlayerClientSharedConfigTransportControlsSeekForwardTime {
-    if (currentSeekTime() == 1) {
-        return 10;
-    } else if (currentSeekTime() == 2) {
-        return 20;
-    } else if (currentSeekTime() == 3) {
-        return 30;
-    } else if (currentSeekTime() == 4) {
-        return 60;
-    } return %orig;
+- (NSInteger)iosPlayerClientSharedConfigTransportControlsSeekForwardTime {
+    NSArray *values = @[@"%orig", @10, @20, @30, @60];
+    NSInteger seekTime = currentSeekTime();
+
+    return (seekTime == 0) ? [values[0] integerValue] : [values[seekTime] integerValue];
 }
 
-- (long long)iosPlayerClientSharedConfigTransportControlsSeekBackwardTime {
-    if (currentSeekTime() == 1) {
-        return 10;
-    } else if (currentSeekTime() == 2) {
-        return 20;
-    } else if (currentSeekTime() == 3) {
-        return 30;
-    } else if (currentSeekTime() == 4) {
-        return 60;
-    } return %orig;
+- (NSInteger)iosPlayerClientSharedConfigTransportControlsSeekBackwardTime {
+    NSArray *values = @[@"%orig", @10, @20, @30, @60];
+    NSInteger seekTime = currentSeekTime();
+
+    return (seekTime == 0) ? [values[0] integerValue] : [values[seekTime] integerValue];
 }
 %end
 %end

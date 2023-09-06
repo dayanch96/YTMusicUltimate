@@ -24,7 +24,7 @@
 "AUDIO" = "Şarkı";
 "VIDEO" = "Video";
 "SEEK_BUTTONS" = "Önceki ve Sonraki düğmelerini Hızlı ileri ve Geri Sar düğmeleriyle değiştir";
-"SEEK_TIME_FOOTER" = "Sarma süresini seçiniz\n\Varsayılanlar:\nGeri Sar = 10 sn.\nHızlı ileri = 30 sn.";
+"SEEK_TIME_FOOTER" = "Sarma süresini seçiniz\n\Varsayılanlar:\nGeri Sar = 10 sn.\nHızlı ileri = 30 sn.\n\nButonlara uzun basılarak sonraki ve önceki parçalara geçebilirsiniz.";
 "DEFAULT" = "Varsayılan";
 
 "THEME_SETTINGS" = "Tema ayarları";

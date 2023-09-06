@@ -24,7 +24,8 @@
 "AUDIO" = "Audio";
 "VIDEO" = "Video";
 "SEEK_BUTTONS" = "Replace next/previous with forward and backward buttons";
-"SEEK_TIME_FOOTER" = "Selecciona un tiempo de búsqueda en segundos\n\nValores predeterminados:\nRetroceder = 10 seg.\nAvanzar = 30 seg.";
+//Selecciona un tiempo de búsqueda en segundos\n\nValores predeterminados:\nRetroceder = 10 seg.\nAvanzar = 30 seg.
+"SEEK_TIME_FOOTER" = "Select a seek time in seconds\n\nDefaults:\nSeek backward = 10 sec.\nSeek forward = 30 sec.\n\nSkip to the next and previous tracks available by long-pressing the buttons.";
 "DEFAULT" = "Predeterminado";
 
 "THEME_SETTINGS" = "Opciones de tema";

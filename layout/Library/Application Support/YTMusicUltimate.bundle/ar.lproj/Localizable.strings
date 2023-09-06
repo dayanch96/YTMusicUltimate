@@ -24,7 +24,7 @@
 "AUDIO" = "Audio";
 "VIDEO" = "Video";
 "SEEK_BUTTONS" = "Replace like/dislike with forward and backward buttons";
-"SEEK_TIME_FOOTER" = "Select a seek time in seconds\n\nDefaults:\nSeek backward = 10 sec.\nSeek forward = 30 sec.";
+"SEEK_TIME_FOOTER" = "Select a seek time in seconds\n\nDefaults:\nSeek backward = 10 sec.\nSeek forward = 30 sec.\n\nSkip to the next and previous tracks available by long-pressing the buttons.";
 "DEFAULT" = "Default";
 
 "THEME_SETTINGS" = "Theme options";

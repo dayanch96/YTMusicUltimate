@@ -24,7 +24,8 @@
 "AUDIO" = "歌曲";
 "VIDEO" = "影片";
 "SEEK_BUTTONS" = "Replace next/previous with forward and backward buttons";
-"SEEK_TIME_FOOTER" = "選擇一個「快轉/倒轉」時間/秒\n\n預設值:\n倒轉 = 10秒\n快轉 = 30秒";
+//選擇一個「快轉/倒轉」時間/秒\n\n預設值:\n倒轉 = 10秒\n快轉 = 30秒
+"SEEK_TIME_FOOTER" = "Select a seek time in seconds\n\nDefaults:\nSeek backward = 10 sec.\nSeek forward = 30 sec.\n\nSkip to the next and previous tracks available by long-pressing the buttons.";
 "DEFAULT" = "預設";
 
 "THEME_SETTINGS" = "介面主題";
