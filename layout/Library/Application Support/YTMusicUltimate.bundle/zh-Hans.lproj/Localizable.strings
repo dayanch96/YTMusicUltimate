@@ -23,9 +23,9 @@
 "AV_DEFAULT_MODE" = "默认播放模式";
 "AUDIO" = "歌曲";
 "VIDEO" = "视频";
-"SEEK_BUTTONS" = "Replace next/previous with forward and backward buttons";
+"SEEK_BUTTONS" = "用“快进/快退”按钮替换“上一曲/下一曲”";
 //选择跳过时间(秒)\n\n默认:\n快退 = 10秒\n快进 = 30秒
-"SEEK_TIME_FOOTER" = "Select a seek time in seconds\n\nDefaults:\nSeek backward = 10 sec.\nSeek forward = 30 sec.\n\nSkip to the next and previous tracks available by long-pressing the buttons.";
+"SEEK_TIME_FOOTER" = "选择跳过时间(秒)\n\n默认:\n快退 = 10秒\n快进 = 30秒\n\n长按按钮可跳到下一曲和上一曲。";
 "DEFAULT" = "默认";
 
 "THEME_SETTINGS" = "主题选项";
@@ -37,8 +37,8 @@
 "LOW_CONTRAST_DESC" = "降低文字和按钮的对比度";
 
 "NAVBAR_SETTINGS" = "导航栏选项";
-"DONT_STICK_HEADERS" = "不固定标题";
-"DONT_STICK_HEADERS_DESC" = "不固定在屏幕顶部的标题";
+"DONT_STICK_HEADERS" = "解除标题固定";
+"DONT_STICK_HEADERS_DESC" = "向下滚动时隐藏屏幕顶部的标题";
 "HIDE_HISTORY_BUTTON" = "隐藏播放历史按钮";
 "HIDE_HISTORY_BUTTON_DESC" = "在导航栏中隐藏播放历史按钮";
 "HIDE_CAST_BUTTON" = "隐藏投屏按钮";
@@ -77,4 +77,4 @@
 "APPLY_MESSAGE" = "此操作将关闭YouTube Music以应用变更，确定继续吗？";
 "CANCEL" = "取消";
 "YES" = "是";
-"REGIONAL_RESTRICTION" = "Looks like YouTube Music restricted in your country.\n\n Please use VPN to get access to YouTube Music.";
+"REGIONAL_RESTRICTION" = "貌似YouTube音乐在您的国家\/地区受到限制。\n\n请使用VPN访问YouTube音乐。";
