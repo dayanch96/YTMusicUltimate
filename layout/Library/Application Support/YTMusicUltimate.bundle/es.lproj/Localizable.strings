@@ -23,8 +23,8 @@
 "AV_DEFAULT_MODE" = "Modo de reproducción predeterminado";
 "AUDIO" = "Audio";
 "VIDEO" = "Video";
-"SEEK_BUTTONS" = "Reemplazar me gusta/no me gusta con botones de avance y retroceso";
-"SEEK_TIME_FOOTER" = "Selecciona un tiempo de búsqueda en segundos\n\nValores predeterminados:\nRetroceder = 10 seg.\nAvanzar = 30 seg.";
+"SEEK_BUTTONS" = "Sustituir siguiente/anterior por botones de avance y retroceso";
+"SEEK_TIME_FOOTER" = "Seleccione un tiempo de búsqueda en segundos\n\nPor defecto:\nBúsqueda hacia atrás = 10 seg.\nBúsqueda hacia adelante = 30 seg.\n\nSalto a la pista siguiente y anterior disponible pulsando prolongadamente los botones.";
 "DEFAULT" = "Predeterminado";
 
 "THEME_SETTINGS" = "Opciones de tema";
