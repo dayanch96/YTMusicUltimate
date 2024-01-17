@@ -1,5 +1,12 @@
 #import <UIKit/UIKit.h>
 
+static BOOL YTMU(NSString *key) {
+    NSDictionary *YTMUltimateDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"];
+    return [YTMUltimateDict[key] boolValue];
+}
+
+static BOOL selectableLyrics = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"selectableLyrics");
+
 @interface YTFormattedStringLabel : UILabel
 @end
 
@@ -7,14 +14,13 @@
 @property (retain, nonatomic) UITextView *lyrics;
 @end
 
-%group SelectableLyrics
 %hook YTMLightweightMusicDescriptionShelfCell
 
 %property (retain, nonatomic) UITextView *lyrics;
 
 - (id)initWithFrame:(CGRect)frame {
     self = %orig;
-    if (self) {
+    if (self && selectableLyrics) {
         UIView *container = [self valueForKey:@"_descriptionContainer"];
         self.lyrics = [[UITextView alloc] init];
         self.lyrics.backgroundColor = [UIColor clearColor];
@@ -28,31 +34,24 @@
 
 - (void)setRenderer:(id)renderer {
     %orig;
-    YTFormattedStringLabel *lyrics = [self valueForKey:@"_descriptionLabel"];
-    lyrics.userInteractionEnabled = YES;
-    lyrics.hidden = YES;
-    self.lyrics.font = lyrics.font;
-    self.lyrics.textColor = lyrics.textColor;
-    self.lyrics.attributedText = lyrics.attributedText;
+
+    if (selectableLyrics) {
+        YTFormattedStringLabel *lyrics = [self valueForKey:@"_descriptionLabel"];
+        lyrics.userInteractionEnabled = YES;
+        lyrics.hidden = YES;
+        self.lyrics.font = lyrics.font;
+        self.lyrics.textColor = lyrics.textColor;
+        self.lyrics.attributedText = lyrics.attributedText;
+    }
 }
 
 - (void)layoutSubviews {
     %orig;
-    YTFormattedStringLabel *lyrics = [self valueForKey:@"_descriptionLabel"];
-    self.lyrics.frame = lyrics.frame;
-}
 
-%end
-%end
-
-%ctor{
-
-    BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
-    BOOL selectableLyrics = ([[NSUserDefaults standardUserDefaults] objectForKey:@"selectableLyrics_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"selectableLyrics_enabled"] : NO;
-    
-    if (isEnabled){
-        if (selectableLyrics) {
-            %init(SelectableLyrics);
-        }
+    if (selectableLyrics) {
+        YTFormattedStringLabel *lyrics = [self valueForKey:@"_descriptionLabel"];
+        self.lyrics.frame = lyrics.frame;
     }
 }
+
+%end

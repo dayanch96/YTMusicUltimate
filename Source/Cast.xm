@@ -1,164 +1,159 @@
 #import <Foundation/Foundation.h>
 
-%group Cast
+static BOOL YTMU(NSString *key) {
+    NSDictionary *YTMUltimateDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"];
+    return [YTMUltimateDict[key] boolValue];
+}
+
 %hook MDXFeatureFlags
 
 - (BOOL)isCastCloudDiscoveryEnabled {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 
 - (void)setIsCastCloudDiscoveryEnabled:(BOOL)enabled {
-    %orig(YES);
+    YTMU(@"YTMUltimateIsEnabled") ? %orig(YES) : %orig;
 }
 
 - (BOOL)isCastToNativeEnabled {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 
 - (void)setIsCastToNativeEnabled:(BOOL)enabled {
-    %orig(YES);
+    YTMU(@"YTMUltimateIsEnabled") ? %orig(YES) : %orig;
 }
 
 - (BOOL)isCastEnabled {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 
 - (void)setIsCastEnabled:(BOOL)enabled {
-    %orig(YES);
+    YTMU(@"YTMUltimateIsEnabled") ? %orig(YES) : %orig;
 }
 %end
 
 %hook YTColdConfig
 - (BOOL)isCastToNativeEnabled {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 
 - (void)setIsCastToNativeEnabled:(BOOL)enabled {
-    %orig(YES);
+    YTMU(@"YTMUltimateIsEnabled") ? %orig(YES) : %orig;
 }
 
 - (BOOL)isPersistentCastIconEnabled {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 
 - (void)setIsPersistentCastIconEnabled:(BOOL)enabled {
-    %orig(YES);
+    YTMU(@"YTMUltimateIsEnabled") ? %orig(YES) : %orig;
 }
 
 - (BOOL)musicEnableSuggestedCastDevices {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 
 - (void)setMusicEnableSuggestedCastDevices:(BOOL)suggest {
-    %orig(YES);
+    YTMU(@"YTMUltimateIsEnabled") ? %orig(YES) : %orig;
 }
 
 - (BOOL)musicClientConfigEnableCastButtonOnPlayerHeader {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 
 - (void)setMusicClientConfigEnableCastButtonOnPlayerHeader:(BOOL)enabled {
-    %orig(YES);
+    YTMU(@"YTMUltimateIsEnabled") ? %orig(YES) : %orig;
 }
 
 - (BOOL)musicClientConfigEnableAudioOnlyCastingForNonMusicAudio {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 
 - (void)setMusicClientConfigEnableAudioOnlyCastingForNonMusicAudio:(BOOL)enabled {
-    %orig(YES);
+    YTMU(@"YTMUltimateIsEnabled") ? %orig(YES) : %orig;
 }
 %end
 
 %hook YTMCastSessionController
 - (id)premiumUpgradeAction {
-    return nil;
+    return YTMU(@"YTMUltimateIsEnabled") ? nil : %orig;
 }
 
 - (void)showAudioCastUpsellDialog {
-    return;
+    if (!YTMU(@"YTMUltimateIsEnabled")) return %orig;
 }
 
 - (BOOL)isFreeTierAudioCastEnabled {
-    return NO;
+    return YTMU(@"YTMUltimateIsEnabled") ? NO : %orig;
 }
 
 - (void)setIsFreeTierAudioCastEnabled:(BOOL)enabled {
-    %orig(NO);
+    YTMU(@"YTMUltimateIsEnabled") ? %orig(NO) : %orig;
 }
 
 - (void)openMusicPremiumLandingPage {
-    return;
+    if (!YTMU(@"YTMUltimateIsEnabled")) return %orig;
 }
 %end
 
 %hook YTMMusicAppMetadata
 - (BOOL)isAudioCastEnabled {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 
 - (void)setIsAudioCastEnabled:(BOOL)enabled {
-    %orig(YES);
+    YTMU(@"YTMUltimateIsEnabled") ? %orig(YES) : %orig;
 }
 
 - (BOOL)isMATScreenedCastEnabled {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 
 - (void)setIsMATScreenedCastEnabled:(BOOL)enabled {
-    %orig(YES);
+    YTMU(@"YTMUltimateIsEnabled") ? %orig(YES) : %orig;
 }
 %end
 
 %hook YTMSettings
 - (BOOL)isAudioCastEnabled {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 
 - (BOOL)isGcmEnabled {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 %end
 
 %hook YTGlobalConfig
 - (BOOL)isAudioCastEnabled {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 
 - (BOOL)isGcmEnabled {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 %end
 
 %hook YTMQueueConfig
 - (BOOL)isMobileAudioTierScreenedCastEnabled {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 %end
 
 %hook GHCCDeviceCapabilities
 - (BOOL)audioSupported {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 
 - (BOOL)hasAudioSupported {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 
 - (BOOL)hasVideoSupported {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 
 - (BOOL)videoSupported {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 %end
-%end
-
-%ctor {
-    BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
-
-    if (isEnabled) {
-        %init(Cast);
-    }
-}

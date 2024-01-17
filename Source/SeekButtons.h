@@ -1,4 +1,5 @@
 #import <UIKit/UIKit.h>
+#import "Prefs/Localization.h"
 
 @interface UIView (NearestViewController)
 - (UIViewController *)nearestViewController;

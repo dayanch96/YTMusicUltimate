@@ -1,106 +1,110 @@
 #import <Foundation/Foundation.h>
 
+static BOOL YTMU(NSString *key) {
+    NSDictionary *YTMUltimateDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"];
+    return [YTMUltimateDict[key] boolValue];
+}
+
 @interface YTIPivotBarItemRenderer : NSObject
- @property(copy, nonatomic) NSString *pivotIdentifier;
- - (NSString *)pivotIdentifier;
- @end
+@property(copy, nonatomic) NSString *pivotIdentifier;
+- (NSString *)pivotIdentifier;
+@end
 
- @interface YTIPivotBarSupportedRenderers : NSObject
- @property(retain, nonatomic) YTIPivotBarItemRenderer *pivotBarItemRenderer;
- - (YTIPivotBarItemRenderer *)pivotBarItemRenderer;
- @end
+@interface YTIPivotBarSupportedRenderers : NSObject
+@property(retain, nonatomic) YTIPivotBarItemRenderer *pivotBarItemRenderer;
+- (YTIPivotBarItemRenderer *)pivotBarItemRenderer;
+@end
 
- @interface YTIPivotBarRenderer : NSObject
- - (NSMutableArray <YTIPivotBarSupportedRenderers *> *)itemsArray;
- @end
+@interface YTIPivotBarRenderer : NSObject
+- (NSMutableArray <YTIPivotBarSupportedRenderers *> *)itemsArray;
+@end
 
- @interface YTMWatchViewController : NSObject
- @end
+@interface YTMWatchViewController : NSObject
+@end
 
-%group EnsurePremiumStatus
 %hook MDXFeatureFlags
 - (BOOL)areMementoPromotionsEnabled {
-    return NO;
+    return YTMU(@"YTMUltimateIsEnabled") ? NO : %orig;
 }
 
 - (void)setAreMementoPromotionsEnabled:(BOOL)enabled {
-    %orig(NO);
+    YTMU(@"YTMUltimateIsEnabled") ? %orig(NO) : %orig;
 }
 %end
 
 %hook YTColdConfig
 - (BOOL)isPassiveSignInUniquePremiumValuePropEnabled {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 
 - (void)setIsPassiveSignInUniquePremiumValuePropEnabled:(BOOL)enabled {
-    %orig(YES);
+    YTMU(@"YTMUltimateIsEnabled") ? %orig(YES) : %orig;
 }
 
 - (BOOL)musicClientConfigIosEnableMobileAudioTierLockscreenControls {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 %end
 
 %hook YTIPlayabilityStatus
 - (id)backgroundUpsell {
-    return nil;
+    return YTMU(@"YTMUltimateIsEnabled") ? nil : %orig;
 }
 
 - (id)offlineUpsell {
-    return nil;
+    return YTMU(@"YTMUltimateIsEnabled") ? nil : %orig;
 }
 %end
 
 %hook YTMAppDelegate
 - (void)showUpsellAlertWithTitle:(id)arg1 subtitle:(id)arg2 upgradeButtonTitle:(id)arg3 upsellURLString:(id)arg4 sourceApplication:(id)arg5 {
-    return;
+    if (!YTMU(@"YTMUltimateIsEnabled")) %orig;
 }
 %end
 
 %hook MDXPromotionManager
 - (void)presentMementoPromotionIfTriggerConditionsAreSatisfied {
-    return;
+    if (!YTMU(@"YTMUltimateIsEnabled")) %orig;
 }
 
 - (void)presentMementoPromotion:(long long)arg1 {
-    return;
+    if (!YTMU(@"YTMUltimateIsEnabled")) %orig;
 }
 %end
 
 %hook YTPlayerPromoController
 - (void)showBackgroundabilityUpsell {
-    return;
+    if (!YTMU(@"YTMUltimateIsEnabled")) %orig;
 }
 
 - (void)showBackgroundOnboardingHint {
-    return;
+    if (!YTMU(@"YTMUltimateIsEnabled")) %orig;
 }
 
 - (void)showPipOnboardingHint {
-    return;
+    if (!YTMU(@"YTMUltimateIsEnabled")) %orig;
 }
 %end
 
 %hook YTMMusicAppMetadata
 - (BOOL)isPremiumSubscriber{
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 
 - (void)setIsPremiumSubscriber:(BOOL)premium {
-    %orig(YES);
+    YTMU(@"YTMUltimateIsEnabled") ? %orig(YES) : %orig;
 }
 
 - (id)sidePanelPromo{
-    return nil;
+    return YTMU(@"YTMUltimateIsEnabled") ? nil : %orig;
 }
 
 - (id)unlimitedSettingsButton {
-    return nil;
+    return YTMU(@"YTMUltimateIsEnabled") ? nil : %orig;
 }
 
 - (BOOL)isMobileAudioTier {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 %end
 
@@ -111,75 +115,77 @@
     NSUInteger index = [items indexOfObjectPassingTest:^BOOL(YTIPivotBarSupportedRenderers *renderers, NSUInteger idx, BOOL *stop) {
         return [[[renderers pivotBarItemRenderer] pivotIdentifier] isEqualToString:@"SPunlimited"];
     }];
-    if (index != NSNotFound) [items removeObjectAtIndex:index];
+
+    if (index != NSNotFound && YTMU(@"YTMUltimateIsEnabled")) [items removeObjectAtIndex:index];
+
     %orig;
 }
 %end
 
 %hook YTIShowFullscreenInterstitialCommand
 - (BOOL)shouldThrottleInterstitial{
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 
 - (void)setShouldThrottleInterstitial:(BOOL)throttle {
-    %orig(YES);
+    YTMU(@"YTMUltimateIsEnabled") ? %orig(YES) : %orig;
 }
 %end
 
 %hook YTMAppResponder
 - (void)presentInterstitialPromoForEvent:(id)event{
-    return;
+    if (!YTMU(@"YTMUltimateIsEnabled")) %orig;
 }
 
 - (void)presentFullscreenPromoForEvent:(id)event{
-    return;
+    if (!YTMU(@"YTMUltimateIsEnabled")) %orig;
 }
 
 - (void)presentInterstitialGridPromoForEvent:(id)event{
-    return;
+    if (!YTMU(@"YTMUltimateIsEnabled")) %orig;
 }
 %end
 
 %hook YTPromosheetController
 - (void)presentPromosheetWithEvent:(id)event{
-    return;
+    if (!YTMU(@"YTMUltimateIsEnabled")) %orig;
 }
 %end
 
 %hook YTMCarPlayController
 - (BOOL)isPremiumSubscriber{
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 
 - (void)setIsPremiumSubscriber:(BOOL)premium {
-    %orig(YES);
+    YTMU(@"YTMUltimateIsEnabled") ? %orig(YES) : %orig;
 }
 %end
 
 %hook YTMYPCGetOfflineUpsellEndpointCommandHandler
 - (BOOL)isPremiumSubscriber{
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 
 - (void)setIsPremiumSubscriber:(BOOL)premium {
-    %orig(YES);
+    YTMU(@"YTMUltimateIsEnabled") ? %orig(YES) : %orig;
 }
 %end
 
 %hook YTMWAWatchAppConfig
 - (BOOL)isCurrentUserPremium {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 
 - (BOOL)isCurrentUserMobileAudioTier {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 %end
 
 %hook YTMWatchViewController
 - (id)init {
     self = %orig;
-    if (self) {
+    if (self && YTMU(@"YTMUltimateIsEnabled")) {
         [self setValue:[NSNumber numberWithBool:YES] forKey:@"_isMobileAudioTierMode"];
     }
     return self;
@@ -188,23 +194,30 @@
 
 %hook YTMQueueCollectionViewController
 - (BOOL)isMobileAudioTierQueue {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 %end
 
 %hook YTUserDefaults
-
 - (BOOL)hasOnboarded {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
-
-%end
 %end
 
-%ctor {
-    BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
-
-    if (isEnabled){
-        %init(EnsurePremiumStatus);
-    }
+// Spoof version (https://github.com/ginsudev/YTMusicUltimate/issues/163#issuecomment-1879583573)
+%hook YTVersionUtils
++ (NSString *)appVersion {
+    return YTMU(@"YTMUltimateIsEnabled") && YTMU(@"premiumWorkaround") ? @"6.01.2" : %orig;
 }
+%end
+
+%hook UILabel
+- (void)setText:(NSString *)text {
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *appVersion = infoDictionary[@"CFBundleShortVersionString"];
+
+    if ([text isEqualToString:@"6.01.2"]) {
+        text = appVersion;
+    } %orig(text);
+}
+%end

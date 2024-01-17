@@ -1,5 +1,14 @@
 #import <UIKit/UIKit.h>
 
+static BOOL YTMU(NSString *key) {
+    NSDictionary *YTMUltimateDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"];
+    return [YTMUltimateDict[key] boolValue];
+}
+
+static BOOL isOLEDTheme = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"oledTheme");
+static BOOL isOLEDKeyboard = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"oledKeyboard");
+static BOOL isLowContrast = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"lowContrast");
+
 @interface YTMPlayerPageColorScheme : NSObject
 - (void)setPlayButtonColor:(UIColor *)color;
 @end
@@ -26,138 +35,110 @@
 @end
 
 #pragma mark - OLED Dark mode
-%group oledTheme
 %hook YTCommonColorPalette
-- (UIColor *)brandBackgroundSolid { return [UIColor blackColor]; }
-- (UIColor *)brandBackgroundPrimary { return [UIColor blackColor]; }
+- (UIColor *)brandBackgroundSolid { return isOLEDTheme ? [UIColor blackColor] : %orig; }
+- (UIColor *)brandBackgroundPrimary { return isOLEDTheme ? [UIColor blackColor] : %orig; }
 %end
 
 %hook YTPivotBarView
 - (void)didMoveToWindow {
-    self.subviews[0].backgroundColor = [UIColor blackColor];
+    if (isOLEDTheme) self.subviews[0].backgroundColor = [UIColor blackColor];
     %orig;
 }
 %end
 
 %hook YTMMusicMenuTitleView
 - (void)didMoveToWindow {
-    self.backgroundColor = [UIColor blackColor];
+    if (isOLEDTheme) self.backgroundColor = [UIColor blackColor];
     %orig;
 }
 %end
 
 %hook MDCSnackbarMessageView
 - (void)didMoveToWindow {
-    self.backgroundColor = [UIColor blackColor];
+    if (isOLEDTheme) self.backgroundColor = [UIColor blackColor];
     %orig;
 }
 %end
 
 %hook YTMPlayerPageColorScheme
 - (void)setMiniPlayerColor:(UIColor *)color {
-    %orig([UIColor blackColor]);
+    isOLEDTheme ? %orig([UIColor blackColor]) : %orig;
 }
 
 - (void)setQueueBackgroundColor:(UIColor *)color {
-    %orig([UIColor blackColor]);
+    isOLEDTheme ? %orig([UIColor blackColor]) : %orig;
 }
 
 - (void)setQueueCurrentlyPlayingBackgroundColor:(UIColor *)color {
-    %orig([UIColor blackColor]);
+    isOLEDTheme ? %orig([UIColor blackColor]) : %orig;
 }
 
 - (void)setTabViewColor:(UIColor *)color {
-    %orig([UIColor blackColor]);
+    isOLEDTheme ? %orig([UIColor blackColor]) : %orig;
 }
 
 - (void)setAVSwitchBackgroundColor:(UIColor *)color {
     %orig(color);
-    [self setPlayButtonColor:color];
+    if (isOLEDTheme) [self setPlayButtonColor:color];
 }
 
 - (void)setBackgroundColor:(UIColor *)color {
-    %orig([UIColor blackColor]);
+    isOLEDTheme ? %orig([UIColor blackColor]) : %orig;
 }
 %end
 
 %hook YTLightweightBrowseBackgroundView
 - (id)imageView {
-    return nil;
+    return isOLEDTheme ? nil : %orig;
 }
-%end
 %end
 
 #pragma mark - OLED Dark Keyboard
-%group oledKB
 %hook UIPredictionViewController // support prediction bar - @ichitaso: http://gist.github.com/ichitaso/935100fd53a26f18a9060f7195a1be0e
 - (void)loadView {
     %orig;
-    [self.view setBackgroundColor:[UIColor blackColor]];
+    if (isOLEDKeyboard) [self.view setBackgroundColor:[UIColor blackColor]];
 }
 %end
 
 %hook UICandidateViewController // support prediction bar - @ichitaso:http://gist.github.com/ichitaso/935100fd53a26f18a9060f7195a1be0e
 - (void)loadView {
     %orig;
-    [self.view setBackgroundColor:[UIColor blackColor]];
+    if (isOLEDKeyboard) [self.view setBackgroundColor:[UIColor blackColor]];
 }
 %end
 
 %hook UIKBRenderConfig // Prediction text color
-- (void)setLightKeyboard:(BOOL)arg1 { %orig(NO); }
+- (void)setLightKeyboard:(BOOL)arg1 { isOLEDKeyboard ? %orig(NO) : %orig; }
 %end
 
 %hook UIKeyboardDockView
 - (void)didMoveToWindow {
-    self.backgroundColor = [UIColor blackColor];
+    if (isOLEDKeyboard) self.backgroundColor = [UIColor blackColor];
     %orig;
 }
 %end
 
 %hook UIKeyboardLayoutStar 
 - (void)didMoveToWindow {
-    self.backgroundColor = [UIColor blackColor];
+    if (isOLEDKeyboard) self.backgroundColor = [UIColor blackColor];
     %orig;
 }
 %end
-%end
 
 #pragma mark - Low contrast mode
-%group lowContrast
 %hook YTCommonColorPalette
 - (UIColor *)textPrimary { 
-    return [UIColor colorWithWhite:0.565 alpha:1];
+    return isLowContrast ? [UIColor colorWithWhite:0.565 alpha:1] : %orig;
 }
 - (UIColor *)textSecondary { 
-    return [UIColor colorWithWhite:0.565 alpha:1]; 
+    return isLowContrast ? [UIColor colorWithWhite:0.565 alpha:1] : %orig;
 }
 %end
 
 %hook UIColor
 + (UIColor *)whiteColor {
-    return [UIColor colorWithWhite:0.565 alpha:1];
+    return isLowContrast ? [UIColor colorWithWhite:0.565 alpha:1] : %orig;
 }
 %end
-%end
-
-%ctor {
-    BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
-    BOOL oledDarkTheme = ([[NSUserDefaults standardUserDefaults] objectForKey:@"oledDarkTheme_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"oledDarkTheme_enabled"] : NO;
-    BOOL oledDarkKeyboard = ([[NSUserDefaults standardUserDefaults] objectForKey:@"oledDarkKeyboard_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"oledDarkKeyboard_enabled"] : NO;    
-    BOOL contrast = ([[NSUserDefaults standardUserDefaults] objectForKey:@"lowContrast_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"lowContrast_enabled"] : NO;
-
-    if (isEnabled){
-
-        if (oledDarkTheme) {
-            %init(oledTheme);
-        }
-
-        if (oledDarkKeyboard) {
-            %init(oledKB);
-        }
-
-        if (contrast) {
-            %init(lowContrast);
-        }
-    }
-}

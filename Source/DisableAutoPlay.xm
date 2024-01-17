@@ -1,46 +1,39 @@
 #import <Foundation/Foundation.h>
 
+static BOOL YTMU(NSString *key) {
+    NSDictionary *YTMUltimateDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"];
+    return [YTMUltimateDict[key] boolValue];
+}
+
+static BOOL isDisableAutoRadio = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"disableAutoRadio");
+
 // To respect users autoplay switch status
 %hook YTDefaultQueueConfig
 - (bool)autoplayEnabled {
-    return 0;
+    return isDisableAutoRadio ? 0 : %orig;
 }
 %end
 
-%group DisableAutoRadio
 %hook YTQueueController
 - (bool)isAutoplaySupported {
-    return 0;
+    return isDisableAutoRadio ? 0 : %orig;
 }
 %end
 
 %hook YTMQueueConfig
 - (bool)autoplayEnabled {
-    return 0;
+    return isDisableAutoRadio ? 0 : %orig;
 }
 %end
 
 %hook YTMSettings
 - (bool)autoplayEnabled {
-    return 0;
+    return isDisableAutoRadio ? 0 : %orig;
 }
 %end
 
 %hook YTUserDefaults
 - (bool)autoplayEnabled {
-    return 0;
+    return isDisableAutoRadio ? 0 : %orig;
 }
 %end
-%end
-
-%ctor {
-
-    BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
-    BOOL disableAutoRadio = ([[NSUserDefaults standardUserDefaults] objectForKey:@"disableAutoRadio_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"disableAutoRadio_enabled"] : NO;
-
-    %init;
-    if (isEnabled && disableAutoRadio) {
-        %init(DisableAutoRadio);
-    }
-
-}
