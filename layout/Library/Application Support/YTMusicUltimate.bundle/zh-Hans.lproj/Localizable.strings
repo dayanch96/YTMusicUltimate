@@ -8,6 +8,8 @@
 "NO_ADS_DESC" = "去除App中的广告";
 "BACKGROUND_PLAYBACK" = "后台播放";
 "BACKGROUND_PLAYBACK_DESC" = "开启后台播放功能";
+"FORCE_PREMIUM" = "Force enable premium";
+"FORCE_PREMIUM_DESC" = "Forcibly enables premium features.\nThis option also disables Samples tab";
 
 "PLAYER_SETTINGS" = "播放器选项";
 "PLAYBACK_RATE_BUTTON" = "显示播放速度按钮";
@@ -20,11 +22,12 @@
 "NO_AUTORADIO_DESC" = "禁用无限播放功能";
 "SKIP_NONMUSIC_PARTS" = "跳过非音乐片段(SponsorBlock)";
 "SKIP_NONMUSIC_PARTS_DESC" = "跳过音乐影片中不属于歌曲的片段";
+"SKIP_CONTENT_WARNING" = "Skip content warning";
+"SKIP_CONTENT_WARNING_DESC" = "Skips warnings about potentially harmful content";
 "AV_DEFAULT_MODE" = "默认播放模式";
 "AUDIO" = "歌曲";
 "VIDEO" = "视频";
 "SEEK_BUTTONS" = "用“快进/快退”按钮替换“上一曲/下一曲”";
-//选择跳过时间(秒)\n\n默认:\n快退 = 10秒\n快进 = 30秒
 "SEEK_TIME_FOOTER" = "选择跳过时间(秒)\n\n默认:\n快退 = 10秒\n快进 = 30秒\n\n长按按钮可跳到下一曲和上一曲。";
 "DEFAULT" = "默认";
 
@@ -78,3 +81,22 @@
 "CANCEL" = "取消";
 "YES" = "是";
 "REGIONAL_RESTRICTION" = "貌似YouTube音乐在您的国家\/地区受到限制。\n\n请使用VPN访问YouTube音乐。";
+
+"DONT_RUSH" = "Don't rush brilliance";
+"DONT_RUSH_DESC" = "Required to play the song to extract the link";
+"SELECT_ACTION" = "Select Action";
+"DOWNLOAD_AUDIO" = "Download Audio";
+"DOWNLOAD_COVER" = "Download Cover";
+"DOWNLOADING" = "Downloading";
+"OOPS" = "Oops\nsomething went wrong";
+"SAVED_TO_PHOTOS" = "Saved to Photos";
+"DONE" = "Done";
+
+"DOWNLOADS" = "Downloads";
+"EMPTY" = "Content you download will show here";
+"REMOVE_ALL" = "Remove all audios";
+"SHARE_ALL" = "Share all audios";
+"PREPARING" = "Preparing...";
+"DELETE_MESSAGE" = "Are you sure you want to delete %@?";
+"ALL_DOWNLOADS" = "all download audios"; //keep it lowercase
+"DELETE" = "Delete";

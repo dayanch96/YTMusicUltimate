@@ -8,6 +8,8 @@
 "NO_ADS_DESC" = "移除應用程式內的廣告";
 "BACKGROUND_PLAYBACK" = "背景播放";
 "BACKGROUND_PLAYBACK_DESC" = "啟用背景播放功能";
+"FORCE_PREMIUM" = "Force enable premium";
+"FORCE_PREMIUM_DESC" = "Forcibly enables premium features.\nThis option also disables Samples tab";
 
 "PLAYER_SETTINGS" = "播放器介面";
 "PLAYBACK_RATE_BUTTON" = "顯示播放速度按鈕";
@@ -20,11 +22,12 @@
 "NO_AUTORADIO_DESC" = "關閉無限接續播放的電台功能";
 "SKIP_NONMUSIC_PARTS" = "跳過MV廣告片段(SponsorBlock)";
 "SKIP_NONMUSIC_PARTS_DESC" = "跳過MV中的廣告片段";
+"SKIP_CONTENT_WARNING" = "Skip content warning";
+"SKIP_CONTENT_WARNING_DESC" = "Skips warnings about potentially harmful content";
 "AV_DEFAULT_MODE" = "預設播放模式";
 "AUDIO" = "歌曲";
 "VIDEO" = "影片";
 "SEEK_BUTTONS" = "將「下一首/上一首」替換為「快轉/倒轉」按鈕";
-//選擇一個「快轉/倒轉」時間/秒\n\n預設值:\n倒轉 = 10秒\n快轉 = 30秒
 "SEEK_TIME_FOOTER" = "選擇一個「快轉/倒轉」時間/秒\n\n預設:\n倒轉 = 10秒\n快轉 = 30秒\n\n長按按鈕可跳到「下一首/上一首」曲目";
 "DEFAULT" = "預設";
 
@@ -78,3 +81,22 @@
 "CANCEL" = "取消";
 "YES" = "是";
 "REGIONAL_RESTRICTION" = "YouTube Music 似乎在您的國家/地區受到限制，請使用 VPN 後再次執行 YouTube Music";
+
+"DONT_RUSH" = "Don't rush brilliance";
+"DONT_RUSH_DESC" = "Required to play the song to extract the link";
+"SELECT_ACTION" = "Select Action";
+"DOWNLOAD_AUDIO" = "Download Audio";
+"DOWNLOAD_COVER" = "Download Cover";
+"DOWNLOADING" = "Downloading";
+"OOPS" = "Oops\nsomething went wrong";
+"SAVED_TO_PHOTOS" = "Saved to Photos";
+"DONE" = "Done";
+
+"DOWNLOADS" = "Downloads";
+"EMPTY" = "Content you download will show here";
+"REMOVE_ALL" = "Remove all audios";
+"SHARE_ALL" = "Share all audios";
+"PREPARING" = "Preparing...";
+"DELETE_MESSAGE" = "Are you sure you want to delete %@?";
+"ALL_DOWNLOADS" = "all download audios"; //keep it lowercase
+"DELETE" = "Delete";
