@@ -1,0 +1,79 @@
+"SETTINGS" = "Ustawienia";
+"ENABLED" = "Włącz rozszerzenie YTMusicUltimate";
+"ENABLED_DESC" = "Funkcje premium; brak reklam, odtwarzanie na zablokowanym ekranie, itp.";
+"RESTART_FOOTER" = "Zrestartuj aplikację, aby zastosować zmiany";
+
+"PREMIUM_SETTINGS" = "Opcje Premium";
+"NO_ADS" = "Brak reklam";
+"NO_ADS_DESC" = "Wyłącza reklamy w aplikacji";
+"BACKGROUND_PLAYBACK" = "Odtwarzanie w tle";
+"BACKGROUND_PLAYBACK_DESC" = "Aktywuje odtwarzanie w tle";
+
+"PLAYER_SETTINGS" = "Ustawienia odtwarzania";
+"PLAYBACK_RATE_BUTTON" = "Pokaż przycisk kontroli prędkości";
+"PLAYBACK_RATE_BUTTON_DESC" = "Dostosuj prędkość odtwarzania;
+"SELECTABLE_LYRICS" = "Zaznaczanie tekstu utworu";
+"SELECTABLE_LYRICS_DESC" = "Włącza zaznaczanie tekstu piosenki, jeśli ta go posiada";
+"VOLBAR" = "Pasek głośności";
+"VOLBAR_DESC" = "Dodaje pasek głośności do odtwarzacza";
+"NO_AUTORADIO" = "Wyłącz radio";
+"NO_AUTORADIO_DESC" = "Wyłącza funkcje automatycznego odtwarzania proponowanego utworu";
+"SKIP_NONMUSIC_PARTS" = "Pomiń sekcję bez muzyki (SponsorBlock)";
+"SKIP_NONMUSIC_PARTS_DESC" = "Pomija nie-muzyczne kwestie w teledyskach";
+"AV_DEFAULT_MODE" = "Domyślny styl odtwarzania";
+"AUDIO" = "Audio";
+"VIDEO" = "Wideo";
+"SEEK_BUTTONS" = "Zamień przyciski następny/poprzedni na do przodu/do tyłu";
+"SEEK_TIME_FOOTER" = "Wybierz czas przewijania w sekundach\n\Domyślnie:\nW tył = 10 sek.\nW przód = 30 sek.\n\nPomijanie utworów do przodu/tyłu jest możliwe przy dłuższym przytrzymaniu przycisku przewijania.";
+"DEFAULT" = "Domyślnie";
+
+"THEME_SETTINGS" = "Opcje wizualne";
+"OLED_DARK_THEME" = "Ciemny Motyw OLED";
+"OLED_DARK_THEME_DESC" = "Włącza Ciemny Motyw OLED";
+"OLED_DARK_KEYBOARD" = "Klawiatura ciemny OLED";
+"OLED_DARK_KEYBOARD_DESC" = "Włącza Klawiaturę w trybie OLED";
+"LOW_CONTRAST" = "Niski kontrast";
+"LOW_CONTRAST_DESC" = "Niższy kontrast dla przycisków i tekstu";
+
+"NAVBAR_SETTINGS" = "Opcje paska nawigacji";
+"DONT_STICK_HEADERS" = "Nie przyczepiaj nagłówków";
+"DONT_STICK_HEADERS_DESC" = "Odczepia panele przypięte na górze ekranu";
+"HIDE_HISTORY_BUTTON" = "Ukryj przycisk historii";
+"HIDE_HISTORY_BUTTON_DESC" = "Ukrywa przycisk historii w pasku nawigacji";
+"HIDE_CAST_BUTTON" = "Ukryj przycisk przesyłania zawartości AirPlay";
+"HIDE_CAST_BUTTON_DESC" = "Ukrywa przycisk przesyłania w pasku nawigacji";
+"HIDE_FILTER_BUTTON" = "Usuń przycisk sortowania filtru";
+"HIDE_FILTER_BUTTON_DESC" = "Usuwa przycisk filtrowania Biblioteka/Pobrane z paska nawigacji";
+
+"TABBAR_SETTINGS" = "Ustawienia paska zakładek";
+"STARTUP_TAB" = "Zakładka startowa";
+"HOME" = "Główna";
+"SAMPLES" = "Sample";
+"EXPLORE" = "Odkrywaj";
+"LIBRARY" = "Biblioteka";
+
+"TAB_SETTINGS" = "Ustawienia zakładek";
+"REMOVE_TABBAR_LABELS" = "Brak podpisu pod ikonami w pasku";
+"HIDE_HOME" = "Ukryj zakładkę "Główna"";
+"HIDE_SAMPLES" = "Ukryj zakładkę "Sample"";
+"HIDE_EXPLORE" = "Ukryj zakładkę "Odkrywaj"";
+"HIDE_LIBRARY" = "Ukryj zakładkę "Biblioteka"";
+
+"APPLY" = "Zastosuj";
+"APPLY_DESC" = "Zamyka aplikację, by zastosować zmiany";
+
+"LINKS" = "Linki";
+"TWITTER" = "Obserwuj %@ na Twitterze";
+"TWITTER_DESC" = "Obserwuj mnie by być na bieżąco";
+"DISCORD" = "Dołącz do Discorda";
+"DISCORD_DESC" = "Reportuj problemy i daj znać co chciałbyś dodać/poprawić";
+"SOURCE_CODE" = "Kod źródłowy";
+"SOURCE_CODE_DESC" = "Zerknij na kod";
+
+"CLOSE" = "Zamknij";
+"WARNING" = "Uwaga";
+"LOGIN_INFO" = "Restart aplikacji wymagany po pomyślnym logowaniu na konto Google.";
+"APPLY_MESSAGE" = "Ta akcja zamknie aplikację by wprowadzić zmiany. Jesteś pewny?";
+"CANCEL" = "Anuluj";
+"YES" = "Tak";
+"REGIONAL_RESTRICTION" = "Wygląda na to, że YT Music jest zablokowany w twoim kraju.\n\n Użyj VPN, by skorzystać z YT Music.";
