@@ -1,33 +1,37 @@
 "SETTINGS" = "إعدادات";
 "ENABLED" = "تفعيل";
 "ENABLED_DESC" = ".مميزات البريميوم، بدون اعلانات، تشغيل بالخلفية، مميزات اخرى";
-"RESTART_FOOTER" = "Restart the app to apply changes";
+"RESTART_FOOTER" = "قم بإغلاق وإعادة فتح البرنامج لتطبيق الاعدادات";
 
-"PREMIUM_SETTINGS" = "Premium options";
-"NO_ADS" = "No ads";
-"NO_ADS_DESC" = "Removes ads in the app";
-"BACKGROUND_PLAYBACK" = "Background playback";
-"BACKGROUND_PLAYBACK_DESC" = "Activates background playback";
+"PREMIUM_SETTINGS" = "مميزات البريميوم";
+"NO_ADS" = "بدون اعلانات";
+"NO_ADS_DESC" = "حذف الاعلانات من التطبيق";
+"BACKGROUND_PLAYBACK" = "التشغيل في الخلفية";
+"BACKGROUND_PLAYBACK_DESC" = "تفعيل التشغيل في الخلفية";
+"FORCE_PREMIUM" = "تفعيل البريميوم";
+"FORCE_PREMIUM_DESC" = "يقوم هذا الخيار بإجبار تفعيل مميزات البريميوم. تحذير : يقوم ايضاً بإخفاء تبويب العينات";
 
-"PLAYER_SETTINGS" = "Player options";
+"PLAYER_SETTINGS" = "إعدادات المشغل";
 "PLAYBACK_RATE_BUTTON" = "إظهار زر تقييم التشغيل";
 "PLAYBACK_RATE_BUTTON_DESC" = "التحكم بسرعة التشغيل";
 "SELECTABLE_LYRICS" = "تحديد كلمات الاغنية ";
 "SELECTABLE_LYRICS_DESC" = "تمكين تحديد كلمات الاغنية";
 "VOLBAR" = "شريط الصوت";
 "VOLBAR_DESC" = "يضيف شريط الصوت إلى المشغل";
-"NO_AUTORADIO" = "Disable radio";
-"NO_AUTORADIO_DESC" = "Disables endless music feature";
-"SKIP_NONMUSIC_PARTS" = "Skip Non-music section (SponsorBlock)";
-"SKIP_NONMUSIC_PARTS_DESC" = "Skips non-music sections in music videos";
-"AV_DEFAULT_MODE" = "Default playback mode";
-"AUDIO" = "Audio";
-"VIDEO" = "Video";
-"SEEK_BUTTONS" = "Replace like/dislike with forward and backward buttons";
-"SEEK_TIME_FOOTER" = "Select a seek time in seconds\n\nDefaults:\nSeek backward = 10 sec.\nSeek forward = 30 sec.\n\nSkip to the next and previous tracks available by long-pressing the buttons.";
-"DEFAULT" = "Default";
+"NO_AUTORADIO" = "تعطيل الراديو";
+"NO_AUTORADIO_DESC" = "تعطيل ميزة التشغيل اللانهائي للموسيقي";
+"SKIP_NONMUSIC_PARTS" = "تخطي قسم الاعلانات ";
+"SKIP_NONMUSIC_PARTS_DESC" = "تخطي قسم الاعلانات في موسيقي الفيديو";
+"AV_DEFAULT_MODE" = "الوضع التلقائي للمشغل";
+"SKIP_CONTENT_WARNING" = "تخطي تحذيرات المحتوي";
+"SKIP_CONTENT_WARNING_DESC" = "يقوم بتخطي التحذيرات بخصوص المحتوي العائلي";
+"AUDIO" = "موسيقي";
+"VIDEO" = "ڤيديو";
+"SEEK_BUTTONS" = "استبدال الإعجاب/عدم الإعجاب بأزرار أمامية وخلفية";
+"SEEK_TIME_FOOTER" = "حدد وقت التقدم بالثواني\n\nالافتراضي:\nالتقدم للخلف = 10 ثوانٍ\nالتقدم للأمام = 30 ثانية\n\nالانتقال إلى الموسيقي التالية والسابقة عن طريق الضغط لفترة طويلة على الأزرار.";
+"DEFAULT" = "افتراضي";
 
-"THEME_SETTINGS" = "Theme options";
+"THEME_SETTINGS" = "اختيارات المظهر";
 "OLED_DARK_THEME" = "الوضع الداكن";
 "OLED_DARK_THEME_DESC" = "تفعيل الوضع الداكن";
 "OLED_DARK_KEYBOARD" = "الوضع الداكن في لوحة المفاتيح";
@@ -35,35 +39,35 @@
 "LOW_CONTRAST" = "تباين منخفض";
 "LOW_CONTRAST_DESC" = "انخفاض تباين النص والأزرار";
 
-"NAVBAR_SETTINGS" = "Navigation bar options";
-"DONT_STICK_HEADERS" = "Dont stick headers";
-"DONT_STICK_HEADERS_DESC" = "Unsticks pinned at the top of the screen panels";
-"HIDE_HISTORY_BUTTON" = "Hide history button";
-"HIDE_HISTORY_BUTTON_DESC" = "Hides history button in the navigation bar";
-"HIDE_CAST_BUTTON" = "Hide cast button";
-"HIDE_CAST_BUTTON_DESC" = "Hides cast button in the navigation bar";
-"HIDE_FILTER_BUTTON" = "Remove sort filter button";
-"HIDE_FILTER_BUTTON_DESC" = "Removes Library/Downloads filter button from the navigation bar";
+"NAVBAR_SETTINGS" = "خيارات الشريط العلوي";
+"DONT_STICK_HEADERS" = "تعطيل ميزة العناوين اللاصقة";
+"DONT_STICK_HEADERS_DESC" = "يقوم بتعطيل التصاق العناوين بالشاشة";
+"HIDE_HISTORY_BUTTON" = " إخفاء زر سجل التصفح";
+"HIDE_HISTORY_BUTTON_DESC" = "يقوم بإخفاء زر سجل التصفح من الشاشة الرئيسية";
+"HIDE_CAST_BUTTON" = "إخفاء زر الكاست";
+"HIDE_CAST_BUTTON_DESC" = "يقوم بإخفاء زر الكاست من الشاشة الرئيسية";
+"HIDE_FILTER_BUTTON" = "إخفاء زر الفلترة";
+"HIDE_FILTER_BUTTON_DESC" = "يقوم بإخفاء زر فلترة المكتبة/التنزيلات من شريط التنقل";
 
-"TABBAR_SETTINGS" = "Tab bar options";
-"STARTUP_TAB" = "Startup tab";
-"HOME" = "Home";
-"SAMPLES" = "Samples";
-"EXPLORE" = "Explore";
-"LIBRARY" = "Library";
+"TABBAR_SETTINGS" = "خيارات الشريط السفلي";
+"STARTUP_TAB" = "الصفحة الافتراضية";
+"HOME" = "الصفحة الرئيسية ";
+"SAMPLES" = "العينات";
+"EXPLORE" = "استكشاف";
+"LIBRARY" = "المكتبة";
 
-"TAB_SETTINGS" = "Tab settings";
-"REMOVE_TABBAR_LABELS" = "No tab bar labels";
-"HIDE_HOME" = "Hide Home tab";
-"HIDE_SAMPLES" = "Hide Samples tab";
-"HIDE_EXPLORE" = "Hide Explore tab";
-"HIDE_LIBRARY" = "Hide Library tab";
+"TAB_SETTINGS" = "إعدادات الشريط السفلي";
+"REMOVE_TABBAR_LABELS" = "حذف اسماء التبويب";
+"HIDE_HOME" = "أخفاء تبويب الصفحة الرئيسية ";
+"HIDE_SAMPLES" = "إخفاء تبويب العينات";
+"HIDE_EXPLORE" = "إخفاء تبويب الاستكشاف";
+"HIDE_LIBRARY" = "إخفاء تبويب المكتبة";
 
 "APPLY" = "تنفيذ التغييرات";
 "APPLY_DESC" = "اغلق التطبيق لتنفيذ التغييرات";
 
 "LINKS" = "الروابط";
-"TWITTER" = "Follow %@ on Twitter"; 
+"TWITTER" = "تابع %@ على تويتر"; 
 "TWITTER_DESC" = "تابعني للحصول على التحديثات";
 "DISCORD" = "انضم الينا في ديسكورد";
 "DISCORD_DESC" = "الإبلاغ عن الأخطاء وطلب الميزات";
@@ -71,9 +75,28 @@
 "SOURCE_CODE_DESC" = "ألق نظرة على الكود";
 
 "CLOSE" = "يغلق";
-"WARNING" = "Warning";
-"LOGIN_INFO" = "App restart required after successful signing into Google account";
-"APPLY_MESSAGE" = "This action will close YouTube Music to apply changes. Are you sure?";
-"CANCEL" = "Cancel";
-"YES" = "Yes";
-"REGIONAL_RESTRICTION" = "Looks like YouTube Music restricted in your country.\n\n Please use VPN to get access to YouTube Music.";
+"WARNING" = "تحذير";
+"LOGIN_INFO" = "تم تسجيل الدخول بنجاح سيتم إعادة تشغيل البرنامج";
+"APPLY_MESSAGE" = "سيتم غلق البرنامج لتطبيق الاعدادات هل انت متأكد؟";
+"CANCEL" = "إلغاء";
+"YES" = "نعم, موافق";
+"REGIONAL_RESTRICTION" = "يبدو أن موسيقى يوتيوب مقيدة في بلدك. يرجى استخدام VPN للوصول إلى موسيقى يوتيوب.";
+
+"DONT_RUSH" = "!لا تستعجل ارجوك";
+"DONT_RUSH_DESC" = "لا تستعجل قم بتشغيل الموسيقي اولاً ";
+"SELECT_ACTION" = "اختر الفعل";
+"DOWNLOAD_AUDIO" = "تحميل الموسيقي";
+"DOWNLOAD_COVER" = "تحميل صورة الغلاف";
+"DOWNLOADING" = "يتم التحميل";
+"OOPS" = "هناك شئ خطأ";
+"SAVED_TO_PHOTOS" = "تم الحفظ في البوم الصور";
+"DONE" = "تم الانتهاء بنجاح";
+
+"DOWNLOADS" = "التحميلات";
+"EMPTY" = "المحتوي الذي تم تحميله سيظهر هنا";
+"REMOVE_ALL" = "مسح كل التحميلات";
+"SHARE_ALL" = "مشاركة كل التحميلات";
+"PREPARING" = "…يتم التحضير";
+"DELETE_MESSAGE" = "هل انت متأكد انك تريد الحذف ؟";
+"ALL_DOWNLOADS" = "كل التحميلات";  //keep it lowercase
+"DELETE" = "حذف";

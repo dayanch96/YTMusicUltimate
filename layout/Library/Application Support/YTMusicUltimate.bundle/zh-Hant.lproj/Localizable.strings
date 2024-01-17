@@ -1,13 +1,15 @@
 "SETTINGS" = "設定";
 "ENABLED" = "啟用";
-"ENABLED_DESC" = "會員功能：去廣告和背景播放等";
+"ENABLED_DESC" = "會員功能：無廣告和背景播放等";
 "RESTART_FOOTER" = "重新啟動應用程式以套用變更";
 
-"PREMIUM_SETTINGS" = "Premium功能";
-"NO_ADS" = "移除廣告";
+"PREMIUM_SETTINGS" = "Premium 功能";
+"NO_ADS" = "無廣告";
 "NO_ADS_DESC" = "移除應用程式內的廣告";
 "BACKGROUND_PLAYBACK" = "背景播放";
 "BACKGROUND_PLAYBACK_DESC" = "啟用背景播放功能";
+"FORCE_PREMIUM" = "強制啟用 Premium 功能";
+"FORCE_PREMIUM_DESC" = "強制啟用 Premium 功能\n此選項也會停用'發現'功能標籤";
 
 "PLAYER_SETTINGS" = "播放器介面";
 "PLAYBACK_RATE_BUTTON" = "顯示播放速度按鈕";
@@ -21,10 +23,11 @@
 "SKIP_NONMUSIC_PARTS" = "跳過MV廣告片段(SponsorBlock)";
 "SKIP_NONMUSIC_PARTS_DESC" = "跳過MV中的廣告片段";
 "AV_DEFAULT_MODE" = "預設播放模式";
+"SKIP_CONTENT_WARNING" = "跳過內容警告";
+"SKIP_CONTENT_WARNING_DESC" = "跳過可能有害的內容警告";
 "AUDIO" = "歌曲";
 "VIDEO" = "影片";
 "SEEK_BUTTONS" = "將「下一首/上一首」替換為「快轉/倒轉」按鈕";
-//選擇一個「快轉/倒轉」時間/秒\n\n預設值:\n倒轉 = 10秒\n快轉 = 30秒
 "SEEK_TIME_FOOTER" = "選擇一個「快轉/倒轉」時間/秒\n\n預設:\n倒轉 = 10秒\n快轉 = 30秒\n\n長按按鈕可跳到「下一首/上一首」曲目";
 "DEFAULT" = "預設";
 
@@ -61,7 +64,7 @@
 "HIDE_LIBRARY" = "隱藏媒體庫";
 
 "APPLY" = "套用";
-"APPLY_DESC" = "按下套用會關閉 APP 讓變更生效";
+"APPLY_DESC" = "按下套用會關閉應用程式讓變更生效";
 
 "LINKS" = "相關連結";
 "TWITTER" = "在推特上跟隨%@";
@@ -72,9 +75,28 @@
 "SOURCE_CODE_DESC" = "查看原始碼";
 
 "CLOSE" =  "關閉";
-"WARNING" = "警告";
 "LOGIN_INFO" = "成功登入 Google 帳戶後需要重新啟動應用程式";
 "APPLY_MESSAGE" = "這個操作將關閉YouTube Music以套用變更，您確定要繼續嗎？";
 "CANCEL" = "取消";
 "YES" = "是";
 "REGIONAL_RESTRICTION" = "YouTube Music 似乎在您的國家/地區受到限制，請使用 VPN 後再次執行 YouTube Music";
+"WARNING" = "警告";
+
+"DONT_RUSH" = "不要急於求成";
+"DONT_RUSH_DESC" = "需要播放歌曲才能提取連結";
+"SELECT_ACTION" = "選擇操作";
+"DOWNLOAD_AUDIO" = "下載音訊";
+"DOWNLOAD_COVER" = "下載封面";
+"DOWNLOADING" = "下載中...";
+"OOPS" = "糟糕\n發生了些錯誤";
+"SAVED_TO_PHOTOS" = "已儲存到照片";
+"DONE" = "完成";
+
+"DOWNLOADS" = "下載管理器";
+"EMPTY" = "您下載的內容將在此顯示";
+"REMOVE_ALL" = "刪除所有音訊";
+"SHARE_ALL" = "分享所有音訊";
+"PREPARING" = "準備中...";
+"DELETE_MESSAGE" = "您確定要刪除%@?";
+"ALL_DOWNLOADS" = "所有下載的音訊"; //keep it lowercase
+"DELETE" = "刪除";
