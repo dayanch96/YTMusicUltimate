@@ -9,7 +9,7 @@
 "BACKGROUND_PLAYBACK" = "背景播放";
 "BACKGROUND_PLAYBACK_DESC" = "啟用背景播放功能";
 "FORCE_PREMIUM" = "強制啟用 Premium 功能";
-"FORCE_PREMIUM_DESC" = "強制啟用 Premium 功能。\n此選項也會停用'發現'功能標籤";
+"FORCE_PREMIUM_DESC" = "強制啟用 Premium 功能\n此選項也會停用'發現'功能標籤";
 
 "PLAYER_SETTINGS" = "播放器介面";
 "PLAYBACK_RATE_BUTTON" = "顯示播放速度按鈕";
