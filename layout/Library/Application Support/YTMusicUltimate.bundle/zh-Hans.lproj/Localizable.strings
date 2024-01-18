@@ -8,6 +8,8 @@
 "NO_ADS_DESC" = "去除App中的广告";
 "BACKGROUND_PLAYBACK" = "后台播放";
 "BACKGROUND_PLAYBACK_DESC" = "开启后台播放功能";
+"FORCE_PREMIUM" = "强制启用Premium功能";
+"FORCE_PREMIUM_DESC" = "强制启用高级会员功能\n此选项还禁用“选段”选项卡";
 
 "PLAYER_SETTINGS" = "播放器选项";
 "PLAYBACK_RATE_BUTTON" = "显示播放速度按钮";
@@ -20,12 +22,14 @@
 "NO_AUTORADIO_DESC" = "禁用无限播放功能";
 "SKIP_NONMUSIC_PARTS" = "跳过非音乐片段(SponsorBlock)";
 "SKIP_NONMUSIC_PARTS_DESC" = "跳过音乐影片中不属于歌曲的片段";
+"SKIP_CONTENT_WARNING" = "跳过内容警告";
+"SKIP_CONTENT_WARNING_DESC" = "跳过有关潜在有害内容的警告";
 "AV_DEFAULT_MODE" = "默认播放模式";
 "AUDIO" = "歌曲";
 "VIDEO" = "视频";
 "SEEK_BUTTONS" = "用“快进/快退”按钮替换“上一曲/下一曲”";
 //选择跳过时间(秒)\n\n默认:\n快退 = 10秒\n快进 = 30秒
-"SEEK_TIME_FOOTER" = "选择跳过时间(秒)\n\n默认:\n快退 = 10秒\n快进 = 30秒\n\n长按按钮可跳到下一曲和上一曲。";
+"SEEK_TIME_FOOTER" = "选择跳过时间(秒)\n\n默认:\n快退 = 10秒\n快进 = 30秒\n\n长按按钮可跳到下一曲和上一曲";
 "DEFAULT" = "默认";
 
 "THEME_SETTINGS" = "主题选项";
@@ -77,4 +81,24 @@
 "APPLY_MESSAGE" = "此操作将关闭YouTube Music以应用变更，确定继续吗？";
 "CANCEL" = "取消";
 "YES" = "是";
-"REGIONAL_RESTRICTION" = "貌似YouTube音乐在您的国家\/地区受到限制。\n\n请使用VPN访问YouTube音乐。";
+"REGIONAL_RESTRICTION" = "貌似YouTube Music在您所在的国家\/地区受到限制。\n\n请使用VPN访问YouTube Music。";
+
+"DONT_RUSH" = "不要急。请等待！";
+"DONT_RUSH_DESC" = "需要播放歌曲才能提取链接";
+"SELECT_ACTION" = "选择操作";
+"DOWNLOAD_AUDIO" = "下载音频";
+"DOWNLOAD_COVER" = "下载封面";
+"DOWNLOADING" = "下载中";
+"OOPS" = "哎呀\n出现了一些问题";
+"SAVED_TO_PHOTOS" = "已保存到照片";
+"DONE" = "完成";
+
+"DOWNLOADS" = "下载";
+"EMPTY" = "下载的内容将显示在此处";
+"REMOVE_ALL" = "删除所有音频";
+"SHARE_ALL" = "分享所有音频";
+"PREPARING" = "准备中...";
+"DELETE_MESSAGE" = "你确定你要删除 %@ ？";
+"ALL_DOWNLOADS" = "所有下载的音频"; //keep it lowercase
+"DELETE" = "删除";
+
