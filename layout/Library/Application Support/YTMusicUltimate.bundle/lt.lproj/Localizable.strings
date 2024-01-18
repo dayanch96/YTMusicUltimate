@@ -8,8 +8,6 @@
 "NO_ADS_DESC" = "Pašalinti programoje esančias reklamas";
 "BACKGROUND_PLAYBACK" = "Foninis atkūrimas";
 "BACKGROUND_PLAYBACK_DESC" = "Įjungti foninį atkūrimą";
-"FORCE_PREMIUM" = "Force enable premium";
-"FORCE_PREMIUM_DESC" = "Forcibly enables premium features.\nThis option also disables Samples tab";
 
 "PLAYER_SETTINGS" = "Grotuvo nustatymai";
 "PLAYBACK_RATE_BUTTON" = "Rodyti atkūrimo sparta";
@@ -22,8 +20,6 @@
 "NO_AUTORADIO_DESC" = "Išjungti begalinės muzikos funkcija";
 "SKIP_NONMUSIC_PARTS" = "Praleisti ne muzikos skyrius \"SponsorBlock\"";
 "SKIP_NONMUSIC_PARTS_DESC" = "Muzikiniuose vaizdo klipuose praleidžiami su muzika nesusiję skyriai";
-"SKIP_CONTENT_WARNING" = "Skip content warning";
-"SKIP_CONTENT_WARNING_DESC" = "Skips warnings about potentially harmful content";
 "AV_DEFAULT_MODE" = "Numatytasis atkūrimo režimas";
 "AUDIO" = "Garsas";
 "VIDEO" = "Vaizdas";
@@ -81,22 +77,3 @@
 "CANCEL" = "Atšaukti";
 "YES" = "Taip";
 "REGIONAL_RESTRICTION" = "Looks like YouTube Music restricted in your country.\n\n Please use VPN to get access to YouTube Music.";
-
-"DONT_RUSH" = "Don't rush brilliance";
-"DONT_RUSH_DESC" = "Required to play the song to extract the link";
-"SELECT_ACTION" = "Select Action";
-"DOWNLOAD_AUDIO" = "Download Audio";
-"DOWNLOAD_COVER" = "Download Cover";
-"DOWNLOADING" = "Downloading";
-"OOPS" = "Oops\nsomething went wrong";
-"SAVED_TO_PHOTOS" = "Saved to Photos";
-"DONE" = "Done";
-
-"DOWNLOADS" = "Downloads";
-"EMPTY" = "Content you download will show here";
-"REMOVE_ALL" = "Remove all audios";
-"SHARE_ALL" = "Share all audios";
-"PREPARING" = "Preparing...";
-"DELETE_MESSAGE" = "Are you sure you want to delete %@?";
-"ALL_DOWNLOADS" = "all download audios"; //keep it lowercase
-"DELETE" = "Delete";
