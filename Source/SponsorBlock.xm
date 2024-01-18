@@ -1,6 +1,13 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+static BOOL YTMU(NSString *key) {
+    NSDictionary *YTMUltimateDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"];
+    return [YTMUltimateDict[key] boolValue];
+}
+
+static BOOL sponsorBlock = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"sponsorBlock");
+
 @protocol YTPlaybackController
 @end
 
@@ -16,7 +23,6 @@
 BOOL isSponsorBlockEnabled;
 NSDictionary *sponsorBlockValues = [[NSDictionary alloc] init];
 
-%group sponsorBlock
 %hook YTPlayerViewController
 - (void)playbackController:(id)arg1 didActivateVideo:(id)arg2 withPlaybackData:(id)arg3 {
     isSponsorBlockEnabled = NO;
@@ -41,7 +47,7 @@ NSDictionary *sponsorBlockValues = [[NSDictionary alloc] init];
 }
 - (void)singleVideo:(id)video currentVideoTimeDidChange:(YTSingleVideoTime *)time {
     %orig();
-    if (isSponsorBlockEnabled && [NSJSONSerialization isValidJSONObject:sponsorBlockValues]) {
+    if (sponsorBlock && isSponsorBlockEnabled && [NSJSONSerialization isValidJSONObject:sponsorBlockValues]) {
         for (NSMutableDictionary *jsonDictionary in sponsorBlockValues) {
             if ([[jsonDictionary objectForKey:@"category"] isEqual:@"music_offtopic"] && self.currentVideoMediaTime >= [[jsonDictionary objectForKey:@"segment"][0] floatValue] && self.currentVideoMediaTime <= ([[jsonDictionary objectForKey:@"segment"][1] floatValue] - 1)) {
                 [self seekToTime:[[jsonDictionary objectForKey:@"segment"][1] floatValue]];
@@ -50,16 +56,3 @@ NSDictionary *sponsorBlockValues = [[NSDictionary alloc] init];
     }
 }
 %end
-%end
-
-%ctor {
-
-    BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
-    BOOL sponsorBlockEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"sponsorBlock_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"sponsorBlock_enabled"] : NO;
-
-    if (isEnabled){
-        if (sponsorBlockEnabled) {
-            %init(sponsorBlock);
-        }
-    }
-}

@@ -18,15 +18,19 @@
 @end
 
 @interface YTIPivotBarItemRenderer : NSObject
- @property(copy, nonatomic) NSString *pivotIdentifier;
- - (NSString *)pivotIdentifier;
- @end
+@property(copy, nonatomic) NSString *pivotIdentifier;
+- (NSString *)pivotIdentifier;
+@end
 
- @interface YTIPivotBarSupportedRenderers : NSObject
- @property(retain, nonatomic) YTIPivotBarItemRenderer *pivotBarItemRenderer;
- - (YTIPivotBarItemRenderer *)pivotBarItemRenderer;
- @end
+@interface YTIPivotBarSupportedRenderers : NSObject
+@property(retain, nonatomic) YTIPivotBarItemRenderer *pivotBarItemRenderer;
+- (YTIPivotBarItemRenderer *)pivotBarItemRenderer;
+@end
 
- @interface YTIPivotBarRenderer : NSObject
- - (NSMutableArray <YTIPivotBarSupportedRenderers *> *)itemsArray;
- @end
+@interface YTIPivotBarRenderer : NSObject
+- (NSMutableArray <YTIPivotBarSupportedRenderers *> *)itemsArray;
+@end
+
+@interface YTPlayabilityResolutionUserActionUIController : NSObject
+- (void)confirmAlertDidPressConfirm;
+@end

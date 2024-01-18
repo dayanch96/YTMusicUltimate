@@ -8,6 +8,8 @@
 "NO_ADS_DESC" = "Removes ads in the app";
 "BACKGROUND_PLAYBACK" = "Background playback";
 "BACKGROUND_PLAYBACK_DESC" = "Activates background playback";
+"FORCE_PREMIUM" = "Force enable premium";
+"FORCE_PREMIUM_DESC" = "Forcibly enables premium features.\nThis option also disables Samples tab";
 
 "PLAYER_SETTINGS" = "Player options";
 "PLAYBACK_RATE_BUTTON" = "Show playback rate button";
@@ -20,6 +22,8 @@
 "NO_AUTORADIO_DESC" = "Disables endless music feature";
 "SKIP_NONMUSIC_PARTS" = "Skip non-music section (SponsorBlock)";
 "SKIP_NONMUSIC_PARTS_DESC" = "Skips non-music sections in music videos";
+"SKIP_CONTENT_WARNING" = "Skip content warning";
+"SKIP_CONTENT_WARNING_DESC" = "Skips warnings about potentially harmful content";
 "AV_DEFAULT_MODE" = "Default playback mode";
 "AUDIO" = "Audio";
 "VIDEO" = "Video";
@@ -53,7 +57,7 @@
 "LIBRARY" = "Library";
 
 "TAB_SETTINGS" = "Tab settings";
-"REMOVE_TABBAR_LABELS" = "No tab bar labels";
+"REMOVE_TABBAR_LABELS" = "Hide labels";
 "HIDE_HOME" = "Hide Home tab";
 "HIDE_SAMPLES" = "Hide Samples tab";
 "HIDE_EXPLORE" = "Hide Explore tab";
@@ -77,3 +81,22 @@
 "CANCEL" = "Cancel";
 "YES" = "Yes";
 "REGIONAL_RESTRICTION" = "Looks like YouTube Music restricted in your country.\n\n Please use VPN to get access to YouTube Music.";
+
+"DONT_RUSH" = "Don't rush brilliance";
+"DONT_RUSH_DESC" = "Required to play the song to extract the link";
+"SELECT_ACTION" = "Select Action";
+"DOWNLOAD_AUDIO" = "Download Audio";
+"DOWNLOAD_COVER" = "Download Cover";
+"DOWNLOADING" = "Downloading";
+"OOPS" = "Oops\nsomething went wrong";
+"SAVED_TO_PHOTOS" = "Saved to Photos";
+"DONE" = "Done";
+
+"DOWNLOADS" = "Downloads";
+"EMPTY" = "Content you download will show here";
+"REMOVE_ALL" = "Remove all audios";
+"SHARE_ALL" = "Share all audios";
+"PREPARING" = "Preparing...";
+"DELETE_MESSAGE" = "Are you sure you want to delete %@?";
+"ALL_DOWNLOADS" = "all download audios"; //keep it lowercase
+"DELETE" = "Delete";

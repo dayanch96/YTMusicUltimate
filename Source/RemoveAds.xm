@@ -1,51 +1,42 @@
 #import <Foundation/Foundation.h>
 
-%group RemoveAds
+static BOOL YTMU(NSString *key) {
+    NSDictionary *YTMUltimateDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"];
+    return [YTMUltimateDict[key] boolValue];
+}
+
+static BOOL removeAds = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"noAds");
+
 %hook YTAdsInnerTubeContextDecorator
 - (void)decorateContext:(id)arg1{
-    return;
+    if (!removeAds) return %orig;
 }
 %end
 
 %hook YTDataUtils
 + (id)spamSignalsDictionary {
-    return NULL;
+    return removeAds ? NULL : %orig;
 }
 %end
 
 %hook YTIPlayerResponse
 - (BOOL)isMonetized {
-    return false;
+    return removeAds ? false : %orig;
 }
 
 - (id)paidContentOverlayElementRendererOptions {
-    return nil;
+    return removeAds ? nil : %orig;
 }
 
 - (BOOL)isCuepointAdsEnabled {
-    return NO;
+    return removeAds ? NO : %orig;
 }
 
 - (id)adIntroRenderer {
-    return nil;
+    return removeAds ? nil : %orig;
 }
 
 - (BOOL)isDAIEnabledPlayback {
-    return YES;
+    return removeAds ? YES : %orig;
 }
 %end
-%end
-
-%ctor {
-    BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
-    BOOL noAds = ([[NSUserDefaults standardUserDefaults] objectForKey:@"noAds_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"noAds_enabled"] : YES;
-
-    // To turn on by default    
-    if (![[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"noAds_enabled"]) { 
-       [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"noAds_enabled"]; 
-    }
-
-    if (isEnabled && noAds) {
-        %init(RemoveAds);
-    }
-}

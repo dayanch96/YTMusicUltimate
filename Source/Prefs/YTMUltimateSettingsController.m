@@ -7,16 +7,7 @@
     [super viewDidLoad];
 
     self.navigationItem.leftBarButtonItem = [self closeButton];
-    self.navigationItem.rightBarButtonItem = [self applyButton];
-
-    UITableViewStyle style;
-    if (@available(iOS 13, *)) {
-        style = UITableViewStyleInsetGrouped;
-    } else {
-        style = UITableViewStyleGrouped;
-    }
-
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:style];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleInsetGrouped];
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -30,8 +21,10 @@
     ]];
 
     //Init isEnabled for first time
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] == nil) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"YTMUltimateIsEnabled"];
+    NSMutableDictionary *YTMUltimateDict = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"]];
+    if (!YTMUltimateDict[@"YTMUltimateIsEnabled"]) {
+        [YTMUltimateDict setObject:@(1) forKey:@"YTMUltimateIsEnabled"];
+        [[NSUserDefaults standardUserDefaults] setObject:YTMUltimateDict forKey:@"YTMUltimate"];
     }
 
 }
@@ -100,25 +93,20 @@
         }
     }
 
-    NSBundle *tweakBundle = YTMusicUltimateBundle();
+    NSMutableDictionary *YTMUltimateDict = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"]];
 
     if (indexPath.section == 0) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell0"];
         cell.textLabel.text = LOC(@"ENABLED");
         cell.textLabel.adjustsFontSizeToFitWidth = YES;
-
-        if (@available(iOS 13, *)) {
-            cell.textLabel.textColor = [UIColor colorWithRed:230/255.0 green:75/255.0 blue:75/255.0 alpha:255/255.0];
-            cell.imageView.image = [UIImage systemImageNamed:@"power"];
-            cell.imageView.tintColor = [UIColor colorWithRed:230/255.0 green:75/255.0 blue:75/255.0 alpha:255/255.0];
-        } else {
-            cell.textLabel.textColor = [UIColor systemRedColor];
-        }
+        cell.textLabel.textColor = [UIColor colorWithRed:230/255.0 green:75/255.0 blue:75/255.0 alpha:255/255.0];
+        cell.imageView.image = [UIImage systemImageNamed:@"power"];
+        cell.imageView.tintColor = [UIColor colorWithRed:230/255.0 green:75/255.0 blue:75/255.0 alpha:255/255.0];
 
         UISwitch *masterSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
         masterSwitch.onTintColor = [UIColor colorWithRed:230/255.0 green:75/255.0 blue:75/255.0 alpha:255/255.0];
         [masterSwitch addTarget:self action:@selector(toggleMasterSwitch:) forControlEvents:UIControlEventValueChanged];
-        masterSwitch.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"];
+        masterSwitch.on = [YTMUltimateDict[@"YTMUltimateIsEnabled"] boolValue];
         cell.accessoryView = masterSwitch;
     } else if (indexPath.section == 1) {
         NSArray *sectionTitles = @[LOC(@"PREMIUM_SETTINGS"), LOC(@"PLAYER_SETTINGS"), LOC(@"THEME_SETTINGS"), LOC(@"NAVBAR_SETTINGS"), LOC(@"TABBAR_SETTINGS")];
@@ -128,13 +116,8 @@
             cell.textLabel.text = sectionTitles[indexPath.row];
             cell.detailTextLabel.numberOfLines = 0;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            
-            if (@available(iOS 13, *)) {
-                NSString *imageName = sectionImages[indexPath.row];
-                cell.imageView.image = [UIImage systemImageNamed:imageName];
-            } else {
-                cell.imageView.image = nil;
-            }
+            NSString *imageName = sectionImages[indexPath.row];
+            cell.imageView.image = [UIImage systemImageNamed:imageName];
         }
     } else if (indexPath.section == 2) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell3"];
@@ -155,25 +138,15 @@
         cell.detailTextLabel.numberOfLines = 0;
 
         NSString *imageName = settingData[@"image"];
-        UIImage *image = [UIImage imageWithContentsOfFile:[tweakBundle pathForResource:imageName ofType:@"png" inDirectory:@"icons"]];
-
-        if (@available(iOS 13, *)) {
-            cell.imageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-            cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
-        } else {
-            cell.detailTextLabel.textColor = [UIColor systemGrayColor];
-            cell.imageView.image = nil;
-        }
+        UIImage *image = [UIImage imageWithContentsOfFile:[YTMusicUltimateBundle() pathForResource:imageName ofType:@"png" inDirectory:@"icons"]];
+        cell.imageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
     } return cell;
 }
 
 #pragma mark - UITableViewDelegate
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 1 || indexPath.section == 2) {
-        return YES;
-    } else {
-        return NO;
-    }
+    return indexPath.section == 0 ? NO : YES;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -213,37 +186,10 @@
 }
 
 - (UIBarButtonItem *)closeButton {
-    UIBarButtonItem *item;
-
-    if (@available(iOS 13, *)) {
-        item = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"xmark"]
-                            style:UIBarButtonItemStylePlain
-                            target:self
-                            action:@selector(close)];
-    } else {
-        item = [[UIBarButtonItem alloc] initWithTitle:LOC(@"CLOSE")
-                            style:UIBarButtonItemStylePlain
-                            target:self
-                            action:@selector(close)];
-    }
-
-    return item;
-}
-
-- (UIBarButtonItem *)applyButton {
-    UIBarButtonItem *item;
-
-    if (@available(iOS 13, *)) {
-        item = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"checkmark"]
-                            style:UIBarButtonItemStylePlain
-                            target:self
-                            action:@selector(apply)];
-    } else {
-        item = [[UIBarButtonItem alloc] initWithTitle:LOC(@"APPLY")
-                             style:UIBarButtonItemStylePlain
-                             target:self
-                             action:@selector(apply)];
-    }
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"xmark"]
+                                                             style:UIBarButtonItemStylePlain
+                                                            target:self
+                                                            action:@selector(close)];
 
     return item;
 }
@@ -252,26 +198,12 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)apply {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:LOC(@"WARNING") message:LOC(@"APPLY_MESSAGE") preferredStyle:UIAlertControllerStyleAlert];
-
-    [alert addAction:[UIAlertAction actionWithTitle:LOC(@"CANCEL") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-    }]];
-
-    [alert addAction:[UIAlertAction actionWithTitle:LOC(@"YES") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-        exit(0);
-    }]];
-
-    [self presentViewController:alert animated:YES completion:nil];
-}
-
-@end
-
-@implementation YTMUltimateSettingsController (Privates)
-
 - (void)toggleMasterSwitch:(UISwitch *)sender {
-    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:@"YTMUltimateIsEnabled"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *twitchDvnDict = [NSMutableDictionary dictionaryWithDictionary:[defaults dictionaryForKey:@"YTMUltimate"]];
+
+    [twitchDvnDict setObject:@([sender isOn]) forKey:@"YTMUltimateIsEnabled"];
+    [defaults setObject:twitchDvnDict forKey:@"YTMUltimate"];
 }
 
 @end

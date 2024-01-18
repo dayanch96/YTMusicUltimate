@@ -1,48 +1,50 @@
 #import "OtherSettings.h"
 
-static BOOL removeTab(NSString *key) {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:key];
+static BOOL YTMU(NSString *key) {
+    NSDictionary *YTMUltimateDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"];
+    return [YTMUltimateDict[key] boolValue];
 }
 
 static NSInteger selectedTab() {
-    return [[NSUserDefaults standardUserDefaults] integerForKey:@"startupPage"];
+    NSDictionary *YTMUltimateDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"];
+    return [YTMUltimateDict[@"startupPage"] integerValue];
 }
 
+static BOOL stickyHeaders = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"noStickyHeaders");
+static BOOL noTabBarLabels = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"noTabBarLabels");
+static BOOL skipWarning = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"skipWarning");
+
+
 // Headers stuff
-%group DontStickHeaders
 %hook YTLightweightCollectionController
 - (void)setUseStickyHeaders:(bool)arg1 {
-	arg1 = NO;
-	%orig;
+	stickyHeaders ? %orig(NO) : %orig;
 }
 %end
 
 %hook YTMSearchTabViewController
 - (bool)shouldUseStickyHeaders {
-	return NO;
+	return stickyHeaders ? NO : %orig;
 }
 %end
 
 %hook YTMTabViewController
 - (bool)shouldUseStickyHeaders {
-	return NO;
+	return stickyHeaders ? NO : %orig;
 }
 %end
 
 // Make chip clouds (aka headers) background transparent
 %hook YTMChipCloudView
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
-    UIColor *newBackgroundColor = [backgroundColor colorWithAlphaComponent:0.0];
-    %orig(newBackgroundColor);
+    stickyHeaders ? %orig([UIColor clearColor]) : %orig;
 }
-%end
 %end
 
 // Tab bar stuff
 BOOL hasHomeBar = NO;
 CGFloat pivotBarViewHeight;
 
-%group RemoveTabBarLabels
 %hook YTPivotBarView
 - (void)layoutSubviews {
     %orig;
@@ -54,63 +56,65 @@ CGFloat pivotBarViewHeight;
 - (void)layoutSubviews {
     %orig;
 
-    CGFloat pivotBarAccessibilityControlWidth;
+    if (noTabBarLabels) {
 
-    for (UIView *subview in self.subviews) {
-        if ([subview isKindOfClass:NSClassFromString(@"YTPivotBarItemViewAccessibilityControl")]) {
-            pivotBarAccessibilityControlWidth = CGRectGetWidth(subview.frame);
-            break;
+        CGFloat pivotBarAccessibilityControlWidth;
+
+        for (UIView *subview in self.subviews) {
+            if ([subview isKindOfClass:NSClassFromString(@"YTPivotBarItemViewAccessibilityControl")]) {
+                pivotBarAccessibilityControlWidth = CGRectGetWidth(subview.frame);
+                break;
+            }
         }
-    }
 
-    for (UIView *subview in self.subviews) {
-        if ([subview isKindOfClass:NSClassFromString(@"YTQTMButton")]) {
-            for (UIView *buttonSubview in subview.subviews) {
-                if ([buttonSubview isKindOfClass:[UILabel class]]) {
-                    [buttonSubview removeFromSuperview];
-                    break;
-                }
-            }
-
-            UIImageView *imageView = nil;
-            for (UIView *buttonSubview in subview.subviews) {
-                if ([buttonSubview isKindOfClass:[UIImageView class]]) {
-                    imageView = (UIImageView *)buttonSubview;
-                    break;
-                }
-            }
-
-            if (imageView) {
-                CGFloat imageViewHeight = imageView.image.size.height;
-                CGFloat imageViewWidth = imageView.image.size.width;
-                CGRect buttonFrame = subview.frame;
-
-                if (@available(iOS 13.0, *)) {
-                    UIWindowScene *mainWindowScene = (UIWindowScene *)[[[UIApplication sharedApplication] connectedScenes] anyObject];
-                    if (mainWindowScene) {
-                        UIEdgeInsets safeAreaInsets = mainWindowScene.windows.firstObject.safeAreaInsets;
-                        if (safeAreaInsets.bottom > 0) {
-                            hasHomeBar = YES;
-                        }
+        for (UIView *subview in self.subviews) {
+            if ([subview isKindOfClass:NSClassFromString(@"YTQTMButton")]) {
+                for (UIView *buttonSubview in subview.subviews) {
+                    if ([buttonSubview isKindOfClass:[UILabel class]]) {
+                        [buttonSubview removeFromSuperview];
+                        break;
                     }
                 }
 
-                CGFloat yOffset = hasHomeBar ? 15.0 : 0.0;
-                CGFloat xOffset = (pivotBarAccessibilityControlWidth - imageViewWidth) / 2.0;
+                UIImageView *imageView = nil;
+                for (UIView *buttonSubview in subview.subviews) {
+                    if ([buttonSubview isKindOfClass:[UIImageView class]]) {
+                        imageView = (UIImageView *)buttonSubview;
+                        break;
+                    }
+                }
 
-                buttonFrame.origin.y = (pivotBarViewHeight - imageViewHeight - yOffset) / 2.0;
-                buttonFrame.origin.x = xOffset;
+                if (imageView) {
+                    CGFloat imageViewHeight = imageView.image.size.height;
+                    CGFloat imageViewWidth = imageView.image.size.width;
+                    CGRect buttonFrame = subview.frame;
 
-                buttonFrame.size.height = imageViewHeight;
-                buttonFrame.size.width = imageViewWidth;
+                    if (@available(iOS 13.0, *)) {
+                        UIWindowScene *mainWindowScene = (UIWindowScene *)[[[UIApplication sharedApplication] connectedScenes] anyObject];
+                        if (mainWindowScene) {
+                            UIEdgeInsets safeAreaInsets = mainWindowScene.windows.firstObject.safeAreaInsets;
+                            if (safeAreaInsets.bottom > 0) {
+                                hasHomeBar = YES;
+                            }
+                        }
+                    }
 
-                subview.frame = buttonFrame;
-                subview.bounds = CGRectMake(0, 0, imageViewWidth, imageViewHeight);
+                    CGFloat yOffset = hasHomeBar ? 15.0 : 0.0;
+                    CGFloat xOffset = (pivotBarAccessibilityControlWidth - imageViewWidth) / 2.0;
+
+                    buttonFrame.origin.y = (pivotBarViewHeight - imageViewHeight - yOffset) / 2.0;
+                    buttonFrame.origin.x = xOffset;
+
+                    buttonFrame.size.height = imageViewHeight;
+                    buttonFrame.size.width = imageViewWidth;
+
+                    subview.frame = buttonFrame;
+                    subview.bounds = CGRectMake(0, 0, imageViewWidth, imageViewHeight);
+                }
             }
         }
     }
 }
-%end
 %end
 
 // Remove tabs
@@ -119,10 +123,10 @@ CGFloat pivotBarViewHeight;
     NSMutableArray <YTIPivotBarSupportedRenderers *> *items = [renderer itemsArray];
 
     NSDictionary *identifiersToRemove = @{
-        @"FEmusic_home": @(removeTab(@"hideHomeTab")),
-        @"FEmusic_immersive": @(removeTab(@"hideSamplesTab")),
-        @"FEmusic_explore": @(removeTab(@"hideExploreTab")),
-        @"FEmusic_library_landing": @(removeTab(@"hideLibraryTab"))
+        @"FEmusic_home": @(YTMU(@"hideHomeTab")),
+        @"FEmusic_immersive": @(YTMU(@"hideSamplesTab")),
+        @"FEmusic_explore": @(YTMU(@"hideExploreTab")),
+        @"FEmusic_library_landing": @(YTMU(@"hideLibraryTab"))
     };
 
     for (NSString *identifier in identifiersToRemove) {
@@ -160,6 +164,9 @@ BOOL isTabSelected = NO;
             case 3:
                 pivotIdentifier = @"FEmusic_library_landing";
                 break;
+            case 4:
+                pivotIdentifier = @"BHdownloadsVC";
+                break;
             default:
                 return;
         }
@@ -169,18 +176,6 @@ BOOL isTabSelected = NO;
 }
 %end
 
-%ctor {
-    BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
-    BOOL noStickyHeaders = [[NSUserDefaults standardUserDefaults] boolForKey:@"noStickyHeaders_enabled"];
-    BOOL noTabBarLabels = [[NSUserDefaults standardUserDefaults] boolForKey:@"noTabBarLabels_enabled"];
-
-    if (isEnabled) {
-        %init;
-        if (noStickyHeaders) {
-            %init(DontStickHeaders);
-        }
-        if (noTabBarLabels) {
-            %init(RemoveTabBarLabels)
-        }
-    }
-}
+%hook YTPlayabilityResolutionUserActionUIController
+- (void)showConfirmAlert { skipWarning ? [self confirmAlertDidPressConfirm] : %orig; }
+%end

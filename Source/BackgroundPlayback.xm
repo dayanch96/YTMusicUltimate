@@ -1,54 +1,59 @@
 #import <Foundation/Foundation.h>
 
+static BOOL YTMU(NSString *key) {
+    NSDictionary *YTMUltimateDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"];
+    return [YTMUltimateDict[key] boolValue];
+}
+
 @interface YTMBackgroundUpsellNotificationController : NSObject
 - (void)removePendingBackgroundNotifications;
 @end
 
-%group BackgroundPlayback
 %hook YTMBackgroundUpsellNotificationController
 - (id)upsellNotificationTriggerOnBackground {
-    return nil;
+    return YTMU(@"YTMUltimateIsEnabled") && YTMU(@"backgroundPlayback") ? nil : %orig;
 }
 
 - (void)maybeScheduleBackgroundUpsellNotification {
     %orig;
-    [self removePendingBackgroundNotifications];
+    if (YTMU(@"YTMUltimateIsEnabled") && YTMU(@"backgroundPlayback")) [self removePendingBackgroundNotifications];
 }
 %end
 
 %hook YTPlayerStatus
 - (id)initWithExternalPlayback:(_Bool)arg1 backgroundPlayback:(_Bool)arg2 inlinePlaybackActive:(_Bool)arg3 cardboardModeActive:(_Bool)arg4 layout:(int)arg5 userAudioOnlyModeActive:(_Bool)arg6 blackoutActive:(_Bool)arg7 clipID:(id)arg8 accountLinkState:(id)arg9 muted:(_Bool)arg10 pictureInPicture:(_Bool)arg11 {
-    return %orig(YES, YES, YES, arg4, arg5, YES, YES, arg8, arg9, arg10, arg11);
+    if (YTMU(@"YTMUltimateIsEnabled") && YTMU(@"backgroundPlayback")) {
+        arg1 = YES; arg2 = YES; arg3 = YES; arg6 = YES; arg7 = YES;
+    }
+
+    return %orig(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
 }
 %end
 
 %hook YTIPlayabilityStatus
 - (BOOL)isPlayableInBackground{
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") && YTMU(@"backgroundPlayback") ? YES : %orig;
 }
 
 - (void)setIsPlayableInBackground:(BOOL)backgroundable {
-    %orig(YES);
+    YTMU(@"YTMUltimateIsEnabled") && YTMU(@"backgroundPlayback") ? %orig(YES) : %orig;
 }
 %end
 
 %hook YTMMusicAppMetadata
 - (BOOL)canPlayBackgroundableContent {
-    return YES;
+    return YTMU(@"YTMUltimateIsEnabled") && YTMU(@"backgroundPlayback") ? YES : %orig;
 }
-%end
 %end
 
 %ctor {
-    BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
-    BOOL backgroundPlayback = ([[NSUserDefaults standardUserDefaults] objectForKey:@"backgroundPlayback_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"backgroundPlayback_enabled"] : YES;
+    NSMutableDictionary *YTMUltimateDict = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"]];
 
-    // To turn on by default
-    if (![[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"backgroundPlayback_enabled"]) { 
-       [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"backgroundPlayback_enabled"]; 
-    }
-
-    if (isEnabled && backgroundPlayback) {
-        %init(BackgroundPlayback);
+    NSArray *keys = @[@"YTMUltimateIsEnabled", @"backgroundPlayback", @"noAds", @"premiumWorkaround"];
+    for (NSString *key in keys) {
+        if (!YTMUltimateDict[key]) {
+            [YTMUltimateDict setObject:@(1) forKey:key];
+            [[NSUserDefaults standardUserDefaults] setObject:YTMUltimateDict forKey:@"YTMUltimate"];
+        }
     }
 }

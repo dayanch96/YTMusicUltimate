@@ -7,15 +7,7 @@
     [super viewDidLoad];
 
     self.title = LOC(@"NAVBAR_SETTINGS");
-
-    UITableViewStyle style;
-    if (@available(iOS 13, *)) {
-        style = UITableViewStyleInsetGrouped;
-    } else {
-        style = UITableViewStyleGrouped;
-    }
-
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:style];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleInsetGrouped];
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -49,14 +41,16 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
 
+    NSMutableDictionary *YTMUltimateDict = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"]];
+
     if (indexPath.section == 0) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell1"];
         
         NSArray *settingsData = @[
-            @{@"title": LOC(@"DONT_STICK_HEADERS"), @"desc": LOC(@"DONT_STICK_HEADERS_DESC"), @"selector": @"toggleNoStickyHeaders:", @"key": @"noStickyHeaders_enabled"},
-            @{@"title": LOC(@"HIDE_HISTORY_BUTTON"), @"desc": LOC(@"HIDE_HISTORY_BUTTON_DESC"), @"selector": @"toggleHideHistoryButton:", @"key": @"hideHistoryButton_enabled"},
-            @{@"title": LOC(@"HIDE_CAST_BUTTON"), @"desc": LOC(@"HIDE_CAST_BUTTON_DESC"), @"selector": @"toggleHideCastButton:", @"key": @"hideCastButton_enabled"},
-            @{@"title": LOC(@"HIDE_FILTER_BUTTON"), @"desc": LOC(@"HIDE_FILTER_BUTTON_DESC"), @"selector": @"toggleHideFilterButton:", @"key": @"hideFilterButton_enabled"}
+            @{@"title": LOC(@"DONT_STICK_HEADERS"), @"desc": LOC(@"DONT_STICK_HEADERS_DESC"), @"key": @"noStickyHeaders"},
+            @{@"title": LOC(@"HIDE_HISTORY_BUTTON"), @"desc": LOC(@"HIDE_HISTORY_BUTTON_DESC"), @"key": @"hideHistoryButton"},
+            @{@"title": LOC(@"HIDE_CAST_BUTTON"), @"desc": LOC(@"HIDE_CAST_BUTTON_DESC"),@"key": @"hideCastButton"},
+            @{@"title": LOC(@"HIDE_FILTER_BUTTON"), @"desc": LOC(@"HIDE_FILTER_BUTTON_DESC"), @"key": @"hideFilterButton"}
         ];
 
         NSDictionary *data = settingsData[indexPath.row];
@@ -65,45 +59,37 @@
         cell.textLabel.adjustsFontSizeToFitWidth = YES;
         cell.detailTextLabel.text = data[@"desc"];
         cell.detailTextLabel.numberOfLines = 0;
-
-        if (@available(iOS 13, *)) {
-            cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
-        } else {
-            cell.detailTextLabel.textColor = [UIColor systemGrayColor];
-        }
+        cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
 
         UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectZero];
         switchControl.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
-        [switchControl addTarget:self action:NSSelectorFromString(data[@"selector"]) forControlEvents:UIControlEventValueChanged];
-        switchControl.on = [[NSUserDefaults standardUserDefaults] boolForKey:data[@"key"]];
+        [switchControl addTarget:self action:@selector(toggleSwitch:) forControlEvents:UIControlEventValueChanged];
+        switchControl.tag = indexPath.row;
+        switchControl.on = [YTMUltimateDict[data[@"key"]] boolValue];
         cell.accessoryView = switchControl;
     }
 
     return cell;
 }
 
-@end
-
-@implementation NavBarSettingsController (Privates)
-
-- (void)toggleNoStickyHeaders:(UISwitch *)sender {
-    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:@"noStickyHeaders_enabled"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
 }
 
-- (void)toggleHideHistoryButton:(UISwitch *)sender {
-    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:@"hideHistoryButton_enabled"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
+- (void)toggleSwitch:(UISwitch *)sender {
+    NSArray *settingsData = @[
+        @{@"key": @"noStickyHeaders"},
+        @{@"key": @"hideHistoryButton"},
+        @{@"key": @"hideCastButton"},
+        @{@"key": @"hideFilterButton"},
+    ];
 
-- (void)toggleHideCastButton:(UISwitch *)sender {
-    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:@"hideCastButton_enabled"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
+    NSDictionary *data = settingsData[sender.tag];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *YTMUltimateDict = [NSMutableDictionary dictionaryWithDictionary:[defaults dictionaryForKey:@"YTMUltimate"]];
 
-- (void)toggleHideFilterButton:(UISwitch *)sender {
-    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:@"hideFilterButton_enabled"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [YTMUltimateDict setObject:@([sender isOn]) forKey:data[@"key"]];
+    [defaults setObject:YTMUltimateDict forKey:@"YTMUltimate"];
 }
 
 @end

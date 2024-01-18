@@ -1,6 +1,13 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+static BOOL YTMU(NSString *key) {
+    NSDictionary *YTMUltimateDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"];
+    return [YTMUltimateDict[key] boolValue];
+}
+
+static BOOL playbackRateButton = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"playbackRateButton");
+
 @interface YTMPlaybackRateButtonHolder : NSObject
 @property (readonly, copy, nonatomic) UIButton *button;
 @end
@@ -9,24 +16,23 @@
 @property (readonly, nonatomic) NSArray <YTMPlaybackRateButtonHolder *> *playbackRateButtons;
 @end
 
-%group RateController
 %hook YTMModularNowPlayingViewController
 - (BOOL)playbackRateButtonEnabled {
-    return YES;
+    return playbackRateButton ? YES : %orig;
 }
 
 - (void)setPlaybackRateButtonEnabled:(BOOL)enabled {
-    %orig(YES);
+    playbackRateButton ? %orig(YES) : %orig;
 }
 %end
 
 %hook YTMPlayerControlsView
 - (BOOL)playbackRateButtonEnabled {
-    return YES;
+    return playbackRateButton ? YES : %orig;
 }
 
 - (void)setPlaybackRateButtonEnabled:(BOOL)enabled {
-    %orig(YES);
+    playbackRateButton ? %orig(YES) : %orig;
 }
 
 // Thanks to @danpashin for help
@@ -44,17 +50,3 @@
 	[NSLayoutConstraint activateConstraints:buttonsConstraints];
 }
 %end
-%end
-
-%ctor {
-
-    //Get / read values
-    BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
-    BOOL playbackRateButton = ([[NSUserDefaults standardUserDefaults] objectForKey:@"playbackRateButton_enabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"playbackRateButton_enabled"] : NO;
-
-    if (isEnabled){
-        if (playbackRateButton) {
-            %init(RateController);
-        }
-    }
-}

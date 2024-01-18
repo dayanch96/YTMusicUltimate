@@ -7,15 +7,7 @@
     [super viewDidLoad];
 
     self.title = LOC(@"TABBAR_SETTINGS");
-
-    UITableViewStyle style;
-    if (@available(iOS 13, *)) {
-        style = UITableViewStyleInsetGrouped;
-    } else {
-        style = UITableViewStyleGrouped;
-    }
-
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:style];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleInsetGrouped];
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -63,11 +55,11 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
 
+    NSMutableDictionary *YTMUltimateDict = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"]];
+
     if (indexPath.section == 0 && indexPath.row == 0) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell0"];
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
-        UISegmentedControl *startupPage = [[UISegmentedControl alloc] initWithItems:@[LOC(@"HOME"), LOC(@"SAMPLES"), LOC(@"EXPLORE"), LOC(@"LIBRARY")]];
+        UISegmentedControl *startupPage = [[UISegmentedControl alloc] initWithItems:@[LOC(@"HOME"), LOC(@"SAMPLES"), LOC(@"EXPLORE"), LOC(@"LIBRARY"), LOC(@"DOWNLOADS")]];
 
         for (UIView *segmentView in startupPage.subviews) {
             for (UIView *subview in segmentView.subviews) {
@@ -78,7 +70,7 @@
             }
         }
 
-        startupPage.selectedSegmentIndex = [defaults integerForKey:@"startupPage"];
+        startupPage.selectedSegmentIndex = [YTMUltimateDict[@"startupPage"] integerValue];
         [startupPage addTarget:self action:@selector(startupPageSelect:) forControlEvents:UIControlEventValueChanged];
         [cell.contentView addSubview:startupPage];
         startupPage.translatesAutoresizingMaskIntoConstraints = NO;
@@ -90,11 +82,11 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell1"];
         
         NSArray *settingsData = @[
-            @{@"title": LOC(@"REMOVE_TABBAR_LABELS"), @"selector": @"toggleNoTabBarLabels:", @"key": @"noTabBarLabels_enabled"},
-            @{@"title": LOC(@"HIDE_HOME"), @"selector": @"toggleHideHome:", @"key": @"hideHomeTab"},
-            @{@"title": LOC(@"HIDE_SAMPLES"), @"selector": @"toggleHideSamples:", @"key": @"hideSamplesTab"},
-            @{@"title": LOC(@"HIDE_EXPLORE"), @"selector": @"toggleHideExplore:", @"key": @"hideExploreTab"},
-            @{@"title": LOC(@"HIDE_LIBRARY"), @"selector": @"toggleHideLibrary:", @"key": @"hideLibraryTab"},
+            @{@"title": LOC(@"REMOVE_TABBAR_LABELS"), @"key": @"noTabBarLabels"},
+            @{@"title": LOC(@"HIDE_HOME"), @"key": @"hideHomeTab"},
+            @{@"title": LOC(@"HIDE_SAMPLES"), @"key": @"hideSamplesTab"},
+            @{@"title": LOC(@"HIDE_EXPLORE"), @"key": @"hideExploreTab"},
+            @{@"title": LOC(@"HIDE_LIBRARY"), @"key": @"hideLibraryTab"}
         ];
 
         NSDictionary *data = settingsData[indexPath.row];
@@ -104,49 +96,42 @@
 
         UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectZero];
         switchControl.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
-        [switchControl addTarget:self action:NSSelectorFromString(data[@"selector"]) forControlEvents:UIControlEventValueChanged];
-        switchControl.on = [[NSUserDefaults standardUserDefaults] boolForKey:data[@"key"]];
+        [switchControl addTarget:self action:@selector(toggleSwitch:) forControlEvents:UIControlEventValueChanged];
+        switchControl.tag = indexPath.row;
+        switchControl.on = [YTMUltimateDict[data[@"key"]] boolValue];
         cell.accessoryView = switchControl;
     }
 
     return cell;
 }
 
-@end
-
-@implementation OtherSettingsController (Privates)
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
+}
 
 - (void)startupPageSelect:(UISegmentedControl *)sender {
-    NSInteger selectedIndex = sender.selectedSegmentIndex;
-    NSLog(@"Selected segment: %@", [sender titleForSegmentAtIndex:selectedIndex]);
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *YTMUltimateDict = [NSMutableDictionary dictionaryWithDictionary:[defaults dictionaryForKey:@"YTMUltimate"]];
 
-    [[NSUserDefaults standardUserDefaults] setInteger:selectedIndex forKey:@"startupPage"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [YTMUltimateDict setObject:@(sender.selectedSegmentIndex) forKey:@"startupPage"];
+    [defaults setObject:YTMUltimateDict forKey:@"YTMUltimate"];
 }
 
-- (void)toggleNoTabBarLabels:(UISwitch *)sender {
-    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:@"noTabBarLabels_enabled"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
+- (void)toggleSwitch:(UISwitch *)sender {
+    NSArray *settingsData = @[
+        @{@"key": @"noTabBarLabels"},
+        @{@"key": @"hideHomeTab"},
+        @{@"key": @"hideSamplesTab"},
+        @{@"key": @"hideExploreTab"},
+        @{@"key": @"hideLibraryTab"},
+    ];
 
-- (void)toggleHideHome:(UISwitch *)sender {
-    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:@"hideHomeTab"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
+    NSDictionary *data = settingsData[sender.tag];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *YTMUltimateDict = [NSMutableDictionary dictionaryWithDictionary:[defaults dictionaryForKey:@"YTMUltimate"]];
 
-- (void)toggleHideSamples:(UISwitch *)sender {
-    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:@"hideSamplesTab"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (void)toggleHideExplore:(UISwitch *)sender {
-    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:@"hideExploreTab"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (void)toggleHideLibrary:(UISwitch *)sender {
-    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:@"hideLibraryTab"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [YTMUltimateDict setObject:@([sender isOn]) forKey:data[@"key"]];
+    [defaults setObject:YTMUltimateDict forKey:@"YTMUltimate"];
 }
 
 @end

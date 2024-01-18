@@ -7,15 +7,7 @@
     [super viewDidLoad];
 
     self.title = LOC(@"PREMIUM_SETTINGS");
-
-    UITableViewStyle style;
-    if (@available(iOS 13, *)) {
-        style = UITableViewStyleInsetGrouped;
-    } else {
-        style = UITableViewStyleGrouped;
-    }
-
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:style];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleInsetGrouped];
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -31,7 +23,7 @@
 
 #pragma mark - Table view stuff
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 60;
+    return UITableViewAutomaticDimension;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -39,7 +31,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return 3;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -49,12 +41,15 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
 
+    NSMutableDictionary *YTMUltimateDict = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"]];
+
     if (indexPath.section == 0) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell1"];
         
         NSArray *settingsData = @[
-            @{@"title": LOC(@"NO_ADS"), @"desc": LOC(@"NO_ADS_DESC"), @"selector": @"toggleNoAds:", @"key": @"noAds_enabled"},
-            @{@"title": LOC(@"BACKGROUND_PLAYBACK"), @"desc": LOC(@"BACKGROUND_PLAYBACK_DESC"), @"selector": @"toggleBackgroundPlayback:", @"key": @"backgroundPlayback_enabled"}
+            @{@"title": LOC(@"NO_ADS"), @"desc": LOC(@"NO_ADS_DESC"), @"key": @"noAds"},
+            @{@"title": LOC(@"BACKGROUND_PLAYBACK"), @"desc": LOC(@"BACKGROUND_PLAYBACK_DESC"), @"key": @"backgroundPlayback"},
+            @{@"title": LOC(@"FORCE_PREMIUM"), @"desc": LOC(@"FORCE_PREMIUM_DESC"), @"key": @"premiumWorkaround"}
         ];
 
         NSDictionary *data = settingsData[indexPath.row];
@@ -63,34 +58,36 @@
         cell.textLabel.adjustsFontSizeToFitWidth = YES;
         cell.detailTextLabel.text = data[@"desc"];
         cell.detailTextLabel.numberOfLines = 0;
-
-        if (@available(iOS 13, *)) {
-            cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
-        } else {
-            cell.detailTextLabel.textColor = [UIColor systemGrayColor];
-        }
+        cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
 
         UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectZero];
         switchControl.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
-        [switchControl addTarget:self action:NSSelectorFromString(data[@"selector"]) forControlEvents:UIControlEventValueChanged];
-        switchControl.on = [[NSUserDefaults standardUserDefaults] boolForKey:data[@"key"]];
+        [switchControl addTarget:self action:@selector(toggleSwitch:) forControlEvents:UIControlEventValueChanged];
+        switchControl.tag = indexPath.row;
+        switchControl.on = [YTMUltimateDict[data[@"key"]] boolValue];
         cell.accessoryView = switchControl;
     }
 
     return cell;
 }
 
-@end
-
-@implementation PremiumSettingsController (Privates)
-
-- (void)toggleNoAds:(UISwitch *)sender {
-    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:@"noAds_enabled"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
 }
 
-- (void)toggleBackgroundPlayback:(UISwitch *)sender {
-    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:@"backgroundPlayback_enabled"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+- (void)toggleSwitch:(UISwitch *)sender {
+    NSArray *settingsData = @[
+        @{@"key": @"noAds"},
+        @{@"key": @"backgroundPlayback"},
+        @{@"key": @"premiumWorkaround"},
+    ];
+
+    NSDictionary *data = settingsData[sender.tag];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *YTMUltimateDict = [NSMutableDictionary dictionaryWithDictionary:[defaults dictionaryForKey:@"YTMUltimate"]];
+
+    [YTMUltimateDict setObject:@([sender isOn]) forKey:data[@"key"]];
+    [defaults setObject:YTMUltimateDict forKey:@"YTMUltimate"];
 }
+
 @end

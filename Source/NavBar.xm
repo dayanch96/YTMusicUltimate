@@ -1,8 +1,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-static BOOL buttonEnabled(NSString *key) {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:key];
+static BOOL YTMU(NSString *key) {
+    NSDictionary *YTMUltimateDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"];
+    return [YTMUltimateDict[key] boolValue];
 }
 
 @interface YTMNavigationBarView : UIView
@@ -15,16 +16,15 @@ static BOOL buttonEnabled(NSString *key) {
 @interface YTMSortFilterButton : UIButton
 @end
 
-%group NavBarItems
 %hook QTMButton
 - (void)layoutSubviews {
     %orig;
-    if (buttonEnabled(@"hideHistoryButton_enabled")) {
+    if (YTMU(@"YTMUltimateIsEnabled") && YTMU(@"hideHistoryButton")) {
         if ([self.accessibilityIdentifier isEqualToString:@"id.navigation.history.button"]) {
             self.hidden = YES;
         }
     }
-    if (buttonEnabled(@"hideCastButton_enabled")) {
+    if (YTMU(@"YTMUltimateIsEnabled") && YTMU(@"hideCastButton")) {
         if ([self.accessibilityIdentifier isEqualToString:@"id.mdx.playbackroute.button"]) {
             self.hidden = YES;
         }
@@ -46,20 +46,10 @@ static BOOL buttonEnabled(NSString *key) {
         }
     }
 
-    if (buttonEnabled(@"hideFilterButton_enabled")) {
+    if (YTMU(@"YTMUltimateIsEnabled") && YTMU(@"hideFilterButton")) {
         if (sortFilterButton != nil) {
             [sortFilterButton removeFromSuperview];
         }
     }
 }
 %end
-%end
-
-%ctor {
-    BOOL isEnabled = ([[NSUserDefaults standardUserDefaults] objectForKey:@"YTMUltimateIsEnabled"] != nil) ? [[NSUserDefaults standardUserDefaults] boolForKey:@"YTMUltimateIsEnabled"] : YES;
-
-    %init;
-    if (isEnabled) {
-        %init(NavBarItems);
-    }
-}

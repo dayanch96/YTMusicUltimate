@@ -17,22 +17,19 @@
 %hook YTMAvatarAccountView
 
 - (void)setAccountMenuUpperButtons:(id)arg1 lowerButtons:(id)arg2 {
-    UIImage *icon;
-    if (@available(iOS 13, *)) {
-        UIGraphicsImageRenderer *renderer = [[UIGraphicsImageRenderer alloc] initWithSize:CGSizeMake(24, 24)];
-        icon = [renderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull rendererContext) {
-            UIImage *flameImage = [UIImage systemImageNamed:@"flame"];
-            UIView *imageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
-            UIImageView *flameImageView = [[UIImageView alloc] initWithImage:flameImage];
-            flameImageView.contentMode = UIViewContentModeScaleAspectFit;
-            flameImageView.clipsToBounds = YES;
-            flameImageView.tintColor = [UIColor redColor];
-            flameImageView.frame = imageView.bounds;
+    UIGraphicsImageRenderer *renderer = [[UIGraphicsImageRenderer alloc] initWithSize:CGSizeMake(24, 24)];
+    UIImage *icon = [renderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull rendererContext) {
+        UIImage *flameImage = [UIImage systemImageNamed:@"flame"];
+        UIView *imageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+        UIImageView *flameImageView = [[UIImageView alloc] initWithImage:flameImage];
+        flameImageView.contentMode = UIViewContentModeScaleAspectFit;
+        flameImageView.clipsToBounds = YES;
+        flameImageView.tintColor = [UIColor redColor];
+        flameImageView.frame = imageView.bounds;
 
-            [imageView addSubview:flameImageView];
-            [imageView.layer renderInContext:rendererContext.CGContext];
-        }];
-    }
+        [imageView addSubview:flameImageView];
+        [imageView.layer renderInContext:rendererContext.CGContext];
+    }];
 
     //Create the YTMusicUltimate button
     YTMAccountButton *button = [[%c(YTMAccountButton) alloc] initWithTitle:@"YTMusicUltimate" identifier:@"ytmult" icon:icon actionBlock:^(BOOL arg4) {
@@ -41,6 +38,8 @@
         [nav setModalPresentationStyle: UIModalPresentationFullScreen];
         [self._viewControllerForAncestor presentViewController:nav animated:YES completion:nil];
     }];
+
+    button.tintColor = [UIColor redColor];
 
     //Add our custom button to the list.
     NSMutableArray *arrDown = [[NSMutableArray alloc] init];
