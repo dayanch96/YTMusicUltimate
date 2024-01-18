@@ -8,6 +8,8 @@
 "NO_ADS_DESC" = "Uygulama içi reklamları kaldırır";
 "BACKGROUND_PLAYBACK" = "Arka planda oynatma";
 "BACKGROUND_PLAYBACK_DESC" = "Arka planda oynatma özelliğini etkinleştirir";
+"FORCE_PREMIUM" = "Force enable premium";
+"FORCE_PREMIUM_DESC" = "Forcibly enables premium features.\nThis option also disables Samples tab";
 
 "PLAYER_SETTINGS" = "Oynatıcı ayarları";
 "PLAYBACK_RATE_BUTTON" = "Oynatma hızı düğmesini göster";
@@ -20,6 +22,8 @@
 "NO_AUTORADIO_DESC" = "Kesintisiz müzik özelliğini kaldırır";
 "SKIP_NONMUSIC_PARTS" = "Müzik olmayan bölümleri atla (SponsorBlock)";
 "SKIP_NONMUSIC_PARTS_DESC" = "Müzik videolarında müzik olmayan bölümleri atlar";
+"SKIP_CONTENT_WARNING" = "Skip content warning";
+"SKIP_CONTENT_WARNING_DESC" = "Skips warnings about potentially harmful content";
 "AV_DEFAULT_MODE" = "Varsayılan oynatma modu";
 "AUDIO" = "Şarkı";
 "VIDEO" = "Video";
@@ -77,3 +81,22 @@
 "CANCEL" = "İptal";
 "YES" = "Evet";
 "REGIONAL_RESTRICTION" = "YouTube Music, ülkende kısıtlanmış gibi görünüyor.\n\nYouTube Music'e erişim sağlamak için lütfen VPN kullan.";
+
+"DONT_RUSH" = "Don't rush brilliance";
+"DONT_RUSH_DESC" = "Required to play the song to extract the link";
+"SELECT_ACTION" = "Select Action";
+"DOWNLOAD_AUDIO" = "Download Audio";
+"DOWNLOAD_COVER" = "Download Cover";
+"DOWNLOADING" = "Downloading";
+"OOPS" = "Oops\nsomething went wrong";
+"SAVED_TO_PHOTOS" = "Saved to Photos";
+"DONE" = "Done";
+
+"DOWNLOADS" = "Downloads";
+"EMPTY" = "Content you download will show here";
+"REMOVE_ALL" = "Remove all audios";
+"SHARE_ALL" = "Share all audios";
+"PREPARING" = "Preparing...";
+"DELETE_MESSAGE" = "Are you sure you want to delete %@?";
+"ALL_DOWNLOADS" = "all download audios"; //keep it lowercase
+"DELETE" = "Delete";

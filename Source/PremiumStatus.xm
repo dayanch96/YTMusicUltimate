@@ -207,7 +207,7 @@ static BOOL YTMU(NSString *key) {
 // Spoof version (https://github.com/ginsudev/YTMusicUltimate/issues/163#issuecomment-1879583573)
 %hook YTVersionUtils
 + (NSString *)appVersion {
-    return YTMU(@"YTMUltimateIsEnabled") && YTMU(@"premiumWorkaround") ? @"6.01.2" : %orig;
+    return YTMU(@"YTMUltimateIsEnabled") && YTMU(@"premiumWorkaround") ? @"4.27.53" : %orig;
 }
 %end
 
@@ -216,7 +216,7 @@ static BOOL YTMU(NSString *key) {
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString *appVersion = infoDictionary[@"CFBundleShortVersionString"];
 
-    if ([text isEqualToString:@"6.01.2"]) {
+    if ([text isEqualToString:@"4.27.53"]) {
         text = appVersion;
     } %orig(text);
 }
