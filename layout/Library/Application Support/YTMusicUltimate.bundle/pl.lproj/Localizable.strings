@@ -8,10 +8,12 @@
 "NO_ADS_DESC" = "Wyłącza reklamy w aplikacji";
 "BACKGROUND_PLAYBACK" = "Odtwarzanie w tle";
 "BACKGROUND_PLAYBACK_DESC" = "Aktywuje odtwarzanie w tle";
+"FORCE_PREMIUM" = "Wymuś premium";
+"FORCE_PREMIUM_DESC" = "Wymusza użycie funkcji premium.\nTa opcja wyłącza również zakładkę Sample";
 
 "PLAYER_SETTINGS" = "Ustawienia odtwarzania";
 "PLAYBACK_RATE_BUTTON" = "Pokaż przycisk kontroli prędkości";
-"PLAYBACK_RATE_BUTTON_DESC" = "Dostosuj prędkość odtwarzania;
+"PLAYBACK_RATE_BUTTON_DESC" = "Dostosuj prędkość odtwarzania";
 "SELECTABLE_LYRICS" = "Zaznaczanie tekstu utworu";
 "SELECTABLE_LYRICS_DESC" = "Włącza zaznaczanie tekstu piosenki, jeśli ta go posiada";
 "VOLBAR" = "Pasek głośności";
@@ -20,6 +22,8 @@
 "NO_AUTORADIO_DESC" = "Wyłącza funkcje automatycznego odtwarzania proponowanego utworu";
 "SKIP_NONMUSIC_PARTS" = "Pomiń sekcję bez muzyki (SponsorBlock)";
 "SKIP_NONMUSIC_PARTS_DESC" = "Pomija nie-muzyczne kwestie w teledyskach";
+"SKIP_CONTENT_WARNING" = "Pomiń ostrzeżenia";
+"SKIP_CONTENT_WARNING_DESC" = "Pomija ostrzeżenia o potencjalnie szkodliwym kontencie";
 "AV_DEFAULT_MODE" = "Domyślny styl odtwarzania";
 "AUDIO" = "Audio";
 "VIDEO" = "Wideo";
@@ -54,10 +58,10 @@
 
 "TAB_SETTINGS" = "Ustawienia zakładek";
 "REMOVE_TABBAR_LABELS" = "Brak podpisu pod ikonami w pasku";
-"HIDE_HOME" = "Ukryj zakładkę "Główna"";
-"HIDE_SAMPLES" = "Ukryj zakładkę "Sample"";
-"HIDE_EXPLORE" = "Ukryj zakładkę "Odkrywaj"";
-"HIDE_LIBRARY" = "Ukryj zakładkę "Biblioteka"";
+"HIDE_HOME" = "Ukryj zakładkę \"Główna\"";
+"HIDE_SAMPLES" = "Ukryj zakładkę \"Sample\"";
+"HIDE_EXPLORE" = "Ukryj zakładkę \"Odkrywaj\"";
+"HIDE_LIBRARY" = "Ukryj zakładkę \"Biblioteka\"";
 
 "APPLY" = "Zastosuj";
 "APPLY_DESC" = "Zamyka aplikację, by zastosować zmiany";
@@ -77,3 +81,22 @@
 "CANCEL" = "Anuluj";
 "YES" = "Tak";
 "REGIONAL_RESTRICTION" = "Wygląda na to, że YT Music jest zablokowany w twoim kraju.\n\n Użyj VPN, by skorzystać z YT Music.";
+
+"DONT_RUSH" = "Nie pośpieszaj ideału";
+"DONT_RUSH_DESC" = "Wymagane odpalenie piosenki, aby wyciągnąć link";
+"SELECT_ACTION" = "Wybierz akcję";
+"DOWNLOAD_AUDIO" = "Pobierz Audio";
+"DOWNLOAD_COVER" = "Pobierz Okładkę";
+"DOWNLOADING" = "Pobieranie";
+"OOPS" = "Uups\ncoś poszło nie tak";
+"SAVED_TO_PHOTOS" = "Zapisane do Zdjęć";
+"DONE" = "Gotowe";
+
+"DOWNLOADS" = "Pobrane";
+"EMPTY" = "Pobrana zawartość wyświetli się tutaj";
+"REMOVE_ALL" = "Usuń wszystkie pliki audio";
+"SHARE_ALL" = "Udostępnij wszystkie pliki audio";
+"PREPARING" = "Przygotowywanie...";
+"DELETE_MESSAGE" = "Jesteś pewien, że chcesz usunąć %@?";
+"ALL_DOWNLOADS" = "wszystkie pliki do pobrania"; //keep it lowercase
+"DELETE" = "Usuń";

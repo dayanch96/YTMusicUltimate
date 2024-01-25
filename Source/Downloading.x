@@ -79,8 +79,8 @@
     if (sender.state == UIGestureRecognizerStateBegan) {
         YTPlayerViewController *parentVC = (YTPlayerViewController *)[self nearestViewController];
         if (parentVC.playerResponse) {
-            NSString *title = parentVC.playerResponse.playerData.videoDetails.title;
-            NSString *author = parentVC.playerResponse.playerData.videoDetails.author;
+            NSString *title = [playerResponse.playerData.videoDetails.title stringByReplacingOccurrencesOfString:@"/" withString:@""];
+            NSString *author = [playerResponse.playerData.videoDetails.author stringByReplacingOccurrencesOfString:@"/" withString:@""];
             NSString *urlStr = parentVC.playerResponse.playerData.streamingData.hlsManifestURL;
 
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LOC(@"SELECT_ACTION") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
