@@ -98,5 +98,5 @@
 "SHARE_ALL" = "Compartir todo";
 "PREPARING" = "Preparando...";
 "DELETE_MESSAGE" = "¿Estás seguro de que quieres eliminar %@?";
-"ALL_DOWNLOADS" = "descargar todos"; //keep it lowercase
+"ALL_DOWNLOADS" = "todas las descargas"; //keep it lowercase
 "DELETE" = "Eliminar";
