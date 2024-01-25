@@ -13,7 +13,7 @@
 
 "PLAYER_SETTINGS" = "Ustawienia odtwarzania";
 "PLAYBACK_RATE_BUTTON" = "Pokaż przycisk kontroli prędkości";
-"PLAYBACK_RATE_BUTTON_DESC" = "Dostosuj prędkość odtwarzania;
+"PLAYBACK_RATE_BUTTON_DESC" = "Dostosuj prędkość odtwarzania";
 "SELECTABLE_LYRICS" = "Zaznaczanie tekstu utworu";
 "SELECTABLE_LYRICS_DESC" = "Włącza zaznaczanie tekstu piosenki, jeśli ta go posiada";
 "VOLBAR" = "Pasek głośności";
@@ -58,10 +58,10 @@
 
 "TAB_SETTINGS" = "Ustawienia zakładek";
 "REMOVE_TABBAR_LABELS" = "Brak podpisu pod ikonami w pasku";
-"HIDE_HOME" = "Ukryj zakładkę "Główna"";
-"HIDE_SAMPLES" = "Ukryj zakładkę "Sample"";
-"HIDE_EXPLORE" = "Ukryj zakładkę "Odkrywaj"";
-"HIDE_LIBRARY" = "Ukryj zakładkę "Biblioteka"";
+"HIDE_HOME" = "Ukryj zakładkę \"Główna\"";
+"HIDE_SAMPLES" = "Ukryj zakładkę \"Sample\"";
+"HIDE_EXPLORE" = "Ukryj zakładkę \"Odkrywaj\"";
+"HIDE_LIBRARY" = "Ukryj zakładkę \"Biblioteka\"";
 
 "APPLY" = "Zastosuj";
 "APPLY_DESC" = "Zamyka aplikację, by zastosować zmiany";
