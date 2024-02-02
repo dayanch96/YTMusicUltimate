@@ -1,5 +1,10 @@
 #include "Prefs/YTMDownloads.h"
 
+static BOOL YTMU(NSString *key) {
+    NSDictionary *YTMUltimateDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"];
+    return [YTMUltimateDict[key] boolValue];
+}
+
 // https://gist.github.com/BandarHL/dce564ab717bed93d479fe849d654c75
 
 @interface YTMBrowseViewController: UIViewController
@@ -88,7 +93,7 @@
     YTIPivotBarSupportedRenderers *barSupport = [[%c(YTIPivotBarSupportedRenderers) alloc] init];
     [barSupport setPivotBarItemRenderer:itemBar];
 
-    [renderer.itemsArray addObject:barSupport];
+    if (YTMU(@"YTMUltimateIsEnabled") && !YTMU(@"hideDownloadsTab")) [renderer.itemsArray addObject:barSupport];
 
     %orig(renderer);
 }

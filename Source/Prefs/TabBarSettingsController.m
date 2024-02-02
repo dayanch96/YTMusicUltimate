@@ -32,7 +32,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 1) {
-        return 5;
+        return 6;
     } else {
         return 1;
     } return 0;
@@ -86,7 +86,8 @@
             @{@"title": LOC(@"HIDE_HOME"), @"key": @"hideHomeTab"},
             @{@"title": LOC(@"HIDE_SAMPLES"), @"key": @"hideSamplesTab"},
             @{@"title": LOC(@"HIDE_EXPLORE"), @"key": @"hideExploreTab"},
-            @{@"title": LOC(@"HIDE_LIBRARY"), @"key": @"hideLibraryTab"}
+            @{@"title": LOC(@"HIDE_LIBRARY"), @"key": @"hideLibraryTab"},
+            @{@"title": LOC(@"HIDE_DOWNLOADS"), @"key": @"hideDownloadsTab"}
         ];
 
         NSDictionary *data = settingsData[indexPath.row];
@@ -124,6 +125,7 @@
         @{@"key": @"hideSamplesTab"},
         @{@"key": @"hideExploreTab"},
         @{@"key": @"hideLibraryTab"},
+        @{@"key": @"hideDownloadsTab"},
     ];
 
     NSDictionary *data = settingsData[sender.tag];
