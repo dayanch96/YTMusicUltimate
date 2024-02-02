@@ -14,7 +14,6 @@ static BOOL stickyHeaders = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"noStickyHead
 static BOOL noTabBarLabels = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"noTabBarLabels");
 static BOOL skipWarning = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"skipWarning");
 
-
 // Headers stuff
 %hook YTLightweightCollectionController
 - (void)setUseStickyHeaders:(bool)arg1 {
