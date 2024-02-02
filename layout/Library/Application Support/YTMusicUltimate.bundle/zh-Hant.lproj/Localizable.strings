@@ -13,9 +13,9 @@
 
 "PLAYER_SETTINGS" = "播放器介面";
 "DOWNLOAD_AUDIO" = "下載音訊";
-"DOWNLOAD_AUDIO_DESC" = "Adds the option to download audio by pressing the YTMUltimate button in the player";
+"DOWNLOAD_AUDIO_DESC" = "按下播放器中的 YTMUltimate 按鈕，即可下載音訊檔案";
 "DOWNLOAD_COVER" = "下載封面";
-"DOWNLOAD_COVER_DESC" = "Adds the option to download cover image by pressing the YTMUltimate button in the player";
+"DOWNLOAD_COVER_DESC" = "按下播放器中的 YTMUltimate 按鈕，即可下載封面圖片";
 "PLAYBACK_RATE_BUTTON" = "顯示播放速度按鈕";
 "PLAYBACK_RATE_BUTTON_DESC" = "調整播放速度";
 "SELECTABLE_LYRICS" = "複製歌詞";
@@ -106,4 +106,4 @@
 "ALL_DOWNLOADS" = "所有下載的音訊"; //keep it lowercase
 "DELETE" = "刪除";
 
-"WORKAROUND_REMINDER" = "If you are in a country where premium features are not available, it is advisable to activate the forced premium activation option.\n\nYou can manage this option later in YTMusicUltimate → %@ → %@.\n\nDo you want to enable %@ option now?";
+"WORKAROUND_REMINDER" = "如果您所在的國家/地區沒有提供 Premium 功能，建議您強制啟用 Premium 功能選項。\n\n您稍後可以在 YTMusicUltimate → %@ → %@ 中啟用這個選項。\n\n您現在要 %@ 選項嗎？";
