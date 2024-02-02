@@ -12,6 +12,10 @@
 "FORCE_PREMIUM_DESC" = "Wymusza użycie funkcji premium.\nTa opcja wyłącza również zakładkę Sample";
 
 "PLAYER_SETTINGS" = "Ustawienia odtwarzania";
+"DOWNLOAD_AUDIO" = "Pobierz Audio";
+"DOWNLOAD_AUDIO_DESC" = "Adds the option to download audio by pressing the YTMUltimate button in the player";
+"DOWNLOAD_COVER" = "Pobierz Okładkę";
+"DOWNLOAD_COVER_DESC" = "Adds the option to download cover image by pressing the YTMUltimate button in the player";
 "PLAYBACK_RATE_BUTTON" = "Pokaż przycisk kontroli prędkości";
 "PLAYBACK_RATE_BUTTON_DESC" = "Dostosuj prędkość odtwarzania";
 "SELECTABLE_LYRICS" = "Zaznaczanie tekstu utworu";
@@ -55,6 +59,7 @@
 "SAMPLES" = "Sample";
 "EXPLORE" = "Odkrywaj";
 "LIBRARY" = "Biblioteka";
+"DOWNLOADS" = "Pobrane";
 
 "TAB_SETTINGS" = "Ustawienia zakładek";
 "REMOVE_TABBAR_LABELS" = "Brak podpisu pod ikonami w pasku";
@@ -62,6 +67,9 @@
 "HIDE_SAMPLES" = "Ukryj zakładkę \"Sample\"";
 "HIDE_EXPLORE" = "Ukryj zakładkę \"Odkrywaj\"";
 "HIDE_LIBRARY" = "Ukryj zakładkę \"Biblioteka\"";
+"HIDE_DOWNLOADS" = "Ukryj zakładkę \"Pobrane\"";
+
+"CLEAR_CACHE" = "Wyczyść pamięć podręczną";
 
 "APPLY" = "Zastosuj";
 "APPLY_DESC" = "Zamyka aplikację, by zastosować zmiany";
@@ -85,14 +93,11 @@
 "DONT_RUSH" = "Nie pośpieszaj ideału";
 "DONT_RUSH_DESC" = "Wymagane odpalenie piosenki, aby wyciągnąć link";
 "SELECT_ACTION" = "Wybierz akcję";
-"DOWNLOAD_AUDIO" = "Pobierz Audio";
-"DOWNLOAD_COVER" = "Pobierz Okładkę";
 "DOWNLOADING" = "Pobieranie";
 "OOPS" = "Uups\ncoś poszło nie tak";
 "SAVED_TO_PHOTOS" = "Zapisane do Zdjęć";
 "DONE" = "Gotowe";
 
-"DOWNLOADS" = "Pobrane";
 "EMPTY" = "Pobrana zawartość wyświetli się tutaj";
 "REMOVE_ALL" = "Usuń wszystkie pliki audio";
 "SHARE_ALL" = "Udostępnij wszystkie pliki audio";
@@ -100,3 +105,5 @@
 "DELETE_MESSAGE" = "Jesteś pewien, że chcesz usunąć %@?";
 "ALL_DOWNLOADS" = "wszystkie pliki do pobrania"; //keep it lowercase
 "DELETE" = "Usuń";
+
+"WORKAROUND_REMINDER" = "If you are in a country where premium features are not available, it is advisable to activate the forced premium activation option.\n\nYou can manage this option later in YTMusicUltimate → %@ → %@.\n\nDo you want to enable %@ option now?";

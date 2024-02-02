@@ -12,6 +12,10 @@
 "FORCE_PREMIUM_DESC" = "强制启用高级会员功能\n此选项还禁用“选段”选项卡";
 
 "PLAYER_SETTINGS" = "播放器选项";
+"DOWNLOAD_AUDIO" = "下载音频";
+"DOWNLOAD_AUDIO_DESC" = "Adds the option to download audio by pressing the YTMUltimate button in the player";
+"DOWNLOAD_COVER" = "下载封面";
+"DOWNLOAD_COVER_DESC" = "Adds the option to download cover image by pressing the YTMUltimate button in the player";
 "PLAYBACK_RATE_BUTTON" = "显示播放速度按钮";
 "PLAYBACK_RATE_BUTTON_DESC" = "调整播放速度";
 "SELECTABLE_LYRICS" = "复制歌词";
@@ -28,7 +32,6 @@
 "AUDIO" = "歌曲";
 "VIDEO" = "视频";
 "SEEK_BUTTONS" = "用“快进/快退”按钮替换“上一曲/下一曲”";
-//选择跳过时间(秒)\n\n默认:\n快退 = 10秒\n快进 = 30秒
 "SEEK_TIME_FOOTER" = "选择跳过时间(秒)\n\n默认:\n快退 = 10秒\n快进 = 30秒\n\n长按按钮可跳到下一曲和上一曲";
 "DEFAULT" = "默认";
 
@@ -41,8 +44,8 @@
 "LOW_CONTRAST_DESC" = "降低文字和按钮的对比度";
 
 "NAVBAR_SETTINGS" = "导航栏选项";
-"DONT_STICK_HEADERS" = "解除标题固定";
-"DONT_STICK_HEADERS_DESC" = "向下滚动时隐藏屏幕顶部的标题";
+"DONT_STICK_HEADERS" = "不固定标题";
+"DONT_STICK_HEADERS_DESC" = "不固定在屏幕顶部的标题";
 "HIDE_HISTORY_BUTTON" = "隐藏播放历史按钮";
 "HIDE_HISTORY_BUTTON_DESC" = "在导航栏中隐藏播放历史按钮";
 "HIDE_CAST_BUTTON" = "隐藏投屏按钮";
@@ -56,6 +59,7 @@
 "HOME" = "首页";
 "EXPLORE" = "探索";
 "LIBRARY" = "媒体库";
+"DOWNLOADS" = "下载";
 
 "TAB_SETTINGS" = "选项卡设置";
 "REMOVE_TABBAR_LABELS" = "隐藏选项卡标签";
@@ -63,6 +67,9 @@
 "HIDE_SAMPLES" = "隐藏选段选项卡";
 "HIDE_EXPLORE" = "隐藏探索选项卡";
 "HIDE_LIBRARY" = "隐藏媒体库选项卡";
+"HIDE_DOWNLOADS" = "隐藏下载选项卡";
+
+"CLEAR_CACHE" = "清除缓存";
 
 "APPLY" = "应用";
 "APPLY_DESC" = "按下应用会关闭APP以应用变更";
@@ -86,14 +93,11 @@
 "DONT_RUSH" = "不要急。请等待！";
 "DONT_RUSH_DESC" = "需要播放歌曲才能提取链接";
 "SELECT_ACTION" = "选择操作";
-"DOWNLOAD_AUDIO" = "下载音频";
-"DOWNLOAD_COVER" = "下载封面";
 "DOWNLOADING" = "下载中";
 "OOPS" = "哎呀\n出现了一些问题";
 "SAVED_TO_PHOTOS" = "已保存到照片";
 "DONE" = "完成";
 
-"DOWNLOADS" = "下载";
 "EMPTY" = "下载的内容将显示在此处";
 "REMOVE_ALL" = "删除所有音频";
 "SHARE_ALL" = "分享所有音频";
@@ -102,3 +106,4 @@
 "ALL_DOWNLOADS" = "所有下载的音频"; //keep it lowercase
 "DELETE" = "删除";
 
+"WORKAROUND_REMINDER" = "If you are in a country where premium features are not available, it is advisable to activate the forced premium activation option.\n\nYou can manage this option later in YTMusicUltimate → %@ → %@.\n\nDo you want to enable %@ option now?";

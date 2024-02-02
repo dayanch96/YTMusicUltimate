@@ -8,8 +8,14 @@
 "NO_ADS_DESC" = "アプリ内広告を削除";
 "BACKGROUND_PLAYBACK" = "バックグラウンド再生";
 "BACKGROUND_PLAYBACK_DESC" = "バックグラウンド再生を有効化";
+"FORCE_PREMIUM" = "Force enable premium";
+"FORCE_PREMIUM_DESC" = "Forcibly enables premium features.\nThis option also disables Samples tab";
 
 "PLAYER_SETTINGS" = "プレーヤーオプション";
+"DOWNLOAD_AUDIO" = "Download audio";
+"DOWNLOAD_AUDIO_DESC" = "Adds the option to download audio by pressing the YTMUltimate button in the player";
+"DOWNLOAD_COVER" = "Download cover image";
+"DOWNLOAD_COVER_DESC" = "Adds the option to download cover image by pressing the YTMUltimate button in the player";
 "PLAYBACK_RATE_BUTTON" = "再生速度ボタンを表示";
 "PLAYBACK_RATE_BUTTON_DESC" = "再生速度を変更できます";
 "SELECTABLE_LYRICS" = "歌詞のテキスト選択";
@@ -20,6 +26,8 @@
 "NO_AUTORADIO_DESC" = "エンドレスミュージック機能を無効化";
 "SKIP_NONMUSIC_PARTS" = "非音楽セクションをスキップ (SponsorBlock)";
 "SKIP_NONMUSIC_PARTS_DESC" = "ミュージックビデオでの音楽以外のセクションをスキップします";
+"SKIP_CONTENT_WARNING" = "Skip content warning";
+"SKIP_CONTENT_WARNING_DESC" = "Skips warnings about potentially harmful content";
 "AV_DEFAULT_MODE" = "デフォルトの再生モード";
 "AUDIO" = "音楽";
 "VIDEO" = "映像";
@@ -51,6 +59,7 @@
 "HOME" = "Home";
 "EXPLORE" = "Explore";
 "LIBRARY" = "Library";
+"DOWNLOADS" = "Downloads";
 
 "TAB_SETTINGS" = "Tab settings";
 "REMOVE_TABBAR_LABELS" = "No tab bar labels";
@@ -58,6 +67,9 @@
 "HIDE_SAMPLES" = "Hide Samples tab";
 "HIDE_EXPLORE" = "Hide Explore tab";
 "HIDE_LIBRARY" = "Hide Library tab";
+"HIDE_DOWNLOADS" = "Hide Downloads tab";
+
+"CLEAR_CACHE" = "Clear cache";
 
 "APPLY" = "適用";
 "APPLY_DESC" = "アプリを終了して変更を適用します";
@@ -77,3 +89,21 @@
 "CANCEL" = "キャンセル";
 "YES" = "はい";
 "REGIONAL_RESTRICTION" = "Looks like YouTube Music restricted in your country.\n\n Please use VPN to get access to YouTube Music.";
+
+"DONT_RUSH" = "Don't rush brilliance";
+"DONT_RUSH_DESC" = "Required to play the song to extract the link";
+"SELECT_ACTION" = "Select Action";
+"DOWNLOADING" = "Downloading";
+"OOPS" = "Oops\nsomething went wrong";
+"SAVED_TO_PHOTOS" = "Saved to Photos";
+"DONE" = "Done";
+
+"EMPTY" = "Content you download will show here";
+"REMOVE_ALL" = "Remove all audios";
+"SHARE_ALL" = "Share all audios";
+"PREPARING" = "Preparing...";
+"DELETE_MESSAGE" = "Are you sure you want to delete %@?";
+"ALL_DOWNLOADS" = "all download audios"; //keep it lowercase
+"DELETE" = "Delete";
+
+"WORKAROUND_REMINDER" = "If you are in a country where premium features are not available, it is advisable to activate the forced premium activation option.\n\nYou can manage this option later in YTMusicUltimate → %@ → %@.\n\nDo you want to enable %@ option now?";

@@ -12,6 +12,10 @@
 "FORCE_PREMIUM_DESC" = "يقوم هذا الخيار بإجبار تفعيل مميزات البريميوم. تحذير : يقوم ايضاً بإخفاء تبويب العينات";
 
 "PLAYER_SETTINGS" = "إعدادات المشغل";
+"DOWNLOAD_AUDIO" = "تحميل الموسيقي";
+"DOWNLOAD_AUDIO_DESC" = "يضيف خيار تنزيل الصوت عند الضغط على زر YTMUltimate في المشغل";
+"DOWNLOAD_COVER" = "تحميل صورة الغلاف";
+"DOWNLOAD_COVER_DESC" = "يضيف خيار تنزيل صورة الغلاف عند الضغط على زر YTMUltimate في المشغل";
 "PLAYBACK_RATE_BUTTON" = "إظهار زر تقييم التشغيل";
 "PLAYBACK_RATE_BUTTON_DESC" = "التحكم بسرعة التشغيل";
 "SELECTABLE_LYRICS" = "تحديد كلمات الاغنية ";
@@ -55,6 +59,7 @@
 "SAMPLES" = "العينات";
 "EXPLORE" = "استكشاف";
 "LIBRARY" = "المكتبة";
+"DOWNLOADS" = "التحميلات";
 
 "TAB_SETTINGS" = "إعدادات الشريط السفلي";
 "REMOVE_TABBAR_LABELS" = "حذف اسماء التبويب";
@@ -62,6 +67,9 @@
 "HIDE_SAMPLES" = "إخفاء تبويب العينات";
 "HIDE_EXPLORE" = "إخفاء تبويب الاستكشاف";
 "HIDE_LIBRARY" = "إخفاء تبويب المكتبة";
+"HIDE_DOWNLOADS" = "خفاء تبويب التنزيلات";
+
+"CLEAR_CACHE" = "مسح الذاكرة المؤقتة";
 
 "APPLY" = "تنفيذ التغييرات";
 "APPLY_DESC" = "اغلق التطبيق لتنفيذ التغييرات";
@@ -85,14 +93,11 @@
 "DONT_RUSH" = "!لا تستعجل ارجوك";
 "DONT_RUSH_DESC" = "لا تستعجل قم بتشغيل الموسيقي اولاً ";
 "SELECT_ACTION" = "اختر الفعل";
-"DOWNLOAD_AUDIO" = "تحميل الموسيقي";
-"DOWNLOAD_COVER" = "تحميل صورة الغلاف";
 "DOWNLOADING" = "يتم التحميل";
 "OOPS" = "هناك شئ خطأ";
 "SAVED_TO_PHOTOS" = "تم الحفظ في البوم الصور";
 "DONE" = "تم الانتهاء بنجاح";
 
-"DOWNLOADS" = "التحميلات";
 "EMPTY" = "المحتوي الذي تم تحميله سيظهر هنا";
 "REMOVE_ALL" = "مسح كل التحميلات";
 "SHARE_ALL" = "مشاركة كل التحميلات";
@@ -100,3 +105,5 @@
 "DELETE_MESSAGE" = "هل انت متأكد انك تريد الحذف ؟";
 "ALL_DOWNLOADS" = "كل التحميلات";  //keep it lowercase
 "DELETE" = "حذف";
+
+"WORKAROUND_REMINDER" = "If you are in a country where premium features are not available, it is advisable to activate the forced premium activation option.\n\nYou can manage this option later in YTMusicUltimate → %@ → %@.\n\nDo you want to enable %@ option now?";

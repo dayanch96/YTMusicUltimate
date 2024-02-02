@@ -12,6 +12,10 @@
 "FORCE_PREMIUM_DESC" = "強制啟用 Premium 功能\n此選項也會停用'發現'功能標籤";
 
 "PLAYER_SETTINGS" = "播放器介面";
+"DOWNLOAD_AUDIO" = "下載音訊";
+"DOWNLOAD_AUDIO_DESC" = "Adds the option to download audio by pressing the YTMUltimate button in the player";
+"DOWNLOAD_COVER" = "下載封面";
+"DOWNLOAD_COVER_DESC" = "Adds the option to download cover image by pressing the YTMUltimate button in the player";
 "PLAYBACK_RATE_BUTTON" = "顯示播放速度按鈕";
 "PLAYBACK_RATE_BUTTON_DESC" = "調整播放速度";
 "SELECTABLE_LYRICS" = "複製歌詞";
@@ -55,6 +59,7 @@
 "HOME" = "首頁";
 "EXPLORE" = "探索";
 "LIBRARY" = "媒體庫";
+"DOWNLOADS" = "下載管理器";
 
 "TAB_SETTINGS" = "標籤設定";
 "REMOVE_TABBAR_LABELS" = "隱藏標籤文字";
@@ -62,6 +67,9 @@
 "HIDE_SAMPLES" = "隱藏發現";
 "HIDE_EXPLORE" = "隱藏探索";
 "HIDE_LIBRARY" = "隱藏媒體庫";
+"HIDE_DOWNLOADS" = "隱藏下載管理器";
+
+"CLEAR_CACHE" = "清除快取";
 
 "APPLY" = "套用";
 "APPLY_DESC" = "按下套用會關閉應用程式讓變更生效";
@@ -85,14 +93,11 @@
 "DONT_RUSH" = "不要急於求成";
 "DONT_RUSH_DESC" = "需要播放歌曲才能提取連結";
 "SELECT_ACTION" = "選擇操作";
-"DOWNLOAD_AUDIO" = "下載音訊";
-"DOWNLOAD_COVER" = "下載封面";
 "DOWNLOADING" = "下載中...";
 "OOPS" = "糟糕\n發生了些錯誤";
 "SAVED_TO_PHOTOS" = "已儲存到照片";
 "DONE" = "完成";
 
-"DOWNLOADS" = "下載管理器";
 "EMPTY" = "您下載的內容會顯示在這裡";
 "REMOVE_ALL" = "刪除所有音訊";
 "SHARE_ALL" = "分享所有音訊";
@@ -100,3 +105,5 @@
 "DELETE_MESSAGE" = "您確定要刪除%@?";
 "ALL_DOWNLOADS" = "所有下載的音訊"; //keep it lowercase
 "DELETE" = "刪除";
+
+"WORKAROUND_REMINDER" = "If you are in a country where premium features are not available, it is advisable to activate the forced premium activation option.\n\nYou can manage this option later in YTMusicUltimate → %@ → %@.\n\nDo you want to enable %@ option now?";
