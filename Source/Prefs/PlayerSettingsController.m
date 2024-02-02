@@ -23,13 +23,7 @@
 
 #pragma mark - Table view stuff
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        return 60;
-    } if (indexPath.section == 2 && indexPath.row == 0) {
-        return 70;
-    } else {
-        return 45;
-    }
+    return UITableViewAutomaticDimension;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -38,7 +32,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return 6;
+        return 8;
     } if (section == 2) {
         return 2;
     } else {
@@ -65,6 +59,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell1"];
         
         NSArray *settingsData = @[
+            @{@"title": LOC(@"DOWNLOAD_AUDIO"), @"desc": LOC(@"DOWNLOAD_AUDIO_DESC"), @"key": @"downloadAudio"},
+            @{@"title": LOC(@"DOWNLOAD_COVER"), @"desc": LOC(@"DOWNLOAD_COVER_DESC"), @"key": @"downloadCoverImage"},
             @{@"title": LOC(@"PLAYBACK_RATE_BUTTON"), @"desc": LOC(@"PLAYBACK_RATE_BUTTON_DESC"), @"key": @"playbackRateButton"},
             @{@"title": LOC(@"SELECTABLE_LYRICS"), @"desc": LOC(@"SELECTABLE_LYRICS_DESC"), @"key": @"selectableLyrics"},
             @{@"title": LOC(@"VOLBAR"), @"desc": LOC(@"VOLBAR_DESC"), @"key": @"volBar"},
@@ -140,6 +136,8 @@
 
 - (void)toggleSwitch:(UISwitch *)sender {
     NSArray *settingsData = @[
+        @{@"key": @"downloadAudio"},
+        @{@"key": @"downloadCoverImage"},
         @{@"key": @"playbackRateButton"},
         @{@"key": @"selectableLyrics"},
         @{@"key": @"volBar"},
