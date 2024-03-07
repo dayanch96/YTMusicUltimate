@@ -18,11 +18,6 @@ Add __[https://ginsu.dev/repo](https://ginsu.dev/repo)__ to your favorite instal
 
 (arm.deb version for Rootful and arm64.deb version for Rootless devices)
 
-* **Sideloading (Without jailbreak):** 
-Download IPA file from the __[Releases](https://github.com/ginsudev/YTMusicUltimate/releases)__ page and install using signer such as __[Sideloadly](https://www.idownloadblog.com/2022/03/28/sideload-apps-iphone-ipad-apple-silicon-macs-sideloady/)__/__[AltStore](https://faq.altstore.io/)__
-
-    Or sign the app with a paid certificate.
-
 ## How to build the package by yourself on your device
 1. Install __[Theos](https://theos.dev/docs/installation)__
 2. Clone this repo __[using git](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)__
