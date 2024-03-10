@@ -19,6 +19,13 @@
         [self.tableView.heightAnchor constraintEqualToAnchor:self.view.heightAnchor]
     ]];
 
+    [self maybeShowEmptyState];
+    [self refreshAudioFiles];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:@"ReloadDataNotification" object:nil];
+}
+
+- (void)maybeShowEmptyState {
     if (self.audioFiles.count == 0) {
         self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yt_outline_audio_48pt" inBundle:[NSBundle mainBundle] compatibleWithTraitCollection:nil]];
         self.imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -48,10 +55,6 @@
             [self.label.trailingAnchor constraintEqualToAnchor:self.tableView.trailingAnchor constant:-20],
         ]];
     }
-
-    [self refreshAudioFiles];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:@"ReloadDataNotification" object:nil];
 }
 
 - (void)dealloc {
@@ -92,11 +95,14 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 1 && self.audioFiles.count == 0) {
+        return 0;
+    }
     return UITableViewAutomaticDimension;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.audioFiles.count != 0 ? 2 : 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -105,7 +111,7 @@
     }
 
     if (section == 1) {
-        return self.audioFiles.count != 0 ? 2 : 0;
+        return 2;
     }
 
     return 0;
@@ -203,9 +209,10 @@
         BOOL coverRemoved = [[NSFileManager defaultManager] removeItemAtURL:coverURL error:nil];
 
         if (audioRemoved && coverRemoved) {
-            [self refreshAudioFiles];
             dispatch_async(dispatch_get_main_queue(), ^{
+                [self.audioFiles removeObjectAtIndex:indexPath.row];
                 [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [self maybeShowEmptyState];
             });
         }
     }
