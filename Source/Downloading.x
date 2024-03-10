@@ -182,6 +182,10 @@ static BOOL YTMU(NSString *key) {
 
     if (playerResponse) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LOC(@"SELECT_ACTION") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        if (alertController.popoverPresentationController) {
+            alertController.popoverPresentationController.sourceView = sender;
+            alertController.popoverPresentationController.sourceRect = sender.bounds;
+        }
         alertController.view.tintColor = [UIColor colorWithRed:230/255.0 green:75/255.0 blue:75/255.0 alpha:255/255.0];
 
         UIAlertAction *audioAction = [UIAlertAction actionWithTitle:LOC(@"DOWNLOAD_AUDIO") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
