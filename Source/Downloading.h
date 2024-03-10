@@ -158,3 +158,17 @@
 - (void)downloadAudio;
 - (void)downloadCoverImage;
 @end
+
+@interface YTActionSheetAction : NSObject
++ (instancetype)actionWithTitle:(NSString *)title iconImage:(UIImage *)image style:(NSInteger)style handler:(void (^)(void))handler;
+@end
+
+@interface YTActionSheetController : NSObject
+- (void)addAction:(YTActionSheetAction *)action;
+- (void)addHeaderWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
+- (void)presentFromViewController:(UIViewController *)vc animated:(BOOL)animated completion:(void(^)(void))completion;
+@end
+
+@interface YTMActionSheetController : YTActionSheetController
++ (instancetype)musicActionSheetController;
+@end
