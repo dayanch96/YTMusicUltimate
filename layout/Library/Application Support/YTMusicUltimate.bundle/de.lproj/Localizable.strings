@@ -1,0 +1,109 @@
+"SETTINGS" = "Einstellungen";
+"ENABLED" = "YTMusicUltimate Aktivieren";
+"ENABLED_DESC" = "Premium Funktionen, keine Werbung, Musik im Hintergrund, etc.";
+"RESTART_FOOTER" = "Du musst die App neustarten, um die änderungen anzuwenden.";
+
+"PREMIUM_SETTINGS" = "Premium Optionen";
+"NO_ADS" = "Keine Werbung";
+"NO_ADS_DESC" = "Entfernt Werbung in der App";
+"BACKGROUND_PLAYBACK" = "Background playback";
+"BACKGROUND_PLAYBACK_DESC" = "Aktiviert Musik, wenn die App im Hintergrund ausgeführt wird.";
+"FORCE_PREMIUM" = "Premium aktivieren erzwingen";
+"FORCE_PREMIUM_DESC" = "Erzwingt das aktivieren der Premium Funktionen.\nDiese Option deaktiviert den Samples tab.";
+
+"PLAYER_SETTINGS" = "Player Optionen";
+"DOWNLOAD_AUDIO" = "Musik herunterladen";
+"DOWNLOAD_AUDIO_DESC" = "Fügt eine Option hinzu um Musik herunterzuladen, wenn der YTMusicUltimate Button gedrückt wurde.";
+"DOWNLOAD_COVER" = "Coverbild herunterladen";
+"DOWNLOAD_COVER_DESC" = "Fügt eine Option hinzu, um das Coverbild herunterzuladen, wenn der YTMusicUltimate Button gedrückt wurde.";
+"PLAYBACK_RATE_BUTTON" = "Zeige Taste für die Wiedergabegeschwindigkeit";
+"PLAYBACK_RATE_BUTTON_DESC" = "Passen Sie die Wiedergabegeschwindigkeit an";
+"SELECTABLE_LYRICS" = "Textauswahl für Liedtexte";
+"SELECTABLE_LYRICS_DESC" = "Ermöglicht die Textauswahl für Songtexte";
+"VOLBAR" = "Lautstärkeleiste";
+"VOLBAR_DESC" = "Fügt dem Player eine Lautstärkeleiste hinzu";
+"NO_AUTORADIO" = "Radio deaktivieren";
+"NO_AUTORADIO_DESC" = "Deaktiviert die Endlosmusikfunktion";
+"SKIP_NONMUSIC_PARTS" = "Nicht-Musikbereich überspringen (SponsorBlock)";
+"SKIP_NONMUSIC_PARTS_DESC" = "Überspringt Abschnitte in Musikvideos, die nichts mit Musik zu tun haben";
+"SKIP_CONTENT_WARNING" = "Inhaltswarnung überspringen";
+"SKIP_CONTENT_WARNING_DESC" = "Überspringt Warnungen vor potenziell schädlichen Inhalten";
+"AV_DEFAULT_MODE" = "Standard-Wiedergabemodus";
+"AUDIO" = "Audio";
+"VIDEO" = "Video";
+"SEEK_BUTTONS" = "Ersetzen Sie „Vorwärts/Zurück“ durch Vorwärts- und Rückwärtstasten";
+"SEEK_TIME_FOOTER" = "Wählen Sie eine Suchzeit in Sekunden aus.\n\nStandardeinstellungen:\nRückwärts suchen = 10 Sekunden.\nVorwärts suchen = 30 Sekunden.\n\nDurch langes Drücken der Tasten können Sie zum nächsten und vorherigen Titel springen.";
+"DEFAULT" = "Standard";
+
+"THEME_SETTINGS" = "Theme Optionen";
+"OLED_DARK_THEME" = "OLED Dunkel Theme";
+"OLED_DARK_THEME_DESC" = "Aktiviert OLED Dunkel Theme";
+"OLED_DARK_KEYBOARD" = "OLED Dunkel Tastatur";
+"OLED_DARK_KEYBOARD_DESC" = "Aktiviert OLED Dunkel Tastatur";
+"LOW_CONTRAST" = "Geringer Kontrast";
+"LOW_CONTRAST_DESC" = "Geringerer Kontrast für Text und Schaltflächen";
+
+"NAVBAR_SETTINGS" = "Navigationsleiste anpassen";
+"DONT_STICK_HEADERS" = "Überschriften nicht fixieren";
+"DONT_STICK_HEADERS_DESC" = "deaktiviert das fixieren der Überschriften am Oberen Bildschirmrand.";
+"HIDE_HISTORY_BUTTON" = "Schaltfläche „Verlauf ausblenden“.";
+"HIDE_HISTORY_BUTTON_DESC" = "Versteckt die Schaltfläche „Verlauf“ in der Navigationsleiste";
+"HIDE_CAST_BUTTON" = "Cast-Schaltfläche ausblenden";
+"HIDE_CAST_BUTTON_DESC" = "Blendet die Cast-Schaltfläche in der Navigationsleiste aus";
+"HIDE_FILTER_BUTTON" = "Schaltfläche Sortierfilter entfernen";
+"HIDE_FILTER_BUTTON_DESC" = "Entfernt die Filterschaltfläche „Bibliothek/Downloads“ aus der Navigationsleiste";
+
+"TABBAR_SETTINGS" = "Optionen der Tab-Leiste";
+"STARTUP_TAB" = "Registerkarte „Start“.";
+"HOME" = "zuhause";
+"SAMPLES" = "Beispiele";
+"EXPLORE" = "Erkunden";
+"LIBRARY" = "Bibliothek";
+"DOWNLOADS" = "Downloads";
+
+"TAB_SETTINGS" = "Tab Einstellungen";
+"REMOVE_TABBAR_LABELS" = "Tab-Leisten Beschriftung verstecken";
+"HIDE_HOME" = "Home-Tab ausblenden";
+"HIDE_SAMPLES" = "Beispiele-Tab ausblenden";
+"HIDE_EXPLORE" = "Erkunden-Tab ausblenden";
+"HIDE_LIBRARY" = "Bibliotheken-Tab ausblenden";
+"HIDE_DOWNLOADS" = "Downloads-Tab ausblenden";
+
+"CLEAR_CACHE" = "Cache leeren";
+
+"APPLY" = "Anwenden";
+"APPLY_DESC" = "Schließt die App, um Änderungen zu übernehmen";
+
+"LINKS" = "Links";
+"TWITTER" = "Folge %@ auf Twitter";
+"TWITTER_DESC" = "Folge mir für Updates";
+"DISCORD" = "Discord beitreten";
+"DISCORD_DESC" = "Melden Sie Fehler und fordern Sie Funktionen an";
+"SOURCE_CODE" = "Quellcode";
+"SOURCE_CODE_DESC" = "Schauen Sie sich den Quellcode an";
+
+"CLOSE" = "schließen";
+"WARNING" = "Warnung";
+"LOGIN_INFO" = "Nach erfolgreicher Anmeldung beim Google-Konto ist ein Neustart der App erforderlich";
+"APPLY_MESSAGE" = "Durch diese Aktion wird YouTube Music geschlossen, um die Änderungen zu übernehmen. Bist du sicher?";
+"CANCEL" = "Abbrechen";
+"YES" = "Ja";
+"REGIONAL_RESTRICTION" = "Anscheinend ist YouTube Music in Ihrem Land eingeschränkt.\n\n Bitte verwenden Sie VPN, um auf YouTube Music zuzugreifen.";
+
+"DONT_RUSH" = "Beeilen Sie sich nicht mit der Brillanz";
+"DONT_RUSH_DESC" = "Erforderlich, um das Lied abzuspielen und den Link zu extrahieren";
+"SELECT_ACTION" = "Aktion auswählen";
+"DOWNLOADING" = "wird heruntergeladen...";
+"OOPS" = "Hoppla! Etwas ist schiefgelaufen";
+"SAVED_TO_PHOTOS" = "in der Fotogalerie gespeichert";
+"DONE" = "Fertig";
+
+"EMPTY" = "Inhalte, die Sie herunterladen, werden hier angezeigt";
+"REMOVE_ALL" = "Entfernen Sie alle Audios";
+"SHARE_ALL" = "Teilen Sie alle Audios";
+"PREPARING" = "Vorbereiten...";
+"DELETE_MESSAGE" = "Sind Sie sicher, dass Sie löschen möchten %@?";
+"ALL_DOWNLOADS" = "alle audios herunterladen"; //keep it lowercase
+"DELETE" = "Löschen";
+
+"WORKAROUND_REMINDER" = "Wenn Sie sich in einem Land befinden, in dem Premium-Funktionen nicht verfügbar sind, empfiehlt es sich, die Option zur erzwungenen Premium-Aktivierung zu aktivieren.\n\nSie können diese Option später in YTMusicUltimate → %@ → %@ verwalten.\n\nMöchten Sie sie aktivieren? %@ Option jetzt?";
