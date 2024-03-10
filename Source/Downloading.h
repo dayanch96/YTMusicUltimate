@@ -154,6 +154,8 @@
 	NSMutableArray *_actionButtonsFromRenderers;
 }
 
+@property (nonatomic, weak, readonly) YTMNowPlayingViewController *parentResponder;
+
 - (void)ytmuButtonAction:(MDCButton *)sender;
 - (void)downloadAudio;
 - (void)downloadCoverImage;
