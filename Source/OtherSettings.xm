@@ -52,66 +52,12 @@ CGFloat pivotBarViewHeight;
 %end
 
 %hook YTPivotBarItemView
-- (void)layoutSubviews {
+- (void)setRenderer:(YTIPivotBarRenderer *)renderer {
     %orig;
 
     if (noTabBarLabels) {
-
-        CGFloat pivotBarAccessibilityControlWidth;
-
-        for (UIView *subview in self.subviews) {
-            if ([subview isKindOfClass:NSClassFromString(@"YTPivotBarItemViewAccessibilityControl")]) {
-                pivotBarAccessibilityControlWidth = CGRectGetWidth(subview.frame);
-                break;
-            }
-        }
-
-        for (UIView *subview in self.subviews) {
-            if ([subview isKindOfClass:NSClassFromString(@"YTQTMButton")]) {
-                for (UIView *buttonSubview in subview.subviews) {
-                    if ([buttonSubview isKindOfClass:[UILabel class]]) {
-                        [buttonSubview removeFromSuperview];
-                        break;
-                    }
-                }
-
-                UIImageView *imageView = nil;
-                for (UIView *buttonSubview in subview.subviews) {
-                    if ([buttonSubview isKindOfClass:[UIImageView class]]) {
-                        imageView = (UIImageView *)buttonSubview;
-                        break;
-                    }
-                }
-
-                if (imageView) {
-                    CGFloat imageViewHeight = imageView.image.size.height;
-                    CGFloat imageViewWidth = imageView.image.size.width;
-                    CGRect buttonFrame = subview.frame;
-
-                    if (@available(iOS 13.0, *)) {
-                        UIWindowScene *mainWindowScene = (UIWindowScene *)[[[UIApplication sharedApplication] connectedScenes] anyObject];
-                        if (mainWindowScene) {
-                            UIEdgeInsets safeAreaInsets = mainWindowScene.windows.firstObject.safeAreaInsets;
-                            if (safeAreaInsets.bottom > 0) {
-                                hasHomeBar = YES;
-                            }
-                        }
-                    }
-
-                    CGFloat yOffset = hasHomeBar ? 15.0 : 0.0;
-                    CGFloat xOffset = (pivotBarAccessibilityControlWidth - imageViewWidth) / 2.0;
-
-                    buttonFrame.origin.y = (pivotBarViewHeight - imageViewHeight - yOffset) / 2.0;
-                    buttonFrame.origin.x = xOffset;
-
-                    buttonFrame.size.height = imageViewHeight;
-                    buttonFrame.size.width = imageViewWidth;
-
-                    subview.frame = buttonFrame;
-                    subview.bounds = CGRectMake(0, 0, imageViewWidth, imageViewHeight);
-                }
-            }
-        }
+        [self.navigationButton setTitle:@"" forState:UIControlStateNormal];
+        [self.navigationButton setSizeWithPaddingAndInsets:NO];
     }
 }
 %end
