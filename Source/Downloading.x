@@ -5,6 +5,10 @@ static BOOL YTMU(NSString *key) {
     return [YTMUltimateDict[key] boolValue];
 }
 
+static UIImage *YTImageNamed(NSString *imageName) {
+    return [UIImage imageNamed:imageName inBundle:[NSBundle mainBundle] compatibleWithTraitCollection:nil];
+}
+
 // Downloading by long press
 /*%hook YTPlayerView
 %property (nonatomic, strong) FFMpegDownloader *ffmpeg;
@@ -181,36 +185,24 @@ static BOOL YTMU(NSString *key) {
     YTPlayerResponse *playerResponse = parentVC.parentViewController.playerViewController.playerResponse;
 
     if (playerResponse) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LOC(@"SELECT_ACTION") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        if (alertController.popoverPresentationController) {
-            alertController.popoverPresentationController.sourceView = sender;
-            alertController.popoverPresentationController.sourceRect = sender.bounds;
-        }
-        alertController.view.tintColor = [UIColor colorWithRed:230/255.0 green:75/255.0 blue:75/255.0 alpha:255/255.0];
+        YTMActionSheetController *sheetController = [%c(YTMActionSheetController) musicActionSheetController];
+        [sheetController addHeaderWithTitle:LOC(@"SELECT_ACTION") subtitle:nil];
 
-        UIAlertAction *audioAction = [UIAlertAction actionWithTitle:LOC(@"DOWNLOAD_AUDIO") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [sheetController addAction:[%c(YTActionSheetAction) actionWithTitle:LOC(@"DOWNLOAD_AUDIO") iconImage:YTImageNamed(@"yt_outline_audio_24pt") style:0 handler:^ {
             [self downloadAudio];
-        }];
+        }]];
 
-        [alertController addAction:audioAction];
-
-        UIAlertAction *photoAction = [UIAlertAction actionWithTitle:LOC(@"DOWNLOAD_COVER") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [sheetController addAction:[%c(YTActionSheetAction) actionWithTitle:LOC(@"DOWNLOAD_COVER") iconImage:YTImageNamed(@"youtube_outline/image_24pt") style:0 handler:^ {
             [self downloadCoverImage];
-        }];
-
-        [alertController addAction:photoAction];
-
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:LOC(@"CANCEL") style:UIAlertActionStyleCancel handler:nil];
-        [alertController addAction:cancelAction];
+        }]];
 
         if (YTMU(@"downloadAudio") && YTMU(@"downloadCoverImage")) {
-            [self.nearestViewController presentViewController:alertController animated:YES completion:nil];
+            [sheetController presentFromViewController:self.parentResponder animated:YES completion:nil];
         } else if (YTMU(@"downloadAudio")) {
             [self downloadAudio];
         } else if (YTMU(@"downloadCoverImage")) {
             [self downloadCoverImage];
         }
-        
     } else {
         YTAlertView *alertView = [%c(YTAlertView) infoDialog];
         alertView.title = LOC(@"DONT_RUSH");
