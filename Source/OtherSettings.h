@@ -7,10 +7,12 @@
 @interface YTPivotBarView : UIView
 @end
 
-@interface YTPivotBarItemView : UIView
+@interface YTQTMButton : UIButton
+- (void)setSizeWithPaddingAndInsets:(BOOL)sizeWithPaddingAndInsets;
 @end
 
-@interface YTQTMButton : UIButton
+@interface YTPivotBarItemView : UIView
+@property (nonatomic, strong, readwrite) YTQTMButton *navigationButton;
 @end
 
 @interface YTPivotBarViewController : UIViewController
