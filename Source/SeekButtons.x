@@ -1,5 +1,9 @@
 #import "SeekButtons.h"
 
+static NSArray *seekTimes() {
+    return @[@10, @20, @30, @60];
+}
+
 static BOOL YTMU(NSString *key) {
     NSDictionary *YTMUltimateDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"];
     return [YTMUltimateDict[key] boolValue];
@@ -64,7 +68,7 @@ static NSInteger currentSeekTime() {
         NSString *forwardValue = @"30";
 
         if (currentSeekTime() != 0) {
-            NSArray *values = @[@"10", @"20", @"30", @"60"];
+            NSArray *values = seekTimes();
             NSInteger seekTime = currentSeekTime() - 1;
             backValue = values[seekTime];
             forwardValue = values[seekTime];
@@ -111,16 +115,14 @@ static NSInteger currentSeekTime() {
 
 %hook YTColdConfig
 - (NSInteger)iosPlayerClientSharedConfigTransportControlsSeekForwardTime {
-    NSArray *values = @[@"%orig", @10, @20, @30, @60];
     NSInteger seekTime = currentSeekTime();
 
-    return (seekTime == 0) ? [values[0] integerValue] : [values[seekTime] integerValue];
+    return (seekTime == 0) ? %orig : [seekTimes()[seekTime - 1] integerValue];
 }
 
 - (NSInteger)iosPlayerClientSharedConfigTransportControlsSeekBackwardTime {
-    NSArray *values = @[@"%orig", @10, @20, @30, @60];
     NSInteger seekTime = currentSeekTime();
 
-    return (seekTime == 0) ? [values[0] integerValue] : [values[seekTime] integerValue];
+    return (seekTime == 0) ? %orig : [seekTimes()[seekTime - 1] integerValue];
 }
 %end
