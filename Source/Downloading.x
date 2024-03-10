@@ -186,6 +186,7 @@ static UIImage *YTImageNamed(NSString *imageName) {
 
     if (playerResponse) {
         YTMActionSheetController *sheetController = [%c(YTMActionSheetController) musicActionSheetController];
+        sheetController.sourceView = sender;
         [sheetController addHeaderWithTitle:LOC(@"SELECT_ACTION") subtitle:nil];
 
         [sheetController addAction:[%c(YTActionSheetAction) actionWithTitle:LOC(@"DOWNLOAD_AUDIO") iconImage:YTImageNamed(@"yt_outline_audio_24pt") style:0 handler:^ {
