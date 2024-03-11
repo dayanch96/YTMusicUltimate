@@ -13,6 +13,21 @@
 - (id)_viewControllerForAncestor;
 @end
 
+@interface YTISupportedMessageRendererIcons : NSObject
+@property (nonatomic, assign, readwrite) int iconType;
+@end
+
+@interface YTIMessageRenderer : NSObject
+@property (nonatomic, strong, readwrite) YTISupportedMessageRendererIcons *icon;
+@end
+
+@interface YTMLightweightMessageCell : UIView
+@end
+
+@interface YTMMessageView : UIView
+@property (nonatomic, weak, readwrite) YTMLightweightMessageCell *delegate;
+@end
+
 %group SettingsPage
 %hook YTMAvatarAccountView
 
@@ -61,9 +76,18 @@
 
 %hook YTMMessageView
 - (void)setMessageText:(id)arg1 {
-    if ([arg1 containsString:@"Premium"]) {
-        arg1 = LOC(@"REGIONAL_RESTRICTION");
-    } %orig(arg1);
+    if (![self.delegate isKindOfClass:%c(YTMLightweightMessageCell)]) {
+        return %orig;
+    }
+
+    YTMLightweightMessageCell *msgCell = (YTMLightweightMessageCell *)self.delegate;
+    YTIMessageRenderer *renderer = [msgCell valueForKey:@"_renderer"];
+
+    if (renderer.icon.iconType != 187) {
+        return %orig;
+    }
+
+    %orig(LOC(@"REGIONAL_RESTRICTION"));
 }
 %end
 %end
