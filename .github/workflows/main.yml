@@ -1,0 +1,99 @@
+# I modified the github action from @arichornlover 's uYouEnhanced repo, but the original idea is by @ISnackable. Thanks to both of them!
+# https://github.com/ISnackable/YTCubePlus/blob/main/.github/workflows/Build.yml
+
+name: Build tweak for sideloading
+
+on:
+  workflow_dispatch:
+    inputs:
+      sdk_version:
+        description: "iOS SDK version to be used during build (don't change it if you don't know what you are doing)"
+        default: "16.2"
+        required: true
+        type: string
+  
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build YTMusicUltimate
+    runs-on: macos-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Main
+        uses: actions/checkout@v4.1.1
+        with:
+          path: main
+          submodules: recursive
+
+      - name: Install Dependencies
+        run: brew install ldid dpkg make
+              
+
+      - name: Set PATH environment variable
+        run: echo "$(brew --prefix make)/libexec/gnubin" >> $GITHUB_PATH 
+
+      - name: Setup Theos
+        uses: actions/checkout@v4.1.1
+        with:
+          repository: theos/theos
+          ref: 4bcc52914e0eeca719288522938185decaa8a1cb
+          path: theos
+          submodules: recursive
+      
+      - name: SDK Caching
+        id: SDK
+        uses: actions/cache@v4.0.1
+        env:
+          cache-name: iOS-${{ inputs.sdk_version }}-SDK
+        with:
+          path: theos/sdks/
+          key: ${{ env.cache-name }}
+          restore-keys: ${{ env.cache-name }}
+
+      - name: Download iOS SDK
+        if: steps.SDK.outputs.cache-hit != 'true'
+        run: |
+          git clone --quiet -n --depth=1 --filter=tree:0 https://github.com/arichorn/sdks/
+          cd sdks
+          git sparse-checkout set --no-cone iPhoneOS${{ inputs.sdk_version }}.sdk
+          git checkout
+          mv *.sdk $THEOS/sdks
+        env:
+          THEOS: ${{ github.workspace }}/theos
+
+      - name: Setup Theos Jailed
+        uses: actions/checkout@v4.1.1
+        with:
+          repository: qnblackcat/theos-jailed
+          ref: master
+          path: theos-jailed
+          submodules: recursive
+
+      - name: Install Theos Jailed
+        run: |
+          ./theos-jailed/install
+        env:
+          THEOS: ${{ github.workspace }}/theos
+
+
+      - name: Build Tweak for Sideloading
+        id: build_package
+        run: |
+          cd ${{ github.workspace }}/main
+          make clean package SIDELOADING=1
+        env:
+          THEOS: ${{ github.workspace }}/theos
+
+          
+      - name: Upload Tweak as Artifact
+        uses: actions/upload-artifact@v4.3.1
+        with:
+          name: ytmusicultimate
+          path: ${{ github.workspace }}/main/packages
+          if-no-files-found: error    
+  
