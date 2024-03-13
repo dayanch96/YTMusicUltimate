@@ -8,51 +8,54 @@ static BOOL YTMU(NSString *key) {
 
 static BOOL sponsorBlock = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"sponsorBlock");
 
-@protocol YTPlaybackController
-@end
+@interface YTPlayerViewController : UIViewController
+@property (nonatomic, strong) NSDictionary *sponsorBlockValues;
 
-@interface YTPlayerViewController : UIViewController <YTPlaybackController>
 - (void)seekToTime:(CGFloat)time;
 - (NSString *)currentVideoID;
 - (CGFloat)currentVideoMediaTime;
 @end
 
-@interface YTSingleVideoTime : NSObject
-@end
+static void skipSegment(YTPlayerViewController *self) {
+    if (sponsorBlock && [NSJSONSerialization isValidJSONObject:self.sponsorBlockValues]) {
+        for (NSMutableDictionary *jsonDictionary in self.sponsorBlockValues) {
+            if ([[jsonDictionary objectForKey:@"category"] isEqual:@"music_offtopic"]
+                && self.currentVideoMediaTime >= [[jsonDictionary objectForKey:@"segment"][0] floatValue]
+                && self.currentVideoMediaTime <= ([[jsonDictionary objectForKey:@"segment"][1] floatValue] - 1)) {
 
-BOOL isSponsorBlockEnabled;
-NSDictionary *sponsorBlockValues = [[NSDictionary alloc] init];
+                [self seekToTime:[[jsonDictionary objectForKey:@"segment"][1] floatValue]];
+            }
+        }
+    }
+}
 
 %hook YTPlayerViewController
+%property (nonatomic, strong) NSDictionary *sponsorBlockValues;
+
 - (void)playbackController:(id)arg1 didActivateVideo:(id)arg2 withPlaybackData:(id)arg3 {
-    isSponsorBlockEnabled = NO;
-    %orig();
-    NSString *options = @"[%22music_offtopic%22]";
-    NSURLRequest *request;
-    request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://sponsor.ajay.app/api/skipSegments?videoID=%@&categories=%@", self.currentVideoID, options]]];
+    %orig;
+
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://sponsor.ajay.app/api/skipSegments?videoID=%@&categories=%@", self.currentVideoID, @"[%22music_offtopic%22]"]]];
 
     [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (!error) {
             NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             if ([NSJSONSerialization isValidJSONObject:jsonResponse]) {
-                sponsorBlockValues = jsonResponse;
-                isSponsorBlockEnabled = YES;
-            } else {
-                isSponsorBlockEnabled = NO;
+                self.sponsorBlockValues = jsonResponse;
             }
-        } else if (error) {
-            isSponsorBlockEnabled = NO;
         }
     }] resume];
 }
-- (void)singleVideo:(id)video currentVideoTimeDidChange:(YTSingleVideoTime *)time {
-    %orig();
-    if (sponsorBlock && isSponsorBlockEnabled && [NSJSONSerialization isValidJSONObject:sponsorBlockValues]) {
-        for (NSMutableDictionary *jsonDictionary in sponsorBlockValues) {
-            if ([[jsonDictionary objectForKey:@"category"] isEqual:@"music_offtopic"] && self.currentVideoMediaTime >= [[jsonDictionary objectForKey:@"segment"][0] floatValue] && self.currentVideoMediaTime <= ([[jsonDictionary objectForKey:@"segment"][1] floatValue] - 1)) {
-                [self seekToTime:[[jsonDictionary objectForKey:@"segment"][1] floatValue]];
-            }
-        }
-    }
+
+- (void)singleVideo:(id)video currentVideoTimeDidChange:(id)time {
+    %orig;
+
+    skipSegment(self);
+}
+
+- (void)potentiallyMutatedSingleVideo:(id)video currentVideoTimeDidChange:(id)time {
+    %orig;
+
+    skipSegment(self);
 }
 %end
