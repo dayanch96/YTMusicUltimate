@@ -1,7 +1,7 @@
 # I modified the github action from @arichornlover 's uYouEnhanced repo, but the original idea is by @ISnackable. Thanks to both of them!
 # https://github.com/ISnackable/YTCubePlus/blob/main/.github/workflows/Build.yml
 
-name: Build tweak for sideloading
+name: Build and Release YTMusicUltimate
 
 on:
   workflow_dispatch:
@@ -10,7 +10,12 @@ on:
         description: "iOS SDK version to be used during build (don't change it if you don't know what you are doing)"
         default: "16.2"
         required: true
-        type: string
+        type: string   
+      decrypted_youtube_music_url:
+        description: "The direct URL to the decrypted YouTube Music ipa (I recommend using Dropbox, Google Drive is causing errors)"
+        default: ""
+        required: true
+        type: string    
   
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -79,7 +84,20 @@ jobs:
           ./theos-jailed/install
         env:
           THEOS: ${{ github.workspace }}/theos
+          
+      - name: Install Azule
+        run: |
+          cd ${{ github.workspace }}/main
+          git clone https://github.com/Al4ise/Azule 
+          sudo ln -sf ~/Azule/azule /usr/local/bin/azule
 
+      - name: Prepare YouTube Music iPA
+        id: prepare_youtube_music
+        run: |
+          wget "$YOUTUBE_MUSIC_URL" --no-verbose -O main/YouTubeMusic.ipa
+
+        env:
+          YOUTUBE_MUSIC_URL: ${{ inputs.decrypted_youtube_music_url }}    
 
       - name: Build Tweak for Sideloading
         id: build_package
@@ -89,11 +107,20 @@ jobs:
         env:
           THEOS: ${{ github.workspace }}/theos
 
-          
-      - name: Upload Tweak as Artifact
-        uses: actions/upload-artifact@v4.3.1
+      - name: Inject tweak into provided IPA
+        run: |
+          brew install coreutils
+          cd ${{ github.workspace }}/main/packages
+          tweakName=$(ls)
+          cd ${{ github.workspace }}/main
+          ./Azule/azule -i $PWD/YouTubeMusic.ipa -o $PWD/packages/YTMusicUltimate.ipa -f $PWD/packages/$tweakName
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v2.0.1
         with:
-          name: ytmusicultimate
-          path: ${{ github.workspace }}/main/packages
-          if-no-files-found: error    
+          tag_name: YTMusicUltimate-v${{ github.run_number }}
+          name: YTMusicUltimate-v${{ github.run_number }}
+          files: main/packages/*.ipa
+          draft: true
   
