@@ -97,6 +97,7 @@
 "OOPS" = "Hoppla! Etwas ist schiefgelaufen";
 "SAVED_TO_PHOTOS" = "in der Fotogalerie gespeichert";
 "DONE" = "Fertig";
+"SEGMENT_SKIPPED" = "SponsorBlock: Offtopic has been skipped";
 
 "EMPTY" = "Inhalte, die Sie herunterladen, werden hier angezeigt";
 "REMOVE_ALL" = "Entfernen Sie alle Audios";

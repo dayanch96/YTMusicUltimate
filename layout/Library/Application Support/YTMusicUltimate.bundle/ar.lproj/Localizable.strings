@@ -97,6 +97,7 @@
 "OOPS" = "هناك شئ خطأ";
 "SAVED_TO_PHOTOS" = "تم الحفظ في البوم الصور";
 "DONE" = "تم الانتهاء بنجاح";
+"SEGMENT_SKIPPED" = "SponsorBlock: Offtopic has been skipped";
 
 "EMPTY" = "المحتوي الذي تم تحميله سيظهر هنا";
 "REMOVE_ALL" = "مسح كل التحميلات";

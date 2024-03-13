@@ -91,6 +91,7 @@
 "OOPS" = "Oops\nalgo salió mal";
 "SAVED_TO_PHOTOS" = "Guardar en Fotos";
 "DONE" = "Hecho";
+"SEGMENT_SKIPPED" = "SponsorBlock: Offtopic has been skipped";
 
 "DOWNLOADS" = "Descargas";
 "EMPTY" = "El contenido que descargue se mostrará aquí";
