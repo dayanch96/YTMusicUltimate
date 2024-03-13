@@ -1,12 +1,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#include "Prefs/Localization.h"
 
-static BOOL YTMU(NSString *key) {
-    NSDictionary *YTMUltimateDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"];
-    return [YTMUltimateDict[key] boolValue];
-}
-
-static BOOL sponsorBlock = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"sponsorBlock");
+NSDictionary *YTMUltimateDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"];
+static BOOL sponsorBlock = YTMUltimateDict[@"YTMUltimateIsEnabled"] && YTMUltimateDict[@"sponsorBlock"];
 
 @interface YTPlayerViewController : UIViewController
 @property (nonatomic, strong) NSMutableDictionary *sponsorBlockValues;
@@ -14,6 +11,10 @@ static BOOL sponsorBlock = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"sponsorBlock"
 - (void)seekToTime:(CGFloat)time;
 - (NSString *)currentVideoID;
 - (CGFloat)currentVideoMediaTime;
+@end
+
+@interface YTMToastController : NSObject
+- (void)showMessage:(NSString *)message;
 @end
 
 static void skipSegment(YTPlayerViewController *self) {
@@ -26,6 +27,8 @@ static void skipSegment(YTPlayerViewController *self) {
                 && self.currentVideoMediaTime <= ([[jsonDictionary objectForKey:@"segment"][1] floatValue] - 1)) {
 
                 [self seekToTime:[[jsonDictionary objectForKey:@"segment"][1] floatValue]];
+
+                [[%c(YTMToastController) alloc] showMessage:LOC(@"SEGMENT_SKIPPED")];
             }
         }
     }
