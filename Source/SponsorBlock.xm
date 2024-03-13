@@ -9,7 +9,7 @@ static BOOL YTMU(NSString *key) {
 static BOOL sponsorBlock = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"sponsorBlock");
 
 @interface YTPlayerViewController : UIViewController
-@property (nonatomic, strong) NSDictionary *sponsorBlockValues;
+@property (nonatomic, strong) NSMutableDictionary *sponsorBlockValues;
 
 - (void)seekToTime:(CGFloat)time;
 - (NSString *)currentVideoID;
@@ -18,7 +18,9 @@ static BOOL sponsorBlock = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"sponsorBlock"
 
 static void skipSegment(YTPlayerViewController *self) {
     if (sponsorBlock && [NSJSONSerialization isValidJSONObject:self.sponsorBlockValues]) {
-        for (NSMutableDictionary *jsonDictionary in self.sponsorBlockValues) {
+        NSDictionary *sponsorBlockValues = [self.sponsorBlockValues objectForKey:self.currentVideoID];
+
+        for (NSDictionary *jsonDictionary in sponsorBlockValues) {
             if ([[jsonDictionary objectForKey:@"category"] isEqual:@"music_offtopic"]
                 && self.currentVideoMediaTime >= [[jsonDictionary objectForKey:@"segment"][0] floatValue]
                 && self.currentVideoMediaTime <= ([[jsonDictionary objectForKey:@"segment"][1] floatValue] - 1)) {
@@ -30,10 +32,14 @@ static void skipSegment(YTPlayerViewController *self) {
 }
 
 %hook YTPlayerViewController
-%property (nonatomic, strong) NSDictionary *sponsorBlockValues;
+%property (nonatomic, strong) NSMutableDictionary *sponsorBlockValues;
 
 - (void)playbackController:(id)arg1 didActivateVideo:(id)arg2 withPlaybackData:(id)arg3 {
     %orig;
+
+    if (!self.sponsorBlockValues) {
+        self.sponsorBlockValues = [NSMutableDictionary dictionary];
+    }
 
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://sponsor.ajay.app/api/skipSegments?videoID=%@&categories=%@", self.currentVideoID, @"[%22music_offtopic%22]"]]];
 
@@ -41,7 +47,7 @@ static void skipSegment(YTPlayerViewController *self) {
         if (!error) {
             NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             if ([NSJSONSerialization isValidJSONObject:jsonResponse]) {
-                self.sponsorBlockValues = jsonResponse;
+                [self.sponsorBlockValues setObject:jsonResponse forKey:self.currentVideoID];
             }
         }
     }] resume];
