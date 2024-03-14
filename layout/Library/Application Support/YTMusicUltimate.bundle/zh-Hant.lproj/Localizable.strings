@@ -97,6 +97,7 @@
 "OOPS" = "糟糕\n發生了些錯誤";
 "SAVED_TO_PHOTOS" = "已儲存到照片";
 "DONE" = "完成";
+"SEGMENT_SKIPPED" = "SponsorBlock: Offtopic has been skipped";
 
 "EMPTY" = "您下載的內容會顯示在這裡";
 "REMOVE_ALL" = "刪除所有音訊";

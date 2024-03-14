@@ -97,6 +97,7 @@
 "OOPS" = "Oops\nsomething went wrong";
 "SAVED_TO_PHOTOS" = "Saved to Photos";
 "DONE" = "Done";
+"SEGMENT_SKIPPED" = "SponsorBlock: Offtopic has been skipped";
 
 "EMPTY" = "Content you download will show here";
 "REMOVE_ALL" = "Remove all audios";
