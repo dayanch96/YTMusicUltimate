@@ -59,7 +59,8 @@
 
     if (indexPath.section == 0 && indexPath.row == 0) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell0"];
-        UISegmentedControl *startupPage = [[UISegmentedControl alloc] initWithItems:@[LOC(@"HOME"), LOC(@"SAMPLES"), LOC(@"EXPLORE"), LOC(@"LIBRARY"), LOC(@"DOWNLOADS")]];
+
+        UISegmentedControl *startupPage = [[UISegmentedControl alloc] initWithItems:@[[self tbImageNamed:@"yt_outline_home_24pt"], [self tbImageNamed:@"youtube_outline/samples_24pt"], [self tbImageNamed:@"yt_outline_compass_24pt"], [self tbImageNamed:@"yt_outline_library_music_24pt"], [self tbImageNamed:@"downloads"]]];
 
         for (UIView *segmentView in startupPage.subviews) {
             for (UIView *subview in segmentView.subviews) {
@@ -104,6 +105,26 @@
     }
 
     return cell;
+}
+
+- (UIImage *)tbImageNamed:(NSString *)imageName {
+    YTAssetLoader *al = [[NSClassFromString(@"YTAssetLoader") alloc] initWithBundle:[NSBundle mainBundle]];
+
+    UIGraphicsImageRenderer *renderer = [[UIGraphicsImageRenderer alloc] initWithSize:CGSizeMake(24, 24)];
+    UIImage *downloadsImage = [renderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull rendererContext) {
+        UIImage *buttonImage = [UIImage imageWithContentsOfFile:[YTMusicUltimateBundle() pathForResource:@"downloads" ofType:@"png" inDirectory:@"icons"]];
+        UIView *imageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+        UIImageView *buttonImageView = [[UIImageView alloc] initWithImage:buttonImage];
+        buttonImageView.contentMode = UIViewContentModeScaleAspectFit;
+        buttonImageView.clipsToBounds = YES;
+        buttonImageView.tintColor = [UIColor labelColor];
+        buttonImageView.frame = imageView.bounds;
+
+        [imageView addSubview:buttonImageView];
+        [imageView.layer renderInContext:rendererContext.CGContext];
+    }];
+
+    return [imageName isEqualToString:@"downloads"] ? downloadsImage : [al imageNamed:imageName];
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
