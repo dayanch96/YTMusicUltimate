@@ -24,13 +24,19 @@
 "VOLBAR_DESC" = "Oynatıcıya bir ses çubuğu ekler";
 "NO_AUTORADIO" = "Radyoyu devre dışı bırak";
 "NO_AUTORADIO_DESC" = "Kesintisiz müzik özelliğini kaldırır";
-"SKIP_NONMUSIC_PARTS" = "Müzik olmayan bölümleri atla (SponsorBlock)";
-"SKIP_NONMUSIC_PARTS_DESC" = "Müzik videolarında müzik olmayan bölümleri atlar";
 "SKIP_CONTENT_WARNING" = "Skip content warning";
 "SKIP_CONTENT_WARNING_DESC" = "Skips warnings about potentially harmful content";
 "AV_DEFAULT_MODE" = "Varsayılan oynatma modu";
 "AUDIO" = "Şarkı";
 "VIDEO" = "Video";
+
+"SKIP_NONMUSIC_PARTS" = "SponsorBlock";
+"SKIP_NONMUSIC_PARTS_DESC" = "Müzik videolarında müzik olmayan bölümleri atlar";
+"SB_BEHAVIOR" = "Behavior";
+"SB_SKIP" = "Skip";
+"SB_ASK" = "Ask";
+"SB_NOTIF_DURATION" = "Notification duration (sec)";
+
 "SEEK_BUTTONS" = "Önceki ve Sonraki düğmelerini Hızlı ileri ve Geri Sar düğmeleriyle değiştir";
 "SEEK_TIME_FOOTER" = "Sarma süresini seçiniz\n\Varsayılanlar:\nGeri Sar = 10 sn.\nHızlı ileri = 30 sn.\n\nButonlara uzun basılarak sonraki ve önceki parçalara geçebilirsiniz.";
 "DEFAULT" = "Varsayılan";
@@ -97,7 +103,10 @@
 "OOPS" = "Oops\nsomething went wrong";
 "SAVED_TO_PHOTOS" = "Saved to Photos";
 "DONE" = "Done";
-"SEGMENT_SKIPPED" = "SponsorBlock: Offtopic has been skipped";
+"FOUND_SEGMENT" = "Found offtopic segment";
+"SEGMENT_SKIPPED" = "Offtopic has been skipped";
+"SKIP" = "Skip";
+"UNSKIP" = "Unskip";
 
 "EMPTY" = "Content you download will show here";
 "REMOVE_ALL" = "Remove all audios";

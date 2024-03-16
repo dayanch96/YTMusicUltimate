@@ -20,13 +20,19 @@
 "VOLBAR_DESC" = "Añade una barra de volumen al reproductor";
 "NO_AUTORADIO" = "Desactivar la radio";
 "NO_AUTORADIO_DESC" = "Desactiva la función de música infinita";
-"SKIP_NONMUSIC_PARTS" = "Saltar secciones no musicales (SponsorBlock)";
-"SKIP_NONMUSIC_PARTS_DESC" = "Salta secciones no musicales en videos musicales";
 "SKIP_CONTENT_WARNING" = "Omitir aviso de contenido";
 "SKIP_CONTENT_WARNING_DESC" = "Omite las advertencias sobre contenidos potencialmente nocivos";
 "AV_DEFAULT_MODE" = "Modo de reproducción predeterminado";
 "AUDIO" = "Audio";
 "VIDEO" = "Vídeo";
+
+"SKIP_NONMUSIC_PARTS" = "SponsorBlock";
+"SKIP_NONMUSIC_PARTS_DESC" = "Salta secciones no musicales en videos musicales";
+"SB_BEHAVIOR" = "Behavior";
+"SB_SKIP" = "Skip";
+"SB_ASK" = "Ask";
+"SB_NOTIF_DURATION" = "Notification duration (sec)";
+
 "SEEK_BUTTONS" = "Sustituir siguiente/anterior por botones de avance y retroceso";
 "SEEK_TIME_FOOTER" = "Seleccione un tiempo de búsqueda en segundos\n\nPor defecto:\nBúsqueda hacia atrás = 10 seg.\nBúsqueda hacia adelante = 30 seg.\n\nSalto a la pista siguiente y anterior disponible pulsando prolongadamente los botones.";
 "DEFAULT" = "Predeterminado";
@@ -91,7 +97,10 @@
 "OOPS" = "Oops\nalgo salió mal";
 "SAVED_TO_PHOTOS" = "Guardar en Fotos";
 "DONE" = "Hecho";
-"SEGMENT_SKIPPED" = "SponsorBlock: Offtopic has been skipped";
+"FOUND_SEGMENT" = "Found offtopic segment";
+"SEGMENT_SKIPPED" = "Offtopic has been skipped";
+"SKIP" = "Skip";
+"UNSKIP" = "Unskip";
 
 "DOWNLOADS" = "Descargas";
 "EMPTY" = "El contenido que descargue se mostrará aquí";

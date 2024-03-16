@@ -24,13 +24,19 @@
 "VOLBAR_DESC" = "Fügt dem Player eine Lautstärkeleiste hinzu";
 "NO_AUTORADIO" = "Radio deaktivieren";
 "NO_AUTORADIO_DESC" = "Deaktiviert die Endlosmusikfunktion";
-"SKIP_NONMUSIC_PARTS" = "Nicht-Musikbereich überspringen (SponsorBlock)";
-"SKIP_NONMUSIC_PARTS_DESC" = "Überspringt Abschnitte in Musikvideos, die nichts mit Musik zu tun haben";
 "SKIP_CONTENT_WARNING" = "Inhaltswarnung überspringen";
 "SKIP_CONTENT_WARNING_DESC" = "Überspringt Warnungen vor potenziell schädlichen Inhalten";
 "AV_DEFAULT_MODE" = "Standard-Wiedergabemodus";
 "AUDIO" = "Audio";
 "VIDEO" = "Video";
+
+"SKIP_NONMUSIC_PARTS" = "SponsorBlock";
+"SKIP_NONMUSIC_PARTS_DESC" = "Überspringt Abschnitte in Musikvideos, die nichts mit Musik zu tun haben";
+"SB_BEHAVIOR" = "Behavior";
+"SB_SKIP" = "Skip";
+"SB_ASK" = "Ask";
+"SB_NOTIF_DURATION" = "Notification duration (sec)";
+
 "SEEK_BUTTONS" = "Ersetzen Sie \"Vorwärts/Zurück\" durch Vorwärts- und Rückwärtstasten";
 "SEEK_TIME_FOOTER" = "Wählen Sie eine Suchzeit in Sekunden aus.\n\nStandardeinstellungen:\nRückwärts suchen = 10 Sekunden.\nVorwärts suchen = 30 Sekunden.\n\nDurch langes Drücken der Tasten können Sie zum nächsten und vorherigen Titel springen.";
 "DEFAULT" = "Standard";
@@ -97,7 +103,10 @@
 "OOPS" = "Hoppla! Etwas ist schiefgelaufen";
 "SAVED_TO_PHOTOS" = "in der Fotogalerie gespeichert";
 "DONE" = "Fertig";
-"SEGMENT_SKIPPED" = "SponsorBlock: Offtopic has been skipped";
+"FOUND_SEGMENT" = "Found offtopic segment";
+"SEGMENT_SKIPPED" = "Offtopic has been skipped";
+"SKIP" = "Skip";
+"UNSKIP" = "Unskip";
 
 "EMPTY" = "Inhalte, die Sie herunterladen, werden hier angezeigt";
 "REMOVE_ALL" = "Entfernen Sie alle Audios";

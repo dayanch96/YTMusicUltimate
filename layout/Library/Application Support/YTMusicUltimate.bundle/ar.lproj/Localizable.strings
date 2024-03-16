@@ -24,13 +24,19 @@
 "VOLBAR_DESC" = "يضيف شريط الصوت إلى المشغل";
 "NO_AUTORADIO" = "تعطيل الراديو";
 "NO_AUTORADIO_DESC" = "تعطيل ميزة التشغيل اللانهائي للموسيقي";
-"SKIP_NONMUSIC_PARTS" = "تخطي قسم الاعلانات ";
-"SKIP_NONMUSIC_PARTS_DESC" = "تخطي قسم الاعلانات في موسيقي الفيديو";
-"AV_DEFAULT_MODE" = "الوضع التلقائي للمشغل";
 "SKIP_CONTENT_WARNING" = "تخطي تحذيرات المحتوي";
 "SKIP_CONTENT_WARNING_DESC" = "يقوم بتخطي التحذيرات بخصوص المحتوي العائلي";
+"AV_DEFAULT_MODE" = "الوضع التلقائي للمشغل";
 "AUDIO" = "موسيقي";
 "VIDEO" = "ڤيديو";
+
+"SKIP_NONMUSIC_PARTS" = "SponsorBlock";
+"SKIP_NONMUSIC_PARTS_DESC" = "تخطي قسم الاعلانات في موسيقي الفيديو";
+"SB_BEHAVIOR" = "Behavior";
+"SB_SKIP" = "Skip";
+"SB_ASK" = "Ask";
+"SB_NOTIF_DURATION" = "Notification duration (sec)";
+
 "SEEK_BUTTONS" = "استبدال الإعجاب/عدم الإعجاب بأزرار أمامية وخلفية";
 "SEEK_TIME_FOOTER" = "حدد وقت التقدم بالثواني\n\nالافتراضي:\nالتقدم للخلف = 10 ثوانٍ\nالتقدم للأمام = 30 ثانية\n\nالانتقال إلى الموسيقي التالية والسابقة عن طريق الضغط لفترة طويلة على الأزرار.";
 "DEFAULT" = "افتراضي";
@@ -97,7 +103,10 @@
 "OOPS" = "هناك شئ خطأ";
 "SAVED_TO_PHOTOS" = "تم الحفظ في البوم الصور";
 "DONE" = "تم الانتهاء بنجاح";
-"SEGMENT_SKIPPED" = "SponsorBlock: Offtopic has been skipped";
+"FOUND_SEGMENT" = "Found offtopic segment";
+"SEGMENT_SKIPPED" = "Offtopic has been skipped";
+"SKIP" = "Skip";
+"UNSKIP" = "Unskip";
 
 "EMPTY" = "المحتوي الذي تم تحميله سيظهر هنا";
 "REMOVE_ALL" = "مسح كل التحميلات";

@@ -24,13 +24,19 @@
 "VOLBAR_DESC" = "プレーヤーにボリュームバーを追加する";
 "NO_AUTORADIO" = "ラジオを無効化する";
 "NO_AUTORADIO_DESC" = "エンドレスミュージック機能を無効化";
-"SKIP_NONMUSIC_PARTS" = "非音楽セクションをスキップ (SponsorBlock)";
-"SKIP_NONMUSIC_PARTS_DESC" = "ミュージックビデオでの音楽以外のセクションをスキップします";
 "SKIP_CONTENT_WARNING" = "Skip content warning";
 "SKIP_CONTENT_WARNING_DESC" = "Skips warnings about potentially harmful content";
 "AV_DEFAULT_MODE" = "デフォルトの再生モード";
 "AUDIO" = "音楽";
 "VIDEO" = "映像";
+
+"SKIP_NONMUSIC_PARTS" = "SponsorBlock";
+"SKIP_NONMUSIC_PARTS_DESC" = "ミュージックビデオでの音楽以外のセクションをスキップします";
+"SB_BEHAVIOR" = "Behavior";
+"SB_SKIP" = "Skip";
+"SB_ASK" = "Ask";
+"SB_NOTIF_DURATION" = "Notification duration (sec)";
+
 "SEEK_BUTTONS" = "Replace next/previous with forward and backward buttons";
 "SEEK_TIME_FOOTER" = "Select a seek time in seconds\n\nDefaults:\nSeek backward = 10 sec.\nSeek forward = 30 sec.";
 "DEFAULT" = "Default";
@@ -97,7 +103,10 @@
 "OOPS" = "Oops\nsomething went wrong";
 "SAVED_TO_PHOTOS" = "Saved to Photos";
 "DONE" = "Done";
-"SEGMENT_SKIPPED" = "SponsorBlock: Offtopic has been skipped";
+"FOUND_SEGMENT" = "Found offtopic segment";
+"SEGMENT_SKIPPED" = "Offtopic has been skipped";
+"SKIP" = "Skip";
+"UNSKIP" = "Unskip";
 
 "EMPTY" = "Content you download will show here";
 "REMOVE_ALL" = "Remove all audios";

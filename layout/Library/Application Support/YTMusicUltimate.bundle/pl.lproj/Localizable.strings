@@ -24,13 +24,19 @@
 "VOLBAR_DESC" = "Dodaje pasek głośności do odtwarzacza";
 "NO_AUTORADIO" = "Wyłącz radio";
 "NO_AUTORADIO_DESC" = "Wyłącza funkcje automatycznego odtwarzania proponowanego utworu";
-"SKIP_NONMUSIC_PARTS" = "Pomiń sekcję bez muzyki (SponsorBlock)";
-"SKIP_NONMUSIC_PARTS_DESC" = "Pomija nie-muzyczne kwestie w teledyskach";
 "SKIP_CONTENT_WARNING" = "Pomiń ostrzeżenia";
 "SKIP_CONTENT_WARNING_DESC" = "Pomija ostrzeżenia o potencjalnie szkodliwym kontencie";
 "AV_DEFAULT_MODE" = "Domyślny styl odtwarzania";
 "AUDIO" = "Audio";
 "VIDEO" = "Wideo";
+
+"SKIP_NONMUSIC_PARTS" = "SponsorBlock";
+"SKIP_NONMUSIC_PARTS_DESC" = "Pomija nie-muzyczne kwestie w teledyskach";
+"SB_BEHAVIOR" = "Behavior";
+"SB_SKIP" = "Skip";
+"SB_ASK" = "Ask";
+"SB_NOTIF_DURATION" = "Notification duration (sec)";
+
 "SEEK_BUTTONS" = "Zamień przyciski następny/poprzedni na do przodu/do tyłu";
 "SEEK_TIME_FOOTER" = "Wybierz czas przewijania w sekundach\n\Domyślnie:\nW tył = 10 sek.\nW przód = 30 sek.\n\nPomijanie utworów do przodu/tyłu jest możliwe przy dłuższym przytrzymaniu przycisku przewijania.";
 "DEFAULT" = "Domyślnie";
@@ -97,7 +103,10 @@
 "OOPS" = "Uups\ncoś poszło nie tak";
 "SAVED_TO_PHOTOS" = "Zapisane do Zdjęć";
 "DONE" = "Gotowe";
-"SEGMENT_SKIPPED" = "SponsorBlock: Offtopic has been skipped";
+"FOUND_SEGMENT" = "Found offtopic segment";
+"SEGMENT_SKIPPED" = "Offtopic has been skipped";
+"SKIP" = "Skip";
+"UNSKIP" = "Unskip";
 
 "EMPTY" = "Pobrana zawartość wyświetli się tutaj";
 "REMOVE_ALL" = "Usuń wszystkie pliki audio";

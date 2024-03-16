@@ -24,13 +24,19 @@
 "VOLBAR_DESC" = "在播放器增加音量控制條";
 "NO_AUTORADIO" = "關閉電台功能";
 "NO_AUTORADIO_DESC" = "關閉無限接續播放的電台功能";
-"SKIP_NONMUSIC_PARTS" = "跳過MV廣告片段(SponsorBlock)";
-"SKIP_NONMUSIC_PARTS_DESC" = "跳過MV中的廣告片段";
 "AV_DEFAULT_MODE" = "預設播放模式";
 "SKIP_CONTENT_WARNING" = "跳過內容警告";
 "SKIP_CONTENT_WARNING_DESC" = "跳過可能有害的內容警告";
 "AUDIO" = "歌曲";
 "VIDEO" = "影片";
+
+"SKIP_NONMUSIC_PARTS" = "SponsorBlock";
+"SKIP_NONMUSIC_PARTS_DESC" = "跳過MV中的廣告片段";
+"SB_BEHAVIOR" = "Behavior";
+"SB_SKIP" = "Skip";
+"SB_ASK" = "Ask";
+"SB_NOTIF_DURATION" = "Notification duration (sec)";
+
 "SEEK_BUTTONS" = "將「下一首/上一首」替換為「快轉/倒轉」按鈕";
 "SEEK_TIME_FOOTER" = "選擇一個「快轉/倒轉」時間/秒\n\n預設:\n倒轉 = 10秒\n快轉 = 30秒\n\n長按按鈕可跳到「下一首/上一首」曲目";
 "DEFAULT" = "預設";
@@ -97,7 +103,10 @@
 "OOPS" = "糟糕\n發生了些錯誤";
 "SAVED_TO_PHOTOS" = "已儲存到照片";
 "DONE" = "完成";
-"SEGMENT_SKIPPED" = "SponsorBlock: Offtopic has been skipped";
+"FOUND_SEGMENT" = "Found offtopic segment";
+"SEGMENT_SKIPPED" = "Offtopic has been skipped";
+"SKIP" = "Skip";
+"UNSKIP" = "Unskip";
 
 "EMPTY" = "您下載的內容會顯示在這裡";
 "REMOVE_ALL" = "刪除所有音訊";

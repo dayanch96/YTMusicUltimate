@@ -24,13 +24,19 @@
 "VOLBAR_DESC" = "Adds a volume bar to the player";
 "NO_AUTORADIO" = "Disable radio";
 "NO_AUTORADIO_DESC" = "Disables endless music feature";
-"SKIP_NONMUSIC_PARTS" = "Skip non-music section (SponsorBlock)";
-"SKIP_NONMUSIC_PARTS_DESC" = "Skips non-music sections in music videos";
 "SKIP_CONTENT_WARNING" = "Skip content warning";
 "SKIP_CONTENT_WARNING_DESC" = "Skips warnings about potentially harmful content";
 "AV_DEFAULT_MODE" = "Default playback mode";
 "AUDIO" = "Audio";
 "VIDEO" = "Video";
+
+"SKIP_NONMUSIC_PARTS" = "SponsorBlock";
+"SKIP_NONMUSIC_PARTS_DESC" = "Skips non-music sections in music videos";
+"SB_BEHAVIOR" = "Behavior";
+"SB_SKIP" = "Skip";
+"SB_ASK" = "Ask";
+"SB_NOTIF_DURATION" = "Notification duration (sec)";
+
 "SEEK_BUTTONS" = "Replace next/previous with forward and backward buttons";
 "SEEK_TIME_FOOTER" = "Select a seek time in seconds\n\nDefaults:\nSeek backward = 10 sec.\nSeek forward = 30 sec.\n\nSkip to the next and previous tracks available by long-pressing the buttons.";
 "DEFAULT" = "Default";
@@ -97,7 +103,10 @@
 "OOPS" = "Oops\nsomething went wrong";
 "SAVED_TO_PHOTOS" = "Saved to Photos";
 "DONE" = "Done";
-"SEGMENT_SKIPPED" = "SponsorBlock: Offtopic has been skipped";
+"FOUND_SEGMENT" = "Found offtopic segment";
+"SEGMENT_SKIPPED" = "Offtopic has been skipped";
+"SKIP" = "Skip";
+"UNSKIP" = "Unskip";
 
 "EMPTY" = "Content you download will show here";
 "REMOVE_ALL" = "Remove all audios";
