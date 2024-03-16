@@ -4,7 +4,7 @@ endif
 
 ARCHS = arm64
 THEOS_DEVICE_IP = localhost -p 2222
-INSTALL_TARGET_PROCESSES = SpringBoard YouTubeMusic
+INSTALL_TARGET_PROCESSES = YouTubeMusic
 TARGET = iphone:clang:latest:13.0
 PACKAGE_VERSION = 2.0.4
 
