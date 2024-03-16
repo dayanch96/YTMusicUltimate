@@ -27,13 +27,15 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return 8;
+        return 7;
     } if (section == 2) {
+        return 3;
+    } if (section == 3) {
         return 2;
     } else {
         return 1;
@@ -41,9 +43,11 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    if (section == 2) {
+    if (section == 3) {
         return LOC(@"SEEK_TIME_FOOTER");
-    } return nil;
+    }
+
+    return nil;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -56,7 +60,7 @@
     NSMutableDictionary *YTMUltimateDict = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"]];
 
     if (indexPath.section == 0) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell1"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"boolsCell"];
         
         NSArray *settingsData = @[
             @{@"title": LOC(@"DOWNLOAD_AUDIO"), @"desc": LOC(@"DOWNLOAD_AUDIO_DESC"), @"key": @"downloadAudio"},
@@ -65,7 +69,6 @@
             @{@"title": LOC(@"SELECTABLE_LYRICS"), @"desc": LOC(@"SELECTABLE_LYRICS_DESC"), @"key": @"selectableLyrics"},
             @{@"title": LOC(@"VOLBAR"), @"desc": LOC(@"VOLBAR_DESC"), @"key": @"volBar"},
             @{@"title": LOC(@"NO_AUTORADIO"), @"desc": LOC(@"NO_AUTORADIO_DESC"), @"key": @"disableAutoRadio"},
-            @{@"title": LOC(@"SKIP_NONMUSIC_PARTS"), @"desc": LOC(@"SKIP_NONMUSIC_PARTS_DESC"), @"key": @"sponsorBlock"},
             @{@"title": LOC(@"SKIP_CONTENT_WARNING"), @"desc": LOC(@"SKIP_CONTENT_WARNING_DESC"), @"key": @"skipWarning"}
         ];
 
@@ -83,18 +86,79 @@
         switchControl.tag = indexPath.row;
         switchControl.on = [YTMUltimateDict[data[@"key"]] boolValue];
         cell.accessoryView = switchControl;
-    } if (indexPath.section == 1) {
-        if (indexPath.row == 0) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell2"];
-            cell.textLabel.text = LOC(@"AV_DEFAULT_MODE");
 
-            UISegmentedControl *control = [[UISegmentedControl alloc] initWithItems:@[[UIImage systemImageNamed:@"music.note"], [UIImage systemImageNamed:@"film"]]];
-            control.selectedSegmentIndex = [YTMUltimateDict[@"audioVideoMode"] integerValue];
-            [control addTarget:self action:@selector(controlSelect:) forControlEvents:UIControlEventValueChanged];
-            cell.accessoryView = control;
-        } return cell;
-    } if (indexPath.section == 2) {
+        return cell;
+    }
+
+    if (indexPath.section == 1) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"avCell"];
+        cell.textLabel.text = LOC(@"AV_DEFAULT_MODE");
+
+        UISegmentedControl *control = [[UISegmentedControl alloc] initWithItems:@[[UIImage systemImageNamed:@"music.note"], [UIImage systemImageNamed:@"film"]]];
+        control.selectedSegmentIndex = [YTMUltimateDict[@"audioVideoMode"] integerValue];
+        [control addTarget:self action:@selector(controlSelect:) forControlEvents:UIControlEventValueChanged];
+        cell.accessoryView = control;
+
+        return cell;
+    }
+
+    if (indexPath.section == 2) {
         if (indexPath.row == 0) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"sbBoolCell"];
+
+            cell.textLabel.text = LOC(@"SKIP_NONMUSIC_PARTS");
+            cell.textLabel.adjustsFontSizeToFitWidth = YES;
+            cell.detailTextLabel.text = LOC(@"SKIP_NONMUSIC_PARTS_DESC");
+            cell.detailTextLabel.numberOfLines = 0;
+            cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
+
+            UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectZero];
+            switchControl.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
+            [switchControl addTarget:self action:@selector(toggleSBSwitch:) forControlEvents:UIControlEventValueChanged];
+            switchControl.tag = indexPath.row;
+            switchControl.on = [YTMUltimateDict[@"sponsorBlock"] boolValue];
+            cell.accessoryView = switchControl;
+
+            return cell;
+        }
+
+        if (indexPath.row == 1) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"sbBehaviorCell"];
+
+            cell.textLabel.text = LOC(@"SB_BEHAVIOR");
+
+            UISegmentedControl *control = [[UISegmentedControl alloc] initWithItems:@[LOC(@"SB_SKIP"), LOC(@"SB_ASK")]];
+            control.selectedSegmentIndex = [YTMUltimateDict[@"sbSkipMode"] integerValue];
+            [control addTarget:self action:@selector(controlSbSelect:) forControlEvents:UIControlEventValueChanged];
+            cell.accessoryView = control;
+
+            return cell;
+        }
+
+        if (indexPath.row == 2) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"sbDurationCell"];
+
+            cell.textLabel.text = LOC(@"SB_NOTIF_DURATION");
+            cell.textLabel.adjustsFontSizeToFitWidth = YES;
+
+            UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 80, cell.contentView.frame.size.height)];
+            textField.text = [NSString stringWithFormat:@"%ld", [YTMUltimateDict[@"sbDuration"] integerValue]];
+            textField.font = [UIFont systemFontOfSize:13.0];
+            textField.keyboardType = UIKeyboardTypeNumberPad;
+            textField.textAlignment = NSTextAlignmentRight;
+            textField.inputAccessoryView = [self KBToolbar:textField];
+            textField.delegate = self;
+
+            cell.accessoryView = textField;
+
+            return cell;
+        }
+    }
+    
+    if (indexPath.section == 3) {
+        if (indexPath.row == 0) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"seekButtonsCell"];
+
             cell.textLabel.text = LOC(@"SEEK_BUTTONS");
             cell.textLabel.numberOfLines = 0;
 
@@ -103,8 +167,12 @@
             [seekButtons addTarget:self action:@selector(toggleSeekButtons:) forControlEvents:UIControlEventValueChanged];
             seekButtons.on = [YTMUltimateDict[@"seekButtons"] boolValue];
             cell.accessoryView = seekButtons;
-        } if (indexPath.row == 1) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell3"];
+
+            return cell;
+        }
+
+        if (indexPath.row == 1) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"seekTimeCell"];
             UISegmentedControl *seekTime = [[UISegmentedControl alloc] initWithItems:@[LOC(@"DEFAULT"), @"10", @"20", @"30", @"60"]];
 
             for (UIView *segmentView in seekTime.subviews) {
@@ -124,6 +192,8 @@
             [seekTime.centerXAnchor constraintEqualToAnchor:cell.contentView.centerXAnchor].active = YES;
             [seekTime.leadingAnchor constraintEqualToAnchor:cell.contentView.leadingAnchor constant:5.0].active = YES;
             [seekTime.trailingAnchor constraintEqualToAnchor:cell.contentView.trailingAnchor constant:-5.0].active = YES;
+
+            return cell;
         }
     }
 
@@ -154,6 +224,22 @@
     [defaults setObject:YTMUltimateDict forKey:@"YTMUltimate"];
 }
 
+- (void)toggleSBSwitch:(UISwitch *)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *YTMUltimateDict = [NSMutableDictionary dictionaryWithDictionary:[defaults dictionaryForKey:@"YTMUltimate"]];
+
+    [YTMUltimateDict setObject:@([sender isOn]) forKey:@"sponsorBlock"];
+    [defaults setObject:YTMUltimateDict forKey:@"YTMUltimate"];
+}
+
+- (void)controlSbSelect:(UISegmentedControl *)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *YTMUltimateDict = [NSMutableDictionary dictionaryWithDictionary:[defaults dictionaryForKey:@"YTMUltimate"]];
+
+    [YTMUltimateDict setObject:@(sender.selectedSegmentIndex) forKey:@"sbSkipMode"];
+    [defaults setObject:YTMUltimateDict forKey:@"YTMUltimate"];
+}
+
 - (void)toggleSeekButtons:(UISwitch *)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *YTMUltimateDict = [NSMutableDictionary dictionaryWithDictionary:[defaults dictionaryForKey:@"YTMUltimate"]];
@@ -176,6 +262,38 @@
 
     [YTMUltimateDict setObject:@(sender.selectedSegmentIndex) forKey:@"seekTime"];
     [defaults setObject:YTMUltimateDict forKey:@"YTMUltimate"];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *YTMUltimateDict = [NSMutableDictionary dictionaryWithDictionary:[defaults dictionaryForKey:@"YTMUltimate"]];
+
+    NSArray *emptyVals = @[@"", @"0"];
+    if ([emptyVals containsObject:textField.text]) {
+        [YTMUltimateDict setObject:@(10) forKey:@"sbDuration"];
+    } else {
+        [YTMUltimateDict setObject:@([textField.text integerValue]) forKey:@"sbDuration"];
+    }
+
+    [defaults setObject:YTMUltimateDict forKey:@"YTMUltimate"];
+
+    textField.text = [NSString stringWithFormat:@"%ld", [YTMUltimateDict[@"sbDuration"] integerValue]];
+}
+
+- (UIView *)KBToolbar:(UITextField *)textField {
+    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 44)];
+    toolbar.barStyle = UIBarStyleDefault;
+
+    UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIBarButtonItem *hideKeyboardButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideKeyboard)];
+
+    [toolbar setItems:@[flexibleSpace, hideKeyboardButton]];
+
+    return toolbar;
+}
+
+- (void)hideKeyboard {
+    [self.view endEditing:YES];
 }
 
 @end
