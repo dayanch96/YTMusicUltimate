@@ -5,10 +5,6 @@ static BOOL YTMU(NSString *key) {
     return [YTMUltimateDict[key] boolValue];
 }
 
-static UIImage *YTImageNamed(NSString *imageName) {
-    return [UIImage imageNamed:imageName inBundle:[NSBundle mainBundle] compatibleWithTraitCollection:nil];
-}
-
 // Downloading by long press
 /*%hook YTPlayerView
 %property (nonatomic, strong) FFMpegDownloader *ffmpeg;
@@ -185,15 +181,17 @@ static UIImage *YTImageNamed(NSString *imageName) {
     YTPlayerResponse *playerResponse = parentVC.parentViewController.playerViewController.playerResponse;
 
     if (playerResponse) {
+        YTAssetLoader *al = [[%c(YTAssetLoader) alloc] initWithBundle:[NSBundle mainBundle]];
+
         YTMActionSheetController *sheetController = [%c(YTMActionSheetController) musicActionSheetController];
         sheetController.sourceView = sender;
         [sheetController addHeaderWithTitle:LOC(@"SELECT_ACTION") subtitle:nil];
 
-        [sheetController addAction:[%c(YTActionSheetAction) actionWithTitle:LOC(@"DOWNLOAD_AUDIO") iconImage:YTImageNamed(@"yt_outline_audio_24pt") style:0 handler:^ {
+        [sheetController addAction:[%c(YTActionSheetAction) actionWithTitle:LOC(@"DOWNLOAD_AUDIO") iconImage:[al imageNamed:@"yt_outline_audio_24pt"] style:0 handler:^ {
             [self downloadAudio];
         }]];
 
-        [sheetController addAction:[%c(YTActionSheetAction) actionWithTitle:LOC(@"DOWNLOAD_COVER") iconImage:YTImageNamed(@"youtube_outline/image_24pt") style:0 handler:^ {
+        [sheetController addAction:[%c(YTActionSheetAction) actionWithTitle:LOC(@"DOWNLOAD_COVER") iconImage:[al imageNamed:@"youtube_outline/image_24pt"] style:0 handler:^ {
             [self downloadCoverImage];
         }]];
 
