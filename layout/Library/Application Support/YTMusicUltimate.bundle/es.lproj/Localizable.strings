@@ -12,6 +12,10 @@
 "FORCE_PREMIUM_DESC" = "Activa forzosamente las funciones Premium.\nEsta opción también desactiva la pestaña Muestras";
 
 "PLAYER_SETTINGS" = "Opciones del reproductor";
+"DOWNLOAD_AUDIO" = "Descargar audio";
+"DOWNLOAD_AUDIO_DESC" = "Añade la opción de descargar audio pulsando el botón YTMUltimate en el reproductor";
+"DOWNLOAD_COVER" = "Descargar imagen de portada";
+"DOWNLOAD_COVER_DESC" = "Añade la opción de descargar la imagen de portada pulsando el botón YTMUltimate en el reproductor";
 "PLAYBACK_RATE_BUTTON" = "Mostrar botón de velocidad de reproducción";
 "PLAYBACK_RATE_BUTTON_DESC" = "Ajustar la velocidad de reproducción";
 "SELECTABLE_LYRICS" = "Selección de texto en letras";
@@ -28,10 +32,10 @@
 
 "SKIP_NONMUSIC_PARTS" = "SponsorBlock";
 "SKIP_NONMUSIC_PARTS_DESC" = "Salta secciones no musicales en videos musicales";
-"SB_BEHAVIOR" = "Behavior";
-"SB_SKIP" = "Skip";
-"SB_ASK" = "Ask";
-"SB_NOTIF_DURATION" = "Notification duration (sec)";
+"SB_BEHAVIOR" = "Comportamiento";
+"SB_SKIP" = "Saltar";
+"SB_ASK" = "Preguntar";
+"SB_NOTIF_DURATION" = "Duración de la notificación (seg)";
 
 "SEEK_BUTTONS" = "Sustituir siguiente/anterior por botones de avance y retroceso";
 "SEEK_TIME_FOOTER" = "Seleccione un tiempo de búsqueda en segundos\n\nPor defecto:\nBúsqueda hacia atrás = 10 seg.\nBúsqueda hacia adelante = 30 seg.\n\nSalto a la pista siguiente y anterior disponible pulsando prolongadamente los botones.";
@@ -61,6 +65,7 @@
 "SAMPLES" = "Muestras";
 "EXPLORE" = "Explorar";
 "LIBRARY" = "Biblioteca";
+"DOWNLOADS" = "Descargas";
 
 "TAB_SETTINGS" = "Configuración de pestañas";
 "REMOVE_TABBAR_LABELS" = "Sin etiquetas en la barra de pestañas";
@@ -68,6 +73,9 @@
 "HIDE_SAMPLES" = "Ocultar pestaña Muestras";
 "HIDE_EXPLORE" = "Ocultar pestaña Explorar";
 "HIDE_LIBRARY" = "Ocultar pestaña Biblioteca";
+"HIDE_DOWNLOADS" = "Ocultar pestaña Descargas";
+
+"CLEAR_CACHE" = "Borrar caché";
 
 "APPLY" = "Aplicar";
 "APPLY_DESC" = "Cierra la aplicación para aplicar los cambios";
@@ -91,18 +99,15 @@
 "DONT_RUSH" = "No hay que precipitarse";
 "DONT_RUSH_DESC" = "Es necesario reproducir la canción para extraer el enlace";
 "SELECT_ACTION" = "Seleccionar acción";
-"DOWNLOAD_AUDIO" = "Descargar audio";
-"DOWNLOAD_COVER" = "Descargar portada";
 "DOWNLOADING" = "Descargando";
 "OOPS" = "Oops\nalgo salió mal";
 "SAVED_TO_PHOTOS" = "Guardar en Fotos";
 "DONE" = "Hecho";
-"FOUND_SEGMENT" = "Found offtopic segment";
-"SEGMENT_SKIPPED" = "Offtopic has been skipped";
-"SKIP" = "Skip";
-"UNSKIP" = "Unskip";
+"FOUND_SEGMENT" = "Se encontró un segmento fuera de tema";
+"SEGMENT_SKIPPED" = "Se ha omitido Offtopic";
+"SKIP" = "Saltar";
+"UNSKIP" = "No saltar";
 
-"DOWNLOADS" = "Descargas";
 "EMPTY" = "El contenido que descargue se mostrará aquí";
 "REMOVE_ALL" = "Eliminar todo";
 "SHARE_ALL" = "Compartir todo";
@@ -110,3 +115,5 @@
 "DELETE_MESSAGE" = "¿Estás seguro de que quieres eliminar %@?";
 "ALL_DOWNLOADS" = "todas las descargas"; //keep it lowercase
 "DELETE" = "Eliminar";
+
+"WORKAROUND_REMINDER" = "Si se encuentra en un país donde las funciones premium no están disponibles, es recomendable activar la opción de activación premium forzada.\n\Puedes gestionar esta opción más adelante en YTMusicUltimate → %@ → %@.\n\n¿Quieres habilitar la opción %@ ahora?";
