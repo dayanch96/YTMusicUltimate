@@ -30,12 +30,12 @@
 "AUDIO" = "歌曲";
 "VIDEO" = "视频";
 
-"SKIP_NONMUSIC_PARTS" = "SponsorBlock";
+"SKIP_NONMUSIC_PARTS" = "拦截推广";
 "SKIP_NONMUSIC_PARTS_DESC" = "跳过音乐影片中不属于歌曲的片段";
-"SB_BEHAVIOR" = "Behavior";
-"SB_SKIP" = "Skip";
-"SB_ASK" = "Ask";
-"SB_NOTIF_DURATION" = "Notification duration (sec)";
+"SB_BEHAVIOR" = "行为操作";
+"SB_SKIP" = "跳过";
+"SB_ASK" = "询问";
+"SB_NOTIF_DURATION" = "通知持续时间(秒)";
 
 "SEEK_BUTTONS" = "用“快进/快退”按钮替换“上一曲/下一曲”";
 "SEEK_TIME_FOOTER" = "选择跳过时间(秒)\n\n默认:\n快退 = 10秒\n快进 = 30秒\n\n长按按钮可跳到下一曲和上一曲";
@@ -103,10 +103,10 @@
 "OOPS" = "哎呀\n出现了一些问题";
 "SAVED_TO_PHOTOS" = "已保存到照片";
 "DONE" = "完成";
-"FOUND_SEGMENT" = "Found offtopic segment";
-"SEGMENT_SKIPPED" = "Offtopic has been skipped";
-"SKIP" = "Skip";
-"UNSKIP" = "Unskip";
+"FOUND_SEGMENT" = "发现题外话片段";
+"SEGMENT_SKIPPED" = "题外话已被跳过";
+"SKIP" = "跳过";
+"UNSKIP" = "不跳过";
 
 "EMPTY" = "下载的内容将显示在此处";
 "REMOVE_ALL" = "删除所有音频";
