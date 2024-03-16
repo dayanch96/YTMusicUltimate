@@ -2,27 +2,12 @@
 #import <Foundation/Foundation.h>
 #import <dlfcn.h>
 #import <rootless.h>
+#import "Source/Prefs/Localization.h"
 
 #define YT_BUNDLE_ID @"com.google.ios.youtubemusic"
 #define YT_BUNDLE_NAME @"YouTubeMusic"
 #define YT_NAME @"YouTube Music"
 #define YTMULoginAlert @"YTMULoginAlert"
-#define LOC(x) [tweakBundle localizedStringForKey:x value:nil table:nil]
-
-NSBundle *YTMusicUltimateBundle() {
-    static NSBundle *bundle = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSString *tweakBundlePath = [[NSBundle mainBundle] pathForResource:@"YTMusicUltimate" ofType:@"bundle"];
-        if (tweakBundlePath)
-            bundle = [NSBundle bundleWithPath:tweakBundlePath];
-        else
-            bundle = [NSBundle bundleWithPath:ROOT_PATH_NS("/Library/Application Support/YTMusicUltimate.bundle")];
-    });
-    return bundle;
-}
-
-NSBundle *tweakBundle = YTMusicUltimateBundle();
 
 @interface YTAlertView : UIView
 @property (nonatomic, copy, readwrite) NSString *title;
