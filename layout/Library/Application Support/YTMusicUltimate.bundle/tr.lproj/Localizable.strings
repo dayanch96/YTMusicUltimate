@@ -8,14 +8,14 @@
 "NO_ADS_DESC" = "Uygulama içi reklamları kaldırır";
 "BACKGROUND_PLAYBACK" = "Arka planda oynatma";
 "BACKGROUND_PLAYBACK_DESC" = "Arka planda oynatma özelliğini etkinleştirir";
-"FORCE_PREMIUM" = "Force enable premium";
-"FORCE_PREMIUM_DESC" = "Forcibly enables premium features.\nThis option also disables Samples tab";
+"FORCE_PREMIUM" = "Premium'u zorla etkinleştir";
+"FORCE_PREMIUM_DESC" = "Premium özellikleri zorla etkinleştirir.\nBu seçenek aynı zamanda Sana Özel sekmesini devre dışı bırakır";
 
 "PLAYER_SETTINGS" = "Oynatıcı ayarları";
-"DOWNLOAD_AUDIO" = "Download audio";
-"DOWNLOAD_AUDIO_DESC" = "Adds the option to download audio by pressing the YTMUltimate button in the player";
-"DOWNLOAD_COVER" = "Download cover image";
-"DOWNLOAD_COVER_DESC" = "Adds the option to download cover image by pressing the YTMUltimate button in the player";
+"DOWNLOAD_AUDIO" = "Ses indir";
+"DOWNLOAD_AUDIO_DESC" = "Oynatıcıdaki YTMUltimate butonuna basarak ses indirme özelliğini ekler";
+"DOWNLOAD_COVER" = "Albüm resmi indir";
+"DOWNLOAD_COVER_DESC" = "Oynatıcıdaki YTMUltimate butonuna basarak albüm resmi indirme özelliğini ekler";
 "PLAYBACK_RATE_BUTTON" = "Oynatma hızı düğmesini göster";
 "PLAYBACK_RATE_BUTTON_DESC" = "Oynatma hızını ayarla";
 "SELECTABLE_LYRICS" = "Şarkı sözleri metin seçimi";
@@ -24,18 +24,18 @@
 "VOLBAR_DESC" = "Oynatıcıya bir ses çubuğu ekler";
 "NO_AUTORADIO" = "Radyoyu devre dışı bırak";
 "NO_AUTORADIO_DESC" = "Kesintisiz müzik özelliğini kaldırır";
-"SKIP_CONTENT_WARNING" = "Skip content warning";
-"SKIP_CONTENT_WARNING_DESC" = "Skips warnings about potentially harmful content";
+"SKIP_CONTENT_WARNING" = "İçerik uyarısını atla";
+"SKIP_CONTENT_WARNING_DESC" = "Potansiyel zararlı içerik uyarılarını atlar";
 "AV_DEFAULT_MODE" = "Varsayılan oynatma modu";
 "AUDIO" = "Şarkı";
 "VIDEO" = "Video";
 
 "SKIP_NONMUSIC_PARTS" = "SponsorBlock";
 "SKIP_NONMUSIC_PARTS_DESC" = "Müzik videolarında müzik olmayan bölümleri atlar";
-"SB_BEHAVIOR" = "Behavior";
-"SB_SKIP" = "Skip";
-"SB_ASK" = "Ask";
-"SB_NOTIF_DURATION" = "Notification duration (sec)";
+"SB_BEHAVIOR" = "Davranış";
+"SB_SKIP" = "Atla";
+"SB_ASK" = "Sor";
+"SB_NOTIF_DURATION" = "Bildirim süresi (saniye)";
 
 "SEEK_BUTTONS" = "Önceki ve Sonraki düğmelerini Hızlı ileri ve Geri Sar düğmeleriyle değiştir";
 "SEEK_TIME_FOOTER" = "Sarma süresini seçiniz\n\Varsayılanlar:\nGeri Sar = 10 sn.\nHızlı ileri = 30 sn.\n\nButonlara uzun basılarak sonraki ve önceki parçalara geçebilirsiniz.";
@@ -65,7 +65,7 @@
 "SAMPLES" = "Sana Özel";
 "EXPLORE" = "Keşfet";
 "LIBRARY" = "Kitaplık";
-"DOWNLOADS" = "Downloads";
+"DOWNLOADS" = "İndirilenler";
 
 "TAB_SETTINGS" = "Sekme çubuğu";
 "REMOVE_TABBAR_LABELS" = "Etiketsiz sekme çubukları";
@@ -73,9 +73,9 @@
 "HIDE_SAMPLES" = "Sana Özel Sekmesini Gizle";
 "HIDE_EXPLORE" = "Keşfet Sekmesini Gizle";
 "HIDE_LIBRARY" = "Kitaplık Sekmesini Gizle";
-"HIDE_DOWNLOADS" = "Hide Downloads tab";
+"HIDE_DOWNLOADS" = "İndirilenler Sekmesini Gizle";
 
-"CLEAR_CACHE" = "Clear cache";
+"CLEAR_CACHE" = "Önbelleği temizle";
 
 "APPLY" = "Uygula";
 "APPLY_DESC" = "Değişiklikleri uygulamak için uygulamayı kapatır.";
@@ -96,24 +96,24 @@
 "YES" = "Evet";
 "REGIONAL_RESTRICTION" = "YouTube Music, ülkende kısıtlanmış gibi görünüyor.\n\nYouTube Music'e erişim sağlamak için lütfen VPN kullan.";
 
-"DONT_RUSH" = "Don't rush brilliance";
-"DONT_RUSH_DESC" = "Required to play the song to extract the link";
-"SELECT_ACTION" = "Select Action";
-"DOWNLOADING" = "Downloading";
-"OOPS" = "Oops\nsomething went wrong";
-"SAVED_TO_PHOTOS" = "Saved to Photos";
-"DONE" = "Done";
-"FOUND_SEGMENT" = "Found offtopic segment";
-"SEGMENT_SKIPPED" = "Offtopic has been skipped";
-"SKIP" = "Skip";
-"UNSKIP" = "Unskip";
+"DONT_RUSH" = "Mükemmellik aceleye gelmez";
+"DONT_RUSH_DESC" = "İndirmeyi başlatmak için şarkıyı çalmak gerkekli";
+"SELECT_ACTION" = "Eylem Seç";
+"DOWNLOADING" = "İndiriliyor";
+"OOPS" = "Tüh\nbir şeyler ters gitti";
+"SAVED_TO_PHOTOS" = "Fotoğraflar'a kaydedildi";
+"DONE" = "Bitti";
+"FOUND_SEGMENT" = "Konu dışı bölüm bulundu";
+"SEGMENT_SKIPPED" = "Konu dışı kısım atlandı";
+"SKIP" = "Atla";
+"UNSKIP" = "Atlama";
 
-"EMPTY" = "Content you download will show here";
-"REMOVE_ALL" = "Remove all audios";
-"SHARE_ALL" = "Share all audios";
-"PREPARING" = "Preparing...";
-"DELETE_MESSAGE" = "Are you sure you want to delete %@?";
-"ALL_DOWNLOADS" = "all download audios"; //keep it lowercase
-"DELETE" = "Delete";
+"EMPTY" = "İndirdiğiniz içerikler burada gözükecek";
+"REMOVE_ALL" = "Tüm sesleri kaldır";
+"SHARE_ALL" = "Tüm sesleri paylaş";
+"PREPARING" = "Hazırlanıyor...";
+"DELETE_MESSAGE" = "Bunu silmek istediğine emin misin: %@?";
+"ALL_DOWNLOADS" = "tüm indirilmiş sesler"; //keep it lowercase
+"DELETE" = "Sil";
 
-"WORKAROUND_REMINDER" = "If you are in a country where premium features are not available, it is advisable to activate the forced premium activation option.\n\nYou can manage this option later in YTMusicUltimate → %@ → %@.\n\nDo you want to enable %@ option now?";
+"WORKAROUND_REMINDER" = "Eğer premium özelliklerin olmadığı bir ülkedeysen, premium'u zorla seçeneğinin aktive edilmesi tavsiye edilmektedir..\n\nBu özelliği daha sonra buradan yönetebilirsin: YTMusicUltimate → %@ → %@.\n\n%@ özelliğini aktive etmek ister misin?";
