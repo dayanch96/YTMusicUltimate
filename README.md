@@ -18,6 +18,14 @@ Add __[https://ginsu.dev/repo](https://ginsu.dev/repo)__ to your favorite instal
 
 (arm.deb version for Rootful and arm64.deb version for Rootless devices)
 
+## How to build a YTMusicUltimate IPA by yourself using Github actions
+
+1. Fork this repository using the fork button on the top right.
+2. On your forked repository, go to Repository Settings > Actions, enable Read and Write permissions.
+3. Go to the Actions tab on your forked repo, click on "Build and Release YTMusicUltimate" located on the left side.
+4. Click "Run workflow" button located on the right side. Provide a URL for a decrypted YTMusic ipa(Providing YTMusic IPA is prohibited, you must find the IPA by yourself, don't ask for one). Click "Run workflow" again.
+5. You can download the tweaked IPA from the releases section of your repo after the build finishes.
+
 ## How to build the package by yourself on your device
 1. Install __[Theos](https://theos.dev/docs/installation)__
 2. Clone this repo __[using git](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)__
