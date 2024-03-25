@@ -31,7 +31,7 @@
 "VIDEO" = "Vaizdas";
 
 "SKIP_NONMUSIC_PARTS" = "SponsorBlock";
-"SKIP_NONMUSIC_PARTS_DESC" = "Muzikiniuose vaizdo klipuose praleidžiami su muzika nesusiję skyriai";
+"SKIP_NONMUSIC_PARTS_DESC" = "Muzikiniuose vaizdo klipuose praleidžiamas su muzika nesusijęs turinys";
 "SB_BEHAVIOR" = "Elgsena";
 "SB_SKIP" = "Praleisti";
 "SB_ASK" = "Klausti";
