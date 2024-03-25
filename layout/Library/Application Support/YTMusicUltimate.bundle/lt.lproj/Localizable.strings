@@ -21,7 +21,7 @@
 "SELECTABLE_LYRICS" = "Teksto pasirinkimas";
 "SELECTABLE_LYRICS_DESC" = "Įgalinti teksto pasirinkimą dainų žodžiams";
 "VOLBAR" = "Garsumo juosta";
-"VOLBAR_DESC" = "Įtraukti garsumo juosta grotuve";
+"VOLBAR_DESC" = "Įtraukti garsumo juostą grotuve";
 "NO_AUTORADIO" = "Išjungti radiją";
 "NO_AUTORADIO_DESC" = "Išjungti begalinės muzikos funkciją";
 "SKIP_CONTENT_WARNING" = "Praleisti įspėjimą apie turinį";
@@ -55,9 +55,9 @@
 "HIDE_HISTORY_BUTTON" = "Paslėpti istorijos mygtuką";
 "HIDE_HISTORY_BUTTON_DESC" = "Naršymo juostoje paslepia istorijos mygtuką";
 "HIDE_CAST_BUTTON" = "Paslėpti \"Cast\" mygtuką";
-"HIDE_CAST_BUTTON_DESC" = "Naršymo juostoje paslepia mygtuką \"Cast\"";
-"HIDE_FILTER_BUTTON" = "Panaikinti rūšiavimo filtro mygtuką";
-"HIDE_FILTER_BUTTON_DESC" = "Panaikina Bibliotekos/Atsisiuntimų filtro mygtuką iš navigacijos juostos";
+"HIDE_CAST_BUTTON_DESC" = "Naršymo juostoje paslepia \"Cast\" mygtuką";
+"HIDE_FILTER_BUTTON" = "Paslėpti rūšiavimo filtro mygtuką";
+"HIDE_FILTER_BUTTON_DESC" = "Navigacijos juostoje paslepia Bibliotekos/Atsisiuntimų filtro mygtuką";
 
 "TABBAR_SETTINGS" = "Kortelių juostos nustatymai";
 "STARTUP_TAB" = "Pradžios kortelė";
@@ -73,7 +73,7 @@
 "HIDE_SAMPLES" = "Nerodyti Pavyzdžių koretelės";
 "HIDE_EXPLORE" = "Nerodyti Naršymo kortelės";
 "HIDE_LIBRARY" = "Nerodyti Bibliotekos kortelės";
-"HIDE_DOWNLOADS" = "Neordyti Atsisiuntimų kortelės";
+"HIDE_DOWNLOADS" = "Nerodyti Atsisiuntimų kortelės";
 
 "CLEAR_CACHE" = "Išvalyti talpyklą";
 
