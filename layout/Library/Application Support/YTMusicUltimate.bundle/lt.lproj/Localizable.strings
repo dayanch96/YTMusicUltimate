@@ -8,8 +8,8 @@
 "NO_ADS_DESC" = "Pašalinti programoje esančias reklamas";
 "BACKGROUND_PLAYBACK" = "Foninis atkūrimas";
 "BACKGROUND_PLAYBACK_DESC" = "Įjungti foninį atkūrimą";
-"FORCE_PREMIUM" = "Force enable premium";
-"FORCE_PREMIUM_DESC" = "Forcibly enables premium features.\nThis option also disables Samples tab";
+"FORCE_PREMIUM" = "Priverstinai įjungti premium funkcijas";
+"FORCE_PREMIUM_DESC" = "Priverstinai įjungia premium funcijas.\nŠis nustatymas panaikina Pavyzdžių kotelę";
 
 "PLAYER_SETTINGS" = "Grotuvo nustatymai";
 "DOWNLOAD_AUDIO" = "Atsisiųsti muziką";
