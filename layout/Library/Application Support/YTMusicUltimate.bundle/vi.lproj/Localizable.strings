@@ -1,47 +1,47 @@
 "SETTINGS" = "Cài đặt";
 "ENABLED" = "Kích hoạt";
 "ENABLED_DESC" = "Kích hoạt năng của tài khoản Premium: không quảng cáo, phát trong nền...";
-"RESTART_FOOTER" = "Restart the app to apply changes";
+"RESTART_FOOTER" = "Khởi động lại ứng dụng để áp dụng các thay đổi";
 
-"PREMIUM_SETTINGS" = "Premium options";
-"NO_ADS" = "No ads";
-"NO_ADS_DESC" = "Removes ads in the app";
-"BACKGROUND_PLAYBACK" = "Background playback";
-"BACKGROUND_PLAYBACK_DESC" = "Activates background playback";
-"FORCE_PREMIUM" = "Force enable premium";
-"FORCE_PREMIUM_DESC" = "Forcibly enables premium features.\nThis option also disables Samples tab";
+"PREMIUM_SETTINGS" = "Tuỳ chọn Premium";
+"NO_ADS" = "Không quảng cáo";
+"NO_ADS_DESC" = "Loại bỏ quảng cáo trong ứng dụng";
+"BACKGROUND_PLAYBACK" = "Phát nhạc trong nền";
+"BACKGROUND_PLAYBACK_DESC" = "Kích hoạt phát nhạc trong nền";
+"FORCE_PREMIUM" = "Bắt buộc bật Premium";
+"FORCE_PREMIUM_DESC" = "Buộc bật các tính năng Premium.\nTùy chọn này cũng vô hiệu hóa Tab Đoạn nhạc";
 
-"PLAYER_SETTINGS" = "Player options";
-"DOWNLOAD_AUDIO" = "Download audio";
-"DOWNLOAD_AUDIO_DESC" = "Adds the option to download audio by pressing the YTMUltimate button in the player";
-"DOWNLOAD_COVER" = "Download cover image";
-"DOWNLOAD_COVER_DESC" = "Adds the option to download cover image by pressing the YTMUltimate button in the player";
+"PLAYER_SETTINGS" = "Tuỳ chọn trình phát nhạc";
+"DOWNLOAD_AUDIO" = "Tải Audio";
+"DOWNLOAD_AUDIO_DESC" = "Thêm tùy chọn tải xuống âm thanh bằng cách nhấn nút YTMUltimate trong trình phát";
+"DOWNLOAD_COVER" = "Tải Ảnh";
+"DOWNLOAD_COVER_DESC" = "Thêm tùy chọn tải xuống ảnh bìa bằng cách nhấn nút YTMUltimate trong trình phát";
 "PLAYBACK_RATE_BUTTON" = "Hiện nút chỉnh tốc độ phát";
 "PLAYBACK_RATE_BUTTON_DESC" = "Tùy chỉnh tốc độ phát";
 "SELECTABLE_LYRICS" = "Lựa chọn lời bài hát";
 "SELECTABLE_LYRICS_DESC" = "Kích hoạt khả năng lựa chọn và sao chép lời bài hát";
 "VOLBAR" = "Thanh âm lượng";
 "VOLBAR_DESC" = "Thêm thanh âm lượng vào trình phát nhạc";
-"NO_AUTORADIO" = "Disable radio";
-"NO_AUTORADIO_DESC" = "Disables endless music feature";
-"SKIP_CONTENT_WARNING" = "Skip content warning";
-"SKIP_CONTENT_WARNING_DESC" = "Skips warnings about potentially harmful content";
-"AV_DEFAULT_MODE" = "Default playback mode";
+"NO_AUTORADIO" = "Vô hiệu hoá Radio";
+"NO_AUTORADIO_DESC" = "Vô hiệu hóa tính năng âm nhạc Radio";
+"SKIP_CONTENT_WARNING" = "Bỏ qua cảnh báo nội dung";
+"SKIP_CONTENT_WARNING_DESC" = "Bỏ qua cảnh báo về nội dung có thể gây hại";
+"AV_DEFAULT_MODE" = "Chế độ phát lại mặc định";
 "AUDIO" = "Audio";
 "VIDEO" = "Video";
 
 "SKIP_NONMUSIC_PARTS" = "SponsorBlock";
-"SKIP_NONMUSIC_PARTS_DESC" = "Skips non-music sections in music videos";
+"SKIP_NONMUSIC_PARTS_DESC" = "Bỏ qua các phần không phải âm nhạc video";
 "SB_BEHAVIOR" = "Behavior";
 "SB_SKIP" = "Skip";
 "SB_ASK" = "Ask";
-"SB_NOTIF_DURATION" = "Notification duration (sec)";
+"SB_NOTIF_DURATION" = "Thời lượng thông báo (giây)";
 
-"SEEK_BUTTONS" = "Replace next/previous with forward and backward buttons";
-"SEEK_TIME_FOOTER" = "Select a seek time in seconds\n\nDefaults:\nSeek backward = 10 sec.\nSeek forward = 30 sec.\n\nSkip to the next and previous tracks available by long-pressing the buttons.";
-"DEFAULT" = "Default";
+"SEEK_BUTTONS" = "Thay thế các nút Next/Previous bằng các nút Forward và Backward";
+"SEEK_TIME_FOOTER" = "Chọn thời gian tìm kiếm tính bằng giây\n\nMặc định:\nTua lùi = 10 giây.\nTua tiến = 30 giây.\n\nChuyển tới các bản nhạc tiếp theo và trước đó có sẵn bằng cách nhấn và giữ các nút.";
+"DEFAULT" = "Mặc định";
 
-"THEME_SETTINGS" = "Theme options";
+"THEME_SETTINGS" = "Tuỳ chọn giao diẹn";
 "OLED_DARK_THEME" = "Chế độ tối OLED";
 "OLED_DARK_THEME_DESC" = "Kích hoạt chế độ tối OLED";
 "OLED_DARK_KEYBOARD" = "Bàn phím tối OLED";
@@ -49,71 +49,67 @@
 "LOW_CONTRAST" = "Độ tương phản thấp";
 "LOW_CONTRAST_DESC" = "Giảm độ tương phản của chữ và các nút ấn";
 
-"NAVBAR_SETTINGS" = "Navigation bar options";
-"DONT_STICK_HEADERS" = "Dont stick headers";
-"DONT_STICK_HEADERS_DESC" = "Unsticks pinned at the top of the screen panels";
-"HIDE_HISTORY_BUTTON" = "Hide history button";
-"HIDE_HISTORY_BUTTON_DESC" = "Hides history button in the navigation bar";
-"HIDE_CAST_BUTTON" = "Hide cast button";
-"HIDE_CAST_BUTTON_DESC" = "Hides cast button in the navigation bar";
-"HIDE_FILTER_BUTTON" = "Remove sort filter button";
-"HIDE_FILTER_BUTTON_DESC" = "Removes Library/Downloads filter button from the navigation bar";
+"NAVBAR_SETTINGS" = "Tuỳ chọn thanh điều hướng";
+"DONT_STICK_HEADERS" = "Không gắn tiêu đề";
+"DONT_STICK_HEADERS_DESC" = "Không gắn tiêu đề ở trên cùng của màn hình";
+"HIDE_HISTORY_BUTTON" = "Ẩn nút lịch sử";
+"HIDE_HISTORY_BUTTON_DESC" = "Ẩn nút lịch sử trong thanh điều hướng";
+"HIDE_CAST_BUTTON" = "Ẩn nút Cast";
+"HIDE_CAST_BUTTON_DESC" = "Ẩn nút Cast trong thanh điều hướng";
+"HIDE_FILTER_BUTTON" = "Xóa nút bộ lọc sắp xếp";
+"HIDE_FILTER_BUTTON_DESC" = "Xóa nút bộ lọc Library/Downloads";
 
-"TABBAR_SETTINGS" = "Tab bar options";
-"STARTUP_TAB" = "Startup tab";
-"SAMPLES" = "Samples";
-"HOME" = "Home";
-"EXPLORE" = "Explore";
-"LIBRARY" = "Library";
-"DOWNLOADS" = "Downloads";
+"TABBAR_SETTINGS" = "Tuỳ chọn Tab Bar";
+"STARTUP_TAB" = "Tab Khởi động";
+"SAMPLES" = "Đoạn nhạc";
+"HOME" = "Trang chủ";
+"EXPLORE" = "Khám phá";
+"LIBRARY" = "Thư viện";
+"DOWNLOADS" = "Tải xuống";
 
-"TAB_SETTINGS" = "Tab settings";
-"REMOVE_TABBAR_LABELS" = "No tab bar labels";
-"HIDE_HOME" = "Hide Home tab";
-"HIDE_SAMPLES" = "Hide Samples tab";
-"HIDE_EXPLORE" = "Hide Explore tab";
-"HIDE_LIBRARY" = "Hide Library tab";
-"HIDE_DOWNLOADS" = "Hide Downloads tab";
+"TAB_SETTINGS" = "Cài đặt Tab Bar";
+"REMOVE_TABBAR_LABELS" = "Không hiển thị tên Tab";
+"HIDE_HOME" = "Ẩn Tab Trang chủ";
+"HIDE_SAMPLES" = "Ẩn Tab Đoạn nhạc";
+"HIDE_EXPLORE" = "Ẩn Tab Khám phá";
+"HIDE_LIBRARY" = "Ẩn Tab Thư viện";
+"HIDE_DOWNLOADS" = "Ẩn Tab Tải xuống";
 
-"CLEAR_CACHE" = "Clear cache";
+"CLEAR_CACHE" = "Xoá bộ nhớ tạm";
 
 "APPLY" = "Áp dụng";
 "APPLY_DESC" = "Đóng ứng dụng để áp dụng các thay đổi";
 
-"LINKS" = "Link";
-"TWITTER" = "Follow %@ on Twitter";
-"TWITTER_DESC" = "Theo dõi tôi để cập nhật các thay đổi";
+"LINKS" = "Liên Kết";
+"TWITTER" = "Theo dõi %@ trên Twitter";
+"TWITTER_DESC" = "Truy cập để kiểm tra bản cập nhật";
 "DISCORD" = "Vào Discord";
 "DISCORD_DESC" = "Báo cáo lỗi và yêu cầu tính năng mới";
 "SOURCE_CODE" = "Mã nguồn";
 "SOURCE_CODE_DESC" = "Kiểm tra mã nguồn";
 
-"CLOSE" = "Close";
-"WARNING" = "Warning";
-"LOGIN_INFO" = "App restart required after successful signing into Google account";
-"APPLY_MESSAGE" = "This action will close YouTube Music to apply changes. Are you sure?";
-"CANCEL" = "Cancel";
-"YES" = "Yes";
-"REGIONAL_RESTRICTION" = "Looks like YouTube Music restricted in your country.\n\n Please use VPN to get access to YouTube Music.";
+"CLOSE" = "Đóng";
+"WARNING" = "Cảnh báo";
+"LOGIN_INFO" = "Yêu cầu khởi động lại ứng dụng sau khi đăng nhập thành công vào tài khoản Google";
+"APPLY_MESSAGE" = "Hành động này YouTube Music sẽ đóng để áp dụng các thay đổi \nBạn có chắc không?";
+"CANCEL" = "Huỷ";
+"YES" = "Có";
+"REGIONAL_RESTRICTION" = "Có vẻ như YouTube Music bị hạn chế ở quốc gia của bạn.\n\n Vui lòng sử dụng VPN để có quyền truy cập vào YouTube Music.";
 
-"DONT_RUSH" = "Don't rush brilliance";
-"DONT_RUSH_DESC" = "Required to play the song to extract the link";
-"SELECT_ACTION" = "Select Action";
-"DOWNLOADING" = "Downloading";
-"OOPS" = "Oops\nsomething went wrong";
-"SAVED_TO_PHOTOS" = "Saved to Photos";
-"DONE" = "Done";
-"FOUND_SEGMENT" = "Found offtopic segment";
-"SEGMENT_SKIPPED" = "Offtopic has been skipped";
-"SKIP" = "Skip";
-"UNSKIP" = "Unskip";
+"DONT_RUSH" = "Đừng vội vàng";
+"DONT_RUSH_DESC" = "Bắt buộc phải phát bài hát để trích xuất link";
+"SELECT_ACTION" = "Chọn hành động";
+"DOWNLOADING" = "Đang tải";
+"OOPS" = "Rất tiếc\đã xảy ra lỗi";
+"SAVED_TO_PHOTOS" = "Đã lưu vào Ảnh";
+"DONE" = "Xong";
 
-"EMPTY" = "Content you download will show here";
-"REMOVE_ALL" = "Remove all audios";
-"SHARE_ALL" = "Share all audios";
-"PREPARING" = "Preparing...";
-"DELETE_MESSAGE" = "Are you sure you want to delete %@?";
-"ALL_DOWNLOADS" = "all download audios"; //keep it lowercase
-"DELETE" = "Delete";
+"EMPTY" = "Nội dung bạn tải xuống sẽ hiển thị ở đây";
+"REMOVE_ALL" = "Xóa tất cả âm thanh";
+"SHARE_ALL" = "Chia sẻ tất cả âm thanh";
+"PREPARING" = "Đang chuẩn bị...";
+"DELETE_MESSAGE" = "Bạn có chắc chắn muốn xóa %@?";
+"ALL_DOWNLOADS" = "tất cả âm thanh tải xuống"; //keep it lowercase
+"DELETE" = "Xoá";
 
-"WORKAROUND_REMINDER" = "If you are in a country where premium features are not available, it is advisable to activate the forced premium activation option.\n\nYou can manage this option later in YTMusicUltimate → %@ → %@.\n\nDo you want to enable %@ option now?";
+"WORKAROUND_REMINDER" = "Nếu bạn đang ở một quốc gia không có sẵn các tính năng cao cấp thì bạn nên kích hoạt tùy chọn kích hoạt cao cấp bắt buộc.\n\nBạn có thể quản lý tùy chọn này sau trong YTMusicUltimate → %@ → %@.\n\nBạn có muốn bật không tùy chọn %@ bây giờ?
