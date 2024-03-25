@@ -37,7 +37,7 @@
 "SB_ASK" = "Klausti";
 "SB_NOTIF_DURATION" = "Pranešimo trukmė (sek)";
 
-"SEEK_BUTTONS" = "Pakeisti kitas/buvęs mygtukais į priekį ir atgal";
+"SEEK_BUTTONS" = "Pakeisti mygtukus kitas/buvęs mygtukais sukti į priekį/atgal";
 "SEEK_TIME_FOOTER" = "Pasirinkti pasukimo laiką sekundėmis\n\nNumatytieji:\nSukti atgal = 10 sek.\nSukti į priekį = 30 sek.";
 "DEFAULT" = "Numatytasis";
 
