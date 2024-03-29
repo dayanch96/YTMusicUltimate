@@ -5,14 +5,9 @@ name: Build and Release YTMusicUltimate
 
 on:
   workflow_dispatch:
-    inputs:
-      sdk_version:
-        description: "iOS SDK version to be used during build (don't change it if you don't know what you are doing)"
-        default: "16.2"
-        required: true
-        type: string   
+    inputs: 
       decrypted_youtube_music_url:
-        description: "The direct URL to the decrypted YouTube Music ipa (I recommend using Dropbox, Google Drive is causing errors)"
+        description: "The direct URL to the decrypted YouTube Music ipa (Upload a decrypted .ipa file to Dropbox and input its URL here.)"
         default: ""
         required: true
         type: string    
@@ -54,7 +49,7 @@ jobs:
         id: SDK
         uses: actions/cache@v4.0.1
         env:
-          cache-name: iOS-${{ inputs.sdk_version }}-SDK
+          cache-name: iOS-${{ "16.2" }}-SDK
         with:
           path: theos/sdks/
           key: ${{ env.cache-name }}
@@ -65,7 +60,7 @@ jobs:
         run: |
           git clone --quiet -n --depth=1 --filter=tree:0 https://github.com/arichorn/sdks/
           cd sdks
-          git sparse-checkout set --no-cone iPhoneOS${{ inputs.sdk_version }}.sdk
+          git sparse-checkout set --no-cone iPhoneOS${{ "16.2" }}.sdk
           git checkout
           mv *.sdk $THEOS/sdks
         env:
