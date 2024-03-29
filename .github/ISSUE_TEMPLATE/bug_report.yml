@@ -34,7 +34,7 @@ body:
         **To find and attach your crashlog:**
         1. Open the Analytics & Improvements section of Settings on the device.
         2. Tap Analytics Data.
-        3. Locate the log for your app. The log name starts with YouTubeMusic_<DateTime>.
+        3. Locate the log for your app. The log name starts with YouTubeMusic_(DateTime).
         4. Select the desired log.
         5. Tap the Share icon, save it in the Files app, then zip saved file.
       placeholder: |
