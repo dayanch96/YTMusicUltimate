@@ -18,13 +18,23 @@ Add __[https://ginsu.dev/repo](https://ginsu.dev/repo)__ to your favorite instal
 
 (arm.deb version for Rootful and arm64.deb version for Rootless devices)
 
+* **Sideloading:**
+  We no longer provide a sideloading IPA but you can build one yourself, keep reading:
+
 ## How to build a YTMusicUltimate IPA by yourself using Github actions
 
 1. Fork this repository using the fork button on the top right.
 2. On your forked repository, go to Repository Settings > Actions, enable Read and Write permissions.
-3. Go to the Actions tab on your forked repo, click on "Build and Release YTMusicUltimate" located on the left side.
-4. Click "Run workflow" button located on the right side. Provide a URL for a decrypted YTMusic ipa(Providing YTMusic IPA is prohibited, you must find the IPA by yourself, don't ask for one). Click "Run workflow" again.
-5. You can download the tweaked IPA from the releases section of your repo after the build finishes.
+3. Go to the Actions tab on your forked repo, click on "Build and Release YTMusicUltimate" located on the left side. Click "Run workflow" button located on the right side.
+4. Provide a URL for a decrypted YTMusic IPA. ***ANY OTHER EXTENSION WON'T WORK, find a decrypted .IPA and upload into a file provider i.e DROPBOX***
+5. Click "Run workflow" again. You can download the tweaked IPA from the releases section of your repo after the build finishes. (**Go to your forked repo and add /releases to the url i.e https://github.com/YOURUSERNAME/YTMusicUltimate/releases**)
+
+## IPA building troubleshooting(I can't build the IPA/Github action fails/I can't find the releases section etc.)
+
+99.9% of the time, the culprit is the IPA URL you provided. You HAVE TO provide a decryped IPA. It cannot be any other extension, it has to be a **.ipa**. Find the decrypted IPA(no we can't help you, use your googling skills or give up), upload it to Dropbox, give the URL to the github action. It'll work, pinky promise.
+
+If the github action works and you cannot find the final ipa, you need to add /releases to the url of your forked repository. Its probably something like this: https://github.com/YOURUSERNAME/YTMusicUltimate/releases replace the YOURUSERNAME part with your username. It may seem invisible but if the github action is successful, ipa is there.
+
 
 ## How to build the package by yourself on your device
 1. Install __[Theos](https://theos.dev/docs/installation)__
