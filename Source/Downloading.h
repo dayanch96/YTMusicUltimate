@@ -75,14 +75,6 @@
 @property (nonatomic, weak, readwrite) YTMWatchViewController *parentViewController;
 @end
 
-@interface YTAlertView : UIView
-@property (nonatomic, copy, readwrite) NSString *title;
-@property (nonatomic, copy, readwrite) NSString *subtitle;
-+ (instancetype)infoDialog;
-+ (instancetype)confirmationDialogWithAction:(void (^)(void))action actionTitle:(NSString *)actionTitle;
-- (void)show;
-@end
-
 // Add new button to YTM player action bar
 // Credits to @BandarHL
 @interface YTCommonColorPalette : NSObject
