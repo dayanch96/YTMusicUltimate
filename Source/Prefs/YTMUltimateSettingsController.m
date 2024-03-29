@@ -1,5 +1,4 @@
 #import "YTMUltimateSettingsController.h"
-#import "Localization.h"
 
 @implementation YTMUltimateSettingsController
 
@@ -73,7 +72,7 @@
     }
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     switch (section) {
         case 0:
             return 1;
@@ -88,11 +87,13 @@
     }
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
-    } else {
+    }
+
+    else {
         for (UIView *subview in cell.contentView.subviews) {
             [subview removeFromSuperview];
         }
@@ -101,30 +102,47 @@
     NSMutableDictionary *YTMUltimateDict = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"]];
 
     if (indexPath.section == 0) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell0"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"masterSection"];
+
         cell.textLabel.text = LOC(@"ENABLED");
         cell.textLabel.adjustsFontSizeToFitWidth = YES;
         cell.textLabel.textColor = [UIColor colorWithRed:230/255.0 green:75/255.0 blue:75/255.0 alpha:255/255.0];
         cell.imageView.image = [UIImage systemImageNamed:@"power"];
         cell.imageView.tintColor = [UIColor colorWithRed:230/255.0 green:75/255.0 blue:75/255.0 alpha:255/255.0];
 
-        UISwitch *masterSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+        ABCSwitch *masterSwitch = [[NSClassFromString(@"ABCSwitch") alloc] init];
         masterSwitch.onTintColor = [UIColor colorWithRed:230/255.0 green:75/255.0 blue:75/255.0 alpha:255/255.0];
         [masterSwitch addTarget:self action:@selector(toggleMasterSwitch:) forControlEvents:UIControlEventValueChanged];
         masterSwitch.on = [YTMUltimateDict[@"YTMUltimateIsEnabled"] boolValue];
         cell.accessoryView = masterSwitch;
-    } else if (indexPath.section == 1) {
-        NSArray *sectionTitles = @[LOC(@"PREMIUM_SETTINGS"), LOC(@"PLAYER_SETTINGS"), LOC(@"THEME_SETTINGS"), LOC(@"NAVBAR_SETTINGS"), LOC(@"TABBAR_SETTINGS")];
-        NSArray *sectionImages = @[@"flame", @"play.rectangle", @"paintbrush", @"sidebar.trailing", @"dock.rectangle"];
-        
-        if (indexPath.row >= 0 && indexPath.row < sectionTitles.count) {
-            cell.textLabel.text = sectionTitles[indexPath.row];
-            cell.detailTextLabel.numberOfLines = 0;
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            NSString *imageName = sectionImages[indexPath.row];
-            cell.imageView.image = [UIImage systemImageNamed:imageName];
-        }
-    } else if (indexPath.section == 2) {
+
+        return cell;
+    }
+
+    if (indexPath.section == 1) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"settingsSection"];
+
+        NSArray *settingsData = @[
+            @{@"title": LOC(@"PREMIUM_SETTINGS"), @"image": @"flame"},
+            @{@"title": LOC(@"PLAYER_SETTINGS"), @"image": @"play.rectangle"},
+            @{@"title": LOC(@"THEME_SETTINGS"), @"image": @"paintbrush"},
+            @{@"title": LOC(@"NAVBAR_SETTINGS"), @"image": @"sidebar.trailing"},
+            @{@"title": LOC(@"TABBAR_SETTINGS"), @"image": @"dock.rectangle"}
+        ];
+
+        NSDictionary *settingData = settingsData[indexPath.row];
+
+        cell.textLabel.text = settingData[@"title"];
+        cell.detailTextLabel.numberOfLines = 0;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.imageView.image = [UIImage systemImageNamed:settingData[@"image"]];
+
+        return cell;
+    }
+
+    if (indexPath.section == 2) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cacheSection"];
+
         cell.textLabel.text = LOC(@"CLEAR_CACHE");
 
         UILabel *cache = [[UILabel alloc] init];
@@ -134,21 +152,16 @@
         cache.textAlignment = NSTextAlignmentRight;
         [cache sizeToFit];
 
-        // dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        //     NSString *cacheSize = [self getCacheSize];
-
-        //     dispatch_async(dispatch_get_main_queue(), ^{
-        //         cache.text = cacheSize;
-                
-        //     });
-        // });
-
         cell.accessoryView = cache;
         cell.imageView.image = [UIImage systemImageNamed:@"trash"];
         cell.imageView.tintColor = [UIColor redColor];
-    } else if (indexPath.section == 3) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell3"];
-        
+
+        return cell;
+    }
+
+    if (indexPath.section == 3) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"linkSection"];
+
         NSArray *settingsData = @[
             @{@"text": [NSString stringWithFormat:LOC(@"TWITTER"), @"Ginsu"],  @"detail": LOC(@"TWITTER_DESC"), @"image": @"ginsu-24@2x"},
             @{@"text": [NSString stringWithFormat:LOC(@"TWITTER"), @"Dayanch96"], @"detail": LOC(@"TWITTER_DESC"), @"image": @"dayanch96-24@2x"},
@@ -164,11 +177,14 @@
         cell.detailTextLabel.text = settingData[@"detail"];
         cell.detailTextLabel.numberOfLines = 0;
 
-        NSString *imageName = settingData[@"image"];
-        UIImage *image = [UIImage imageWithContentsOfFile:[YTMusicUltimateBundle() pathForResource:imageName ofType:@"png" inDirectory:@"icons"]];
+        UIImage *image = [UIImage imageWithContentsOfFile:[YTMusicUltimateBundle() pathForResource:settingData[@"image"] ofType:@"png" inDirectory:@"icons"]];
         cell.imageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
-    } return cell;
+
+        return cell;
+    }
+
+    return cell;
 }
 
 - (NSString *)getCacheSize {
@@ -193,7 +209,7 @@
     return indexPath.section == 0 ? NO : YES;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 1) {
         NSArray *controllers = @[[PremiumSettingsController class],
                                  [PlayerSettingsController class],
