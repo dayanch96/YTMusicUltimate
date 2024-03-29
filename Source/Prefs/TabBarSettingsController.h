@@ -1,4 +1,5 @@
 #import "UIKit/UIKit.h"
+#import "Localization.h"
 
 @interface OtherSettingsController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView* tableView;

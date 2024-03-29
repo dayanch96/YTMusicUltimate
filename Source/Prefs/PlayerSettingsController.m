@@ -1,5 +1,4 @@
 #import "PlayerSettingsController.h"
-#import "Localization.h"
 
 @implementation PlayerSettingsController
 
@@ -80,7 +79,7 @@
         cell.detailTextLabel.numberOfLines = 0;
         cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
 
-        UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectZero];
+        ABCSwitch *switchControl = [[NSClassFromString(@"ABCSwitch") alloc] init];
         switchControl.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
         [switchControl addTarget:self action:@selector(toggleSwitch:) forControlEvents:UIControlEventValueChanged];
         switchControl.tag = indexPath.row;
@@ -112,7 +111,7 @@
             cell.detailTextLabel.numberOfLines = 0;
             cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
 
-            UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectZero];
+            ABCSwitch *switchControl = [[NSClassFromString(@"ABCSwitch") alloc] init];
             switchControl.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
             [switchControl addTarget:self action:@selector(toggleSBSwitch:) forControlEvents:UIControlEventValueChanged];
             switchControl.tag = indexPath.row;
@@ -162,7 +161,7 @@
             cell.textLabel.text = LOC(@"SEEK_BUTTONS");
             cell.textLabel.numberOfLines = 0;
 
-            UISwitch *seekButtons = [[UISwitch alloc] initWithFrame:CGRectZero];
+            ABCSwitch *seekButtons = [[NSClassFromString(@"ABCSwitch") alloc] init];
             seekButtons.onTintColor = [UIColor colorWithRed:30.0/255.0 green:150.0/255.0 blue:245.0/255.0 alpha:1.0];
             [seekButtons addTarget:self action:@selector(toggleSeekButtons:) forControlEvents:UIControlEventValueChanged];
             seekButtons.on = [YTMUltimateDict[@"seekButtons"] boolValue];
