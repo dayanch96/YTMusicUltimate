@@ -211,13 +211,6 @@
     NSURL *audioURL = [documentsURL URLByAppendingPathComponent:[NSString stringWithFormat:@"YTMusicUltimate/%@", self.audioFiles[indexPath.row]]];
     NSURL *coverURL = [documentsURL URLByAppendingPathComponent:[NSString stringWithFormat:@"YTMusicUltimate/%@.png", [self.audioFiles[indexPath.row] stringByDeletingPathExtension]]];
 
-    // UITextField *textField = [[UITextField alloc] init];
-    // textField.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
-    // textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    // textField.borderStyle = UITextBorderStyleRoundedRect;
-    // textField.text = [self.audioFiles[indexPath.row] stringByDeletingPathExtension];
-    // textField.placeholder = [self.audioFiles[indexPath.row] stringByDeletingPathExtension];
-
     UITextView *textView = [[UITextView alloc] init];
     textView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.15];
     textView.layer.cornerRadius = 3.0;
@@ -375,14 +368,7 @@
     NSURL *documentsURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
     NSURL *audiosFolder = [documentsURL URLByAppendingPathComponent:@"YTMusicUltimate"];
 
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil
-                                                                   message:[NSString stringWithFormat:LOC(@"DELETE_MESSAGE"), LOC(@"ALL_DOWNLOADS")]
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-
-    [alert addAction:[UIAlertAction actionWithTitle:LOC(@"CANCEL") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-    }]];
-
-    [alert addAction:[UIAlertAction actionWithTitle:LOC(@"DELETE") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+    YTAlertView *alertView = [NSClassFromString(@"YTAlertView") confirmationDialogWithAction:^{
         BOOL audiosRemoved = [[NSFileManager defaultManager] removeItemAtURL:audiosFolder error:nil];
 
         if (audiosRemoved) {
@@ -393,9 +379,11 @@
                 [self.tableView reloadData];
             });
         }
-    }]];
-
-    [self presentViewController:alert animated:YES completion:nil];
+    }
+    actionTitle:LOC(@"DELETE")];
+    alertView.title = @"YTMusicUltimate";
+    alertView.subtitle = [NSString stringWithFormat:LOC(@"DELETE_MESSAGE"), LOC(@"ALL_DOWNLOADS")];
+    [alertView show];
 }
 
 @end
