@@ -174,13 +174,20 @@
         shareAction.image = [UIImage systemImageNamed:@"square.and.arrow.up"];
         shareAction.backgroundColor = [UIColor systemBlueColor];
 
+        UIContextualAction *renameAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+            [self renameFileForIndexPath:indexPath];
+            completionHandler(YES);
+        }];
+        renameAction.image = [UIImage systemImageNamed:@"pencil"];
+        renameAction.backgroundColor = [UIColor systemOrangeColor];
+
         UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [self deleteFileForIndexPath:indexPath];
             completionHandler(YES);
         }];
         deleteAction.image = [UIImage systemImageNamed:@"trash"];
 
-        UISwipeActionsConfiguration *configuration = [UISwipeActionsConfiguration configurationWithActions:@[deleteAction, shareAction]];
+        UISwipeActionsConfiguration *configuration = [UISwipeActionsConfiguration configurationWithActions:@[deleteAction, renameAction, shareAction]];
         configuration.performsFirstActionWithFullSwipe = YES;
 
         return configuration;
@@ -197,6 +204,58 @@
     activityViewController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypePrint];
 
     [self presentViewController:activityViewController animated:YES completion:nil];
+}
+
+- (void)renameFileForIndexPath:(NSIndexPath *)indexPath {
+    NSURL *documentsURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    NSURL *audioURL = [documentsURL URLByAppendingPathComponent:[NSString stringWithFormat:@"YTMusicUltimate/%@", self.audioFiles[indexPath.row]]];
+    NSURL *coverURL = [documentsURL URLByAppendingPathComponent:[NSString stringWithFormat:@"YTMusicUltimate/%@.png", [self.audioFiles[indexPath.row] stringByDeletingPathExtension]]];
+
+    // UITextField *textField = [[UITextField alloc] init];
+    // textField.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
+    // textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    // textField.borderStyle = UITextBorderStyleRoundedRect;
+    // textField.text = [self.audioFiles[indexPath.row] stringByDeletingPathExtension];
+    // textField.placeholder = [self.audioFiles[indexPath.row] stringByDeletingPathExtension];
+
+    UITextView *textView = [[UITextView alloc] init];
+    textView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.15];
+    textView.layer.cornerRadius = 3.0;
+    textView.layer.borderWidth = 1.0;
+    textView.layer.borderColor = [[UIColor blackColor] colorWithAlphaComponent:0.5].CGColor;
+    textView.textColor = [UIColor whiteColor];
+    textView.text = [self.audioFiles[indexPath.row] stringByDeletingPathExtension];
+    textView.editable = YES;
+    textView.scrollEnabled = YES;
+    textView.textAlignment = NSTextAlignmentNatural;
+    textView.font = [UIFont systemFontOfSize:14.0];
+
+    YTAlertView *alertView = [NSClassFromString(@"YTAlertView") confirmationDialogWithAction:^{
+        NSString *newName = [textView.text stringByReplacingOccurrencesOfString:@"/" withString:@""];
+
+        NSURL *newAudioURL = [documentsURL URLByAppendingPathComponent:[NSString stringWithFormat:@"YTMusicUltimate/%@.mp3", newName]];
+        NSURL *newCoverURL = [documentsURL URLByAppendingPathComponent:[NSString stringWithFormat:@"YTMusicUltimate/%@.png", newName]];
+
+        NSError *error = nil;
+        [[NSFileManager defaultManager] moveItemAtURL:audioURL toURL:newAudioURL error:&error];
+        [[NSFileManager defaultManager] moveItemAtURL:coverURL toURL:newCoverURL error:&error];
+
+        if (!error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self reloadData];
+                [[NSClassFromString(@"YTMToastController") alloc] showMessage:LOC(@"DONE")];
+            });
+        }
+    }
+    actionTitle:LOC(@"RENAME")];
+    alertView.title = @"YTMusicUltimate";
+
+    UIView *customView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, alertView.frameForDialog.size.width - 50, 75)];
+    textView.frame = customView.frame;
+    [customView addSubview:textView];
+
+    alertView.customContentView = customView;
+    [alertView show];
 }
 
 - (void)deleteFileForIndexPath:(NSIndexPath *)indexPath {
@@ -235,7 +294,7 @@
         NSString *documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
 
         NSString *authorTitleString = [self.audioFiles[indexPath.row] stringByDeletingPathExtension];
-        NSArray *components = [authorTitleString componentsSeparatedByString:@" - "];
+        // NSArray *components = [authorTitleString componentsSeparatedByString:@" - "];
 
         AVAudioSession *audioSession = [AVAudioSession sharedInstance];
 
@@ -257,12 +316,12 @@
         AVMutableMetadataItem *titleMetadataItem = [AVMutableMetadataItem metadataItem];
         titleMetadataItem.key = AVMetadataCommonKeyTitle;
         titleMetadataItem.keySpace = AVMetadataKeySpaceCommon;
-        titleMetadataItem.value = components[1];
+        titleMetadataItem.value = authorTitleString;
 
-        AVMutableMetadataItem *authorMetadataItem = [AVMutableMetadataItem metadataItem];
-        authorMetadataItem.key = AVMetadataCommonKeyAlbumName; // It doesn't works
-        authorMetadataItem.keySpace = AVMetadataKeySpaceCommon;
-        authorMetadataItem.value = components[0];
+        // AVMutableMetadataItem *authorMetadataItem = [AVMutableMetadataItem metadataItem];
+        // authorMetadataItem.key = AVMetadataCommonKeyAlbumName; // It doesn't works
+        // authorMetadataItem.keySpace = AVMetadataKeySpaceCommon;
+        // authorMetadataItem.value = components[0];
 
         AVMutableMetadataItem *artworkMetadataItem = [AVMutableMetadataItem metadataItem];
         artworkMetadataItem.key = AVMetadataCommonKeyArtwork;
@@ -270,7 +329,7 @@
         UIImage *artworkImage = [UIImage imageWithContentsOfFile:[[documentsDirectory stringByAppendingPathComponent:@"YTMusicUltimate"] stringByAppendingPathComponent:imageName]];
         artworkMetadataItem.value = UIImagePNGRepresentation(artworkImage);
 
-        playerItem.externalMetadata = @[titleMetadataItem, authorMetadataItem, artworkMetadataItem];
+        playerItem.externalMetadata = @[titleMetadataItem, artworkMetadataItem];
 
         AVPlayerViewController *playerViewController = [[AVPlayerViewController alloc] init];
         AVPlayer *player = [AVPlayer playerWithPlayerItem:playerItem];
