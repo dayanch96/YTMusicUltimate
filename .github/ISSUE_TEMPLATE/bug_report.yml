@@ -5,6 +5,9 @@ body:
     attributes:
       label: Describe the bug
       description: Describe the issue in detail here, including any relevant context or background information. Be clear and concise.
+      placeholder: |
+        Enter your description here
+      render: yaml
     validations:
       required: true
 
