@@ -1,8 +1,8 @@
 ---
-name: "[Enter a brief issue title here]"
+name: Issue report
 about: This issue template is designed to help you report problems and suggest improvements
   for our project
-title: "[Bug]"
+title: "[Enter a brief issue title here]"
 labels: bug
 assignees: ''
 
