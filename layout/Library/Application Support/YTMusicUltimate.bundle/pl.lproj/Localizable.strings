@@ -91,6 +91,7 @@
 "CLOSE" = "Zamknij";
 "WARNING" = "Uwaga";
 "LOGIN_INFO" = "Restart aplikacji wymagany po pomyślnym logowaniu na konto Google.";
+"RETRY_LOGIN" = "Workaround activated.\n\nPlease try again.";
 "APPLY_MESSAGE" = "Ta akcja zamknie aplikację by wprowadzić zmiany. Jesteś pewny?";
 "CANCEL" = "Anuluj";
 "YES" = "Tak";
@@ -115,5 +116,6 @@
 "DELETE_MESSAGE" = "Jesteś pewien, że chcesz usunąć %@?";
 "ALL_DOWNLOADS" = "wszystkie pliki do pobrania"; //keep it lowercase
 "DELETE" = "Usuń";
+"RENAME" = "Rename";
 
 "WORKAROUND_REMINDER" = "If you are in a country where premium features are not available, it is advisable to activate the forced premium activation option.\n\nYou can manage this option later in YTMusicUltimate → %@ → %@.\n\nDo you want to enable %@ option now?";

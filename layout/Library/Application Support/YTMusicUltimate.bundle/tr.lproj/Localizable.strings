@@ -91,6 +91,7 @@
 "CLOSE" = "Kapat";
 "WARNING" = "Uyarı";
 "LOGIN_INFO" = "Google hesabına başarılı girişten sonra uygulamanın yeniden başlatılması gerekir";
+"RETRY_LOGIN" = "Çözüm yolu etkinleştirildi.\n\nLütfen tekrar dene.";
 "APPLY_MESSAGE" = "Bu eylem, değişikliklerin uygulanması için YouTube Music'i kapatacak. Devam etmek istediğine emin misin?";
 "CANCEL" = "İptal";
 "YES" = "Evet";
@@ -115,5 +116,6 @@
 "DELETE_MESSAGE" = "Bunu silmek istediğine emin misin: %@?";
 "ALL_DOWNLOADS" = "tüm indirilmiş sesler"; //keep it lowercase
 "DELETE" = "Sil";
+"RENAME" = "Kaydet";
 
 "WORKAROUND_REMINDER" = "Eğer premium özelliklerin olmadığı bir ülkedeysen, premium'u zorla seçeneğinin aktive edilmesi tavsiye edilmektedir..\n\nBu özelliği daha sonra buradan yönetebilirsin: YTMusicUltimate → %@ → %@.\n\n%@ özelliğini aktive etmek ister misin?";

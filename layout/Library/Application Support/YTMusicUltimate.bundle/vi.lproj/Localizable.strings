@@ -91,6 +91,7 @@
 "CLOSE" = "Đóng";
 "WARNING" = "Cảnh báo";
 "LOGIN_INFO" = "Yêu cầu khởi động lại ứng dụng sau khi đăng nhập thành công vào tài khoản Google";
+"RETRY_LOGIN" = "Workaround activated.\n\nPlease try again.";
 "APPLY_MESSAGE" = "Hành động này YouTube Music sẽ đóng để áp dụng các thay đổi \nBạn có chắc không?";
 "CANCEL" = "Huỷ";
 "YES" = "Có";
@@ -111,5 +112,6 @@
 "DELETE_MESSAGE" = "Bạn có chắc chắn muốn xóa %@?";
 "ALL_DOWNLOADS" = "tất cả âm thanh tải xuống"; //keep it lowercase
 "DELETE" = "Xoá";
+"RENAME" = "Rename";
 
 "WORKAROUND_REMINDER" = "Nếu bạn đang ở một quốc gia không có sẵn các tính năng cao cấp thì bạn nên kích hoạt tùy chọn kích hoạt cao cấp bắt buộc.\n\nBạn có thể quản lý tùy chọn này sau trong YTMusicUltimate → %@ → %@.\n\nBạn có muốn bật không tùy chọn %@ bây giờ?

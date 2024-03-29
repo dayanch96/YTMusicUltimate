@@ -91,6 +91,7 @@
 "CLOSE" = "يغلق";
 "WARNING" = "تحذير";
 "LOGIN_INFO" = "تم تسجيل الدخول بنجاح سيتم إعادة تشغيل البرنامج";
+"RETRY_LOGIN" = "Workaround activated.\n\nPlease try again.";
 "APPLY_MESSAGE" = "سيتم غلق البرنامج لتطبيق الاعدادات هل انت متأكد؟";
 "CANCEL" = "إلغاء";
 "YES" = "نعم, موافق";
@@ -115,5 +116,6 @@
 "DELETE_MESSAGE" = "هل انت متأكد انك تريد الحذف ؟";
 "ALL_DOWNLOADS" = "كل التحميلات";  //keep it lowercase
 "DELETE" = "حذف";
+"RENAME" = "Rename";
 
 "WORKAROUND_REMINDER" = "If you are in a country where premium features are not available, it is advisable to activate the forced premium activation option.\n\nYou can manage this option later in YTMusicUltimate → %@ → %@.\n\nDo you want to enable %@ option now?";

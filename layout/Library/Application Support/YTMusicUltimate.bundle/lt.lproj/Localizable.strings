@@ -91,6 +91,7 @@
 "CLOSE" = "Uždaryti";
 "WARNING" = "Įspėjimas";
 "LOGIN_INFO" = "App restart required after successful signing into Google account";
+"RETRY_LOGIN" = "Workaround activated.\n\nPlease try again.";
 "APPLY_MESSAGE" = "Atlikus šį veiksmą \"YouTube Music\" bus uždaryta, kad būtų galima taikyti pakeitimus. Ar esate tikri?";
 "CANCEL" = "Atšaukti";
 "YES" = "Taip";
@@ -115,5 +116,6 @@
 "DELETE_MESSAGE" = "Are you sure you want to delete %@?";
 "ALL_DOWNLOADS" = "all download audios"; //keep it lowercase
 "DELETE" = "Delete";
+"RENAME" = "Rename";
 
 "WORKAROUND_REMINDER" = "If you are in a country where premium features are not available, it is advisable to activate the forced premium activation option.\n\nYou can manage this option later in YTMusicUltimate → %@ → %@.\n\nDo you want to enable %@ option now?";

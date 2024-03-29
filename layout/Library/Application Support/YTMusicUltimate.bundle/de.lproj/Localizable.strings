@@ -91,6 +91,7 @@
 "CLOSE" = "Schließen";
 "WARNING" = "Warnung";
 "LOGIN_INFO" = "Nach erfolgreicher Anmeldung beim Google-Konto ist ein Neustart der App erforderlich";
+"RETRY_LOGIN" = "Workaround activated.\n\nPlease try again.";
 "APPLY_MESSAGE" = "Durch diese Aktion wird YouTube Music geschlossen, um die Änderungen zu übernehmen. Bist du sicher?";
 "CANCEL" = "Abbrechen";
 "YES" = "Ja";
@@ -115,5 +116,6 @@
 "DELETE_MESSAGE" = "Sind Sie sicher, dass Sie %@ löschen möchten ?";
 "ALL_DOWNLOADS" = "alle heruntergeladenen lieder"; //keep it lowercase
 "DELETE" = "Löschen";
+"RENAME" = "Rename";
 
 "WORKAROUND_REMINDER" = "Wenn Sie sich in einem Land befinden, in dem Premium-Funktionen nicht verfügbar sind, empfiehlt es sich, die Option zur erzwungenen Premium-Aktivierung zu aktivieren.\n\nSie können diese Option später in YTMusicUltimate → %@ → %@ verwalten.\n\nMöchten Sie sie aktivieren? %@ Option jetzt?";
