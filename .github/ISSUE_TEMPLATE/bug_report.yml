@@ -30,14 +30,15 @@ body:
       label: Crashlog
       description: |
         **Do not put text from crashlog, include zipped Crashlog_File.ips instead**
-      value: |
+
         **To find and attach your crashlog:**
         1. Open the Analytics & Improvements section of Settings on the device. See Share analytics, diagnostics, and usage information with Apple.
         2. Tap Analytics Data.
         3. Locate the log for your app. The log name starts with YouTubeMusic_<DateTime>.
         4. Select the desired log.
         5. Tap the Share icon, save it in the Files app, then zip saved file.
-        6. **Drag and drop your zip file below.**
+      placeholder: |
+        Drag and drop your Crashlog.zip here.
     validations:
       required: false
 
