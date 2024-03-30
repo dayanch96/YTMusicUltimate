@@ -54,6 +54,8 @@ body:
           required: true
         - label: Provided a detailed description of the problem and have filled in all required fields.
           required: true
+        - label: I have read the 'IPA Building Troubleshooting' section (Only for issues related to building the IPA file).
+          required: false
         - label: I did not answer truthfully to **ALL** the above checkboxes.
           required: false
         - label: By submitting this issue, **I confirm that I have filled in all the necessary fields and complied with the guidelines. Failure to comply may result in the issue being closed without discussion, and repeated violations may lead to restrict account from further participation.**
