@@ -90,7 +90,7 @@
 
 "CLOSE" =  "關閉";
 "LOGIN_INFO" = "成功登入 Google 帳戶後需要重新啟動應用程式";
-"RETRY_LOGIN" = "Workaround activated.\n\nPlease try again.";
+"RETRY_LOGIN" = "登入權限已修復\n\n請再次登入";
 "APPLY_MESSAGE" = "這個操作將關閉YouTube Music以套用變更，您確定要繼續嗎？";
 "CANCEL" = "取消";
 "YES" = "是";
@@ -116,6 +116,6 @@
 "DELETE_MESSAGE" = "您確定要刪除%@?";
 "ALL_DOWNLOADS" = "所有下載的音訊"; //keep it lowercase
 "DELETE" = "刪除";
-"RENAME" = "Rename";
+"RENAME" = "重新命名";
 
 "WORKAROUND_REMINDER" = "如果您所在的國家/地區沒有提供 Premium 功能，建議您強制啟用 Premium 功能選項。\n\n您稍後可以在 YTMusicUltimate → %@ → %@ 中啟用這個選項。\n\n您現在要 %@ 選項嗎？";
