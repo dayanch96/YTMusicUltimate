@@ -23,19 +23,19 @@ Add __[https://ginsu.dev/repo](https://ginsu.dev/repo)__ to your favorite instal
 
 ## How to build a YTMusicUltimate IPA by yourself using Github actions
 
-If this is not your first time, skip steps 1 and 2. Instead, click on the "Sync fork" button to get the latest version of the tweak before step 3.
+If this is your first time here, start from step 1. If you built a YTMU IPA before, skip steps 1 and 2. Instead, click on the "Sync fork" button to get the latest version of the tweak and continue through step 3.
 
 1. Fork this repository using the fork button on the top right.
 2. On your forked repository, go to Repository Settings > Actions, enable Read and Write permissions.
 3. Go to the Actions tab on your forked repo, click on "Build and Release YTMusicUltimate" located on the left side. Click "Run workflow" button located on the right side.
-4. Provide a URL for a decrypted YTMusic IPA. ***ANY OTHER EXTENSION WON'T WORK, find a decrypted .IPA and upload into a file provider i.e filebin.net or Dropbox***
-5. Click "Run workflow" again. You can download the tweaked IPA from the releases section of your repo after the build finishes. (**Go to your forked repo and add /releases to the url i.e https://github.com/YOURUSERNAME/YTMusicUltimate/releases**)
+4. Find a decrypted YTMusic .ipa file (we cannot provide you this due to legal reasons) and upload it to a file provider(filebin.net or Dropbox is recommended). Paste the url to the necessary field and click "Run workflow".
+5. Wait for the build to finish. You can download the tweaked IPA from the releases section of your forked repo. (If you can't find the releases section, go to your forked repo and add /releases to the url. i.e github.com/user/YTMusicUltimate/releases)
 
 ## IPA building troubleshooting(I can't build the IPA/Github action fails/I can't find the releases section etc.)
 
-99.9% of the time, the culprit is the IPA URL you provided. You HAVE TO provide a decryped IPA. It cannot be any other extension, it has to be a **.ipa**. Find the decrypted IPA(no we can't help you, use your googling skills or give up), upload it to filebin.net or Dropbox, give the URL to the github action. It'll work, pinky promise.
+99.9% of the time, the culprit is the IPA URL you provided. You HAVE TO provide a decryped IPA. It cannot be any other extension, it has to be a **.ipa** file. Find a decrypted YTMusic IPA(we can't help you with that), upload it to filebin.net or Dropbox, give the direct link to the GitHub action. If you find a working ipa and upload it properly, everything will start working perfectly, pinky promise.
 
-If the github action works and you cannot find the final ipa, you need to add /releases to the url of your forked repository. Its probably something like this: https://github.com/YOURUSERNAME/YTMusicUltimate/releases replace the YOURUSERNAME part with your username. It may seem invisible but if the github action is successful, ipa is there.
+If the github action works and you cannot find where you can download the result, you need to add /releases to the url of your forked repository. It'll probably look like this: https://github.com/YOURUSERNAME/YTMusicUltimate/releases, don't forget to replace the YOURUSERNAME part with your username. It may seem invisible but if the github action is successful, IPA will be there.
 
 
 ## How to build the package by yourself on your device
