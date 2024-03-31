@@ -1,108 +1,26 @@
-#import "Downloading.h"
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "FFMpegDownloader.h"
+#import "Headers/YTAssetLoader.h"
+#import "Headers/YTMActionSheetController.h"
+#import "Headers/YTMActionRowView.h"
+#import "Headers/YTIPlayerOverlayRenderer.h"
+#import "Headers/YTIPlayerOverlayActionSupportedRenderers.h"
+#import "Headers/YTMNowPlayingViewController.h"
+#import "Headers/YTPlayerView.h"
+#import "Headers/YTIThumbnailDetails_Thumbnail.h"
+#import "Headers/YTIFormatStream.h"
+#import "Headers/YTAlertView.h"
+
+#define BHButtonType 909
+#define STYLE_LIGHT_TEXT 15
+#define SIZE_DEFAULT 1
+#define buttonAccessibilityLabel @"BHDownloadButton"
 
 static BOOL YTMU(NSString *key) {
     NSDictionary *YTMUltimateDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"];
     return [YTMUltimateDict[key] boolValue];
 }
-
-// Downloading by long press
-/*%hook YTPlayerView
-%property (nonatomic, strong) FFMpegDownloader *ffmpeg;
-- (void)setOverlayView:(id)arg1 {
-    %orig;
-
-    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(prepareForDownloading:)];
-    longPress.minimumPressDuration = 0.3;
-    [self addGestureRecognizer:longPress];
-}
-
-%new
-- (void)prepareForDownloading:(UILongPressGestureRecognizer *)sender {
-    if (sender.state == UIGestureRecognizerStateBegan) {
-        YTPlayerViewController *parentVC = (YTPlayerViewController *)[self nearestViewController];
-        if (parentVC.playerResponse) {
-            NSString *title = parentVC.playerResponse.playerData.videoDetails.title;
-            NSString *author = parentVC.playerResponse.playerData.videoDetails.author;
-            NSString *urlStr = parentVC.playerResponse.playerData.streamingData.hlsManifestURL;
-
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LOC(@"SELECT_ACTION") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-
-            UIAlertAction *audioAction = [UIAlertAction actionWithTitle:LOC(@"DOWNLOAD_AUDIO") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                self.ffmpeg = [[FFMpegDownloader alloc] init];
-                self.ffmpeg.tempName = parentVC.contentVideoID;
-                self.ffmpeg.mediaName = [NSString stringWithFormat:@"%@ - %@", author, title];
-                self.ffmpeg.duration = round(parentVC.currentVideoTotalMediaTime);
-
-                NSData *manifestData = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlStr]];
-                NSString *manifestString = [[NSString alloc] initWithData:manifestData encoding:NSUTF8StringEncoding];
-
-                NSError *regexError = nil;
-                NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"#EXT-X-MEDIA:URI=\"(https://.*?/index.m3u8)\"" options:0 error:&regexError];
-
-                if (!regexError) {
-                    NSTextCheckingResult *match = [regex firstMatchInString:manifestString options:0 range:NSMakeRange(0, [manifestString length])];
-
-                    if (match && [match numberOfRanges] >= 2) {
-                        NSString *extractedURL = [manifestString substringWithRange:[match rangeAtIndex:1]];
-                        [self.ffmpeg downloadAudio:extractedURL];
-
-                        NSMutableArray *thumbnailsArray = parentVC.playerResponse.playerData.videoDetails.thumbnail.thumbnailsArray;
-                        YTIThumbnailDetails_Thumbnail *thumbnail = [thumbnailsArray lastObject];
-                        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:thumbnail.URL]];
-
-                        if (imageData) {
-                            NSURL *documentsURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-                            NSURL *coverURL = [documentsURL URLByAppendingPathComponent:[NSString stringWithFormat:@"YTMusicUltimate/%@ - %@.png", author, title]];
-                            [imageData writeToURL:coverURL atomically:YES];
-                        }
-                    }
-                } else {
-                    YTAlertView *alertView = [%c(YTAlertView) infoDialog];
-                    alertView.title = LOC(@"OOPS");
-                    alertView.subtitle = regexError.localizedDescription;
-                    [alertView show];
-                }
-            }];
-
-            UIAlertAction *photoAction = [UIAlertAction actionWithTitle:LOC(@"DOWNLOAD_COVER") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    hud.mode = MBProgressHUDModeIndeterminate;
-                });
-
-                NSMutableArray *thumbnailsArray = parentVC.playerResponse.playerData.videoDetails.thumbnail.thumbnailsArray;
-                YTIThumbnailDetails_Thumbnail *thumbnail = [thumbnailsArray lastObject];
-                NSString *thumbnailURL = [thumbnail.URL stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"w%u-h%u-", thumbnail.width, thumbnail.width] withString:@"w2048-h2048-"];
-
-                self.ffmpeg = [[FFMpegDownloader alloc] init];
-                [self.ffmpeg downloadImage:[NSURL URLWithString:thumbnailURL]];
-
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [hud hideAnimated:YES];
-                });
-            }];
-
-            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:LOC(@"CANCEL") style:UIAlertActionStyleCancel handler:nil];
-
-            [audioAction setValue:[UIColor colorWithRed:230/255.0 green:75/255.0 blue:75/255.0 alpha:255/255.0] forKey:@"titleTextColor"];
-            [photoAction setValue:[UIColor colorWithRed:230/255.0 green:75/255.0 blue:75/255.0 alpha:255/255.0] forKey:@"titleTextColor"];
-            [cancelAction setValue:[UIColor colorWithRed:230/255.0 green:75/255.0 blue:75/255.0 alpha:255/255.0] forKey:@"titleTextColor"];
-            [alertController addAction:audioAction];
-            [alertController addAction:photoAction];
-            [alertController addAction:cancelAction];
-
-            UIViewController *currentVC = [self nearestViewController];
-            [currentVC presentViewController:alertController animated:YES completion:nil];
-        } else {
-            YTAlertView *alertView = [%c(YTAlertView) infoDialog];
-            alertView.title = LOC(@"DONT_RUSH");
-            alertView.subtitle = LOC(@"DONT_RUSH_DESC");
-            [alertView show];
-        }
-    }
-}
-%end
-*/
 
 // Set action bar button icon
 %hook YTIIcon
@@ -177,8 +95,7 @@ static BOOL YTMU(NSString *key) {
 
 %new
 - (void)ytmuButtonAction:(MDCButton *)sender {
-    YTMNowPlayingViewController *parentVC = (YTMNowPlayingViewController *)[self nearestViewController];
-    YTPlayerResponse *playerResponse = parentVC.parentViewController.playerViewController.playerResponse;
+    YTPlayerResponse *playerResponse = self.parentResponder.parentViewController.playerViewController.playerResponse;
 
     if (playerResponse) {
         YTAssetLoader *al = [[%c(YTAssetLoader) alloc] initWithBundle:[NSBundle mainBundle]];
@@ -212,7 +129,7 @@ static BOOL YTMU(NSString *key) {
 
 %new
 - (void)downloadAudio {
-    YTMNowPlayingViewController *parentVC = (YTMNowPlayingViewController *)[self nearestViewController];
+    YTMNowPlayingViewController *parentVC = self.parentResponder;
     YTPlayerResponse *playerResponse = parentVC.parentViewController.playerViewController.playerResponse;
 
     NSString *title = [playerResponse.playerData.videoDetails.title stringByReplacingOccurrencesOfString:@"/" withString:@""];
@@ -262,7 +179,7 @@ static BOOL YTMU(NSString *key) {
         hud.mode = MBProgressHUDModeIndeterminate;
     });
 
-    YTMNowPlayingViewController *parentVC = (YTMNowPlayingViewController *)[self nearestViewController];
+    YTMNowPlayingViewController *parentVC = self.parentResponder;
     YTPlayerResponse *playerResponse = parentVC.parentViewController.playerViewController.playerResponse;
     NSMutableArray *thumbnailsArray = playerResponse.playerData.videoDetails.thumbnail.thumbnailsArray;
     YTIThumbnailDetails_Thumbnail *thumbnail = [thumbnailsArray lastObject];
