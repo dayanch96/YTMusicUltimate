@@ -1,7 +1,19 @@
-#import "SeekButtons.h"
+#import "Headers/YTMNowPlayingViewController.h"
+#import "Headers/YTMNowPlayingView.h"
+#import "Headers/YTAssetLoader.h"
+#import "Headers/Localization.h"
 
-static NSArray *seekTimes() {
-    return @[@10, @20, @30, @60];
+static NSInteger seekTime() {
+    NSDictionary *YTMUltimateDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"];
+
+    if (YTMUltimateDict && YTMUltimateDict[@"seekTime"]) {
+        NSInteger index = [YTMUltimateDict[@"seekTime"] integerValue];
+        NSArray *seekTimes = @[@0, @10, @20, @30, @60];
+
+        return [seekTimes[index] integerValue];
+    }
+
+    return 0;
 }
 
 static BOOL YTMU(NSString *key) {
@@ -9,120 +21,77 @@ static BOOL YTMU(NSString *key) {
     return [YTMUltimateDict[key] boolValue];
 }
 
-static NSInteger currentSeekTime() {
-    NSDictionary *YTMUltimateDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"];
-    return [YTMUltimateDict[@"seekTime"] integerValue];
-}
-
-@implementation UIView (NearestViewController)
-- (UIViewController *)nearestViewController {
-    UIResponder *responder = self.nextResponder;
-    while (responder) {
-        if ([responder isKindOfClass:[UIViewController class]]) {
-            return (UIViewController *)responder;
-        } responder = responder.nextResponder;
-    } return nil;
-}
-@end
-
-%hook YTMPlayerControlsView
-- (void)layoutSubviews {
+%hook YTMNowPlayingViewController
+- (void)viewDidLoad {
     %orig;
 
-    if (YTMU(@"YTMUltimateIsEnabled") && YTMU(@"seekButtons")) {
-        UIButton *prevButton = [self prevButton];
-        UIButton *nextButton = [self nextButton];
+    if (!YTMU(@"YTMUltimateIsEnabled") || !YTMU(@"seekButtons")) {
+        return;
+    }
 
-        NSSet *prevTargets = [prevButton allTargets];
-        for (id prevTarget in prevTargets) {
-            NSArray *actions = [prevButton actionsForTarget:prevTarget forControlEvent:UIControlEventTouchUpInside];
-            for (NSString *action in actions) {
-                if ([action isEqualToString:@"didTapPrevButton"]) {
-                    [prevButton removeTarget:prevTarget action:NSSelectorFromString(action) forControlEvents:UIControlEventTouchUpInside];
-                    [prevButton addTarget:prevTarget action:@selector(didTapSeekBackwardButton) forControlEvents:UIControlEventTouchUpInside];
-                }
-            }
-        }
+    YTMNowPlayingView *nowPlayingView = [self valueForKey:@"_nowPlayingView"];
 
-        NSSet *nextTargets = [nextButton allTargets];
-        for (id nextTarget in nextTargets) {
-            NSArray *actions = [nextButton actionsForTarget:nextTarget forControlEvent:UIControlEventTouchUpInside];
-            for (NSString *action in actions) {
-                if ([action isEqualToString:@"didTapNextButton"]) {
-                    [nextButton removeTarget:nextTarget action:NSSelectorFromString(action) forControlEvents:UIControlEventTouchUpInside];
-                    [nextButton addTarget:nextTarget action:@selector(didTapSeekForwardButton) forControlEvents:UIControlEventTouchUpInside];
-                }
-            }
-        }
+    if (nowPlayingView) {
+        YTMPlayerControlsView *controlsView = nowPlayingView.playerControlsView;
+
+        [controlsView.prevButton removeTarget:self action:@selector(didTapPrevButton) forControlEvents:UIControlEventTouchUpInside];
+        [controlsView.nextButton removeTarget:self action:@selector(didTapNextButton) forControlEvents:UIControlEventTouchUpInside];
+
+        [controlsView.prevButton addTarget:self action:@selector(didTapSeekBackwardButton) forControlEvents:UIControlEventTouchUpInside];
+        [controlsView.nextButton addTarget:self action:@selector(didTapSeekForwardButton) forControlEvents:UIControlEventTouchUpInside];
 
         UILongPressGestureRecognizer *longPressPrev = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressPrev:)];
         [longPressPrev setMinimumPressDuration:0.5];
-        [prevButton addGestureRecognizer:longPressPrev];
+        [controlsView.prevButton addGestureRecognizer:longPressPrev];
 
         UILongPressGestureRecognizer *longPressNext = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressNext:)];
         [longPressNext setMinimumPressDuration:0.5];
-        [nextButton addGestureRecognizer:longPressNext];
+        [controlsView.nextButton addGestureRecognizer:longPressNext];
 
+        NSInteger backValue = seekTime() == 0 ? 10 : seekTime();
+        NSInteger forwardValue = seekTime() == 0 ? 30 : seekTime();
 
-        NSString *backValue = @"10";
-        NSString *forwardValue = @"30";
+        YTAssetLoader *al = [[%c(YTAssetLoader) alloc] initWithBundle:[NSBundle mainBundle]];
 
-        if (currentSeekTime() != 0) {
-            NSArray *values = seekTimes();
-            NSInteger seekTime = currentSeekTime() - 1;
-            backValue = values[seekTime];
-            forwardValue = values[seekTime];
-        }
+        UIImage *backImage = [al imageNamed:[NSString stringWithFormat:@"ic_seek_back_%ld_40", backValue]];
+        UIImage *forwardImage = [al imageNamed:[NSString stringWithFormat:@"ic_seek_forward_%ld_40", forwardValue]];
 
-        NSString *appBundle = [[NSBundle mainBundle] bundlePath];
-        UIImage *backImage = [UIImage imageNamed:[NSString stringWithFormat:@"ic_seek_back_%@_40", backValue] inBundle:[NSBundle bundleWithPath:appBundle] compatibleWithTraitCollection:nil];
-        UIImage *forwardImage = [UIImage imageNamed:[NSString stringWithFormat:@"ic_seek_forward_%@_40", forwardValue] inBundle:[NSBundle bundleWithPath:appBundle] compatibleWithTraitCollection:nil];
-
-        [prevButton setImage:backImage forState:UIControlStateNormal];
-        [prevButton setImage:backImage forState:UIControlStateSelected];
-        [nextButton setImage:forwardImage forState:UIControlStateNormal];
-        [nextButton setImage:forwardImage forState:UIControlStateSelected];
+        [controlsView.prevButton setImage:backImage forState:UIControlStateNormal];
+        [controlsView.prevButton setImage:backImage forState:UIControlStateSelected];
+        [controlsView.nextButton setImage:forwardImage forState:UIControlStateNormal];
+        [controlsView.nextButton setImage:forwardImage forState:UIControlStateSelected];
     }
 }
 
-- (void)didTapSeekBackwardButton {
-    YTMU(@"YTMUltimateIsEnabled") && YTMU(@"seekButtons") ? [self didTapSeekBackwardButton] : %orig;
-}
+// - (void)didTapPrevButton {
+//     YTMU(@"YTMUltimateIsEnabled") && YTMU(@"seekButtons") ? [self didTapSeekBackwardButton] : %orig;
+// }
 
-- (void)didTapSeekForwardButton {
-    YTMU(@"YTMUltimateIsEnabled") && YTMU(@"seekButtons") ? [self didTapSeekForwardButton] : %orig;
-}
+// - (void)didTapNextButton {
+//     YTMU(@"YTMUltimateIsEnabled") && YTMU(@"seekButtons") ? [self didTapSeekForwardButton] : %orig;
+// }
 
-%new - (void)longPressPrev:(UILongPressGestureRecognizer *)gesture {
+%new
+- (void)longPressPrev:(UILongPressGestureRecognizer *)gesture {
     if (gesture.state == UIGestureRecognizerStateBegan) {
-        YTMNowPlayingViewController *parentVC = (YTMNowPlayingViewController *)[self nearestViewController];
-        if (parentVC && YTMU(@"YTMUltimateIsEnabled") && YTMU(@"seekButtons")) {
-            [parentVC didTapPrevButton];
-        }
+        [self didTapPrevButton];
     }
 }
 
-%new - (void)longPressNext:(UILongPressGestureRecognizer *)gesture {
+%new
+- (void)longPressNext:(UILongPressGestureRecognizer *)gesture {
     if (gesture.state == UIGestureRecognizerStateBegan) {
-        YTMNowPlayingViewController *parentVC = (YTMNowPlayingViewController *)[self nearestViewController];
-        if (parentVC && YTMU(@"YTMUltimateIsEnabled") && YTMU(@"seekButtons")) {
-            [parentVC didTapNextButton];
-        }
+        [self didTapNextButton];
     }
 }
-
 %end
 
 %hook YTColdConfig
 - (NSInteger)iosPlayerClientSharedConfigTransportControlsSeekForwardTime {
-    NSInteger seekTime = currentSeekTime();
-
-    return (seekTime == 0) ? %orig : [seekTimes()[seekTime - 1] integerValue];
+    return (seekTime() == 0) ? %orig : seekTime();
 }
 
 - (NSInteger)iosPlayerClientSharedConfigTransportControlsSeekBackwardTime {
-    NSInteger seekTime = currentSeekTime();
-
-    return (seekTime == 0) ? %orig : [seekTimes()[seekTime - 1] integerValue];
+    return (seekTime() == 0) ? %orig : seekTime();
 }
 %end
