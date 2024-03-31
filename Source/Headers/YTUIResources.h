@@ -1,5 +1,6 @@
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface YTUIResources : NSObject
-+ (UIImage *)youtubePremiumLogoWithPageStyle:(NSInteger)pageStyle;
++ (UIImage *)audioOutline;
++ (UIImage *)outlineImageWithColor:(UIColor *)imageColor;
 @end

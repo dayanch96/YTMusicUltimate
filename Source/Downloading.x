@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "FFMpegDownloader.h"
-#import "Headers/YTAssetLoader.h"
+#import "Headers/YTUIResources.h"
 #import "Headers/YTMActionSheetController.h"
 #import "Headers/YTMActionRowView.h"
 #import "Headers/YTIPlayerOverlayRenderer.h"
@@ -98,17 +98,15 @@ static BOOL YTMU(NSString *key) {
     YTPlayerResponse *playerResponse = self.parentResponder.parentViewController.playerViewController.playerResponse;
 
     if (playerResponse) {
-        YTAssetLoader *al = [[%c(YTAssetLoader) alloc] initWithBundle:[NSBundle mainBundle]];
-
         YTMActionSheetController *sheetController = [%c(YTMActionSheetController) musicActionSheetController];
         sheetController.sourceView = sender;
         [sheetController addHeaderWithTitle:LOC(@"SELECT_ACTION") subtitle:nil];
 
-        [sheetController addAction:[%c(YTActionSheetAction) actionWithTitle:LOC(@"DOWNLOAD_AUDIO") iconImage:[al imageNamed:@"yt_outline_audio_24pt"] style:0 handler:^ {
+        [sheetController addAction:[%c(YTActionSheetAction) actionWithTitle:LOC(@"DOWNLOAD_AUDIO") iconImage:[%c(YTUIResources) audioOutline] style:0 handler:^ {
             [self downloadAudio];
         }]];
 
-        [sheetController addAction:[%c(YTActionSheetAction) actionWithTitle:LOC(@"DOWNLOAD_COVER") iconImage:[al imageNamed:@"youtube_outline/image_24pt"] style:0 handler:^ {
+        [sheetController addAction:[%c(YTActionSheetAction) actionWithTitle:LOC(@"DOWNLOAD_COVER") iconImage:[%c(YTUIResources) outlineImageWithColor:[UIColor whiteColor]] style:0 handler:^ {
             [self downloadCoverImage];
         }]];
 
