@@ -1,4 +1,7 @@
-#include "Prefs/YTMDownloads.h"
+#import "Headers/YTMBrowseViewController.h"
+#import "Headers/YTPivotBarView.h"
+#import "Headers/YTIPivotBarSupportedRenderers.h"
+#import "Prefs/YTMDownloads.h"
 
 static BOOL YTMU(NSString *key) {
     NSDictionary *YTMUltimateDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"];
@@ -6,49 +9,6 @@ static BOOL YTMU(NSString *key) {
 }
 
 // https://gist.github.com/BandarHL/dce564ab717bed93d479fe849d654c75
-
-@interface YTMBrowseViewController: UIViewController
-@end
-
-@interface YTIFormattedString : NSObject
-+ (id)formattedStringWithString:(id)arg1;
-@end
-
-@interface YTIIcon : NSObject
-- (id)iconImageWithColor:(UIColor *)arg1;
-- (id)newIconImageWithColor:(id)arg1;
-@property(nonatomic) int iconType;
-@end
-
-@interface YTIBrowseEndpoint : NSObject
-@property(copy, nonatomic) NSString *browseId;
-@end
-
-@interface YTICommand : NSObject
-@property(retain, nonatomic) YTIBrowseEndpoint *browseEndpoint;
-@end
-
-@interface YTIPivotBarRenderer: NSObject
-@property (nonatomic, strong) NSMutableArray *itemsArray;
-@end
-
-@interface YTPivotBarView: UIView
-@property (nonatomic, strong, readwrite) YTIPivotBarRenderer *renderer;
-@end
-
-@interface YTIPivotBarItemRenderer : NSObject
-@property(retain, nonatomic) YTIIcon *icon; // @dynamic icon;
-@property(retain, nonatomic) YTICommand *navigationEndpoint; // @dynamic navigationEndpoint;
-@property(copy, nonatomic) NSString *pivotIdentifier;
-@property(retain, nonatomic) YTIFormattedString *title; // @dynamic title;
-@property(copy, nonatomic) NSData *trackingParams; // @dynamic trackingParams;
-@end
-
-@interface YTIPivotBarSupportedRenderers : NSObject
-@property(retain, nonatomic) YTIPivotBarItemRenderer *pivotBarItemRenderer;
-- (YTIPivotBarItemRenderer *)pivotBarItemRenderer;
-@end
-
 %hook YTMImageStyle
 - (UIImage *)pivotBarItemIconImageWithIconType:(int)type color:(UIColor *)color useNewIcons:(BOOL)isNew selected:(BOOL)isSelected {
 

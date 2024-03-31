@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 #include "Prefs/YTMUltimateSettingsController.h"
-#include "Prefs/Localization.h"
+#include "Headers/Localization.h"
 
 @interface YTMAccountButton : UIButton
 - (id)initWithTitle:(id)arg1 identifier:(id)arg2 icon:(id)arg3 actionBlock:(void (^)(BOOL finished))arg4;

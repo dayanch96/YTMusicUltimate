@@ -5,7 +5,7 @@
 #import "MobileFFmpeg/MobileFFmpeg.h"
 #import "MobileFFmpeg/MobileFFprobe.h"
 #import "MBProgressHUD/MBProgressHUD.h"
-#import "Prefs/Localization.h"
+#import "Headers/Localization.h"
 
 @interface FFMpegDownloader : NSObject <LogDelegate, StatisticsDelegate>
 @property (nonatomic, strong) MBProgressHUD *hud;
