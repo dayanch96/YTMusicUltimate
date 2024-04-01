@@ -2,7 +2,8 @@
 #import <Foundation/Foundation.h>
 #import <dlfcn.h>
 #import <rootless.h>
-#import "Source/Prefs/Localization.h"
+#import "Source/Headers/YTAlertView.h"
+#import "Source/Headers/Localization.h"
 
 #define YT_BUNDLE_ID @"com.google.ios.youtubemusic"
 #define YT_BUNDLE_NAME @"YouTubeMusic"
@@ -216,6 +217,7 @@ NSDictionary *replaceInfoDict(id self, SEL _cmd) {
 BOOL isFirstTime = YES;
 
 @interface InitWorkaround : UIViewController
+@property (nonatomic, copy) void (^completion)(void);
 @end
 
 @implementation InitWorkaround
@@ -233,13 +235,18 @@ BOOL isFirstTime = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         MSHookMessageEx(objc_getClass("NSBundle"), @selector(infoDictionary), (IMP)replaceInfoDict, (IMP *)&orig_infoDictionary);
 
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:^{
+            if (self.completion) {
+                self.completion();
+            }
+        }];
     });
 }
 
 @end
 
 @interface SFAuthenticationViewController : UIViewController
+- (void)remoteViewControllerWillDismiss:(id)remoteVC;
 @end
 
 %hook SFAuthenticationViewController
@@ -247,32 +254,26 @@ BOOL isFirstTime = YES;
     %orig;
 
     if (isFirstTime) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            MSHookMessageEx(objc_getClass("NSBundle"), @selector(infoDictionary), (IMP)replaceInfoDict, (IMP *)&orig_infoDictionary);
-
+        InitWorkaround *workaround = [[InitWorkaround alloc] init];
+        workaround.completion = ^{
             [self dismissViewControllerAnimated:YES completion:^{
-                isFirstTime = NO;
+                if ([self respondsToSelector:@selector(remoteViewControllerWillDismiss:)]) {
+                    [self performSelector:@selector(remoteViewControllerWillDismiss:)];
+                }
+
                 YTAlertView *alertView = [%c(YTAlertView) infoDialog];
                 alertView.title = LOC(@"WARNING");
                 alertView.subtitle = LOC(@"RETRY_LOGIN");
                 [alertView show];
             }];
-        });
+        };
+
+        [self presentViewController:workaround animated:YES completion:nil];
     }
 }
 %end
 
-@interface YTMFirstTimeSignInViewController : UIViewController
-@end
-
 %hook YTMFirstTimeSignInViewController
-- (void)viewDidAppear:(bool)arg1 {
-    %orig;
-
-    InitWorkaround *workaround = [[InitWorkaround alloc] init];
-    [self presentViewController:workaround animated:YES completion:nil];
-}
-
 - (void)viewDidDisappear:(bool)arg1 {
     %orig;
 
