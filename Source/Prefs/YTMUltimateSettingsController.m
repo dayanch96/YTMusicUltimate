@@ -177,7 +177,7 @@
         cell.detailTextLabel.text = settingData[@"detail"];
         cell.detailTextLabel.numberOfLines = 0;
 
-        UIImage *image = [UIImage imageWithContentsOfFile:[YTMusicUltimateBundle() pathForResource:settingData[@"image"] ofType:@"png" inDirectory:@"icons"]];
+        UIImage *image = [UIImage imageWithContentsOfFile:[NSBundle.ytmu_defaultBundle pathForResource:settingData[@"image"] ofType:@"png" inDirectory:@"icons"]];
         cell.imageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
 

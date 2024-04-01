@@ -16,7 +16,7 @@ static BOOL YTMU(NSString *key) {
     NSString *imageName = isSelected ? @"downloads_selected" : @"downloads";
     UIGraphicsImageRenderer *renderer = [[UIGraphicsImageRenderer alloc] initWithSize:CGSizeMake(24, 24)];
     UIImage *image = [renderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull rendererContext) {
-        UIImage *buttonImage = [UIImage imageWithContentsOfFile:[YTMusicUltimateBundle() pathForResource:imageName ofType:@"png" inDirectory:@"icons"]];
+        UIImage *buttonImage = [UIImage imageWithContentsOfFile:[NSBundle.ytmu_defaultBundle pathForResource:imageName ofType:@"png" inDirectory:@"icons"]];
         UIView *imageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
         UIImageView *buttonImageView = [[UIImageView alloc] initWithImage:buttonImage];
         buttonImageView.contentMode = UIViewContentModeScaleAspectFit;

@@ -111,7 +111,7 @@
 
     UIGraphicsImageRenderer *renderer = [[UIGraphicsImageRenderer alloc] initWithSize:CGSizeMake(24, 24)];
     UIImage *downloadsImage = [renderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull rendererContext) {
-        UIImage *buttonImage = [UIImage imageWithContentsOfFile:[YTMusicUltimateBundle() pathForResource:@"downloads" ofType:@"png" inDirectory:@"icons"]];
+        UIImage *buttonImage = [UIImage imageWithContentsOfFile:[NSBundle.ytmu_defaultBundle pathForResource:@"downloads" ofType:@"png" inDirectory:@"icons"]];
         UIView *imageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
         UIImageView *buttonImageView = [[UIImageView alloc] initWithImage:buttonImage];
         buttonImageView.contentMode = UIViewContentModeScaleAspectFit;
