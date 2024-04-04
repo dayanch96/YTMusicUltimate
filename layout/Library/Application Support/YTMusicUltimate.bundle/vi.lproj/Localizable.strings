@@ -114,4 +114,4 @@
 "DELETE" = "Xoá";
 "RENAME" = "Rename";
 
-"WORKAROUND_REMINDER" = "Nếu bạn đang ở một quốc gia không có sẵn các tính năng cao cấp thì bạn nên kích hoạt tùy chọn kích hoạt cao cấp bắt buộc.\n\nBạn có thể quản lý tùy chọn này sau trong YTMusicUltimate → %@ → %@.\n\nBạn có muốn bật không tùy chọn %@ bây giờ?
+"WORKAROUND_REMINDER" = "Nếu bạn đang ở một quốc gia không có sẵn các tính năng cao cấp thì bạn nên kích hoạt tùy chọn kích hoạt cao cấp bắt buộc.\n\nBạn có thể quản lý tùy chọn này sau trong YTMusicUltimate → %@ → %@.\n\nBạn có muốn bật không tùy chọn %@ bây giờ?";
