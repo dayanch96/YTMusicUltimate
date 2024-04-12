@@ -215,7 +215,7 @@
     textView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.15];
     textView.layer.cornerRadius = 3.0;
     textView.layer.borderWidth = 1.0;
-    textView.layer.borderColor = [[UIColor blackColor] colorWithAlphaComponent:0.5].CGColor;
+    textView.layer.borderColor = [[UIColor grayColor] colorWithAlphaComponent:0.5].CGColor;
     textView.textColor = [UIColor whiteColor];
     textView.text = [self.audioFiles[indexPath.row] stringByDeletingPathExtension];
     textView.editable = YES;
