@@ -1,6 +1,7 @@
 #import "Headers/YTPivotBarItemView.h"
-#import "Headers/YTPivotBarViewController.h"
 #import "Headers/YTIPivotBarRenderer.h"
+#import "Headers/YTMWatchViewController.h"
+#import "Headers/YTPivotBarViewController.h"
 #import "Headers/YTPlayabilityResolutionUserActionUIController.h"
 
 static BOOL YTMU(NSString *key) {
@@ -94,5 +95,19 @@ BOOL isTabSelected = NO;
 %hook YTPlayabilityResolutionUserActionUIController
 - (void)showConfirmAlert {
     YTMU(@"YTMUltimateIsEnabled") && YTMU(@"skipWarning") ? [self confirmAlertDidPressConfirm] : %orig;
+}
+%end
+
+%hook YTMWatchViewController
+- (void)playbackControllerStateDidChange {
+    %orig;
+
+    //Reset all miniplayer restrictions
+    if ([self respondsToSelector:@selector(resetMiniplayerRestrictions)]) {
+        [self resetMiniplayerRestrictions];
+    }
+
+    //Disable auto-pause when player minimized to miniplayer
+    [self setValue:@(NO) forKey:@"_pauseOnMinimize"];
 }
 %end
