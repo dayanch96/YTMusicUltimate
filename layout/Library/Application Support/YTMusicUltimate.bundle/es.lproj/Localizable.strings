@@ -91,7 +91,7 @@
 "CLOSE" = "Cerrar";
 "WARNING" = "Advertencia";
 "LOGIN_INFO" = "Es necesario reiniciar la aplicación después de iniciar sesión correctamente en la cuenta de Google";
-"RETRY_LOGIN" = "Workaround activated.\n\nPlease try again.";
+"RETRY_LOGIN" = "Solución alternativa activada.\n\nPor favor, inténtelo de nuevo.";
 "APPLY_MESSAGE" = "Esta acción cerrará YouTube Music para aplicar los cambios. ¿Estás seguro?";
 "CANCEL" = "Cancelar";
 "YES" = "Sí";
@@ -116,6 +116,6 @@
 "DELETE_MESSAGE" = "¿Estás seguro de que quieres eliminar %@?";
 "ALL_DOWNLOADS" = "todas las descargas"; //keep it lowercase
 "DELETE" = "Eliminar";
-"RENAME" = "Rename";
+"RENAME" = "Renombrar";
 
 "WORKAROUND_REMINDER" = "Si se encuentra en un país donde las funciones premium no están disponibles, es recomendable activar la opción de activación premium forzada.\n\Puedes gestionar esta opción más adelante en YTMusicUltimate → %@ → %@.\n\n¿Quieres habilitar la opción %@ ahora?";
