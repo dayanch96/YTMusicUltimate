@@ -13,9 +13,9 @@
 
 "PLAYER_SETTINGS" = "Ustawienia odtwarzania";
 "DOWNLOAD_AUDIO" = "Pobierz Audio";
-"DOWNLOAD_AUDIO_DESC" = "Adds the option to download audio by pressing the YTMUltimate button in the player";
+"DOWNLOAD_AUDIO_DESC" = "Dodaje opcję pobrania audio poprzez kliknięcie przycisku YTMusicUltimate w odtwarzaczu";
 "DOWNLOAD_COVER" = "Pobierz Okładkę";
-"DOWNLOAD_COVER_DESC" = "Adds the option to download cover image by pressing the YTMUltimate button in the player";
+"DOWNLOAD_COVER_DESC" = "Dodaje opcję pobrania okładki poprzez kliknięcie przycisku YTMusicUltimate w odtwarzaczu";
 "PLAYBACK_RATE_BUTTON" = "Pokaż przycisk kontroli prędkości";
 "PLAYBACK_RATE_BUTTON_DESC" = "Dostosuj prędkość odtwarzania";
 "SELECTABLE_LYRICS" = "Zaznaczanie tekstu utworu";
@@ -32,10 +32,10 @@
 
 "SKIP_NONMUSIC_PARTS" = "SponsorBlock";
 "SKIP_NONMUSIC_PARTS_DESC" = "Pomija nie-muzyczne kwestie w teledyskach";
-"SB_BEHAVIOR" = "Behavior";
-"SB_SKIP" = "Skip";
-"SB_ASK" = "Ask";
-"SB_NOTIF_DURATION" = "Notification duration (sec)";
+"SB_BEHAVIOR" = "Zachowanie";
+"SB_SKIP" = "Pomiń";
+"SB_ASK" = "Zapytaj";
+"SB_NOTIF_DURATION" = "Czas powiadomienia (sek.)";
 
 "SEEK_BUTTONS" = "Zamień przyciski następny/poprzedni na do przodu/do tyłu";
 "SEEK_TIME_FOOTER" = "Wybierz czas przewijania w sekundach\n\Domyślnie:\nW tył = 10 sek.\nW przód = 30 sek.\n\nPomijanie utworów do przodu/tyłu jest możliwe przy dłuższym przytrzymaniu przycisku przewijania.";
@@ -91,23 +91,23 @@
 "CLOSE" = "Zamknij";
 "WARNING" = "Uwaga";
 "LOGIN_INFO" = "Restart aplikacji wymagany po pomyślnym logowaniu na konto Google.";
-"RETRY_LOGIN" = "Workaround activated.\n\nPlease try again.";
+"RETRY_LOGIN" = "Obejście aktywowane.\n\nProszę, spróbuj ponownie.";
 "APPLY_MESSAGE" = "Ta akcja zamknie aplikację by wprowadzić zmiany. Jesteś pewny?";
 "CANCEL" = "Anuluj";
 "YES" = "Tak";
-"REGIONAL_RESTRICTION" = "Wygląda na to, że YT Music jest zablokowany w twoim kraju.\n\n Użyj VPN, by skorzystać z YT Music.";
+"REGIONAL_RESTRICTION" = "Wygląda na to, że YT Music jest zablokowany w twoim kraju.\n\nUżyj VPN, by skorzystać z YT Music.";
 
 "DONT_RUSH" = "Nie pośpieszaj ideału";
-"DONT_RUSH_DESC" = "Wymagane odpalenie piosenki, aby wyciągnąć link";
+"DONT_RUSH_DESC" = "Wymagane odtworzenie piosenki, aby wyciągnąć link";
 "SELECT_ACTION" = "Wybierz akcję";
 "DOWNLOADING" = "Pobieranie";
 "OOPS" = "Uups\ncoś poszło nie tak";
 "SAVED_TO_PHOTOS" = "Zapisane do Zdjęć";
 "DONE" = "Gotowe";
-"FOUND_SEGMENT" = "Found offtopic segment";
-"SEGMENT_SKIPPED" = "Offtopic has been skipped";
-"SKIP" = "Skip";
-"UNSKIP" = "Unskip";
+"FOUND_SEGMENT" = "Znaleziono niezwiązany segment";
+"SEGMENT_SKIPPED" = "Niezwiązany segment został pominięty";
+"SKIP" = "Pomiń";
+"UNSKIP" = "Cofnij pominięcie";
 
 "EMPTY" = "Pobrana zawartość wyświetli się tutaj";
 "REMOVE_ALL" = "Usuń wszystkie pliki audio";
@@ -116,6 +116,6 @@
 "DELETE_MESSAGE" = "Jesteś pewien, że chcesz usunąć %@?";
 "ALL_DOWNLOADS" = "wszystkie pliki do pobrania"; //keep it lowercase
 "DELETE" = "Usuń";
-"RENAME" = "Rename";
+"RENAME" = "Zmień nazwę";
 
-"WORKAROUND_REMINDER" = "If you are in a country where premium features are not available, it is advisable to activate the forced premium activation option.\n\nYou can manage this option later in YTMusicUltimate → %@ → %@.\n\nDo you want to enable %@ option now?";
+"WORKAROUND_REMINDER" = "Jeśli mieszkasz w kraju w którym usługi premium nie są dostępne, zaleca się włączenie opcji wymuszenia premium.\n\nMożesz zmienić tę opcję później w YTMusicUltimate → %@ → %@.\n\nCzy chcesz włączyć opcję %@ teraz?";
