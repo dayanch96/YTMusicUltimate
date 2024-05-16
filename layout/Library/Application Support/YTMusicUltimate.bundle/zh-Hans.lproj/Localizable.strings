@@ -1,17 +1,17 @@
 "SETTINGS" = "设置";
-"ENABLED" = "启用";
+"ENABLED" = "功能启用";
 "ENABLED_DESC" = "会员功能：去广告和背景播放等";
 "RESTART_FOOTER" = "重新启动App以应用设置更改";
 
-"PREMIUM_SETTINGS" = "高级功能选项";
+"PREMIUM_SETTINGS" = "高级功能";
 "NO_ADS" = "去广告";
 "NO_ADS_DESC" = "去除App中的广告";
 "BACKGROUND_PLAYBACK" = "后台播放";
 "BACKGROUND_PLAYBACK_DESC" = "开启后台播放功能";
 "FORCE_PREMIUM" = "强制启用Premium功能";
-"FORCE_PREMIUM_DESC" = "强制启用高级会员功能\n此选项还禁用“选段”选项卡";
+"FORCE_PREMIUM_DESC" = "强制启用高级会员功能\n此选项还禁用“选段”按钮";
 
-"PLAYER_SETTINGS" = "播放器选项";
+"PLAYER_SETTINGS" = "播放器项";
 "DOWNLOAD_AUDIO" = "下载音频";
 "DOWNLOAD_AUDIO_DESC" = "在播放器中添加一个YTMUltimate按钮用于下载音频";
 "DOWNLOAD_COVER" = "下载封面";
@@ -49,9 +49,9 @@
 "LOW_CONTRAST" = "低对比度";
 "LOW_CONTRAST_DESC" = "降低文字和按钮的对比度";
 
-"NAVBAR_SETTINGS" = "导航栏选项";
-"DONT_STICK_HEADERS" = "不固定标题";
-"DONT_STICK_HEADERS_DESC" = "不固定在屏幕顶部的标题";
+"NAVBAR_SETTINGS" = "导航栏项";
+"DONT_STICK_HEADERS" = "解除标题固定";
+"DONT_STICK_HEADERS_DESC" = "不让屏幕顶部的标题始终在顶部";
 "HIDE_HISTORY_BUTTON" = "隐藏播放历史按钮";
 "HIDE_HISTORY_BUTTON_DESC" = "在导航栏中隐藏播放历史按钮";
 "HIDE_CAST_BUTTON" = "隐藏投屏按钮";
@@ -59,7 +59,7 @@
 "HIDE_FILTER_BUTTON" = "隐藏分类按钮";
 "HIDE_FILTER_BUTTON_DESC" = "在导航栏中隐藏库\/下载分类按钮";
 
-"TABBAR_SETTINGS" = "选项卡选项";
+"TABBAR_SETTINGS" = "底部按钮";
 "STARTUP_TAB" = "启动页";
 "SAMPLES" = "选段";
 "HOME" = "首页";
@@ -67,13 +67,13 @@
 "LIBRARY" = "媒体库";
 "DOWNLOADS" = "下载";
 
-"TAB_SETTINGS" = "选项卡设置";
-"REMOVE_TABBAR_LABELS" = "隐藏选项卡标签";
-"HIDE_HOME" = "隐藏首页选项卡";
-"HIDE_SAMPLES" = "隐藏选段选项卡";
-"HIDE_EXPLORE" = "隐藏探索选项卡";
-"HIDE_LIBRARY" = "隐藏媒体库选项卡";
-"HIDE_DOWNLOADS" = "隐藏下载选项卡";
+"TAB_SETTINGS" = "底部按钮设置";
+"REMOVE_TABBAR_LABELS" = "隐藏按钮标签";
+"HIDE_HOME" = "隐藏首页按钮";
+"HIDE_SAMPLES" = "隐藏选段按钮";
+"HIDE_EXPLORE" = "隐藏探索按钮";
+"HIDE_LIBRARY" = "隐藏媒体库按钮";
+"HIDE_DOWNLOADS" = "隐藏下载按钮";
 
 "CLEAR_CACHE" = "清除缓存";
 
@@ -81,7 +81,7 @@
 "APPLY_DESC" = "按下应用会关闭APP以应用变更";
 
 "LINKS" = "相关链接";
-"TWITTER" = "在推特上关注%@";
+"TWITTER" = "推特关注%@";
 "TWITTER_DESC" = "获取更新消息";
 "DISCORD" = "加入Discord";
 "DISCORD_DESC" = "反馈问题和请求新功能";
