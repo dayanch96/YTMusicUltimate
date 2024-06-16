@@ -49,7 +49,7 @@ static int YTMUint(NSString *key) {
     YTMU(@"YTMUltimateIsEnabled") ? %orig(NO) : %orig;
 }
 
-- (void)setSwitchAvailability:(long long)arg1 {
+- (void)setSwitchAvailability:(NSInteger)arg1 {
     YTMU(@"YTMUltimateIsEnabled") ? %orig(1) : %orig;
 }
 %end
@@ -74,9 +74,29 @@ static int YTMUint(NSString *key) {
 */
 %end
 
+%hook YTMAudioVideoModeControllerInternalImpl
+- (void)setSwitchAvailability:(NSInteger)arg1 { YTMU(@"YTMUltimateIsEnabled") ? %orig(1) : %orig; }
+- (NSInteger)switchAvailability { return YTMU(@"YTMUltimateIsEnabled") ? 1 : %orig; }
+- (BOOL)isAudioOnlyBlocked { return YTMU(@"YTMUltimateIsEnabled") ? NO : %orig; }
+%end
+
+%hook YTVideoQualitySwitchRedesignedController
+- (void)setAllowAudioOnlyManualQualitySelection:(BOOL)arg1 { YTMU(@"YTMUltimateIsEnabled") ? %orig(YES) : %orig; }
+- (BOOL)allowAudioOnlyManualQualitySelection { return YTMU(@"YTMUltimateIsEnabled") ?: %orig; }
+%end
+
+%hook YTVideoQualitySwitchOriginalController
+- (void)setAllowAudioOnlyManualQualitySelection:(BOOL)arg1 { YTMU(@"YTMUltimateIsEnabled") ? %orig(YES) : %orig; }
+- (BOOL)allowAudioOnlyManualQualitySelection { return YTMU(@"YTMUltimateIsEnabled") ?: %orig; }
+%end
+
 %hook YTDefaultQueueConfig
+- (BOOL)isAudioVideoModeSupportedForNonPodcasts {
+    return YTMU(@"YTMUltimateIsEnabled") ?: %orig;
+}
+
 - (BOOL)isAudioVideoModeSupported {
-    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
+    return YTMU(@"YTMUltimateIsEnabled") ?: %orig;
 }
 
 - (void)setIsAudioVideoModeSupported:(BOOL)supported {
@@ -86,13 +106,13 @@ static int YTMUint(NSString *key) {
 
 %hook YTMSettings
 - (BOOL)allowAudioOnlyManualQualitySelection {
-    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
+    return YTMU(@"YTMUltimateIsEnabled") ?: %orig;
 }
 %end
 
 %hook YTIAudioOnlyPlayabilityRenderer
 - (BOOL)audioOnlyPlayability {
-    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
+    return YTMU(@"YTMUltimateIsEnabled") ?: %orig;
 }
 
 - (int)audioOnlyAvailability {
@@ -124,13 +144,17 @@ static int YTMUint(NSString *key) {
 
 %hook YTQueueItem
 - (BOOL)supportsAudioVideoSwitching {
-    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
+    return YTMU(@"YTMUltimateIsEnabled") ?: %orig;
+}
+
+- (void)setSupportsAudioVideoSwitching:(BOOL)arg1 {
+    YTMU(@"YTMUltimateIsEnabled") ? %orig(YES) : %orig;
 }
 %end
 
 %hook YTMMusicAppMetadata
 - (BOOL)isAudioOnlyButtonVisible {
-    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
+    return YTMU(@"YTMUltimateIsEnabled") ?: %orig;
 }
 %end
 
@@ -148,6 +172,8 @@ static int YTMUint(NSString *key) {
 - (bool)noVideoModeEnabled:(id)arg1 {
 	return YTMUint(@"audioVideoMode") == 0 ? 1 : %orig;
 }
+
+- (BOOL)isAudioVideoModeSupportedForVideo:(id)video { return YTMU(@"YTMUltimateIsEnabled") ?: %orig; }
 %end
 
 // %group AVSwitchForAds
