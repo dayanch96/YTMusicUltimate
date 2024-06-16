@@ -78,8 +78,11 @@
         return;
     }
 
+    NSPredicate *m4aPredicate = [NSPredicate predicateWithFormat:@"SELF ENDSWITH[c] '.m4a'"];
     NSPredicate *mp3Predicate = [NSPredicate predicateWithFormat:@"SELF ENDSWITH[c] '.mp3'"];
-    self.audioFiles = [NSMutableArray arrayWithArray:[allFiles filteredArrayUsingPredicate:mp3Predicate]];
+    NSPredicate *predicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[m4aPredicate, mp3Predicate]];
+
+    self.audioFiles = [NSMutableArray arrayWithArray:[allFiles filteredArrayUsingPredicate:predicate]];
 
     self.imageView.tintColor = self.audioFiles.count == 0 ? [[UIColor whiteColor] colorWithAlphaComponent:0.8] : [UIColor clearColor];
     self.label.textColor = self.audioFiles.count == 0 ? [[UIColor whiteColor] colorWithAlphaComponent:0.8] : [UIColor clearColor];
@@ -225,8 +228,9 @@
 
     YTAlertView *alertView = [NSClassFromString(@"YTAlertView") confirmationDialogWithAction:^{
         NSString *newName = [textView.text stringByReplacingOccurrencesOfString:@"/" withString:@""];
+        NSString *extension = [audioURL pathExtension];
 
-        NSURL *newAudioURL = [documentsURL URLByAppendingPathComponent:[NSString stringWithFormat:@"YTMusicUltimate/%@.mp3", newName]];
+        NSURL *newAudioURL = [documentsURL URLByAppendingPathComponent:[NSString stringWithFormat:@"YTMusicUltimate/%@.%@", newName, extension]];
         NSURL *newCoverURL = [documentsURL URLByAppendingPathComponent:[NSString stringWithFormat:@"YTMusicUltimate/%@.png", newName]];
 
         NSError *error = nil;
@@ -350,15 +354,15 @@
     NSURL *documentsURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
     NSURL *audiosFolder = [documentsURL URLByAppendingPathComponent:@"YTMusicUltimate"];
 
-    NSArray<NSURL *> *mp3Files = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:audiosFolder
+    NSArray<NSURL *> *files = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:audiosFolder
                                                                includingPropertiesForKeys:@[NSURLNameKey, NSURLIsDirectoryKey]
                                                                                   options:NSDirectoryEnumerationSkipsHiddenFiles
                                                                                     error:nil];
 
-    NSPredicate *mp3Predicate = [NSPredicate predicateWithFormat:@"pathExtension.lowercaseString == 'mp3'"];
-    mp3Files = [mp3Files filteredArrayUsingPredicate:mp3Predicate];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pathExtension.lowercaseString == 'm4a' || pathExtension.lowercaseString == 'mp3'"];
+    files = [files filteredArrayUsingPredicate:predicate];
 
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:mp3Files applicationActivities:nil];
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:files applicationActivities:nil];
     activityViewController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypePrint];
 
     [self presentViewController:activityViewController animated:YES completion:nil];
