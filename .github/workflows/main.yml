@@ -1,6 +1,3 @@
-# I modified the github action from @arichornlover 's uYouEnhanced repo, but the original idea is by @ISnackable. Thanks to both of them!
-# https://github.com/ISnackable/YTCubePlus/blob/main/.github/workflows/Build.yml
-
 name: Build and Release YTMusicUltimate
 
 on:
@@ -11,7 +8,7 @@ on:
         default: ""
         required: true
         type: string    
-  
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -32,7 +29,6 @@ jobs:
 
       - name: Install Dependencies
         run: brew install ldid dpkg make
-              
 
       - name: Set PATH environment variable
         run: echo "$(brew --prefix make)/libexec/gnubin" >> $GITHUB_PATH 
@@ -44,7 +40,7 @@ jobs:
           ref: 4bcc52914e0eeca719288522938185decaa8a1cb
           path: theos
           submodules: recursive
-      
+
       - name: SDK Caching
         id: SDK
         uses: actions/cache@v4.0.1
@@ -57,8 +53,15 @@ jobs:
 
       - name: Download iOS SDK
         if: steps.SDK.outputs.cache-hit != 'true'
+        uses: actions/checkout@v4.1.1
+        with:
+          repository: arichorn/sdks
+          ref: main
+          path: sdks
+
+      - name: Sparse checkout iOS SDK
+        if: steps.SDK.outputs.cache-hit != 'true'
         run: |
-          git clone --quiet -n --depth=1 --filter=tree:0 https://github.com/arichorn/sdks/
           cd sdks
           git sparse-checkout set --no-cone iPhoneOS16.2.sdk
           git checkout
@@ -79,7 +82,7 @@ jobs:
           ./theos-jailed/install
         env:
           THEOS: ${{ github.workspace }}/theos
-          
+
       - name: Install Azule
         run: |
           cd ${{ github.workspace }}/main
@@ -90,7 +93,6 @@ jobs:
         id: prepare_youtube_music
         run: |
           wget "$YOUTUBE_MUSIC_URL" --no-verbose -O main/YouTubeMusic.ipa
-
         env:
           YOUTUBE_MUSIC_URL: ${{ inputs.decrypted_youtube_music_url }}    
 
