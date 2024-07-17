@@ -33,7 +33,7 @@
 
     [MobileFFmpegConfig setLogDelegate:self];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        int returnCode = [MobileFFmpeg execute:[NSString stringWithFormat:@"-i %@ -c copy %@", audioURL, destinationURL]];
+        int returnCode = [MobileFFmpeg execute:[NSString stringWithFormat:@"-i %@ -c:a aac -b:a 320k %@", audioURL, destinationURL]];
         dispatch_async(dispatch_get_main_queue(), ^{
             if (returnCode == RETURN_CODE_SUCCESS) {
                 [self.hud hideAnimated:YES];
