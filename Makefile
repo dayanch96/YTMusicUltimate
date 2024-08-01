@@ -20,7 +20,7 @@ $(TWEAK_NAME)_FRAMEWORKS = UIKit Foundation AVFoundation AVKit Photos Accelerate
 $(TWEAK_NAME)_INJECT_DYLIBS = .theos/obj/YTMABConfig.dylib .theos/obj/ReturnYouTubeMusicDislikes.dylib
 $(TWEAK_NAME)_OBJ_FILES = $(shell find Source/Utils/lib -name '*.a')
 $(TWEAK_NAME)_LIBRARIES = bz2 c++ iconv z
-SUBPROJECTS += Tweaks/YTMABConfig Tweaks/Return-YouTube-Music-Dislikes
+SUBPROJECTS += Tweaks/YTABConfig Tweaks/Return-YouTube-Dislikes Tweaks/YTMABConfig Tweaks/Return-YouTube-Music-Dislikes
 ifeq ($(SIDELOADING),1)
 $(TWEAK_NAME)_FILES += Sideloading.xm
 endif
