@@ -1,7 +1,7 @@
 # I modified the github action from @arichornlover 's uYouEnhanced repo, but the original idea is by @ISnackable. Thanks to both of them!
 # https://github.com/ISnackable/YTCubePlus/blob/main/.github/workflows/Build.yml
 
-name: Build and Release YTMusicUltimate
+name: Build and Release YTMusicUltimateDX
 
 on:
   workflow_dispatch:
@@ -108,7 +108,7 @@ jobs:
           cd ${{ github.workspace }}/main/packages
           tweakName=$(ls)
           cd ${{ github.workspace }}/main
-          ./Azule/azule -i $PWD/YouTubeMusic.ipa -o $PWD/packages/YTMusicUltimate.ipa -f $PWD/packages/$tweakName
+          ./Azule/azule -i $PWD/YouTubeMusic.ipa -o $PWD/packages/YTMusicUltimate.ipa -f $PWD/packages/$tweakName -l .theos/obj/YTMABConfig.dylib -l .theos/obj/ReturnYouTubeMusicDislikes.dylib
 
       - name: Remove the Watch folder
         run: |
