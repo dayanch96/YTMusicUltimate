@@ -99,6 +99,7 @@ jobs:
         run: |
           cd ${{ github.workspace }}/main
           make clean package SIDELOADING=1
+          cp .theos/obj/*.dylib Theos/lib/
         env:
           THEOS: ${{ github.workspace }}/theos
 
