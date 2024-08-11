@@ -1,7 +1,7 @@
 # I modified the github action from @arichornlover 's uYouEnhanced repo, but the original idea is by @ISnackable. Thanks to both of them!
 # https://github.com/ISnackable/YTCubePlus/blob/main/.github/workflows/Build.yml
 
-name: Build and Release YTMusicUltimateDX
+name: Build and Release YTMusicUltimate
 
 on:
   workflow_dispatch:
@@ -25,7 +25,7 @@ jobs:
 
     steps:
       - name: Checkout Main
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4.1.1
         with:
           path: main
           submodules: recursive
@@ -38,7 +38,7 @@ jobs:
         run: echo "$(brew --prefix make)/libexec/gnubin" >> $GITHUB_PATH 
 
       - name: Setup Theos
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4.1.1
         with:
           repository: theos/theos
           ref: 4bcc52914e0eeca719288522938185decaa8a1cb
@@ -47,9 +47,9 @@ jobs:
       
       - name: SDK Caching
         id: SDK
-        uses: actions/cache@v4.0.2
+        uses: actions/cache@v4.0.1
         env:
-          cache-name: iOS-16.4-SDK
+          cache-name: iOS-16.2-SDK
         with:
           path: theos/sdks/
           key: ${{ env.cache-name }}
@@ -58,16 +58,16 @@ jobs:
       - name: Download iOS SDK
         if: steps.SDK.outputs.cache-hit != 'true'
         run: |
-          git clone --quiet -n --depth=1 --filter=tree:0 https://github.com/arichornloverALT/sdks/
+          git clone --quiet -n --depth=1 --filter=tree:0 https://github.com/arichorn/sdks/
           cd sdks
-          git sparse-checkout set --no-cone iPhoneOS16.4.sdk
+          git sparse-checkout set --no-cone iPhoneOS16.2.sdk
           git checkout
           mv *.sdk $THEOS/sdks
         env:
           THEOS: ${{ github.workspace }}/theos
 
       - name: Setup Theos Jailed
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4.1.1
         with:
           repository: qnblackcat/theos-jailed
           ref: master
@@ -99,7 +99,6 @@ jobs:
         run: |
           cd ${{ github.workspace }}/main
           make clean package SIDELOADING=1
-          cp .theos/obj/*.dylib Theos/lib/
         env:
           THEOS: ${{ github.workspace }}/theos
 
@@ -109,7 +108,7 @@ jobs:
           cd ${{ github.workspace }}/main/packages
           tweakName=$(ls)
           cd ${{ github.workspace }}/main
-          ./Azule/azule -i $PWD/YouTubeMusic.ipa -o $PWD/packages/YTMusicUltimate.ipa -f $PWD/packages/$tweakName
+          ./Azule/azule -i $PWD/YouTubeMusic.ipa -o $PWD/packages/YTMusicUltimate.ipa -f $PWD/packages/$tweakName 
 
       - name: Remove the Watch folder
         run: |
@@ -124,7 +123,7 @@ jobs:
 
       - name: Create Release
         id: create_release
-        uses: softprops/action-gh-release@v2.0.5
+        uses: softprops/action-gh-release@v2.0.1
         with:
           tag_name: YTMusicUltimate-v${{ github.run_number }}
           name: YTMusicUltimate-v${{ github.run_number }}
