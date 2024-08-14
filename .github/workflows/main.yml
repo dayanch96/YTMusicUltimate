@@ -58,8 +58,8 @@ jobs:
       - name: Download iOS SDK
         if: steps.SDK.outputs.cache-hit != 'true'
         run: |
-          git clone --quiet -n --depth=1 --filter=tree:0 https://github.com/xybp888/iOS-SDKs/
-          cd iOS-SDKs
+          git clone --quiet -n --depth=1 --filter=tree:0 https://github.com/theos/sdks/
+          cd sdks
           git sparse-checkout set --no-cone iPhoneOS16.2.sdk
           git checkout
           mv *.sdk $THEOS/sdks
