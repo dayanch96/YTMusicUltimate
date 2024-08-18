@@ -25,9 +25,10 @@ jobs:
 
     steps:
       - name: Checkout Main
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.1.7
         with:
           path: main
+          ref: ${{ github.event.inputs.commit_id || github.ref }}
           submodules: recursive
 
       - name: Install Dependencies
@@ -38,18 +39,18 @@ jobs:
         run: echo "$(brew --prefix make)/libexec/gnubin" >> $GITHUB_PATH 
 
       - name: Setup Theos
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.1.7
         with:
           repository: theos/theos
-          ref: 4bcc52914e0eeca719288522938185decaa8a1cb
+          ref: 3da31488281ecf4394d10302d2629607f4a1aa07
           path: theos
           submodules: recursive
       
       - name: SDK Caching
         id: SDK
-        uses: actions/cache@v4.0.1
+        uses: actions/cache@v4.0.2
         env:
-          cache-name: iOS-16.2-SDK
+          cache-name: iOS-16.5-SDK
         with:
           path: theos/sdks/
           key: ${{ env.cache-name }}
@@ -58,16 +59,16 @@ jobs:
       - name: Download iOS SDK
         if: steps.SDK.outputs.cache-hit != 'true'
         run: |
-          git clone --quiet -n --depth=1 --filter=tree:0 https://github.com/arichorn/sdks/
+          git clone --quiet -n --depth=1 --filter=tree:0 https://github.com/theos/sdks/
           cd sdks
-          git sparse-checkout set --no-cone iPhoneOS16.2.sdk
+          git sparse-checkout set --no-cone iPhoneOS16.5.sdk
           git checkout
           mv *.sdk $THEOS/sdks
         env:
           THEOS: ${{ github.workspace }}/theos
 
       - name: Setup Theos Jailed
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.1.7
         with:
           repository: qnblackcat/theos-jailed
           ref: master
@@ -123,7 +124,7 @@ jobs:
 
       - name: Create Release
         id: create_release
-        uses: softprops/action-gh-release@v2.0.1
+        uses: softprops/action-gh-release@v2.0.6
         with:
           tag_name: YTMusicUltimate-v${{ github.run_number }}
           name: YTMusicUltimate-v${{ github.run_number }}
