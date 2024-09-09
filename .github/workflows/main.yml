@@ -84,8 +84,8 @@ jobs:
           cd ${{ github.workspace }}/main/packages
           tweakName=$(ls)
           cd ${{ github.workspace }}/main
-          bash -c "$(curl https://raw.githubusercontent.com/asdfzxcvbn/pyzule/main/install-pyzule.sh)"
-          pyzule -i $PWD/YouTubeMusic.ipa -o $PWD/packages/YTMusicUltimate.ipa -f $PWD/packages/$tweakName -w
+          pip3 install --force-reinstall lief git+https://github.com/asdfzxcvbn/pyzule-rw.git#egg=cyan
+          cyan -i YouTubeMusic.ipa -o packages/YTMusicUltimate.ipa -uwsf packages/$tweakName
 
       - name: Create Release
         id: create_release
