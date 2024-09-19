@@ -102,6 +102,7 @@
 "SELECT_ACTION" = "選擇操作";
 "DOWNLOADING" = "下載中...";
 "OOPS" = "糟糕\n發生了些錯誤";
+"LINK_NOT_FOUND" = "Link not found";
 "SAVED_TO_PHOTOS" = "已儲存到照片";
 "DONE" = "完成";
 "FOUND_SEGMENT" = "發現題外話片段";

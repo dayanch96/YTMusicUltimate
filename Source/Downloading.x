@@ -51,6 +51,10 @@ static BOOL YTMU(NSString *key) {
 }
 %end
 
+@interface YTMActionRowView ()
+- (NSString *)getURLFromManifest:(NSURL *)manifest;
+@end
+
 // Set action bar button
 %hook YTMActionRowView
 - (void)setButtonRenderers:(NSArray *)supportedRenderers {
@@ -138,35 +142,52 @@ static BOOL YTMU(NSString *key) {
     ffmpeg.mediaName = [NSString stringWithFormat:@"%@ - %@", author, title];
     ffmpeg.duration = round(parentVC.parentViewController.playerViewController.currentVideoTotalMediaTime);
 
-    NSData *manifestData = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlStr]];
-    NSString *manifestString = [[NSString alloc] initWithData:manifestData encoding:NSUTF8StringEncoding];
+    
+    NSString *extractedURL = [self getURLFromManifest:[NSURL URLWithString:urlStr]];
+    
+    if (extractedURL.length > 0) {
+        [ffmpeg downloadAudio:extractedURL];
 
-    NSError *regexError = nil;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"#EXT-X-MEDIA:URI=\"(https://.*?/index.m3u8)\"" options:0 error:&regexError];
+        NSMutableArray *thumbnailsArray = playerResponse.playerData.videoDetails.thumbnail.thumbnailsArray;
+        YTIThumbnailDetails_Thumbnail *thumbnail = [thumbnailsArray lastObject];
+        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:thumbnail.URL]];
 
-    if (!regexError) {
-        NSTextCheckingResult *match = [regex firstMatchInString:manifestString options:0 range:NSMakeRange(0, [manifestString length])];
-
-        if (match && [match numberOfRanges] >= 2) {
-            NSString *extractedURL = [manifestString substringWithRange:[match rangeAtIndex:1]];
-            [ffmpeg downloadAudio:extractedURL];
-
-            NSMutableArray *thumbnailsArray = playerResponse.playerData.videoDetails.thumbnail.thumbnailsArray;
-            YTIThumbnailDetails_Thumbnail *thumbnail = [thumbnailsArray lastObject];
-            NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:thumbnail.URL]];
-
-            if (imageData) {
-                NSURL *documentsURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-                NSURL *coverURL = [documentsURL URLByAppendingPathComponent:[NSString stringWithFormat:@"YTMusicUltimate/%@ - %@.png", author, title]];
-                [imageData writeToURL:coverURL atomically:YES];
-            }
+        if (imageData) {
+            NSURL *documentsURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+            NSURL *coverURL = [documentsURL URLByAppendingPathComponent:[NSString stringWithFormat:@"YTMusicUltimate/%@ - %@.png", author, title]];
+            [imageData writeToURL:coverURL atomically:YES];
         }
     } else {
         YTAlertView *alertView = [%c(YTAlertView) infoDialog];
         alertView.title = LOC(@"OOPS");
-        alertView.subtitle = regexError.localizedDescription;
+        alertView.subtitle = LOC(@"LINK_NOT_FOUND");
         [alertView show];
     }
+}
+
+%new
+- (NSString *)getURLFromManifest:(NSURL *)manifest {
+    NSData *manifestData = [NSData dataWithContentsOfURL:manifest];
+    NSString *manifestString = [[NSString alloc] initWithData:manifestData encoding:NSUTF8StringEncoding];
+    NSArray *manifestLines = [manifestString componentsSeparatedByString:@"\n"];
+
+    NSArray *groupIDS = @[@"234", @"233"]; // Our priority to find group id 234
+    for (NSString *groupID in groupIDS) {
+        for (NSString *line in manifestLines) {
+            NSString *searchString = [NSString stringWithFormat:@"TYPE=AUDIO,GROUP-ID=\"%@\"", groupID];
+            if ([line containsString:searchString]) {
+                NSRange startRange = [line rangeOfString:@"https://"];
+                NSRange endRange = [line rangeOfString:@"index.m3u8"];
+
+                if (startRange.location != NSNotFound && endRange.location != NSNotFound) {
+                    NSRange targetRange = NSMakeRange(startRange.location, NSMaxRange(endRange) - startRange.location);
+                    return [line substringWithRange:targetRange];
+                }
+            }
+        }
+    }
+
+    return nil;
 }
 
 %new
@@ -190,21 +211,3 @@ static BOOL YTMU(NSString *key) {
     });
 }
 %end
-
-%ctor {
-    if (!YTMU(@"premiumWorkaround") && !YTMU(@"workaroundReminded")) {
-        NSMutableDictionary *YTMUltimateDict = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"]];
-        [YTMUltimateDict setObject:@(YES) forKey:@"workaroundReminded"];
-        [[NSUserDefaults standardUserDefaults] setObject:YTMUltimateDict forKey:@"YTMUltimate"];
-
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            YTAlertView *alertView = [%c(YTAlertView) confirmationDialogWithAction:^{
-                [YTMUltimateDict setObject:@(YES) forKey:@"premiumWorkaround"];
-            }
-            actionTitle:LOC(@"YES")];
-            alertView.title = @"YTMusicUltimate";
-            alertView.subtitle = [NSString stringWithFormat:LOC(@"WORKAROUND_REMINDER"), LOC(@"PREMIUM_SETTINGS"), LOC(@"FORCE_PREMIUM"), LOC(@"FORCE_PREMIUM")];
-            [alertView show];
-        });
-    }
-}

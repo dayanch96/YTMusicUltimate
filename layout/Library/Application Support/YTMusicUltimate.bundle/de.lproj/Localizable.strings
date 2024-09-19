@@ -102,6 +102,7 @@
 "SELECT_ACTION" = "Aktion auswählen";
 "DOWNLOADING" = "wird heruntergeladen...";
 "OOPS" = "Hoppla! Etwas ist schiefgelaufen";
+"LINK_NOT_FOUND" = "Link not found";
 "SAVED_TO_PHOTOS" = "in der Fotogalerie gespeichert";
 "DONE" = "Fertig";
 "FOUND_SEGMENT" = "Inhaltswarnung gefunden";

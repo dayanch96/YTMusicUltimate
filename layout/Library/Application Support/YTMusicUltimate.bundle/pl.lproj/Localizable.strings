@@ -102,6 +102,7 @@
 "SELECT_ACTION" = "Wybierz akcję";
 "DOWNLOADING" = "Pobieranie";
 "OOPS" = "Uups\ncoś poszło nie tak";
+"LINK_NOT_FOUND" = "Link not found";
 "SAVED_TO_PHOTOS" = "Zapisane do Zdjęć";
 "DONE" = "Gotowe";
 "FOUND_SEGMENT" = "Znaleziono niezwiązany segment";

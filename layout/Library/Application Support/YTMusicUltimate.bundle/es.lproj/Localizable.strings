@@ -102,6 +102,7 @@
 "SELECT_ACTION" = "Seleccionar acción";
 "DOWNLOADING" = "Descargando";
 "OOPS" = "Oops\nalgo salió mal";
+"LINK_NOT_FOUND" = "Link not found";
 "SAVED_TO_PHOTOS" = "Guardar en Fotos";
 "DONE" = "Hecho";
 "FOUND_SEGMENT" = "Se encontró un segmento fuera de tema";

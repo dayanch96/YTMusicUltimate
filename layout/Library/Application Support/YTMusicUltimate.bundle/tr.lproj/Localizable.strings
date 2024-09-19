@@ -102,6 +102,7 @@
 "SELECT_ACTION" = "Eylem Seç";
 "DOWNLOADING" = "İndiriliyor";
 "OOPS" = "Tüh\nbir şeyler ters gitti";
+"LINK_NOT_FOUND" = "Bağlantı bulunamadı";
 "SAVED_TO_PHOTOS" = "Fotoğraflar'a kaydedildi";
 "DONE" = "Bitti";
 "FOUND_SEGMENT" = "Konu dışı bölüm bulundu";

@@ -102,6 +102,7 @@
 "SELECT_ACTION" = "اختر الفعل";
 "DOWNLOADING" = "يتم التحميل";
 "OOPS" = "هناك شئ خطأ";
+"LINK_NOT_FOUND" = "Link not found";
 "SAVED_TO_PHOTOS" = "تم الحفظ في البوم الصور";
 "DONE" = "تم الانتهاء بنجاح";
 "FOUND_SEGMENT" = "Found offtopic segment";

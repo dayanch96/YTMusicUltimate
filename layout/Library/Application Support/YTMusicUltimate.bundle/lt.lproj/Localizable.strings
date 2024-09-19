@@ -102,6 +102,7 @@
 "SELECT_ACTION" = "Pasirinkite veiksmą";
 "DOWNLOADING" = "Atsisiunčiama";
 "OOPS" = "Oi!\nkažkas atsitiko";
+"LINK_NOT_FOUND" = "Link not found";
 "SAVED_TO_PHOTOS" = "Išsaugota Nuotraukose";
 "DONE" = "Atlikta";
 "FOUND_SEGMENT" = "Rastas segmentas nepriklausantis temai";
