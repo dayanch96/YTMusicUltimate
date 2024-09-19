@@ -204,20 +204,35 @@ static BOOL YTMU(NSString *key) {
 }
 %end
 
-// Spoof version (https://github.com/ginsudev/YTMusicUltimate/issues/163#issuecomment-1879583573)
-%hook YTVersionUtils
-+ (NSString *)appVersion {
-    return YTMU(@"YTMUltimateIsEnabled") && YTMU(@"premiumWorkaround") ? @"4.27.53" : %orig;
-}
+%hook YTCommonUtils
++ (BOOL)isInternallyDistributedBuild { return YTMU(@"YTMUltimateIsEnabled") ?: %orig; }
++ (BOOL)isOfflineToDownloadsEnabled { return YTMU(@"YTMUltimateIsEnabled") ?: %orig; }
++ (BOOL)isUnitOrFunctionalTesting { return YTMU(@"YTMUltimateIsEnabled") ?: %orig; }
++ (BOOL)isEarlGreyV2FunctionalTesting { return YTMU(@"YTMUltimateIsEnabled") ?: %orig; }
++ (BOOL)isUnitTesting { return YTMU(@"YTMUltimateIsEnabled") ?: %orig; }
++ (BOOL)isFunctionalTesting { return YTMU(@"YTMUltimateIsEnabled") ?: %orig; }
++ (BOOL)isDistributedBuild { return YTMU(@"YTMUltimateIsEnabled") ? NO : %orig; }
 %end
 
-%hook UILabel
-- (void)setText:(NSString *)text {
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    NSString *appVersion = infoDictionary[@"CFBundleShortVersionString"];
+%hook YTMYPCGetOfflineUpsellEndpointCommandHandlerImpl
+- (BOOL)isPremiumSubscriber { return YTMU(@"YTMUltimateIsEnabled") ?: %orig; }
+%end
 
-    if ([text isEqualToString:@"4.27.53"]) {
-        text = appVersion;
-    } %orig(text);
-}
+%hook YTMCarPlayControllerImpl
+- (BOOL)isPremiumSubscriber { return YTMU(@"YTMUltimateIsEnabled") ?: %orig; }
+- (void)setPremiumSubscriber:(BOOL)arg1 { return YTMU(@"YTMUltimateIsEnabled") ? %orig(YES) : %orig; }
+%end
+
+%hook YTMMusicAppMetadataImpl
+- (BOOL)isPremiumSubscriber { return YTMU(@"YTMUltimateIsEnabled") ?: %orig; }
+- (BOOL)isMobileAudioTier { return YTMU(@"YTMUltimateIsEnabled") ?: %orig; }
+%end
+
+// Unlimited listening - YouAreThere (https://github.com/PoomSmart/YouAreThere)
+%hook YTColdConfig
+- (BOOL)enableYouthereCommandsOnIos { return YTMU(@"YTMUltimateIsEnabled") ? NO : %orig; }
+%end
+
+%hook YTYouThereController
+- (BOOL)shouldShowYouTherePrompt { return YTMU(@"YTMUltimateIsEnabled") ? NO : %orig; }
 %end
