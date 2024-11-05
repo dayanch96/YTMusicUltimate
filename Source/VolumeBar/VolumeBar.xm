@@ -9,8 +9,10 @@ static BOOL volumeBar = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"volBar");
 
 @interface YTMWatchView: UIView
 @property (readonly, nonatomic) BOOL isExpanded;
+@property (nonatomic, strong) UIView *tabView;
 @property (nonatomic) long long currentLayout;
 @property (nonatomic, strong) GSVolBar *volumeBar;
+
 - (void)updateVolBarVisibility;
 @end
 
@@ -19,30 +21,38 @@ static BOOL volumeBar = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"volBar");
 
 - (instancetype)initWithColorScheme:(id)scheme {
     self = %orig;
+
     if (self && volumeBar) {
-        UIView *container = [self valueForKey:@"_centerContentContainerView"];
-        self.volumeBar = [[GSVolBar alloc] initWithFrame:CGRectMake(container.frame.size.width / 2 - (container.frame.size.width / 2) / 2, 0, container.frame.size.width / 2, 25)];
-        [container addSubview:self.volumeBar];
+        self.volumeBar = [[GSVolBar alloc] initWithFrame:CGRectMake(self.frame.size.width / 2 - (self.frame.size.width / 2) / 2, 0, self.frame.size.width / 2, 25)];
+
+        [self addSubview:self.volumeBar];
     }
+
     return self;
 }
 
 - (void)layoutSubviews {
     %orig;
+
     if (volumeBar) {
-        UIView *container = [self valueForKey:@"_centerContentContainerView"];
-        self.volumeBar.frame = CGRectMake(self.frame.size.width / 2 - (self.frame.size.width / 2) / 2, container.frame.size.height - 19, self.frame.size.width / 2, 25);
+        self.volumeBar.frame = CGRectMake(self.frame.size.width / 2 - (self.frame.size.width / 2) / 2, CGRectGetMinY(self.tabView.frame) - 25, self.frame.size.width / 2, 25);
     }
 }
 
 - (void)updateColorsAfterLayoutChangeTo:(long long)arg1 {
-    %orig(arg1);
-    if (volumeBar) [self updateVolBarVisibility];
+    %orig;
+
+    if (volumeBar) {
+        [self updateVolBarVisibility];
+    }
 }
 
 - (void)updateColorsBeforeLayoutChangeTo:(long long)arg1 {
-    %orig(arg1);
-    if (volumeBar) self.volumeBar.hidden = YES;
+    %orig;
+
+    if (volumeBar) {
+        self.volumeBar.hidden = YES;
+    }
 }
 
 %new
