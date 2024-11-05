@@ -13,9 +13,9 @@
 
 "PLAYER_SETTINGS" = "播放器项";
 "DOWNLOAD_AUDIO" = "下载音频";
-"DOWNLOAD_AUDIO_DESC" = "在播放器中添加一个YTMUltimate按钮用于下载音频";
+"DOWNLOAD_AUDIO_DESC" = "点击原生下载按钮弹出下载菜单用于下载音频";
 "DOWNLOAD_COVER" = "下载封面";
-"DOWNLOAD_COVER_DESC" = "在播放器中添加一个YTMUltimate按钮用于下载封面图像";
+"DOWNLOAD_COVER_DESC" = "点击原生下载按钮弹出下载菜单用于下载封面图像";
 "PLAYBACK_RATE_BUTTON" = "显示播放速度按钮";
 "PLAYBACK_RATE_BUTTON_DESC" = "调整播放速度";
 "SELECTABLE_LYRICS" = "复制歌词";
@@ -101,9 +101,9 @@
 "DONT_RUSH_DESC" = "需要播放歌曲才能提取链接";
 "SELECT_ACTION" = "选择操作";
 "DOWNLOADING" = "下载中";
-"DOWNLOAD_PREMIUM" = "Download (Premium required)";
+"DOWNLOAD_PREMIUM" = "下载(需付费)";
 "OOPS" = "哎呀\n出现了一些问题";
-"LINK_NOT_FOUND" = "Link not found";
+"LINK_NOT_FOUND" = "未找到链接";
 "SAVED_TO_PHOTOS" = "已保存到照片";
 "DONE" = "完成";
 "FOUND_SEGMENT" = "发现题外话片段";
