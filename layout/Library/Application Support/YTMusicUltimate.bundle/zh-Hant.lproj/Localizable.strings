@@ -3,19 +3,19 @@
 "ENABLED_DESC" = "會員功能：無廣告和背景播放等";
 "RESTART_FOOTER" = "重新啟動應用程式以套用變更";
 
-"PREMIUM_SETTINGS" = "Premium 功能";
+"PREMIUM_SETTINGS" = "Premium功能";
 "NO_ADS" = "無廣告";
 "NO_ADS_DESC" = "移除應用程式內的廣告";
 "BACKGROUND_PLAYBACK" = "背景播放";
 "BACKGROUND_PLAYBACK_DESC" = "啟用背景播放功能";
-"FORCE_PREMIUM" = "強制啟用 Premium 功能";
-"FORCE_PREMIUM_DESC" = "強制啟用 Premium 功能\n此選項也會停用'發現'功能標籤";
+"FORCE_PREMIUM" = "強制啟用Premium功能";
+"FORCE_PREMIUM_DESC" = "強制啟用Premium功能\n此選項也會停用'發現'功能標籤";
 
 "PLAYER_SETTINGS" = "播放器介面";
 "DOWNLOAD_AUDIO" = "下載音訊";
-"DOWNLOAD_AUDIO_DESC" = "按下播放器中的 YTMUltimate 按鈕，即可下載音訊檔案";
+"DOWNLOAD_AUDIO_DESC" = "按下播放器中的YTMUltimate按鈕，即可下載音訊檔案";
 "DOWNLOAD_COVER" = "下載封面";
-"DOWNLOAD_COVER_DESC" = "按下播放器中的 YTMUltimate 按鈕，即可下載封面圖片";
+"DOWNLOAD_COVER_DESC" = "按下播放器中的YTMUltimate按鈕，即可下載封面圖片";
 "PLAYBACK_RATE_BUTTON" = "顯示播放速度按鈕";
 "PLAYBACK_RATE_BUTTON_DESC" = "調整播放速度";
 "SELECTABLE_LYRICS" = "複製歌詞";
@@ -43,9 +43,9 @@
 
 "THEME_SETTINGS" = "介面主題";
 "OLED_DARK_THEME" = "深色主題";
-"OLED_DARK_THEME_DESC" = "啟用 OLED 深色主題";
+"OLED_DARK_THEME_DESC" = "啟用OLED深色主題";
 "OLED_DARK_KEYBOARD" = "深色鍵盤";
-"OLED_DARK_KEYBOARD_DESC" = "啟用 OLED 深色鍵盤";
+"OLED_DARK_KEYBOARD_DESC" = "啟用OLED深色鍵盤";
 "LOW_CONTRAST" = "低對比度";
 "LOW_CONTRAST_DESC" = "降低文字和按鈕的對比度";
 
@@ -94,16 +94,16 @@
 "APPLY_MESSAGE" = "這個操作將關閉YouTube Music以套用變更，您確定要繼續嗎？";
 "CANCEL" = "取消";
 "YES" = "是";
-"REGIONAL_RESTRICTION" = "YouTube Music 似乎在您的國家/地區受到限制，請使用 VPN 後再次執行 YouTube Music";
+"REGIONAL_RESTRICTION" = "YouTube Music似乎在您的國家/地區受到限制，請使用VPN後再次執行YouTube Music";
 "WARNING" = "警告";
 
 "DONT_RUSH" = "不要急於求成";
 "DONT_RUSH_DESC" = "需要播放歌曲才能提取連結";
 "SELECT_ACTION" = "選擇操作";
 "DOWNLOADING" = "下載中...";
-"DOWNLOAD_PREMIUM" = "Download (Premium required)";
+"DOWNLOAD_PREMIUM" = "下載(需要Premium)";
 "OOPS" = "糟糕\n發生了些錯誤";
-"LINK_NOT_FOUND" = "Link not found";
+"LINK_NOT_FOUND" = "找不到連結";
 "SAVED_TO_PHOTOS" = "已儲存到照片";
 "DONE" = "完成";
 "FOUND_SEGMENT" = "發現題外話片段";
