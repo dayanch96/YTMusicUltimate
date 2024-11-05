@@ -101,6 +101,7 @@
 "DONT_RUSH_DESC" = "لا تستعجل قم بتشغيل الموسيقي اولاً ";
 "SELECT_ACTION" = "اختر الفعل";
 "DOWNLOADING" = "يتم التحميل";
+"DOWNLOAD_PREMIUM" = "Download (Premium required)";
 "OOPS" = "هناك شئ خطأ";
 "LINK_NOT_FOUND" = "Link not found";
 "SAVED_TO_PHOTOS" = "تم الحفظ في البوم الصور";
@@ -118,5 +119,3 @@
 "ALL_DOWNLOADS" = "كل التحميلات";  //keep it lowercase
 "DELETE" = "حذف";
 "RENAME" = "Rename";
-
-"WORKAROUND_REMINDER" = "If you are in a country where premium features are not available, it is advisable to activate the forced premium activation option.\n\nYou can manage this option later in YTMusicUltimate → %@ → %@.\n\nDo you want to enable %@ option now?";

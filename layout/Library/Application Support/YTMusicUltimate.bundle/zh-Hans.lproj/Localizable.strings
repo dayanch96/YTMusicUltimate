@@ -101,8 +101,9 @@
 "DONT_RUSH_DESC" = "需要播放歌曲才能提取链接";
 "SELECT_ACTION" = "选择操作";
 "DOWNLOADING" = "下载中";
+"DOWNLOAD_PREMIUM" = "Download (Premium required)";
 "OOPS" = "哎呀\n出现了一些问题";
-"LINK_NOT_FOUND" = "未找到链接";
+"LINK_NOT_FOUND" = "Link not found";
 "SAVED_TO_PHOTOS" = "已保存到照片";
 "DONE" = "完成";
 "FOUND_SEGMENT" = "发现题外话片段";
@@ -118,5 +119,3 @@
 "ALL_DOWNLOADS" = "所有下载的音频"; //keep it lowercase
 "DELETE" = "删除";
 "RENAME" = "重命名";
-
-"WORKAROUND_REMINDER" = "如果所在的国家\/地区没有Premium功能，建议激活“强制启用Premium”选项。\n\n可以稍后在 YTMusicUltimate → %@ → %@ 启用此选项。\n\n你现在要启用 %@ 选项吗？";

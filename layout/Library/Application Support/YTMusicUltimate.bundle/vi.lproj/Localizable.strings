@@ -101,6 +101,7 @@
 "DONT_RUSH_DESC" = "Bắt buộc phải phát bài hát để trích xuất link";
 "SELECT_ACTION" = "Chọn hành động";
 "DOWNLOADING" = "Đang tải";
+"DOWNLOAD_PREMIUM" = "Download (Premium required)";
 "OOPS" = "Rất tiếc\đã xảy ra lỗi";
 "LINK_NOT_FOUND" = "Link not found";
 "SAVED_TO_PHOTOS" = "Đã lưu vào Ảnh";
@@ -114,5 +115,3 @@
 "ALL_DOWNLOADS" = "tất cả âm thanh tải xuống"; //keep it lowercase
 "DELETE" = "Xoá";
 "RENAME" = "Rename";
-
-"WORKAROUND_REMINDER" = "Nếu bạn đang ở một quốc gia không có sẵn các tính năng cao cấp thì bạn nên kích hoạt tùy chọn kích hoạt cao cấp bắt buộc.\n\nBạn có thể quản lý tùy chọn này sau trong YTMusicUltimate → %@ → %@.\n\nBạn có muốn bật không tùy chọn %@ bây giờ?";

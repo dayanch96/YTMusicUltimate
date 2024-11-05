@@ -101,6 +101,7 @@
 "DONT_RUSH_DESC" = "Wymagane odtworzenie piosenki, aby wyciągnąć link";
 "SELECT_ACTION" = "Wybierz akcję";
 "DOWNLOADING" = "Pobieranie";
+"DOWNLOAD_PREMIUM" = "Download (Premium required)";
 "OOPS" = "Uups\ncoś poszło nie tak";
 "LINK_NOT_FOUND" = "Link not found";
 "SAVED_TO_PHOTOS" = "Zapisane do Zdjęć";
@@ -118,5 +119,3 @@
 "ALL_DOWNLOADS" = "wszystkie pliki do pobrania"; //keep it lowercase
 "DELETE" = "Usuń";
 "RENAME" = "Zmień nazwę";
-
-"WORKAROUND_REMINDER" = "Jeśli mieszkasz w kraju w którym usługi premium nie są dostępne, zaleca się włączenie opcji wymuszenia premium.\n\nMożesz zmienić tę opcję później w YTMusicUltimate → %@ → %@.\n\nCzy chcesz włączyć opcję %@ teraz?";

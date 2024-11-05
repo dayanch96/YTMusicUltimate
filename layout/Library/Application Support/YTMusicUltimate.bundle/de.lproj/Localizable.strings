@@ -101,6 +101,7 @@
 "DONT_RUSH_DESC" = "Erforderlich, um das Lied abzuspielen und den Link zu extrahieren";
 "SELECT_ACTION" = "Aktion auswählen";
 "DOWNLOADING" = "wird heruntergeladen...";
+"DOWNLOAD_PREMIUM" = "Download (Premium required)";
 "OOPS" = "Hoppla! Etwas ist schiefgelaufen";
 "LINK_NOT_FOUND" = "Link not found";
 "SAVED_TO_PHOTOS" = "in der Fotogalerie gespeichert";
@@ -118,5 +119,3 @@
 "ALL_DOWNLOADS" = "alle heruntergeladenen lieder"; //keep it lowercase
 "DELETE" = "Löschen";
 "RENAME" = "Rename";
-
-"WORKAROUND_REMINDER" = "Wenn Sie sich in einem Land befinden, in dem Premium-Funktionen nicht verfügbar sind, empfiehlt es sich, die Option zur erzwungenen Premium-Aktivierung zu aktivieren.\n\nSie können diese Option später in YTMusicUltimate → %@ → %@ verwalten.\n\nMöchten Sie sie aktivieren? %@ Option jetzt?";

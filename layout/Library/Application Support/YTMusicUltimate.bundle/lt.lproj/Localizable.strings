@@ -101,6 +101,7 @@
 "DONT_RUSH_DESC" = "Required to play the song to extract the link";
 "SELECT_ACTION" = "Pasirinkite veiksmą";
 "DOWNLOADING" = "Atsisiunčiama";
+"DOWNLOAD_PREMIUM" = "Download (Premium required)";
 "OOPS" = "Oi!\nkažkas atsitiko";
 "LINK_NOT_FOUND" = "Link not found";
 "SAVED_TO_PHOTOS" = "Išsaugota Nuotraukose";
@@ -118,5 +119,3 @@
 "ALL_DOWNLOADS" = "visą atsiųstą muziką"; //keep it lowercase
 "DELETE" = "Panaikinti";
 "RENAME" = "Pervardyti";
-
-"WORKAROUND_REMINDER" = "Jeigu jūs esate šalyje, kurioje premium funkcijos yra neprieinamos, rekomenduojama aktyvuoti Priverstinai įjungti premium funkcijas nustatymą.\n\nVėliau šį nustatymą galite keisti YTMusicUltimate → %@ → %@.\n\nAr norite aktyvuoti %@ nustatymą dabar?";

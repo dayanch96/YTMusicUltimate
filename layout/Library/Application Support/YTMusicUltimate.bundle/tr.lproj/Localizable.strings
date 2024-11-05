@@ -101,6 +101,7 @@
 "DONT_RUSH_DESC" = "İndirmeyi başlatmak için şarkıyı çalmak gerkekli";
 "SELECT_ACTION" = "Eylem Seç";
 "DOWNLOADING" = "İndiriliyor";
+"DOWNLOAD_PREMIUM" = "İndir (Premium gerekli)";
 "OOPS" = "Tüh\nbir şeyler ters gitti";
 "LINK_NOT_FOUND" = "Bağlantı bulunamadı";
 "SAVED_TO_PHOTOS" = "Fotoğraflar'a kaydedildi";
@@ -118,5 +119,3 @@
 "ALL_DOWNLOADS" = "tüm indirilmiş sesler"; //keep it lowercase
 "DELETE" = "Sil";
 "RENAME" = "Kaydet";
-
-"WORKAROUND_REMINDER" = "Eğer premium özelliklerin olmadığı bir ülkedeysen, premium'u zorla seçeneğinin aktive edilmesi tavsiye edilmektedir..\n\nBu özelliği daha sonra buradan yönetebilirsin: YTMusicUltimate → %@ → %@.\n\n%@ özelliğini aktive etmek ister misin?";

@@ -100,6 +100,7 @@
 "DONT_RUSH" = "Don't rush brilliance";
 "DONT_RUSH_DESC" = "Required to play the song to extract the link";
 "SELECT_ACTION" = "Select Action";
+"DOWNLOAD_PREMIUM" = "Download (Premium required)";
 "DOWNLOADING" = "Downloading";
 "OOPS" = "Oops\nsomething went wrong";
 "LINK_NOT_FOUND" = "Link not found";
@@ -118,5 +119,3 @@
 "ALL_DOWNLOADS" = "all download audios"; //keep it lowercase
 "DELETE" = "Delete";
 "RENAME" = "Rename";
-
-"WORKAROUND_REMINDER" = "If you are in a country where premium features are not available, it is advisable to activate the forced premium activation option.\n\nYou can manage this option later in YTMusicUltimate → %@ → %@.\n\nDo you want to enable %@ option now?";
