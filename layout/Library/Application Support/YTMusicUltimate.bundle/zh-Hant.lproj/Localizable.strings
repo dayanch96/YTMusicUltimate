@@ -13,9 +13,9 @@
 
 "PLAYER_SETTINGS" = "播放器介面";
 "DOWNLOAD_AUDIO" = "下載音訊";
-"DOWNLOAD_AUDIO_DESC" = "按下播放器中的YTMUltimate按鈕，即可下載音訊檔案";
+"DOWNLOAD_AUDIO_DESC" = "按下播放器中的下載按鈕，即可下載音訊檔案";
 "DOWNLOAD_COVER" = "下載封面";
-"DOWNLOAD_COVER_DESC" = "按下播放器中的YTMUltimate按鈕，即可下載封面圖片";
+"DOWNLOAD_COVER_DESC" = "按下播放器中的下載按鈕，即可下載封面圖片";
 "PLAYBACK_RATE_BUTTON" = "顯示播放速度按鈕";
 "PLAYBACK_RATE_BUTTON_DESC" = "調整播放速度";
 "SELECTABLE_LYRICS" = "複製歌詞";
