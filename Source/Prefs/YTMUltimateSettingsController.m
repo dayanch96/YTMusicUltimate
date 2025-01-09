@@ -59,7 +59,7 @@
     } if (section == 3) {
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
         NSString *appVersion = infoDictionary[@"CFBundleShortVersionString"];
-        return [NSString stringWithFormat:@"\nYouTubeMusic: v%@\nYTMusicUltimate: v%@\n\n© Ginsu (@ginsudev) 2021-2024", appVersion, @(OS_STRINGIFY(TWEAK_VERSION))];
+        return [NSString stringWithFormat:@"\nYouTubeMusic: v%@\nYTMusicUltimate: v%@", appVersion, @(OS_STRINGIFY(TWEAK_VERSION))];
     }
 
     return nil;
@@ -243,8 +243,8 @@
     if (indexPath.section == 3) {
         NSArray *urls = @[@"https://twitter.com/ginsudev",
                         @"https://twitter.com/dayanch96",
-                        @"https://discord.com/invite/BhdUyCbgkZ",
-                        @"https://github.com/ginsudev/YTMusicUltimate"];
+                        @"https://discord.gg/VN9ZSeMhEW",
+                        @"https://github.com/dayanch96/YTMusicUltimate"];
 
         if (indexPath.row >= 0 && indexPath.row < urls.count) {
             NSURL *url = [NSURL URLWithString:urls[indexPath.row]];
