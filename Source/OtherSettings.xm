@@ -111,3 +111,13 @@ BOOL isTabSelected = NO;
     [self setValue:@(NO) forKey:@"_pauseOnMinimize"];
 }
 %end
+
+%hook YTColdConfig
+- (BOOL)cxClientEnableIosLocalNetworkPermissionWifiFixes { return YES; }
+- (BOOL)cxClientEnableIosLocalNetworkPermissionUsingSockets { return NO; }
+- (BOOL)cxClientEnableIosLocalNetworkPermissionReliabilityFixes { return YES; }
+%end
+
+%hook YTHotConfig
+- (BOOL)isPromptForLocalNetworkPermissionsEnabled { return NO; }
+%end
