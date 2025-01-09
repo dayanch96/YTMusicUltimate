@@ -1,5 +1,5 @@
 #import "YTIPivotBarItemRenderer.h"
 
 @interface YTIPivotBarSupportedRenderers : NSObject
-@property (nonatomic, retain) YTIPivotBarItemRenderer *pivotBarItemRenderer;
+@property (nonatomic, strong, readwrite) YTIPivotBarItemRenderer *pivotBarItemRenderer;
 @end
