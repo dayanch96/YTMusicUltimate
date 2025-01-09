@@ -3,9 +3,9 @@ Name: YTMusicUltimate
 Version: 0.0.1
 Architecture: iphoneos-arm
 Description: YouTube Music Premium
-Maintainer: Ginsu
-Author: Ginsu
+Maintainer: dayanch96 & ginsu
+Author: dayanch96 & ginsu
 Section: Tweaks
 Depends: mobilesubstrate (>= 0.9.5000)
-Icon: https://raw.githubusercontent.com/dayanch96/icons/main/icon.png
-Depiction: https://ginsudev.github.io/repo/depictions/YTMusicUltimate/index.html
+Icon: https://raw.githubusercontent.com/dayanch96/YTMusicUltimate/refs/heads/main/Resources/icon.png
+SileoDepiction: https://raw.githubusercontent.com/dayanch96/YTMusicUltimate/main/Resources/depiction.json
