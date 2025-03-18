@@ -70,7 +70,7 @@ jobs:
 
       - name: Setup Theos
         if: steps.theos.outputs.cache-hit != 'true'
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4.2.2
         with:
           repository: theos/theos
           ref: 67db2ab8d950910161730de77c322658ea3e6b44
