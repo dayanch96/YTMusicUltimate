@@ -147,6 +147,15 @@ jobs:
           cd ${{ github.workspace }}
           git clone --quiet --depth=1 https://github.com/PoomSmart/Return-YouTube-Music-Dislikes.git
 
+      - name: Build Return-YouTube-Music-Dislikes
+        if: ${{ inputs.enable_rymd }}
+        run: |
+          cd ${{ github.workspace }}/Return-YouTube-Music-Dislikes
+          make clean package DEBUG=0 FINALPACKAGE=1
+          mv packages/*.deb ${{ github.workspace }}/rymd.deb
+        env:
+          THEOS: ${{ github.workspace }}/theos
+
       - name: Build Tweak for Sideloading
         id: build_package
         run: |
