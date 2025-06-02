@@ -9,7 +9,7 @@ on:
         required: true
         type: string
 
-        enable_rymd:
+      enable_rymd:
         description: "enable rymd"
         type: boolean
         required: true
