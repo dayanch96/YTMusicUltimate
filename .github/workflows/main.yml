@@ -9,6 +9,12 @@ on:
         required: true
         type: string
 
+        enable_rymd:
+        description: "enable rymd"
+        type: boolean
+        required: true
+        default: true
+
       display_name:
         description: "App Name (Optional)"
         default: "YouTube Music"
@@ -94,6 +100,12 @@ jobs:
       - name: Download YouTube Music
         id: download_youtube_music
         run: wget "${{ inputs.ipa_url }}" --no-verbose -O ${{ github.workspace }}/main/ytm.ipa
+
+        - name: Clone Return-YouTube-Dislikes
+        if: ${{ inputs.enable_rymd }}
+        run: |
+          cd ${{ github.workspace }}
+          git clone --quiet --depth=1 https://github.com/PoomSmart/Return-YouTube-Dislikes.git
 
       - name: Build Tweak for Sideloading
         id: build_package
