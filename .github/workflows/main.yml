@@ -121,6 +121,20 @@ jobs:
         env:
           THEOS: ${{ github.workspace }}/theos
 
+      - name: Clone YouTubeMusicHeader
+        run: |
+          if [ -d "$THEOS/include/YouTubeMusicHeader" ]; then
+            echo "YouTubeMusicHeader exists. Pulling latest changes..."
+            cd $THEOS/include/YouTubeMusicHeader
+            git pull
+          else
+            echo "YouTubeMusicHeader does not exist. Cloning repository..."
+            cd $THEOS/include
+            git clone --quiet --depth=1 https://github.com/PoomSmart/YouTubeMusicHeader.git
+          fi
+        env:
+          THEOS: ${{ github.workspace }}/theos
+
       - name: Clone Return-YouTube-Dislikes
         if: ${{ inputs.enable_rymd }}
         run: |
