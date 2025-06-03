@@ -135,12 +135,6 @@ jobs:
         env:
           THEOS: ${{ github.workspace }}/theos
 
-      - name: Clone Return-YouTube-Dislikes
-        if: ${{ inputs.enable_rymd }}
-        run: |
-          cd ${{ github.workspace }}
-          git clone --quiet --depth=1 https://github.com/PoomSmart/Return-YouTube-Dislikes.git
-
       - name: Clone Return-YouTube-Music-Dislikes
         if: ${{ inputs.enable_rymd }}
         run: |
