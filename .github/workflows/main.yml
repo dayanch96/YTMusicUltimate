@@ -101,6 +101,20 @@ jobs:
         id: download_youtube_music
         run: wget "${{ inputs.ipa_url }}" --no-verbose -O ${{ github.workspace }}/main/ytm.ipa
 
+      - name: Clone PSHeader
+        run: |
+          if [ -d "$THEOS/include/PSHeader" ]; then
+            echo "PSHeader exists. Pulling latest changes..."
+            cd $THEOS/include/PSHeader
+            git pull
+          else
+            echo "PSHeader does not exist. Cloning repository..."
+            cd $THEOS/include
+            git clone --quiet --depth=1 https://github.com/PoomSmart/PSHeader.git
+          fi
+        env:
+          THEOS: ${{ github.workspace }}/theos
+
       - name: Clone Return-YouTube-Dislikes
         if: ${{ inputs.enable_rymd }}
         run: |
