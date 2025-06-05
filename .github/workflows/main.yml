@@ -175,6 +175,8 @@ jobs:
 
       - name: Inject tweaks into IPA
         run: |
+         cd ${{ github.workspace }}/main/packages
+          tweakName=$(ls)
           tweaks="main/packages main"
 
           for deb in youpip.deb ytuhd.deb rymd.deb ygs.deb yq.deb ytvo.deb demc.deb; do
