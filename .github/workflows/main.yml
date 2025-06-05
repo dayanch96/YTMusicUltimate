@@ -171,17 +171,11 @@ jobs:
           make clean package SIDELOADING=1
         env:
           THEOS: ${{ github.workspace }}/theos
-
-      //- name: Inject tweak into provided IPA
-        run: |
-          cd ${{ github.workspace }}/main/packages
-          tweakName=$(ls)
-          cd ${{ github.workspace }}/main
-          cyan -i ytm.ipa -o packages/YTMusicUltimate.ipa -uwsf packages/$tweakName -n "${{ inputs.display_name }}" -b ${{ inputs.bundle_id }} 
+ 
 
       - name: Inject tweaks into IPA
         run: |
-          tweaks="ytplus.deb OpenYoutubeSafariExtension.appex"
+          tweaks="main"
 
           for deb in youpip.deb ytuhd.deb rymd.deb ygs.deb yq.deb ytvo.deb demc.deb; do
             if [ -f "$deb" ]; then
