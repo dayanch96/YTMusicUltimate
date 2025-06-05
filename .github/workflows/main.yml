@@ -172,7 +172,7 @@ jobs:
         env:
           THEOS: ${{ github.workspace }}/theos
 
-      - name: Inject tweak into provided IPA
+      //- name: Inject tweak into provided IPA
         run: |
           cd ${{ github.workspace }}/main/packages
           tweakName=$(ls)
@@ -183,13 +183,13 @@ jobs:
         run: |
           tweaks="ytplus.deb OpenYoutubeSafariExtension.appex"
 
-          for deb in youpip.deb ytuhd.deb ryd.deb ygs.deb yq.deb ytvo.deb demc.deb; do
+          for deb in youpip.deb ytuhd.deb rymd.deb ygs.deb yq.deb ytvo.deb demc.deb; do
             if [ -f "$deb" ]; then
               tweaks="$tweaks $deb"
             fi
           done
 
-          cyan -i youtube.ipa -o YouTubePlus_${{ inputs.tweak_version }}.ipa -uwef $tweaks -n "${{ inputs.display_name }}" -b ${{ inputs.bundle_id }}
+          cyan -i ytm.ipa -o YouTubeMusicUltimate_${{ inputs.tweak_version }}.ipa -uwef $tweaks -n "${{ inputs.display_name }}" -b ${{ inputs.bundle_id }}
 
 
       - name: Create Release
