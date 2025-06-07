@@ -175,11 +175,9 @@ jobs:
 
       - name: Inject tweaks into IPA
         run: |
-         cd ${{ github.workspace }}/main/packages
-          tweakName=$(ls)
-          tweaks="main/packages main"
+          tweaks="main/packages " //tweaks="ytplus.deb OpenYoutubeSafariExtension.appex"
 
-          for deb in youpip.deb ytuhd.deb rymd.deb ygs.deb yq.deb ytvo.deb demc.deb; do
+          for deb in rymd.deb ygs.deb ytvo.deb ; do
             if [ -f "$deb" ]; then
               tweaks="$tweaks $deb"
             fi
