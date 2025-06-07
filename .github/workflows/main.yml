@@ -99,7 +99,7 @@ jobs:
 
       - name: Download YouTube Music
         id: download_youtube_music
-        run: wget "${{ inputs.ipa_url }}" --no-verbose -O ${{ github.workspace }}/main/ytm.ipa
+        run: wget "${{ inputs.ipa_url }}" --no-verbose -O ${{ github.workspace }}/ytm.ipa
 
       - name: Clone PSHeader
         run: |
