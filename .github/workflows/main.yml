@@ -182,7 +182,7 @@ jobs:
               tweaks="$tweaks $deb"
             fi
           done
-          cd ${{ github.workspace }}/main
+          
 
           cyan -i ytm.ipa -o YouTubeMusicUltimate_${{ inputs.tweak_version }}.ipa -uwef $tweaks -n "${{ inputs.display_name }}" -b ${{ inputs.bundle_id }}
 
