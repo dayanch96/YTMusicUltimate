@@ -175,7 +175,7 @@ jobs:
 
       - name: Inject tweaks into IPA
         run: |
-          tweaks="main/packages " //tweaks="ytplus.deb OpenYoutubeSafariExtension.appex"
+          tweaks="main/packages"
 
           for deb in rymd.deb ygs.deb ytvo.deb ; do
             if [ -f "$deb" ]; then
