@@ -10,7 +10,7 @@ on:
         type: string
 
       enable_rymd:
-        description: "enable return youtube music dislikes"
+        description: "Integrate Return YouTube Music Dislikes"
         type: boolean
         required: true
         default: true
@@ -123,6 +123,7 @@ jobs:
           git clone --quiet --depth=1 https://github.com/PoomSmart/Return-YouTube-Dislikes.git
 
       - name: Clone YouTubeHeader
+        if: ${{ inputs.enable_rymd }}
         run: |
           if [ -d "$THEOS/include/YouTubeHeader" ]; then
             echo "YouTubeHeader exists. Pulling latest changes..."
@@ -137,6 +138,7 @@ jobs:
           THEOS: ${{ github.workspace }}/theos
 
       - name: Clone YouTubeMusicHeader
+        if: ${{ inputs.enable_rymd }}
         run: |
           if [ -d "$THEOS/include/YouTubeMusicHeader" ]; then
             echo "YouTubeMusicHeader exists. Pulling latest changes..."
