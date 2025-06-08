@@ -192,7 +192,7 @@ jobs:
         uses: softprops/action-gh-release@v2.0.6
         with:
           name: YTMusicUltimate-v${{ github.run_number }}
-          files: main/*.ipa
+          files: YouTubeMusicUltimate_${{ inputs.tweak_version }}.ipa
           draft: true
 
       - name: Output Release URL
