@@ -169,13 +169,14 @@ jobs:
         run: |
           cd ${{ github.workspace }}/main
           make clean package SIDELOADING=1
+          mv packages/*.deb ${{ github.workspace }}/ymu.deb
         env:
           THEOS: ${{ github.workspace }}/theos
  
 
       - name: Inject tweaks into IPA
         run: |
-          tweaks="main/packages"
+          tweaks="ymu.deb"
 
           for deb in rymd.deb ygs.deb ytvo.deb ; do
             if [ -f "$deb" ]; then
