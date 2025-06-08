@@ -10,7 +10,7 @@ on:
         type: string
 
       enable_rymd:
-        description: "enable rymd"
+        description: "enable return youtube music dislikes"
         type: boolean
         required: true
         default: true
@@ -102,6 +102,7 @@ jobs:
         run: wget "${{ inputs.ipa_url }}" --no-verbose -O ${{ github.workspace }}/ytm.ipa
 
       - name: Clone PSHeader
+        if: ${{ inputs.enable_rymd }}
         run: |
           if [ -d "$THEOS/include/PSHeader" ]; then
             echo "PSHeader exists. Pulling latest changes..."
@@ -178,7 +179,7 @@ jobs:
         run: |
           tweaks="ymu.deb"
 
-          for deb in rymd.deb ygs.deb ytvo.deb ; do
+          for deb in rymd.deb ; do
             if [ -f "$deb" ]; then
               tweaks="$tweaks $deb"
             fi
