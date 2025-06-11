@@ -9,6 +9,12 @@ on:
         required: true
         type: string
 
+      enable_rymd:
+        description: "Integrate Return YouTube Music Dislikes"
+        type: boolean
+        required: true
+        default: true
+
       display_name:
         description: "App Name (Optional)"
         default: "YouTube Music"
@@ -93,28 +99,103 @@ jobs:
 
       - name: Download YouTube Music
         id: download_youtube_music
-        run: wget "${{ inputs.ipa_url }}" --no-verbose -O ${{ github.workspace }}/main/ytm.ipa
+        run: wget "${{ inputs.ipa_url }}" --no-verbose -O ${{ github.workspace }}/ytm.ipa
+
+      - name: Clone PSHeader
+        if: ${{ inputs.enable_rymd }}
+        run: |
+          if [ -d "$THEOS/include/PSHeader" ]; then
+            echo "PSHeader exists. Pulling latest changes..."
+            cd $THEOS/include/PSHeader
+            git pull
+          else
+            echo "PSHeader does not exist. Cloning repository..."
+            cd $THEOS/include
+            git clone --quiet --depth=1 https://github.com/PoomSmart/PSHeader.git
+          fi
+        env:
+          THEOS: ${{ github.workspace }}/theos
+
+      - name: Clone Return-YouTube-Dislikes
+        if: ${{ inputs.enable_rymd }}
+        run: |
+          cd ${{ github.workspace }}
+          git clone --quiet --depth=1 https://github.com/PoomSmart/Return-YouTube-Dislikes.git
+
+      - name: Clone YouTubeHeader
+        if: ${{ inputs.enable_rymd }}
+        run: |
+          if [ -d "$THEOS/include/YouTubeHeader" ]; then
+            echo "YouTubeHeader exists. Pulling latest changes..."
+            cd $THEOS/include/YouTubeHeader
+            git pull
+          else
+            echo "YouTubeHeader does not exist. Cloning repository..."
+            cd $THEOS/include
+            git clone --quiet --depth=1 https://github.com/PoomSmart/YouTubeHeader.git
+          fi
+        env:
+          THEOS: ${{ github.workspace }}/theos
+
+      - name: Clone YouTubeMusicHeader
+        if: ${{ inputs.enable_rymd }}
+        run: |
+          if [ -d "$THEOS/include/YouTubeMusicHeader" ]; then
+            echo "YouTubeMusicHeader exists. Pulling latest changes..."
+            cd $THEOS/include/YouTubeMusicHeader
+            git pull
+          else
+            echo "YouTubeMusicHeader does not exist. Cloning repository..."
+            cd $THEOS/include
+            git clone --quiet --depth=1 https://github.com/PoomSmart/YouTubeMusicHeader.git
+          fi
+        env:
+          THEOS: ${{ github.workspace }}/theos
+
+      - name: Clone Return-YouTube-Music-Dislikes
+        if: ${{ inputs.enable_rymd }}
+        run: |
+          cd ${{ github.workspace }}
+          git clone --quiet --depth=1 https://github.com/PoomSmart/Return-YouTube-Music-Dislikes.git
+
+      - name: Build Return-YouTube-Music-Dislikes
+        if: ${{ inputs.enable_rymd }}
+        run: |
+          cd ${{ github.workspace }}/Return-YouTube-Music-Dislikes
+          make clean package DEBUG=0 FINALPACKAGE=1
+          mv packages/*.deb ${{ github.workspace }}/rymd.deb
+        env:
+          THEOS: ${{ github.workspace }}/theos
 
       - name: Build Tweak for Sideloading
         id: build_package
         run: |
           cd ${{ github.workspace }}/main
           make clean package SIDELOADING=1
+          mv packages/*.deb ${{ github.workspace }}/ytmu.deb
         env:
           THEOS: ${{ github.workspace }}/theos
+ 
 
-      - name: Inject tweak into provided IPA
+      - name: Inject tweaks into IPA
         run: |
-          cd ${{ github.workspace }}/main/packages
-          tweakName=$(ls)
-          cd ${{ github.workspace }}/main
-          cyan -i ytm.ipa -o packages/YTMusicUltimate.ipa -uwsf packages/$tweakName -n "${{ inputs.display_name }}" -b ${{ inputs.bundle_id }} 
+          tweaks="ytmu.deb"
+
+          for deb in rymd.deb ; do
+            if [ -f "$deb" ]; then
+              tweaks="$tweaks $deb"
+            fi
+          done
+          
+
+          cyan -i ytm.ipa -o YTMusicUltimate.ipa -uwef $tweaks -n "${{ inputs.display_name }}" -b ${{ inputs.bundle_id }}
+
 
       - name: Create Release
         uses: softprops/action-gh-release@v2.0.6
         with:
           name: YTMusicUltimate-v${{ github.run_number }}
-          files: main/packages/*.ipa
+          files: YTMusicUltimate.ipa
           draft: true
 
       - name: Output Release URL

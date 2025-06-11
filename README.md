@@ -57,3 +57,19 @@ If the github action works and you cannot find where you can download the result
 
 
 Made with ❤ by Ginsu and Dayanch96
+
+
+## Tweak Integration Details
+
+
+
+
+<details>
+  <summary>Return YouTube Music Dislikes</summary>
+  <p>Return YouTube Music Dislikes is a tweak developed by <a href="https://github.com/PoomSmart">PoomSmart</a> that brings back dislikes on the YouTube Music app.</p>
+  <p><strong>Return YouTube Music Dislikes preferences</strong> are available in the <strong>YouTube settings</strong>.</p>
+  <p>Source code and additional information are available <a href="https://github.com/PoomSmart/Return-YouTube-Music-Dislikes">in PoomSmart's GitHub repository</a>.</p>
+</details>
+
+
+
