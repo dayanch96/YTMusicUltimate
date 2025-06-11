@@ -188,14 +188,14 @@ jobs:
           done
           
 
-          cyan -i ytm.ipa -o YouTubeMusicUltimate_${{ inputs.tweak_version }}.ipa -uwef $tweaks -n "${{ inputs.display_name }}" -b ${{ inputs.bundle_id }}
+          cyan -i ytm.ipa -o YTMusicUltimate.ipa -uwef $tweaks -n "${{ inputs.display_name }}" -b ${{ inputs.bundle_id }}
 
 
       - name: Create Release
         uses: softprops/action-gh-release@v2.0.6
         with:
           name: YTMusicUltimate-v${{ github.run_number }}
-          files: YouTubeMusicUltimate_${{ inputs.tweak_version }}.ipa
+          files: YTMusicUltimate.ipa
           draft: true
 
       - name: Output Release URL
