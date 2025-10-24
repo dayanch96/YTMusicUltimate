@@ -1,5 +1,5 @@
 #import "PlayerSettingsController.h"
-#import "Localization.h"
+#import "../Headers/Localization.h"
 
 @interface PlayerSettingsController ()
 @property (nonatomic, strong) UILabel *crossfadeDurationLabel;
