@@ -1,10 +1,14 @@
 #import <Foundation/Foundation.h>
 #import "UIKit/UIKit.h"
 #import "Source/Headers/YTPlayerViewController.h"
+#import "Source/Headers/YTQueueController.h"
 #import <AVFoundation/AVFoundation.h>
 #import <objc/runtime.h>
 
-// Helper to safely read from NSUserDefaults
+// --- Globals & Helpers ---
+
+static AVPlayer *crossfade_takeoverPlayer = nil;
+
 static id YTMUValue(NSString *key) {
     return [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"][key];
 }
@@ -15,102 +19,128 @@ static BOOL crossfadeEnabled() {
 
 static int crossfadeDuration() {
     NSNumber *duration = YTMUValue(@"crossfadeDuration");
-    return duration ? [duration intValue] : 5; // Default to 5 seconds if not set
+    if (duration && [duration intValue] > 0) {
+        return [duration intValue];
+    }
+    return 5; // Default to 5s
 }
 
-#pragma mark - YTPlayerViewController Category
+// --- Category for Associated Objects ---
 
 @interface YTPlayerViewController (YTMUltimate)
-@property (nonatomic, strong) AVPlayer *ytm_player;
-@property (nonatomic, strong) id ytm_timeObserver;
-- (void)checkForCrossfade;
-- (void)cleanupCrossfadeObserver;
+@property (nonatomic, strong, setter=ytm_setPlayer:, getter=ytm_player) AVPlayer *ytm_player;
+@property (nonatomic, strong, setter=ytm_setTimeObserver:, getter=ytm_timeObserver) id ytm_timeObserver;
+@property (nonatomic, strong, setter=ytm_setQueueController:, getter=ytm_queueController) YTQueueController *ytm_queueController;
 @end
 
-#pragma mark - Logos Hooks
+@implementation YTPlayerViewController (YTMUltimate)
+- (void)ytm_setPlayer:(AVPlayer *)player { objc_setAssociatedObject(self, @selector(ytm_player), player, OBJC_ASSOCIATION_RETAIN_NONATOMIC); }
+- (AVPlayer *)ytm_player { return objc_getAssociatedObject(self, @selector(ytm_player)); }
+- (void)ytm_setTimeObserver:(id)observer { objc_setAssociatedObject(self, @selector(ytm_timeObserver), observer, OBJC_ASSOCIATION_RETAIN_NONATOMIC); }
+- (id)ytm_timeObserver { return objc_getAssociatedObject(self, @selector(ytm_timeObserver)); }
+- (void)ytm_setQueueController:(YTQueueController *)controller { objc_setAssociatedObject(self, @selector(ytm_queueController), controller, OBJC_ASSOCIATION_RETAIN_NONATOMIC); }
+- (YTQueueController *)ytm_queueController { return objc_getAssociatedObject(self, @selector(ytm_queueController)); }
+@end
 
-%hook YTPlayerViewController
+// --- Core Logic ---
 
-- (void)playbackController:(id)arg1 didActivateVideo:(id)arg2 withPlaybackData:(id)arg3 {
-    // It is critical to clean up the observer from the *previous* song before the original method runs.
-    [self cleanupCrossfadeObserver];
-    %orig;
-
-    if (crossfadeEnabled()) {
-        // Find the AVPlayer instance for the newly activated video.
-        unsigned int ivarCount;
-        Ivar *ivars = class_copyIvarList([self class], &ivarCount);
-        for (unsigned int i = 0; i < ivarCount; i++) {
-            Ivar ivar = ivars[i];
-            const char *ivarName = ivar_getName(ivar);
-            NSString *name = [NSString stringWithUTF8String:ivarName];
-
-            id ivarValue = [self valueForKey:name];
-            if ([ivarValue isKindOfClass:[AVPlayer class]]) {
-                self.ytm_player = (AVPlayer *)ivarValue;
-                break;
-            }
-        }
-        free(ivars);
-
-        if (self.ytm_player) {
-            __weak typeof(self) weakSelf = self;
-            self.ytm_timeObserver = [self.ytm_player addPeriodicTimeObserverForInterval:CMTimeMake(1, 10) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
-                [weakSelf checkForCrossfade];
-            }];
-        }
-    }
-}
-
-%new
-- (void)checkForCrossfade {
-    if (!crossfadeEnabled() || !self.ytm_player) return;
-
-    CGFloat currentTime = self.currentVideoMediaTime;
-    CGFloat totalTime = self.currentVideoTotalMediaTime;
-    int duration = crossfadeDuration();
-
-    if (CMTIME_IS_VALID(self.ytm_player.currentTime) && totalTime > duration && duration > 0) {
-        // Fade out in the last X seconds
-        if (totalTime - currentTime < duration) {
-            float newVolume = (totalTime - currentTime) / duration;
-            if (self.ytm_player.volume != newVolume) self.ytm_player.volume = newVolume;
-        }
-        // Fade in in the first X seconds
-        else if (currentTime < duration) {
-            float newVolume = currentTime / duration;
-            if (self.ytm_player.volume != newVolume) self.ytm_player.volume = newVolume;
-        }
-        // Otherwise, ensure volume is at max
-        else {
-            if (self.ytm_player.volume < 1.0) {
-                self.ytm_player.volume = 1.0;
-            }
-        }
-    }
-}
-
-// This logic is now more robust to prevent crashes.
-// It ensures that we don't try to remove an observer from a deallocated player.
-%new
-- (void)cleanupCrossfadeObserver {
+// This function is the heart of the new implementation. It safely cleans up the time observer from the player it was attached to.
+static void cleanupObserver(YTPlayerViewController *self) {
     if (self.ytm_timeObserver) {
-        // The original player instance might be gone, so we find it again just to be safe.
-        AVPlayer *player_instance = self.ytm_player;
-        if (player_instance) {
-             @try {
-                [player_instance removeTimeObserver:self.ytm_timeObserver];
-             } @catch (NSException *e) {
-                // Player was likely deallocated. Safe to ignore.
-             }
+        AVPlayer *observedPlayer = self.ytm_player;
+        if (observedPlayer) {
+            @try {
+                [observedPlayer removeTimeObserver:self.ytm_timeObserver];
+            } @catch (NSException *exception) {
+                // This can happen if the player was deallocated. It's safe to ignore.
+            }
         }
         self.ytm_timeObserver = nil;
     }
     self.ytm_player = nil;
 }
 
+// --- Logos Hooks ---
+
+%hook YTPlayerViewController
+
+- (void)playbackController:(id)arg1 didActivateVideo:(id)arg2 withPlaybackData:(id)arg3 {
+    cleanupObserver(self); // Always clean up the old observer before proceeding.
+    %orig;
+
+    if (crossfadeEnabled()) {
+        // Find the active AVPlayer instance
+        unsigned int ivarCount;
+        Ivar *ivars = class_copyIvarList([self class], &ivarCount);
+        for (unsigned int i = 0; i < ivarCount; i++) {
+            const char *ivarName = ivar_getName(ivar);
+            id ivarValue = object_getIvar(self, ivars[i]);
+            if ([ivarValue isKindOfClass:[AVPlayer class]]) {
+                self.ytm_player = ivarValue;
+            } else if ([ivarValue isKindOfClass:[YTQueueController class]]) {
+                self.ytm_queueController = ivarValue;
+            }
+        }
+        free(ivars);
+
+        if (self.ytm_player) {
+            // Fade in the new track
+            self.ytm_player.volume = 0.0;
+
+            __weak YTPlayerViewController *weakSelf = self;
+            self.ytm_timeObserver = [self.ytm_player addPeriodicTimeObserverForInterval:CMTimeMake(1, 10) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
+                YTPlayerViewController *strongSelf = weakSelf;
+                if (!strongSelf || !strongSelf.ytm_player) return;
+
+                CGFloat currentTime = strongSelf.currentVideoMediaTime;
+                CGFloat totalTime = strongSelf.currentVideoTotalMediaTime;
+                int duration = crossfadeDuration();
+
+                // --- True Crossfade Logic ---
+                if (totalTime > duration && (totalTime - currentTime) < duration) {
+                    cleanupObserver(strongSelf); // Stop observing the current player
+
+                    // Take over playback for the fade-out
+                    crossfade_takeoverPlayer = [[AVPlayer alloc] initWithPlayerItem:strongSelf.ytm_player.currentItem];
+                    [crossfade_takeoverPlayer seekToTime:strongSelf.ytm_player.currentTime];
+                    crossfade_takeoverPlayer.volume = strongSelf.ytm_player.volume;
+                    [crossfade_takeoverPlayer play];
+
+                    // Tell the app to play the next song
+                    if (strongSelf.ytm_queueController) {
+                        [strongSelf.ytm_queueController playNext];
+                    }
+
+                    // Start a new timer to fade out the takeover player
+                    __block float fadeOutVolume = crossfade_takeoverPlayer.volume;
+                    [NSTimer scheduledTimerWithTimeInterval:0.1 repeats:YES block:^(NSTimer * _Nonnull timer) {
+                        fadeOutVolume -= (0.1 / duration);
+                        if (fadeOutVolume <= 0) {
+                            [crossfade_takeoverPlayer pause];
+                            crossfade_takeoverPlayer = nil;
+                            [timer invalidate];
+                        } else {
+                            crossfade_takeoverPlayer.volume = fadeOutVolume;
+                        }
+                    }];
+                }
+                // --- Fade-in Logic for the new track ---
+                else if (currentTime < duration) {
+                    strongSelf.ytm_player.volume = currentTime / duration;
+                }
+                // --- Normal Playback Volume ---
+                else {
+                    if (strongSelf.ytm_player.volume < 1.0) {
+                        strongSelf.ytm_player.volume = 1.0;
+                    }
+                }
+            }];
+        }
+    }
+}
+
 - (void)dealloc {
-    [self cleanupCrossfadeObserver];
+    cleanupObserver(self);
     %orig;
 }
 

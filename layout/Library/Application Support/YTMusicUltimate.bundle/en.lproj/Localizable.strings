@@ -121,3 +121,4 @@
 "RENAME" = "Rename";
 "CROSSFADE" = "Crossfade";
 "CROSSFADE_DESC" = "Fade between songs";
+"CROSSFADE_DURATION" = "Fade Duration";
