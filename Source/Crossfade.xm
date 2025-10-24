@@ -1,9 +1,16 @@
 #import <Foundation/Foundation.h>
 #import "UIKit/UIKit.h"
-#import "Source/Headers/YTPlayerViewController.h"
-#import "Source/Headers/YTQueueController.h"
+#import "Headers/YTPlayerViewController.h"
+// #import "Source/Headers/YTQueueController.h" // This was the cause of the build error. The header does not exist.
 #import <AVFoundation/AVFoundation.h>
 #import <objc/runtime.h>
+
+// --- Local Interface Declaration ---
+// This is the correct way to use a private class that does not have a public header file.
+@interface YTQueueController : NSObject
+- (void)playNext;
+@end
+
 
 // --- Globals & Helpers ---
 
@@ -44,7 +51,6 @@ static int crossfadeDuration() {
 
 // --- Core Logic ---
 
-// This function is the heart of the new implementation. It safely cleans up the time observer from the player it was attached to.
 static void cleanupObserver(YTPlayerViewController *self) {
     if (self.ytm_timeObserver) {
         AVPlayer *observedPlayer = self.ytm_player;
@@ -52,7 +58,7 @@ static void cleanupObserver(YTPlayerViewController *self) {
             @try {
                 [observedPlayer removeTimeObserver:self.ytm_timeObserver];
             } @catch (NSException *exception) {
-                // This can happen if the player was deallocated. It's safe to ignore.
+                // Player might be deallocated, which is safe to ignore.
             }
         }
         self.ytm_timeObserver = nil;
@@ -65,11 +71,10 @@ static void cleanupObserver(YTPlayerViewController *self) {
 %hook YTPlayerViewController
 
 - (void)playbackController:(id)arg1 didActivateVideo:(id)arg2 withPlaybackData:(id)arg3 {
-    cleanupObserver(self); // Always clean up the old observer before proceeding.
+    cleanupObserver(self);
     %orig;
 
     if (crossfadeEnabled()) {
-        // Find the active AVPlayer instance
         unsigned int ivarCount;
         Ivar *ivars = class_copyIvarList([self class], &ivarCount);
         for (unsigned int i = 0; i < ivarCount; i++) {
@@ -84,7 +89,6 @@ static void cleanupObserver(YTPlayerViewController *self) {
         free(ivars);
 
         if (self.ytm_player) {
-            // Fade in the new track
             self.ytm_player.volume = 0.0;
 
             __weak YTPlayerViewController *weakSelf = self;
@@ -96,26 +100,22 @@ static void cleanupObserver(YTPlayerViewController *self) {
                 CGFloat totalTime = strongSelf.currentVideoTotalMediaTime;
                 int duration = crossfadeDuration();
 
-                // --- True Crossfade Logic ---
                 if (totalTime > duration && (totalTime - currentTime) < duration) {
-                    cleanupObserver(strongSelf); // Stop observing the current player
+                    cleanupObserver(strongSelf);
 
-                    // Take over playback for the fade-out
                     crossfade_takeoverPlayer = [[AVPlayer alloc] initWithPlayerItem:strongSelf.ytm_player.currentItem];
                     [crossfade_takeoverPlayer seekToTime:strongSelf.ytm_player.currentTime];
                     crossfade_takeoverPlayer.volume = strongSelf.ytm_player.volume;
                     [crossfade_takeoverPlayer play];
 
-                    // Tell the app to play the next song
                     if (strongSelf.ytm_queueController) {
                         [strongSelf.ytm_queueController playNext];
                     }
 
-                    // Start a new timer to fade out the takeover player
                     __block float fadeOutVolume = crossfade_takeoverPlayer.volume;
                     [NSTimer scheduledTimerWithTimeInterval:0.1 repeats:YES block:^(NSTimer * _Nonnull timer) {
                         fadeOutVolume -= (0.1 / duration);
-                        if (fadeOutVolume <= 0) {
+                        if (fadeOutVolume <= 0 || !crossfade_takeoverPlayer) {
                             [crossfade_takeoverPlayer pause];
                             crossfade_takeoverPlayer = nil;
                             [timer invalidate];
@@ -124,11 +124,9 @@ static void cleanupObserver(YTPlayerViewController *self) {
                         }
                     }];
                 }
-                // --- Fade-in Logic for the new track ---
                 else if (currentTime < duration) {
                     strongSelf.ytm_player.volume = currentTime / duration;
                 }
-                // --- Normal Playback Volume ---
                 else {
                     if (strongSelf.ytm_player.volume < 1.0) {
                         strongSelf.ytm_player.volume = 1.0;
