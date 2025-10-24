@@ -9,21 +9,32 @@ static BOOL YTMU(NSString *key) {
     return [YTMUltimateDict[key] boolValue];
 }
 
-static BOOL crossfadeEnabled = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"crossfade");
+static BOOL crossfadeEnabled() {
+    return YTMU(@"YTMUltimateIsEnabled") && YTMU(@"crossfade");
+}
+
+#pragma mark - YTPlayerViewController Category
 
 @interface YTPlayerViewController (YTMUltimate)
 @property (nonatomic, strong) AVPlayer *ytm_player;
 @property (nonatomic, strong) id ytm_timeObserver;
 - (void)checkForCrossfade;
+- (void)cleanupCrossfade;
 @end
+
+#pragma mark - Logos Hooks
 
 %hook YTPlayerViewController
 
-- (void)viewDidLoad {
+// The feature was previously initialized in viewDidLoad, which was too early and caused a crash.
+// By moving the logic to `didActivateVideo`, we ensure the player is ready, making the feature stable.
+- (void)playbackController:(id)arg1 didActivateVideo:(id)arg2 withPlaybackData:(id)arg3 {
     %orig;
 
-    if (crossfadeEnabled) {
-        // Find the AVPlayer instance
+    // Clean up any previous observer before starting a new one.
+    [self cleanupCrossfade];
+
+    if (crossfadeEnabled()) {
         unsigned int ivarCount;
         Ivar *ivars = class_copyIvarList([self class], &ivarCount);
         for (unsigned int i = 0; i < ivarCount; i++) {
@@ -34,7 +45,6 @@ static BOOL crossfadeEnabled = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"crossfade
             id ivarValue = [self valueForKey:name];
             if ([ivarValue isKindOfClass:[AVPlayer class]]) {
                 self.ytm_player = (AVPlayer *)ivarValue;
-                NSLog(@"YTMusicUltimate: Found AVPlayer instance: %@", self.ytm_player);
                 break;
             }
         }
@@ -45,29 +55,27 @@ static BOOL crossfadeEnabled = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"crossfade
             self.ytm_timeObserver = [self.ytm_player addPeriodicTimeObserverForInterval:CMTimeMake(1, 10) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
                 [weakSelf checkForCrossfade];
             }];
-        } else {
-            NSLog(@"YTMusicUltimate: Could not find AVPlayer instance.");
         }
     }
 }
 
 %new
 - (void)checkForCrossfade {
-    if (crossfadeEnabled && self.ytm_player) {
-        CGFloat currentTime = [self currentVideoMediaTime];
-        CGFloat totalTime = [self currentVideoTotalMediaTime];
+    if (crossfadeEnabled() && self.ytm_player) {
+        CGFloat currentTime = self.currentVideoMediaTime;
+        CGFloat totalTime = self.currentVideoTotalMediaTime;
 
-        if (totalTime > 0) {
+        if (CMTIME_IS_VALID(self.ytm_player.currentTime) && totalTime > 0) {
+            // Fade out in the last 5 seconds
             if (totalTime - currentTime < 5.0) {
-                // Fade out
-                float volume = (totalTime - currentTime) / 5.0;
-                self.ytm_player.volume = volume;
-            } else if (currentTime < 5.0) {
-                // Fade in
-                float volume = currentTime / 5.0;
-                self.ytm_player.volume = volume;
-            } else {
-                // Ensure volume is at max during normal playback
+                self.ytm_player.volume = (totalTime - currentTime) / 5.0;
+            }
+            // Fade in in the first 5 seconds
+            else if (currentTime < 5.0) {
+                self.ytm_player.volume = currentTime / 5.0;
+            }
+            // Otherwise, ensure volume is at max
+            else {
                 if (self.ytm_player.volume < 1.0) {
                     self.ytm_player.volume = 1.0;
                 }
@@ -76,12 +84,17 @@ static BOOL crossfadeEnabled = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"crossfade
     }
 }
 
-- (void)dealloc {
+%new
+- (void)cleanupCrossfade {
     if (self.ytm_timeObserver) {
         [self.ytm_player removeTimeObserver:self.ytm_timeObserver];
         self.ytm_timeObserver = nil;
     }
     self.ytm_player = nil;
+}
+
+- (void)dealloc {
+    [self cleanupCrossfade];
     %orig;
 }
 
