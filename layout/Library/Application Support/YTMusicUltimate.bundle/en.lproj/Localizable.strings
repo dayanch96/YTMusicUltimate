@@ -13,9 +13,9 @@
 
 "PLAYER_SETTINGS" = "Player options";
 "DOWNLOAD_AUDIO" = "Download audio";
-"DOWNLOAD_AUDIO_DESC" = "Adds the option to download audio by pressing the YTMUltimate button in the player";
+"DOWNLOAD_AUDIO_DESC" = "Adds the to download audio by pressing the YTMUltimate button in the player";
 "DOWNLOAD_COVER" = "Download cover image";
-"DOWNLOAD_COVER_DESC" = "Adds the option to download cover image by pressing the YTMUltimate button in the player";
+"DOWNLOAD_COVER_DESC" = "Adds the to download cover image by pressing the YTMUltimate button in the player";
 "PLAYBACK_RATE_BUTTON" = "Show playback rate button";
 "PLAYBACK_RATE_BUTTON_DESC" = "Adjust playback speed";
 "SELECTABLE_LYRICS" = "Lyrics text selection";
@@ -119,3 +119,5 @@
 "ALL_DOWNLOADS" = "all download audios"; //keep it lowercase
 "DELETE" = "Delete";
 "RENAME" = "Rename";
+"CROSSFADE" = "Crossfade";
+"CROSSFADE_DESC" = "Fade between songs";
