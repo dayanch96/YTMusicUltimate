@@ -78,7 +78,6 @@ static void cleanupObserver(YTPlayerViewController *self) {
         unsigned int ivarCount;
         Ivar *ivars = class_copyIvarList([self class], &ivarCount);
         for (unsigned int i = 0; i < ivarCount; i++) {
-            const char *ivarName = ivar_getName(ivars[i]);
             id ivarValue = object_getIvar(self, ivars[i]);
             if ([ivarValue isKindOfClass:[AVPlayer class]]) {
                 self.ytm_player = ivarValue;
