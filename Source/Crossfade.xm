@@ -14,6 +14,7 @@ static BOOL crossfadeEnabled = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"crossfade
 @interface YTPlayerViewController (YTMUltimate)
 @property (nonatomic, strong) AVPlayer *ytm_player;
 @property (nonatomic, strong) id ytm_timeObserver;
+- (void)checkForCrossfade;
 @end
 
 %hook YTPlayerViewController
