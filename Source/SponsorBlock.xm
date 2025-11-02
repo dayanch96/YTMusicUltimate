@@ -108,3 +108,11 @@
 
     [[NSUserDefaults standardUserDefaults] setObject:mutableDict forKey:@"YTMUltimate"];
 }
+--- a/Source/SponsorBlock.xm
++++ b/Source/SponsorBlock.xm
+@@ -?*,? +?*,? @@
+-    size_t _nBytes = 1024;
+-    char _typeEncoding[_nBytes];
+-    snprintf(_typeEncoding, _nBytes, "%s@:", @encode(NSMutableDictionary *));
++    char _typeEncoding[1024];
++    snprintf(_typeEncoding, sizeof(_typeEncoding), "%s@:", @encode(NSMutableDictionary *));
