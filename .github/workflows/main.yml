@@ -110,13 +110,9 @@ jobs:
           cd ${{ github.workspace }}/main
           cyan -i ytm.ipa -o packages/YTMusicUltimate.ipa -uwsf packages/$tweakName -n "${{ inputs.display_name }}" -b ${{ inputs.bundle_id }} 
 
-      - name: Create Release
-        uses: softprops/action-gh-release@v2.4.1
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
         with:
-          name: YTMusicUltimate-v${{ github.run_number }}
-          files: main/packages/*.ipa
-          draft: true
-
-      - name: Output Release URL
-        run: |
-          echo "::notice::Release available at: https://github.com/${{ github.repository }}/releases"
+          name: YTMusicUltimate-IPA
+          path: ${{ github.workspace }}/main/packages/*.ipa
+          retention-days: 3
