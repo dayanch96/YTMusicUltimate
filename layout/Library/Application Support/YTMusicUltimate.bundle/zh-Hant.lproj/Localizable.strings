@@ -3,13 +3,13 @@
 "ENABLED_DESC" = "會員功能：無廣告和背景播放等";
 "RESTART_FOOTER" = "重新啟動應用程式以套用變更";
 
-"PREMIUM_SETTINGS" = "Premium功能";
+"PREMIUM_SETTINGS" = "會員功能";
 "NO_ADS" = "無廣告";
 "NO_ADS_DESC" = "移除應用程式內的廣告";
 "BACKGROUND_PLAYBACK" = "背景播放";
 "BACKGROUND_PLAYBACK_DESC" = "啟用背景播放功能";
-"FORCE_PREMIUM" = "強制啟用Premium功能";
-"FORCE_PREMIUM_DESC" = "強制啟用Premium功能\n此選項也會停用'發現'功能標籤";
+"FORCE_PREMIUM" = "強制啟用會員功能";
+"FORCE_PREMIUM_DESC" = "強制啟用會員功能\n此選項也會停用'發現'功能標籤";
 
 "PLAYER_SETTINGS" = "播放器介面";
 "DOWNLOAD_AUDIO" = "下載音訊";
@@ -23,7 +23,7 @@
 "VOLBAR" = "音量條";
 "VOLBAR_DESC" = "在播放器增加音量控制條";
 "NO_AUTORADIO" = "關閉電台功能";
-"NO_AUTORADIO_DESC" = "關閉無限接續播放的電台功能";
+"NO_AUTORADIO_DESC" = "關閉無限自動播放的電台功能";
 "AV_DEFAULT_MODE" = "預設播放模式";
 "SKIP_CONTENT_WARNING" = "跳過內容警告";
 "SKIP_CONTENT_WARNING_DESC" = "跳過可能有害的內容警告";
@@ -42,9 +42,9 @@
 "DEFAULT" = "預設";
 
 "THEME_SETTINGS" = "介面主題";
-"OLED_DARK_THEME" = "深色主題";
+"OLED_DARK_THEME" = "OLED深色主題";
 "OLED_DARK_THEME_DESC" = "啟用OLED深色主題";
-"OLED_DARK_KEYBOARD" = "深色鍵盤";
+"OLED_DARK_KEYBOARD" = "OLED深色鍵盤";
 "OLED_DARK_KEYBOARD_DESC" = "啟用OLED深色鍵盤";
 "LOW_CONTRAST" = "低對比度";
 "LOW_CONTRAST_DESC" = "降低文字和按鈕的對比度";
@@ -60,12 +60,12 @@
 "HIDE_FILTER_BUTTON_DESC" = "從導覽列中移除「媒體庫/下載內容」分類按鈕";
 
 "TABBAR_SETTINGS" = "下方功能標籤";
-"STARTUP_TAB" = "預設開啟畫面";
+"STARTUP_TAB" = "預設開啟標籤欄";
 "SAMPLES" = "發現";
 "HOME" = "首頁";
 "EXPLORE" = "探索";
 "LIBRARY" = "媒體庫";
-"DOWNLOADS" = "下載管理器";
+"DOWNLOADS" = "隱藏下載管理器";
 
 "TAB_SETTINGS" = "標籤設定";
 "REMOVE_TABBAR_LABELS" = "隱藏標籤文字";
@@ -81,8 +81,8 @@
 "APPLY_DESC" = "按下套用會關閉應用程式讓變更生效";
 
 "LINKS" = "相關連結";
-"TWITTER" = "在推特上跟隨%@";
-"TWITTER_DESC" = "跟隨我獲得更新資訊";
+"TWITTER" = "在Twitter上關注%@";
+"TWITTER_DESC" = "關注我以獲得更新資訊";
 "DISCORD" = "加入Discord";
 "DISCORD_DESC" = "回報問題和請求新功能";
 "SOURCE_CODE" = "原始碼";
@@ -101,10 +101,10 @@
 "DONT_RUSH_DESC" = "需要播放歌曲才能提取連結";
 "SELECT_ACTION" = "選擇操作";
 "DOWNLOADING" = "下載中...";
-"DOWNLOAD_PREMIUM" = "下載(需要Premium)";
+"DOWNLOAD_PREMIUM" = "下載(需要會員)";
 "OOPS" = "糟糕\n發生了些錯誤";
 "LINK_NOT_FOUND" = "找不到連結";
-"SAVED_TO_PHOTOS" = "已儲存到照片";
+"SAVED_TO_PHOTOS" = "已儲存到相片";
 "DONE" = "完成";
 "FOUND_SEGMENT" = "發現題外話片段";
 "SEGMENT_SKIPPED" = "題外話已跳過";
