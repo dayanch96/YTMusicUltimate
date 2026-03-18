@@ -8,34 +8,39 @@ static BOOL YTMU(NSString *key) {
 static BOOL removeAds = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"noAds");
 
 %hook YTAdsInnerTubeContextDecorator
-- (void)decorateContext:(id)arg1{
+- (void)decorateContext:(id)arg1 {
     if (!removeAds) return %orig;
 }
 %end
 
 %hook YTDataUtils
-+ (id)spamSignalsDictionary {
-    return removeAds ? NULL : %orig;
+- (id)spamSignalsDictionary {
+    return removeAds ? nil : %orig;
+}
+%end
+
+%hook YTAdShieldUtils
+- (id)spamSignalsDictionary {
+    return removeAds ? nil : %orig;
+}
+- (id)spamSignalsDictionaryWithoutIDFA {
+    return removeAds ? nil : %orig;
 }
 %end
 
 %hook YTIPlayerResponse
 - (BOOL)isMonetized {
-    return removeAds ? false : %orig;
+    return removeAds ? NO : %orig;
 }
-
 - (id)paidContentOverlayElementRendererOptions {
     return removeAds ? nil : %orig;
 }
-
 - (BOOL)isCuepointAdsEnabled {
     return removeAds ? NO : %orig;
 }
-
 - (id)adIntroRenderer {
     return removeAds ? nil : %orig;
 }
-
 - (BOOL)isDAIEnabledPlayback {
     return removeAds ? YES : %orig;
 }
