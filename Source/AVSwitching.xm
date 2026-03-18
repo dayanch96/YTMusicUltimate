@@ -13,8 +13,8 @@ static int YTMUint(NSString *key) {
 
 // Remove popup reminder 
 %hook YTMPlayerHeaderViewController
-- (bool)shouldDisplayHintForAudioVideoSwitch {
-	return YTMU(@"YTMUltimateIsEnabled") ? 0 : %orig;
+- (BOOL)shouldDisplayHintForAudioVideoSwitch {
+	return YTMU(@"YTMUltimateIsEnabled") ? NO : %orig;
 }
 %end
 
@@ -110,6 +110,12 @@ static int YTMUint(NSString *key) {
 }
 %end
 
+%hook YTMSettingsImpl
+- (BOOL)allowAudioOnlyManualQualitySelection {
+    return YTMU(@"YTMUltimateIsEnabled") ?: %orig;
+}
+%end
+
 %hook YTIAudioOnlyPlayabilityRenderer
 - (BOOL)audioOnlyPlayability {
     return YTMU(@"YTMUltimateIsEnabled") ?: %orig;
@@ -158,31 +164,56 @@ static int YTMUint(NSString *key) {
 }
 %end
 
+%hook YTMMusicAppMetadataImpl
+- (BOOL)isAudioOnlyButtonVisible {
+    return YTMU(@"YTMUltimateIsEnabled") ?: %orig;
+}
+%end
+
 %hook YTMQueueConfig
-- (bool)noVideoModeEnabledForMusic {
-	return YTMUint(@"audioVideoMode") == 0 ? 1 : %orig;
+- (BOOL)noVideoModeEnabledForMusic {
+	return YTMUint(@"audioVideoMode") == 0 ? YES : %orig;
 }
 
-- (bool)noVideoModeEnabledForPodcasts {
-	return YTMUint(@"audioVideoMode") == 0 ? 1 : %orig;
+- (BOOL)noVideoModeEnabledForPodcasts {
+	return YTMUint(@"audioVideoMode") == 0 ? YES : %orig;
+}
+%end
+
+%hook YTMQueueConfigImpl
+- (BOOL)isAudioVideoModeSupportedForNonPodcasts {
+    return YTMU(@"YTMUltimateIsEnabled") ?: %orig;
+}
+
+- (BOOL)noVideoModeEnabledForMusic {
+	return YTMUint(@"audioVideoMode") == 0 ? YES : %orig;
+}
+
+- (BOOL)noVideoModeEnabledForPodcasts {
+	return YTMUint(@"audioVideoMode") == 0 ? YES : %orig;
 }
 %end
 
 %hook YTQueueController
-- (bool)noVideoModeEnabled:(id)arg1 {
-	return YTMUint(@"audioVideoMode") == 0 ? 1 : %orig;
+- (BOOL)noVideoModeEnabled:(id)arg1 {
+	return YTMUint(@"audioVideoMode") == 0 ? YES : %orig;
 }
-
 - (BOOL)isAudioVideoModeSupportedForVideo:(id)video { return YTMU(@"YTMUltimateIsEnabled") ?: %orig; }
+%end
+
+%hook YTColdConfig
+- (BOOL)iosEnableHighQualityAudioAppSettingsPremiumUpsell { 
+    return YTMU(@"YTMUltimateIsEnabled") ? NO : %orig;
+}
 %end
 
 // %group AVSwitchForAds
 // %hook YTDefaultQueueConfig
-// - (bool)noVideoModeEnabledForMusic {
+// - (BOOL)noVideoModeEnabledForMusic {
 // 	return 1;
 // }
 
-// - (bool)noVideoModeEnabledForPodcasts {
+// - (BOOL)noVideoModeEnabledForPodcasts {
 // 	return 1;
 // }
 // %end
@@ -224,7 +255,6 @@ static int YTMUint(NSString *key) {
 
 %ctor {
     NSMutableDictionary *YTMUltimateDict = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"]];
-
     NSArray *intKeys = @[@"audioVideoMode"];
     for (NSString *key in intKeys) {
         if (!YTMUltimateDict[key]) {
