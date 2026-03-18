@@ -32,13 +32,6 @@ static BOOL YTMU(NSString *key) {
 }
 %end
 
-%hook YTCreateCommentAccessoryView
-- (id)emojiPickerUpsellCategoryRenderer { return YTMU(@"YTMUltimateIsEnabled") ? nil : %orig; }
-- (void)setEmojiPickerUpsellCategoryRenderer:(id)arg1 {
-    if (!YTMU(@"YTMUltimateIsEnabled")) %orig;
-}
-%end
-
 %hook YTMIntegrationsSettingsViewController
 - (void)showUpsellingDialog {
     if (!YTMU(@"YTMUltimateIsEnabled")) %orig;
