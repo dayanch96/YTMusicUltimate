@@ -4,6 +4,10 @@
 #import "Headers/YTPivotBarViewController.h"
 #import "Headers/YTPlayabilityResolutionUserActionUIController.h"
 
+@interface YTPlayabilityResolutionUserActionUIControllerImpl : NSObject
+- (void)confirmAlertDidPressConfirm;
+@end
+
 static BOOL YTMU(NSString *key) {
     NSDictionary *YTMUltimateDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"];
     return [YTMUltimateDict[key] boolValue];
@@ -17,13 +21,13 @@ static BOOL YTMU(NSString *key) {
 %end
 
 %hook YTMSearchTabViewController
-- (bool)shouldUseStickyHeaders {
+- (BOOL)shouldUseStickyHeaders {
 	return YTMU(@"YTMUltimateIsEnabled") && YTMU(@"noStickyHeaders") ? NO : %orig;
 }
 %end
 
 %hook YTMTabViewController
-- (bool)shouldUseStickyHeaders {
+- (BOOL)shouldUseStickyHeaders {
 	return YTMU(@"YTMUltimateIsEnabled") && YTMU(@"noStickyHeaders") ? NO : %orig;
 }
 %end
@@ -39,7 +43,6 @@ static BOOL YTMU(NSString *key) {
 %hook YTPivotBarItemView
 - (void)setRenderer:(YTIPivotBarRenderer *)renderer {
     %orig;
-
     if (YTMU(@"YTMUltimateIsEnabled") && YTMU(@"noTabBarLabels")) {
         [self.navigationButton setTitle:@"" forState:UIControlStateNormal];
         [self.navigationButton setSizeWithPaddingAndInsets:NO];
@@ -51,25 +54,21 @@ static BOOL YTMU(NSString *key) {
 %hook YTPivotBarView
 - (void)setRenderer:(YTIPivotBarRenderer *)renderer {
     NSMutableArray <YTIPivotBarSupportedRenderers *> *items = [renderer itemsArray];
-
     NSDictionary *identifiersToRemove = @{
         @"FEmusic_home": @(YTMU(@"hideHomeTab")),
         @"FEmusic_immersive": @(YTMU(@"hideSamplesTab")),
         @"FEmusic_explore": @(YTMU(@"hideExploreTab")),
         @"FEmusic_library_landing": @(YTMU(@"hideLibraryTab"))
     };
-
     for (NSString *identifier in identifiersToRemove) {
         BOOL shouldRemoveItem = [identifiersToRemove[identifier] boolValue];
         NSUInteger index = [items indexOfObjectPassingTest:^BOOL(YTIPivotBarSupportedRenderers *renderers, NSUInteger idx, BOOL *stop) {
             return shouldRemoveItem && [[[renderers pivotBarItemRenderer] pivotIdentifier] isEqualToString:identifier];
         }];
-
         if (index != NSNotFound) {
             [items removeObjectAtIndex:index];
         }
     }
-
     %orig;
 }
 %end
@@ -80,13 +79,10 @@ BOOL isTabSelected = NO;
 %hook YTPivotBarViewController
 - (void)viewDidAppear:(BOOL)animated {
     %orig;
-
     if (!isTabSelected) {
         NSArray *pivotIdentifiers = @[@"FEmusic_home", @"FEmusic_immersive", @"FEmusic_explore", @"FEmusic_library_landing", @"BHdownloadsVC"];
-
         NSDictionary *YTMUltimateDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"];
         [self selectItemWithPivotIdentifier:pivotIdentifiers[[YTMUltimateDict[@"startupPage"] integerValue]]];
-
         isTabSelected = YES;
     }
 }
@@ -98,16 +94,20 @@ BOOL isTabSelected = NO;
 }
 %end
 
+%hook YTPlayabilityResolutionUserActionUIControllerImpl
+- (void)showConfirmAlert {
+    YTMU(@"YTMUltimateIsEnabled") && YTMU(@"skipWarning") ? [self confirmAlertDidPressConfirm] : %orig;
+}
+%end
+
 %hook YTMWatchViewController
 - (void)playbackControllerStateDidChange {
     %orig;
-
-    //Reset all miniplayer restrictions
+    // Reset all miniplayer restrictions
     if ([self respondsToSelector:@selector(resetMiniplayerRestrictions)]) {
         [self resetMiniplayerRestrictions];
     }
-
-    //Disable auto-pause when player minimized to miniplayer
+    // Disable auto-pause when player minimized to miniplayer
     [self setValue:@(NO) forKey:@"_pauseOnMinimize"];
 }
 %end
@@ -116,6 +116,7 @@ BOOL isTabSelected = NO;
 - (BOOL)cxClientEnableIosLocalNetworkPermissionWifiFixes { return YES; }
 - (BOOL)cxClientEnableIosLocalNetworkPermissionUsingSockets { return NO; }
 - (BOOL)cxClientEnableIosLocalNetworkPermissionReliabilityFixes { return YES; }
+- (BOOL)cxClientEnableIosLocalNetworkPermissionPageDelayFix { return YES; }
 %end
 
 %hook YTHotConfig
