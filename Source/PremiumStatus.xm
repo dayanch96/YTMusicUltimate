@@ -40,12 +40,6 @@ static BOOL YTMU(NSString *key) {
 }
 %end
 
-%hook YTMCastSessionControllerImpl
-- (void)showAudioCastUpsellDialog {
-    if (!YTMU(@"YTMUltimateIsEnabled")) %orig;
-}
-%end
-
 %hook YTAdBaseVideoPlayerOverlayViewController
 - (void)playbackRouteButtonWillShowPromotion {
     if (!YTMU(@"YTMUltimateIsEnabled")) %orig;
@@ -260,7 +254,7 @@ static BOOL YTMU(NSString *key) {
 %end
 
 %hook YTIShowFullscreenInterstitialCommand
-- (BOOL)shouldThrottleInterstitial{
+- (BOOL)shouldThrottleInterstitial {
     return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 - (void)setShouldThrottleInterstitial:(BOOL)throttle {
@@ -269,13 +263,13 @@ static BOOL YTMU(NSString *key) {
 %end
 
 %hook YTMAppResponder
-- (void)presentInterstitialPromoForEvent:(id)event{
+- (void)presentInterstitialPromoForEvent:(id)event {
     if (!YTMU(@"YTMUltimateIsEnabled")) %orig;
 }
-- (void)presentFullscreenPromoForEvent:(id)event{
+- (void)presentFullscreenPromoForEvent:(id)event {
     if (!YTMU(@"YTMUltimateIsEnabled")) %orig;
 }
-- (void)presentInterstitialGridPromoForEvent:(id)event{
+- (void)presentInterstitialGridPromoForEvent:(id)event {
     if (!YTMU(@"YTMUltimateIsEnabled")) %orig;
 }
 %end
