@@ -27,7 +27,7 @@ concurrency:
 jobs:
   build:
     name: Build YTMusicUltimate
-    runs-on: macos-14
+    runs-on: macos-latest
     permissions:
       contents: write
 
@@ -97,7 +97,6 @@ jobs:
         run: wget "${{ inputs.ipa_url }}" --no-verbose -O ytm.ipa
 
       - name: Build Tweak for Sideloading
-        id: build_package
         run: |
           cd main
           make clean package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless SIDELOADING=1

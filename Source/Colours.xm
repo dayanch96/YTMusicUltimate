@@ -76,7 +76,9 @@ static BOOL isLowContrast = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"lowContrast"
 - (UIColor *)halfExpandedQueueBackgroundColor { return isOLEDTheme ? [UIColor blackColor] : %orig; }
 - (UIColor *)halfExpandedQueueCurrentlyPlayingColor { return isOLEDTheme ? [UIColor blackColor] : %orig; }
 - (UIColor *)halfExpandedTabsBackgroundColor { return isOLEDTheme ? [UIColor blackColor] : %orig; }
-- (UIColor *)queueReorderingCellColor { return isOLEDTheme ? [UIColor blackColor] : %orig; }
+- (UIColor *)playerTopScrimColors { return isOLEDTheme ? [UIColor blackColor] : %orig; }
+- (UIColor *)playerBottomScrimColors { return isOLEDTheme ? [UIColor blackColor] : %orig; }
+- (UIColor *)gradientBackgroundColors { return isOLEDTheme ? [UIColor blackColor] : %orig; }
 - (BOOL)gradientBackgroundEnabled { return isOLEDTheme ? NO : %orig; }
 %end
 

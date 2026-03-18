@@ -1,7 +1,7 @@
 "SETTINGS" = "การตั้งค่า";
 "ENABLED" = "เปิดใช้งาน YTMusicUltimate";
 "ENABLED_DESC" = "ฟีเจอร์พรีเมียม ไม่มีโฆษณา เล่นเบื้องหลัง และอื่นๆ";
-"RESTART_FOOTER" = "รีสตาร์ทแอปเพื่อปรับใช้งาน";
+"RESTART_FOOTER" = "ต้องรีสตาร์ทแอปเพื่อปรับใช้งาน";
 
 "PREMIUM_SETTINGS" = "พรีเมียม";
 "NO_ADS" = "ไม่มีโฆษณา";
@@ -11,7 +11,7 @@
 "FORCE_PREMIUM" = "บังคับเปิดพรีเมียม";
 "FORCE_PREMIUM_DESC" = "บังคับเปิดฟีเจอร์พรีเมียม\nตัวเลือกนี้จะเป็นการปิดใช้งานแท็บ Samples ไปด้วย";
 
-"PLAYER_SETTINGS" = "ตัวเลือกเครื่องเล่น";
+"PLAYER_SETTINGS" = "เครื่องเล่น";
 "DOWNLOAD_AUDIO" = "ดาวน์โหลดเสียง";
 "DOWNLOAD_AUDIO_DESC" = "เพิ่มตัวเลือกดาวน์โหลดเสียงโดยกดปุ่ม YTMUltimate ในเครื่องเล่น";
 "DOWNLOAD_COVER" = "ดาวน์โหลดภาพปก";
