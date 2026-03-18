@@ -203,19 +203,7 @@
     NSURL *documentsURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
     NSURL *audioURL = [documentsURL URLByAppendingPathComponent:[NSString stringWithFormat:@"YTMusicUltimate/%@", self.audioFiles[indexPath.row]]];
 
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[audioURL] applicationActivities:nil];
-    activityViewController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypePrint];
-
-    UIPopoverPresentationController *popover = activityViewController.popoverPresentationController;
-    if (popover) {
-        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-
-        popover.sourceView = cell;
-        popover.sourceRect = CGRectMake(CGRectGetWidth(cell.bounds) - 10.0, CGRectGetMidY(cell.bounds), 1.0, 1.0);
-        popover.permittedArrowDirections = UIPopoverArrowDirectionRight;
-    }
-
-    [self presentViewController:activityViewController animated:YES completion:nil];
+    [self activityControllerWithObjects:@[audioURL] sender:[self.tableView cellForRowAtIndexPath:indexPath]];
 }
 
 - (void)renameFileForIndexPath:(NSIndexPath *)indexPath {
@@ -348,7 +336,7 @@
 
     if (indexPath.section == 1) {
         if (indexPath.row == 0) {
-            [self shareAll];
+            [self shareAll:indexPath];
         }
 
         if (indexPath.row == 1) {
@@ -359,7 +347,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-- (void)shareAll {
+- (void)shareAll:(NSIndexPath *)indexPath {
     NSURL *documentsURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
     NSURL *audiosFolder = [documentsURL URLByAppendingPathComponent:@"YTMusicUltimate"];
 
@@ -371,10 +359,7 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pathExtension.lowercaseString == 'm4a' || pathExtension.lowercaseString == 'mp3'"];
     files = [files filteredArrayUsingPredicate:predicate];
 
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:files applicationActivities:nil];
-    activityViewController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypePrint];
-
-    [self presentViewController:activityViewController animated:YES completion:nil];
+    [self activityControllerWithObjects:files sender:[self.tableView cellForRowAtIndexPath:indexPath]];
 }
 
 - (void)removeAll {
@@ -397,6 +382,22 @@
     alertView.title = @"YTMusicUltimate";
     alertView.subtitle = [NSString stringWithFormat:LOC(@"DELETE_MESSAGE"), LOC(@"ALL_DOWNLOADS")];
     [alertView show];
+}
+
+- (void)activityControllerWithObjects:(NSArray<id> *)items sender:(UIView *)sender {
+    if (items.count == 0) return;
+
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:nil];
+    activityVC.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypePrint];
+
+    UIPopoverPresentationController *popover = activityVC.popoverPresentationController;
+    if (popover && sender) {
+        popover.sourceView = sender;
+        popover.sourceRect = CGRectMake(CGRectGetWidth(sender.bounds) - 10.0, CGRectGetMidY(sender.bounds), 1.0, 1.0);
+        popover.permittedArrowDirections = UIPopoverArrowDirectionRight;
+    }
+
+    [self presentViewController:activityVC animated:YES completion:nil];
 }
 
 @end
