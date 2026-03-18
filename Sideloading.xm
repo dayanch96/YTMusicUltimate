@@ -100,45 +100,92 @@ static NSString *accessGroupID() {
 #pragma mark - Thanks PoomSmart for the following hooks
 /* IAmYouTube + Extra hooks for ytmusic */
 %hook YTVersionUtils
-- (id)appName { return YT_NAME; }
-- (id)appID { return YT_BUNDLE_ID; }
+
++ (NSString *)appName {
+    return YT_NAME;
+}
+
++ (NSString *)appID {
+    return YT_BUNDLE_ID;
+}
+
+%end
+
+%hook GCKBUtils
+
++ (NSString *)appIdentifier {
+    return YT_BUNDLE_ID;
+}
+
+%end
+
+%hook GPCDeviceInfo
+
++ (NSString *)bundleId {
+    return YT_BUNDLE_ID;
+}
+
+%end
+
+%hook OGLBundle
+
++ (NSString *)shortAppName {
+    return YT_NAME;
+}
+
+%end
+
+%hook GVROverlayView
+
++ (NSString *)appName {
+    return YT_NAME;
+}
+
+%end
+
+%hook OGLPhenotypeFlagServiceImpl
+
+- (NSString *)bundleId {
+    return YT_BUNDLE_ID;
+}
+
+%end
+
+%hook APMAEU
+
++ (BOOL)isFAS {
+    return YES;
+}
+
+%end
+
+%hook GULAppEnvironmentUtil
+
++ (BOOL)isFromAppStore {
+    return YES;
+}
+
+%end
+
+%hook SSOClientLogin
+
++ (NSString *)defaultSourceString {
+    return YT_BUNDLE_ID;
+}
+
 %end
 
 %hook CHRAppState
 - (id)appName { return YT_NAME; }
 %end
 
-%hook GCKBUtils
-- (id)appIdentifier { return YT_BUNDLE_ID; }
-%end
-
 %hook FIRInstallationsIIDTokenStore
 - (id)IIDAppIdentifier { return YT_BUNDLE_ID; }
-%end
-
-%hook GPCDeviceInfo
-- (id)bundleId { return YT_BUNDLE_ID; }
-%end
-
-%hook OGLBundle
-- (id)shortAppName { return YT_NAME; }
-%end
-
-%hook OGLPhenotypeFlagServiceImpl
-- (NSString *)bundleId { return YT_BUNDLE_ID; }
-%end
-
-%hook APMAEU
-- (BOOL)isFAS { return YES; }
 %end
 
 %hook ASWApp
 - (id)bundleIdentifier { return YT_BUNDLE_ID; }
 - (id)exp_productionBundleIdentifier { return YT_BUNDLE_ID; }
-%end
-
-%hook GULAppEnvironmentUtil
-- (BOOL)isFromAppStore { return YES; }
 %end
 
 %hook APMIdentity
@@ -182,23 +229,31 @@ static NSString *accessGroupID() {
 %end
 
 %hook NSBundle
++ (NSBundle *)bundleWithIdentifier:(NSString *)identifier {
+    if ([identifier isEqualToString:YT_BUNDLE_ID])
+        return NSBundle.mainBundle;
+    return %orig(identifier);
+}
 - (NSString *)bundleIdentifier {
-    NSArray *address = [NSThread callStackReturnAddresses];
-    Dl_info info = {0};
-    if (dladdr((void *)[address[2] longLongValue], &info) == 0)
+    return [self isEqual:NSBundle.mainBundle] ? YT_BUNDLE_ID : %orig;
+}
+- (NSDictionary *)infoDictionary {
+    NSDictionary *dict = %orig;
+    if (![self isEqual:NSBundle.mainBundle])
         return %orig;
-    NSString *path = [NSString stringWithUTF8String:info.dli_fname];
-    if ([path hasPrefix:NSBundle.mainBundle.bundlePath])
-        return YT_BUNDLE_ID;
-    return %orig;
+    NSMutableDictionary *info = [dict mutableCopy];
+    if (info[@"CFBundleIdentifier"]) info[@"CFBundleIdentifier"] = YT_BUNDLE_ID;
+    if (info[@"CFBundleDisplayName"]) info[@"CFBundleDisplayName"] = YT_NAME;
+    if (info[@"CFBundleName"]) info[@"CFBundleName"] = YT_NAME;
+    return info;
 }
 - (id)objectForInfoDictionaryKey:(NSString *)key {
+    if (![self isEqual:NSBundle.mainBundle])
+        return %orig;
     if ([key isEqualToString:@"CFBundleIdentifier"])
         return YT_BUNDLE_ID;
-    if ([key isEqualToString:@"CFBundleDisplayName"])
+    if ([key isEqualToString:@"CFBundleDisplayName"] || [key isEqualToString:@"CFBundleName"])
         return YT_NAME;
-    if ([key isEqualToString:@"CFBundleName"])
-        return YT_BUNDLE_NAME;
     return %orig;
 }
 %end
