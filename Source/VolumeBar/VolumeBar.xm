@@ -5,7 +5,9 @@ static BOOL YTMU(NSString *key) {
     return [YTMUltimateDict[key] boolValue];
 }
 
-static BOOL volumeBar = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"volBar");
+static BOOL shouldShowVolumeBar() {
+    return YTMU(@"YTMUltimateIsEnabled") && YTMU(@"volBar");
+}
 
 @interface YTMWatchView: UIView
 @property (readonly, nonatomic) BOOL isExpanded;
@@ -17,12 +19,11 @@ static BOOL volumeBar = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"volBar");
 @end
 
 %hook YTMWatchView
-%property (nonatomic, strong) GSVolBar *volumeBar;
 
 - (instancetype)initWithColorScheme:(id)scheme {
     self = %orig;
 
-    if (self && volumeBar) {
+    if (self && shouldShowVolumeBar()) {
         self.volumeBar = [[GSVolBar alloc] initWithFrame:CGRectMake(self.frame.size.width / 2 - (self.frame.size.width / 2) / 2, 0, self.frame.size.width / 2, 25)];
 
         [self addSubview:self.volumeBar];
@@ -34,7 +35,7 @@ static BOOL volumeBar = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"volBar");
 - (void)layoutSubviews {
     %orig;
 
-    if (volumeBar) {
+    if (shouldShowVolumeBar()) {
         self.volumeBar.frame = CGRectMake(self.frame.size.width / 2 - (self.frame.size.width / 2) / 2, CGRectGetMinY(self.tabView.frame) - 25, self.frame.size.width / 2, 25);
     }
 }
@@ -42,7 +43,7 @@ static BOOL volumeBar = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"volBar");
 - (void)updateColorsAfterLayoutChangeTo:(long long)arg1 {
     %orig;
 
-    if (volumeBar) {
+    if (shouldShowVolumeBar()) {
         [self updateVolBarVisibility];
     }
 }
@@ -50,14 +51,14 @@ static BOOL volumeBar = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"volBar");
 - (void)updateColorsBeforeLayoutChangeTo:(long long)arg1 {
     %orig;
 
-    if (volumeBar) {
+    if (shouldShowVolumeBar()) {
         self.volumeBar.hidden = YES;
     }
 }
 
 %new
 - (void)updateVolBarVisibility {
-    if (volumeBar) {
+    if (shouldShowVolumeBar()) {
         dispatch_async(dispatch_get_main_queue(), ^(void){
             self.volumeBar.hidden = !(self.isExpanded && self.currentLayout == 2);
         });

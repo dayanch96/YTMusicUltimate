@@ -5,7 +5,9 @@ static BOOL YTMU(NSString *key) {
     return [YTMUltimateDict[key] boolValue];
 }
 
-static BOOL selectableLyrics = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"selectableLyrics");
+static BOOL shouldShowSelectableLyrics() {
+    return YTMU(@"YTMUltimateIsEnabled") && YTMU(@"selectableLyrics");
+}
 
 @interface YTFormattedStringLabel : UILabel
 @end
@@ -16,11 +18,9 @@ static BOOL selectableLyrics = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"selectabl
 
 %hook YTMLightweightMusicDescriptionShelfCell
 
-%property (retain, nonatomic) UITextView *lyrics;
-
 - (id)initWithFrame:(CGRect)frame {
     self = %orig;
-    if (self && selectableLyrics) {
+    if (self && shouldShowSelectableLyrics()) {
         UIView *container = [self valueForKey:@"_descriptionContainer"];
         self.lyrics = [[UITextView alloc] init];
         self.lyrics.backgroundColor = [UIColor clearColor];
@@ -35,7 +35,7 @@ static BOOL selectableLyrics = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"selectabl
 - (void)setRenderer:(id)renderer {
     %orig;
 
-    if (selectableLyrics) {
+    if (shouldShowSelectableLyrics()) {
         YTFormattedStringLabel *lyrics = [self valueForKey:@"_descriptionLabel"];
         lyrics.userInteractionEnabled = YES;
         lyrics.hidden = YES;
@@ -48,7 +48,7 @@ static BOOL selectableLyrics = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"selectabl
 - (void)layoutSubviews {
     %orig;
 
-    if (selectableLyrics) {
+    if (shouldShowSelectableLyrics()) {
         YTFormattedStringLabel *lyrics = [self valueForKey:@"_descriptionLabel"];
         self.lyrics.frame = lyrics.frame;
     }

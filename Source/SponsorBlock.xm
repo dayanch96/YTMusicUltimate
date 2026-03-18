@@ -8,7 +8,6 @@
 #define ytmuInt(key) [[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"][key] integerValue]
 
 %hook YTPlayerViewController
-%property (nonatomic, strong) NSMutableDictionary *sponsorBlockValues;
 
 - (void)playbackController:(id)arg1 didActivateVideo:(id)arg2 withPlaybackData:(id)arg3 {
     %orig;
@@ -17,7 +16,7 @@
 
     self.sponsorBlockValues = [NSMutableDictionary dictionary];
 
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://sponsor.ajay.app/api/skipSegments?videoID=%@&categories=%@", self.currentVideoID, @"%5B%22music_offtopic%22%5D"]]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://sponsor.ajay.app/api/skipSegments?videoID=%@&categories=%@", [self currentVideoID], @"%5B%22music_offtopic%22%5D"]]];
 
     [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (!error) {
@@ -29,7 +28,7 @@
                     [segments setObject:@(1) forKey:uuid];
                 }
 
-                [self.sponsorBlockValues setObject:jsonResponse forKey:self.currentVideoID];
+                [self.sponsorBlockValues setObject:jsonResponse forKey:[self currentVideoID]];
                 [self.sponsorBlockValues setObject:segments forKey:@"segments"];
             }
         }
@@ -50,8 +49,8 @@
 
 %new
 - (void)skipSegment {
-    if (ytmuBool(@"sponsorBlock") && [NSJSONSerialization isValidJSONObject:self.sponsorBlockValues]) {
-        NSDictionary *sponsorBlockValues = [self.sponsorBlockValues objectForKey:self.currentVideoID];
+    if (ytmuBool(@"sponsorBlock") && self.sponsorBlockValues && [self.sponsorBlockValues count] > 0) {
+        NSDictionary *sponsorBlockValues = [self.sponsorBlockValues objectForKey:[self currentVideoID]];
         NSMutableDictionary *segmentSkipValues = [self.sponsorBlockValues objectForKey:@"segments"];
 
         for (NSDictionary *jsonDictionary in sponsorBlockValues) {
@@ -60,8 +59,8 @@
 
             if (segmentSkipValue && [segmentSkipValue isEqual:@(1)]
                 && [[jsonDictionary objectForKey:@"category"] isEqual:@"music_offtopic"]
-                && self.currentVideoMediaTime >= [[jsonDictionary objectForKey:@"segment"][0] floatValue]
-                && self.currentVideoMediaTime <= ([[jsonDictionary objectForKey:@"segment"][1] floatValue] - 1)) {
+                && [self currentVideoMediaTime] >= [[jsonDictionary objectForKey:@"segment"][0] floatValue]
+                && [self currentVideoMediaTime] <= ([[jsonDictionary objectForKey:@"segment"][1] floatValue] - 1)) {
 
                 [segmentSkipValues setObject:@(0) forKey:uuid];
                 [self.sponsorBlockValues setObject:segmentSkipValues forKey:@"segments"];
