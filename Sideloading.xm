@@ -8,7 +8,14 @@
 #define YT_BUNDLE_ID @"com.google.ios.youtubemusic"
 #define YT_BUNDLE_NAME @"YouTubeMusic"
 #define YT_NAME @"YouTube Music"
-#define YTMULoginAlert @"YTMULoginAlert"
+
+@interface InitWorkaround : UIViewController
+@property (nonatomic, copy) void (^completion)(void);
+@end
+
+@interface SFAuthenticationViewController : UIViewController
+- (void)remoteViewControllerWillDismiss:(id)remoteVC;
+@end
 
 @interface SSOConfiguration : NSObject
 @end
@@ -28,18 +35,14 @@ static NSString *accessGroupID() {
             return nil;
         }
     }
-
     NSString *accessGroup = [(__bridge NSDictionary *)result objectForKey:(__bridge NSString *)kSecAttrAccessGroup];
-
     return accessGroup;
 }
 
-%group SideloadingFixes
-//Fix login (2) - Ginsu & AhmedBakfir
+// Fix login (2) - Ginsu & AhmedBakfir
 // %hook SSOSafariSignIn
 // - (void)signInWithURL:(id)arg1 presentationAnchor:(id)arg2 completionHandler:(id)arg3 {
 //     NSURL *origURL = arg1;
-
 //     NSURLComponents *urlComponents = [[NSURLComponents alloc] initWithURL:origURL resolvingAgainstBaseURL:NO];
 //     NSMutableArray *newQueryItems = [urlComponents.queryItems mutableCopy];
 //     for (NSURLQueryItem *queryItem in urlComponents.queryItems) {
@@ -57,7 +60,7 @@ static NSString *accessGroupID() {
 // }
 // %end
 
-//Force enable safari sign-in
+// Force enable safari sign-in
 %hook SSOConfiguration
 - (BOOL)shouldEnableSafariSignIn { return YES; }
 - (BOOL)temporarilyDisableSafariSignIn { return NO; }
@@ -65,24 +68,18 @@ static NSString *accessGroupID() {
 %end
 
 %hook SSOKeychainHelper
-+ (id)accessGroup {
-    return accessGroupID();
-}
-
-+ (id)sharedAccessGroup {
-    return accessGroupID();
-}
+- (id)accessGroup { return accessGroupID(); }
+- (id)sharedAccessGroup { return accessGroupID(); }
 %end
 
+// Thanks to jawshoeadan for this hook.
 %hook SSOKeychainCore
-//Thanks to jawshoeadan for this hook.
-+ (id)accessGroup {
-    return accessGroupID();
-}
+- (id)accessGroup { return accessGroupID(); }
+- (id)sharedAccessGroup { return accessGroupID(); }
+%end
 
-+ (id)sharedAccessGroup {
-    return accessGroupID();
-}
+%hook SSOBundleIdServiceImpl
+- (id)bundleId { return YT_BUNDLE_ID; }
 %end
 
 %hook NSFileManager
@@ -99,55 +96,57 @@ static NSString *accessGroupID() {
 #pragma mark - Thanks PoomSmart for the following hooks
 /* IAmYouTube + Extra hooks for ytmusic */
 %hook YTVersionUtils
-+ (NSString *)appName {
-    return YT_NAME;
-}
+- (id)appName { return YT_NAME; }
+- (id)appID { return YT_BUNDLE_ID; }
+%end
 
-+ (NSString *)appID {
-    return YT_BUNDLE_ID;
-}
+%hook CHRAppState
+- (id)appName { return YT_NAME; }
 %end
 
 %hook GCKBUtils
-+ (NSString *)appIdentifier {
-    return YT_BUNDLE_ID;
-}
+- (id)appIdentifier { return YT_BUNDLE_ID; }
+%end
+
+%hook FIRInstallationsIIDTokenStore
+- (id)IIDAppIdentifier { return YT_BUNDLE_ID; }
 %end
 
 %hook GPCDeviceInfo
-+ (NSString *)bundleId {
-    return YT_BUNDLE_ID;
-}
+- (id)bundleId { return YT_BUNDLE_ID; }
 %end
 
 %hook OGLBundle
-+ (NSString *)shortAppName {
-    return YT_NAME;
-}
+- (id)shortAppName { return YT_NAME; }
 %end
 
 %hook GVROverlayView
-+ (NSString *)appName {
-    return YT_NAME;
-}
+- (id)appName { return YT_NAME; }
+%end
+
+%hook OGLGM2AccountSelectorViewController 
+- (id)shortAppName { return YT_NAME; }
 %end
 
 %hook OGLPhenotypeFlagServiceImpl
-- (NSString *)bundleId {
-    return YT_BUNDLE_ID;
-}
+- (NSString *)bundleId { return YT_BUNDLE_ID; }
 %end
 
 %hook APMAEU
-+ (BOOL)isFAS {
-    return YES;
-}
+- (BOOL)isFAS { return YES; }
+%end
+
+%hook ASWApp
+- (id)bundleIdentifier { return YT_BUNDLE_ID; }
+- (id)exp_productionBundleIdentifier { return YT_BUNDLE_ID; }
 %end
 
 %hook GULAppEnvironmentUtil
-+ (BOOL)isFromAppStore {
-    return YES;
-}
+- (BOOL)isFromAppStore { return YES; }
+%end
+
+%hook APMIdentity
+- (BOOL)isFromAppStore { return YES; }
 %end
 
 %hook SSOConfiguration
@@ -157,6 +156,7 @@ static NSString *accessGroupID() {
     [self setValue:YT_BUNDLE_ID forKey:@"_applicationIdentifier"];
     return self;
 }
+- (void)setShortAppName:(id)appName { %orig(YT_NAME); }
 %end
 
 %hook NSBundle
@@ -170,7 +170,6 @@ static NSString *accessGroupID() {
         return YT_BUNDLE_ID;
     return %orig;
 }
-
 - (id)objectForInfoDictionaryKey:(NSString *)key {
     if ([key isEqualToString:@"CFBundleIdentifier"])
         return YT_BUNDLE_ID;
@@ -184,57 +183,55 @@ static NSString *accessGroupID() {
 /*IAmYouTube end */
 
 %hook ASWUtilities
-+ (NSString *)productionBundleIdentifier {
-    return YT_BUNDLE_ID;
-}
+- (id)productionBundleIdentifier { return YT_BUNDLE_ID; }
+- (id)lowercaseProductionBundleIdentifier { return YT_BUNDLE_ID; }
+%end
 
-+ (NSString *)lowercaseProductionBundleIdentifier {
-    return YT_BUNDLE_ID;
-}
+%hook EXPApp
+- (id)bundleIdentifier { return YT_BUNDLE_ID; }
+%end
+
+%hook CHRInfoPlistUtil
+- (id)mainAppBundleID { return YT_BUNDLE_ID; }
+%end
+
+%hook FIROptions
+- (id)bundleID { return YT_BUNDLE_ID; }
+%end
+
+%hook FIRApp
+- (id)actualBundleID { return YT_BUNDLE_ID; }
 %end
 
 %hook GAZAppInfo
-- (NSString *)currentBundleIdentifier {
-    return YT_BUNDLE_ID;
-}
-%end
+- (id)currentBundleIdentifier { return YT_BUNDLE_ID; }
 %end
 
 NSDictionary *(*orig_infoDictionary)(id self, SEL _cmd);
 NSDictionary *replaceInfoDict(id self, SEL _cmd) {
     NSDictionary *originalInfoDictionary = orig_infoDictionary(self, _cmd);
     NSString *bundleIdentifier = originalInfoDictionary[@"CFBundleIdentifier"];
-
     if (![bundleIdentifier isEqualToString:YT_BUNDLE_ID]) {
         NSMutableDictionary *newInfoDictionary = [NSMutableDictionary dictionaryWithDictionary:originalInfoDictionary];
         [newInfoDictionary setValue:YT_BUNDLE_ID forKey:@"CFBundleIdentifier"];
         return newInfoDictionary;
     }
-
     return originalInfoDictionary;
 }
 
 BOOL isFirstTime = YES;
 
-@interface InitWorkaround : UIViewController
-@property (nonatomic, copy) void (^completion)(void);
-@end
-
 @implementation InitWorkaround
 - (void)viewDidLoad {
-    [super viewDidLoad];
-
+    [super viewDidLoad]
     isFirstTime = NO;
-
     UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleLarge];
     activityIndicator.color = [UIColor whiteColor];
     activityIndicator.center = self.view.center;
     [self.view addSubview:activityIndicator];
     [activityIndicator startAnimating];
-
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         MSHookMessageEx(objc_getClass("NSBundle"), @selector(infoDictionary), (IMP)replaceInfoDict, (IMP *)&orig_infoDictionary);
-
         [self dismissViewControllerAnimated:YES completion:^{
             if (self.completion) {
                 self.completion();
@@ -245,14 +242,9 @@ BOOL isFirstTime = YES;
 
 @end
 
-@interface SFAuthenticationViewController : UIViewController
-- (void)remoteViewControllerWillDismiss:(id)remoteVC;
-@end
-
 %hook SFAuthenticationViewController
 - (void)viewDidAppear:(BOOL)animated {
     %orig;
-
     if (isFirstTime) {
         InitWorkaround *workaround = [[InitWorkaround alloc] init];
         workaround.completion = ^{
@@ -260,14 +252,12 @@ BOOL isFirstTime = YES;
                 if ([self respondsToSelector:@selector(remoteViewControllerWillDismiss:)]) {
                     [self performSelector:@selector(remoteViewControllerWillDismiss:)];
                 }
-
                 YTAlertView *alertView = [%c(YTAlertView) infoDialog];
                 alertView.title = LOC(@"WARNING");
                 alertView.subtitle = LOC(@"RETRY_LOGIN");
                 [alertView show];
             }];
         };
-
         [self presentViewController:workaround animated:YES completion:nil];
     }
 }
@@ -276,15 +266,9 @@ BOOL isFirstTime = YES;
 %hook YTMFirstTimeSignInViewController
 - (void)viewDidDisappear:(bool)arg1 {
     %orig;
-
     YTAlertView *alertView = [%c(YTAlertView) infoDialog];
     alertView.title = LOC(@"WARNING");
     alertView.subtitle = LOC(@"LOGIN_INFO");
     [alertView show];
 }
 %end
-
-%ctor {
-    %init;
-    %init(SideloadingFixes);
-}
