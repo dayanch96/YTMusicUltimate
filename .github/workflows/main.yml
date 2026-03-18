@@ -46,6 +46,7 @@ jobs:
       - name: Validate IPA URL
         run: |
           curl -L -r 0-1023 -o sample.part "${{ inputs.ipa_url }}" > /dev/null 2>&1
+          
           file_type=$(file --mime-type -b sample.part)
 
           if [[ "$file_type" != "application/x-ios-app" && "$file_type" != "application/zip" ]]; then
@@ -93,13 +94,12 @@ jobs:
         run: pipx install --force https://github.com/asdfzxcvbn/pyzule-rw/archive/main.zip
 
       - name: Download YouTube Music
-        id: download_youtube_music
         run: wget "${{ inputs.ipa_url }}" --no-verbose -O ytm.ipa
 
       - name: Build Tweak for Sideloading
         run: |
           cd main
-          make clean package DEBUG=0 FINALPACKAGE=1 SIDELOADING=1
+          make clean package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless SIDELOADING=1
           mv packages/*.deb ../ytmult.deb
 
       - name: Inject tweak into provided IPA
