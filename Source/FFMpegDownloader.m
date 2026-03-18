@@ -173,20 +173,15 @@
 }
 
 - (void)shareMedia:(NSURL *)mediaURL {
-    UIActivityViewController *activityViewController =
-    [[UIActivityViewController alloc] initWithActivityItems:@[mediaURL] applicationActivities:nil];
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[mediaURL] applicationActivities:nil];
     activityViewController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypePrint];
-    activityViewController.modalPresentationStyle = UIModalPresentationAutomatic;
+
     [activityViewController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
         [[NSFileManager defaultManager] removeItemAtURL:mediaURL error:nil];
     }];
-    UIViewController *rootVC = UIApplication.sharedApplication.windows.firstObject.rootViewController;
-    if (activityViewController.popoverPresentationController) {
-        activityViewController.popoverPresentationController.sourceView = rootVC.view;
-        activityViewController.popoverPresentationController.sourceRect = rootVC.view.bounds;
-        activityViewController.popoverPresentationController.permittedArrowDirections = 0;
-    }
-    [rootVC presentViewController:activityViewController animated:YES completion:nil];
+
+    UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    [rootViewController presentViewController:activityViewController animated:YES completion:nil];
 }
 
 @end
