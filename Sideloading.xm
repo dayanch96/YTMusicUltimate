@@ -223,7 +223,7 @@ BOOL isFirstTime = YES;
 
 @implementation InitWorkaround
 - (void)viewDidLoad {
-    [super viewDidLoad]
+    [super viewDidLoad];
     isFirstTime = NO;
     UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleLarge];
     activityIndicator.color = [UIColor whiteColor];
