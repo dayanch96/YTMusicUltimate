@@ -63,7 +63,7 @@ static BOOL YTMU(NSString *key) {
     };
 
     for (NSString *identifier in identifiersToRemove) {
-        BOOL shouldRemoveItem = [identifiersToRemove[identifier] BOOLValue];
+        BOOL shouldRemoveItem = [identifiersToRemove[identifier] boolValue];
         NSUInteger index = [items indexOfObjectPassingTest:^BOOL(YTIPivotBarSupportedRenderers *renderers, NSUInteger idx, BOOL *stop) {
             return shouldRemoveItem && [[[renderers pivotBarItemRenderer] pivotIdentifier] isEqualToString:identifier];
         }];
