@@ -28,18 +28,15 @@ static NSString *accessGroupID() {
             return nil;
         }
     }
-
     NSString *accessGroup = [(__bridge NSDictionary *)result objectForKey:(__bridge NSString *)kSecAttrAccessGroup];
-
     return accessGroup;
 }
 
 %group SideloadingFixes
-//Fix login (2) - Ginsu & AhmedBakfir
+// Fix login (2) - Ginsu & AhmedBakfir
 // %hook SSOSafariSignIn
 // - (void)signInWithURL:(id)arg1 presentationAnchor:(id)arg2 completionHandler:(id)arg3 {
 //     NSURL *origURL = arg1;
-
 //     NSURLComponents *urlComponents = [[NSURLComponents alloc] initWithURL:origURL resolvingAgainstBaseURL:NO];
 //     NSMutableArray *newQueryItems = [urlComponents.queryItems mutableCopy];
 //     for (NSURLQueryItem *queryItem in urlComponents.queryItems) {
@@ -57,7 +54,7 @@ static NSString *accessGroupID() {
 // }
 // %end
 
-//Force enable safari sign-in
+// Force enable safari sign-in
 %hook SSOConfiguration
 - (BOOL)shouldEnableSafariSignIn { return YES; }
 - (BOOL)temporarilyDisableSafariSignIn { return NO; }
@@ -75,13 +72,25 @@ static NSString *accessGroupID() {
 %end
 
 %hook SSOKeychainCore
-//Thanks to jawshoeadan for this hook.
+// Thanks to jawshoeadan for this hook.
 + (id)accessGroup {
     return accessGroupID();
 }
 
 + (id)sharedAccessGroup {
     return accessGroupID();
+}
+%end
+
+%hook SSOFolsomKeychainUtils
+- (id)sharedAccessGroup { 
+    return accessGroupID();
+}
+%end
+
+%hook SSOBundleIdServiceImpl
+- (id)bundleId {
+    return YT_BUNDLE_ID;
 }
 %end
 
@@ -198,19 +207,54 @@ static NSString *accessGroupID() {
     return YT_BUNDLE_ID;
 }
 %end
+
+%hook CHRAppState
+- (id)appName {
+    return YT_NAME;
+}
+%end
+
+%hook FIRInstallationsIIDTokenStore
+- (id)IIDAppIdentifier {
+    return YT_BUNDLE_ID;
+}
+%end
+
+%hook ASWApp
+- (id)bundleIdentifier { return YT_BUNDLE_ID; }
+- (id)exp_productionBundleIdentifier { return YT_BUNDLE_ID; }
+%end
+
+%hook APMIdentity
+- (BOOL)isFromAppStore { return YES; }
+%end
+
+%hook FIRApp
+- (id)actualBundleID { return YT_BUNDLE_ID; }
+%end
+
+%hook FIROptions
+- (id)bundleID { return YT_BUNDLE_ID; }
+%end
+
+%hook EXPApp
+- (id)bundleIdentifier { return YT_BUNDLE_ID; }
+%end
+
+%hook CHRInfoPlistUtil
+- (id)mainAppBundleID { return YT_BUNDLE_ID; }
+%end
 %end
 
 NSDictionary *(*orig_infoDictionary)(id self, SEL _cmd);
 NSDictionary *replaceInfoDict(id self, SEL _cmd) {
     NSDictionary *originalInfoDictionary = orig_infoDictionary(self, _cmd);
     NSString *bundleIdentifier = originalInfoDictionary[@"CFBundleIdentifier"];
-
     if (![bundleIdentifier isEqualToString:YT_BUNDLE_ID]) {
         NSMutableDictionary *newInfoDictionary = [NSMutableDictionary dictionaryWithDictionary:originalInfoDictionary];
         [newInfoDictionary setValue:YT_BUNDLE_ID forKey:@"CFBundleIdentifier"];
         return newInfoDictionary;
     }
-
     return originalInfoDictionary;
 }
 
@@ -223,18 +267,14 @@ BOOL isFirstTime = YES;
 @implementation InitWorkaround
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     isFirstTime = NO;
-
     UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleLarge];
     activityIndicator.color = [UIColor whiteColor];
     activityIndicator.center = self.view.center;
     [self.view addSubview:activityIndicator];
     [activityIndicator startAnimating];
-
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         MSHookMessageEx(objc_getClass("NSBundle"), @selector(infoDictionary), (IMP)replaceInfoDict, (IMP *)&orig_infoDictionary);
-
         [self dismissViewControllerAnimated:YES completion:^{
             if (self.completion) {
                 self.completion();
@@ -252,7 +292,6 @@ BOOL isFirstTime = YES;
 %hook SFAuthenticationViewController
 - (void)viewDidAppear:(BOOL)animated {
     %orig;
-
     if (isFirstTime) {
         InitWorkaround *workaround = [[InitWorkaround alloc] init];
         workaround.completion = ^{
@@ -260,14 +299,12 @@ BOOL isFirstTime = YES;
                 if ([self respondsToSelector:@selector(remoteViewControllerWillDismiss:)]) {
                     [self performSelector:@selector(remoteViewControllerWillDismiss:)];
                 }
-
                 YTAlertView *alertView = [%c(YTAlertView) infoDialog];
                 alertView.title = LOC(@"WARNING");
                 alertView.subtitle = LOC(@"RETRY_LOGIN");
                 [alertView show];
             }];
         };
-
         [self presentViewController:workaround animated:YES completion:nil];
     }
 }
@@ -276,7 +313,6 @@ BOOL isFirstTime = YES;
 %hook YTMFirstTimeSignInViewController
 - (void)viewDidDisappear:(bool)arg1 {
     %orig;
-
     YTAlertView *alertView = [%c(YTAlertView) infoDialog];
     alertView.title = LOC(@"WARNING");
     alertView.subtitle = LOC(@"LOGIN_INFO");

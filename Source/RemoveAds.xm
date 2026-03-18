@@ -15,13 +15,22 @@ static BOOL removeAds = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"noAds");
 
 %hook YTDataUtils
 + (id)spamSignalsDictionary {
-    return removeAds ? NULL : %orig;
+    return removeAds ? nil : %orig;
+}
+%end
+
+%hook YTAdShieldUtils
+- (id)spamSignalsDictionary {
+    return removeAds ? nil : %orig;
+}
+- (id)spamSignalsDictionaryWithoutIDFA {
+    return removeAds ? nil : %orig;
 }
 %end
 
 %hook YTIPlayerResponse
 - (BOOL)isMonetized {
-    return removeAds ? false : %orig;
+    return removeAds ? NO : %orig;
 }
 
 - (id)paidContentOverlayElementRendererOptions {

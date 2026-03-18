@@ -40,8 +40,26 @@ static BOOL YTMU(NSString *key) {
 }
 %end
 
+%hook YTPlaybackData
+- (BOOL)isPlayableInBackground {
+    return YTMU(@"YTMUltimateIsEnabled") && YTMU(@"backgroundPlayback") ? YES : %orig;
+}
+%end
+
 %hook YTMMusicAppMetadata
 - (BOOL)canPlayBackgroundableContent {
+    return YTMU(@"YTMUltimateIsEnabled") && YTMU(@"backgroundPlayback") ? YES : %orig;
+}
+%end
+
+%hook YTMMusicAppMetadataImpl
+- (BOOL)canPlayBackgroundableContent {
+    return YTMU(@"YTMUltimateIsEnabled") && YTMU(@"backgroundPlayback") ? YES : %orig;
+}
+%end
+
+%hook YTLocalPlaybackController
+- (BOOL)isPlaybackBackgroundable {
     return YTMU(@"YTMUltimateIsEnabled") && YTMU(@"backgroundPlayback") ? YES : %orig;
 }
 %end

@@ -32,6 +32,12 @@ static BOOL YTMU(NSString *key) {
 }
 %end
 
+%hook MDXPlaybackRouteButtonController
+- (BOOL)isPersistentCastIconEnabled {
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
+}
+%end
+
 %hook YTColdConfig
 - (BOOL)isCastToNativeEnabled {
     return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
@@ -96,6 +102,26 @@ static BOOL YTMU(NSString *key) {
 }
 %end
 
+%hook YTMAudioCastUpsellDialogController
+- (void)showAudioCastUpsellDialogWithUpsellParentResponder:(id)arg {
+    if (!YTMU(@"YTMUltimateIsEnabled")) return %orig;
+}
+%end
+
+%hook YTMCastSessionControllerImpl
+- (id)premiumUpgradeAction {
+    return YTMU(@"YTMUltimateIsEnabled") ? nil : %orig;
+}
+
+- (void)showAudioCastUpsellDialog {
+    if (!YTMU(@"YTMUltimateIsEnabled")) return %orig;
+}
+
+- (void)openMusicPremiumLandingPage {
+    if (!YTMU(@"YTMUltimateIsEnabled")) return %orig;
+}
+%end
+
 %hook YTMMusicAppMetadata
 - (BOOL)isAudioCastEnabled {
     return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
@@ -114,7 +140,27 @@ static BOOL YTMU(NSString *key) {
 }
 %end
 
+%hook YTMMusicAppMetadataImpl
+- (BOOL)isAudioCastEnabled {
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
+}
+
+- (BOOL)isMATScreenedCastEnabled {
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
+}
+%end
+
 %hook YTMSettings
+- (BOOL)isAudioCastEnabled {
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
+}
+
+- (BOOL)isGcmEnabled {
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
+}
+%end
+
+%hook YTMSettingsImpl
 - (BOOL)isAudioCastEnabled {
     return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
@@ -140,6 +186,12 @@ static BOOL YTMU(NSString *key) {
 }
 %end
 
+%hook YTMQueueConfigImpl
+- (BOOL)isMobileAudioTierScreenedCastEnabled {
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
+}
+%end
+
 %hook GHCCDeviceCapabilities
 - (BOOL)audioSupported {
     return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
@@ -154,6 +206,12 @@ static BOOL YTMU(NSString *key) {
 }
 
 - (BOOL)videoSupported {
+    return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
+}
+%end
+
+%hook YTHotConfig
+- (BOOL)isCastCloudDiscoveryEnabled {
     return YTMU(@"YTMUltimateIsEnabled") ? YES : %orig;
 }
 %end
