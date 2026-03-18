@@ -4,6 +4,9 @@
 #import "Headers/YTPivotBarViewController.h"
 #import "Headers/YTPlayabilityResolutionUserActionUIController.h"
 
+@interface YTPlayabilityResolutionUserActionUIControllerImpl : NSObject
+@end
+
 static BOOL YTMU(NSString *key) {
     NSDictionary *YTMUltimateDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"];
     return [YTMUltimateDict[key] boolValue];
@@ -17,13 +20,13 @@ static BOOL YTMU(NSString *key) {
 %end
 
 %hook YTMSearchTabViewController
-- (bool)shouldUseStickyHeaders {
+- (BOOL)shouldUseStickyHeaders {
 	return YTMU(@"YTMUltimateIsEnabled") && YTMU(@"noStickyHeaders") ? NO : %orig;
 }
 %end
 
 %hook YTMTabViewController
-- (bool)shouldUseStickyHeaders {
+- (BOOL)shouldUseStickyHeaders {
 	return YTMU(@"YTMUltimateIsEnabled") && YTMU(@"noStickyHeaders") ? NO : %orig;
 }
 %end
@@ -60,7 +63,7 @@ static BOOL YTMU(NSString *key) {
     };
 
     for (NSString *identifier in identifiersToRemove) {
-        BOOL shouldRemoveItem = [identifiersToRemove[identifier] boolValue];
+        BOOL shouldRemoveItem = [identifiersToRemove[identifier] BOOLValue];
         NSUInteger index = [items indexOfObjectPassingTest:^BOOL(YTIPivotBarSupportedRenderers *renderers, NSUInteger idx, BOOL *stop) {
             return shouldRemoveItem && [[[renderers pivotBarItemRenderer] pivotIdentifier] isEqualToString:identifier];
         }];
@@ -98,16 +101,20 @@ BOOL isTabSelected = NO;
 }
 %end
 
+%hook YTPlayabilityResolutionUserActionUIControllerImpl
+- (void)showConfirmAlert {
+    YTMU(@"YTMUltimateIsEnabled") && YTMU(@"skipWarning") ? [self confirmAlertDidPressConfirm] : %orig;
+}
+%end
+
 %hook YTMWatchViewController
 - (void)playbackControllerStateDidChange {
     %orig;
-
-    //Reset all miniplayer restrictions
+    // Reset all miniplayer restrictions
     if ([self respondsToSelector:@selector(resetMiniplayerRestrictions)]) {
         [self resetMiniplayerRestrictions];
     }
-
-    //Disable auto-pause when player minimized to miniplayer
+    // Disable auto-pause when player minimized to miniplayer
     [self setValue:@(NO) forKey:@"_pauseOnMinimize"];
 }
 %end
@@ -116,6 +123,7 @@ BOOL isTabSelected = NO;
 - (BOOL)cxClientEnableIosLocalNetworkPermissionWifiFixes { return YES; }
 - (BOOL)cxClientEnableIosLocalNetworkPermissionUsingSockets { return NO; }
 - (BOOL)cxClientEnableIosLocalNetworkPermissionReliabilityFixes { return YES; }
+- (BOOL)cxClientEnableIosLocalNetworkPermissionPageDelayFix { return YES; }
 %end
 
 %hook YTHotConfig

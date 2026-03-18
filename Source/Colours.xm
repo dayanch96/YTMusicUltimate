@@ -61,6 +61,7 @@ static BOOL isLowContrast = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"lowContrast"
 }
 %end
 
+// Need test before PR
 %hook YTMPlayerPageColorScheme
 - (UIColor *)backgroundColor { return isOLEDTheme ? [UIColor blackColor] : %orig; }
 - (UIColor *)expandedTabsBackgroundColor { return isOLEDTheme ? [UIColor blackColor] : %orig; }
@@ -72,7 +73,10 @@ static BOOL isLowContrast = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"lowContrast"
 - (UIColor *)AVSwitchActiveModeColor { return isOLEDTheme ? [[UIColor whiteColor] colorWithAlphaComponent:0.1] : %orig; }
 - (UIColor *)queueBackgroundColor { return isOLEDTheme ? [UIColor blackColor] : %orig; }
 - (UIColor *)queueCurrentlyPlayingColor { return isOLEDTheme ? [[UIColor whiteColor] colorWithAlphaComponent:0.1] : %orig; }
-
+- (UIColor *)halfExpandedQueueBackgroundColor { return isOLEDTheme ? [UIColor blackColor] : %orig; }
+- (UIColor *)halfExpandedQueueCurrentlyPlayingColor { return isOLEDTheme ? [UIColor blackColor] : %orig; }
+- (UIColor *)halfExpandedTabsBackgroundColor { return isOLEDTheme ? [UIColor blackColor] : %orig; }
+- (UIColor *)queueReorderingCellColor { return isOLEDTheme ? [UIColor blackColor] : %orig; }
 - (BOOL)gradientBackgroundEnabled { return isOLEDTheme ? NO : %orig; }
 %end
 

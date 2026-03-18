@@ -184,13 +184,20 @@ static int YTMUint(NSString *key) {
 - (BOOL)isAudioVideoModeSupportedForNonPodcasts {
     return YTMU(@"YTMUltimateIsEnabled") ?: %orig;
 }
+
+- (BOOL)noVideoModeEnabledForMusic {
+	return YTMUint(@"audioVideoMode") == 0 ? 1 : %orig;
+}
+
+- (BOOL)noVideoModeEnabledForPodcasts {
+	return YTMUint(@"audioVideoMode") == 0 ? 1 : %orig;
+}
 %end
 
 %hook YTQueueController
 - (BOOL)noVideoModeEnabled:(id)arg1 {
 	return YTMUint(@"audioVideoMode") == 0 ? 1 : %orig;
 }
-
 - (BOOL)isAudioVideoModeSupportedForVideo:(id)video { return YTMU(@"YTMUltimateIsEnabled") ?: %orig; }
 %end
 
