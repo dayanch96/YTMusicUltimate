@@ -175,6 +175,10 @@ static NSString *accessGroupID() {
 
 %end
 
+%hook OGLGM2AccountSelectorViewController 
+- (id)shortAppName { return YT_NAME; }
+%end
+
 %hook CHRAppState
 - (id)appName { return YT_NAME; }
 %end
