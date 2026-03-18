@@ -57,6 +57,7 @@ static BOOL isDisableAutoRadio = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"disable
     return isDisableAutoRadio ? NO : %orig;
 }
 - (void)setAutoplayEnabled:(BOOL)arg { isDisableAutoRadio ? %orig(NO) : %orig; }
+- (void)setMDXAutoplayEnabled:(BOOL)arg { isDisableAutoRadio ? %orig(NO) : %orig; }
 %end
 
 %hook YTMQueueConfig
@@ -75,8 +76,4 @@ static BOOL isDisableAutoRadio = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"disable
 - (BOOL)isAutoplayEnabled {
     return isDisableAutoRadio ? NO : %orig;
 }
-%end
-
-%hook YTMPlaybackQueueAutoplayHeaderReusableView
-- (void)setMDXAutoplayEnabled:(BOOL)arg { isDisableAutoRadio ? %orig(NO) : %orig; }
 %end

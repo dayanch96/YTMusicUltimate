@@ -14,7 +14,7 @@ static BOOL YTMU(NSString *key) {
 @property(retain, nonatomic) YTIPivotBarItemRenderer *pivotBarItemRenderer;
 - (YTIPivotBarItemRenderer *)pivotBarItemRenderer;
 @end
-isMobileAudioTierScreenedCastEnabled
+
 @interface YTIPivotBarRenderer : NSObject
 - (NSMutableArray <YTIPivotBarSupportedRenderers *> *)itemsArray;
 @end
