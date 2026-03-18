@@ -49,7 +49,7 @@
 "LOW_CONTRAST" = "คอนทราสต์ต่ำ";
 "LOW_CONTRAST_DESC" = "ลดความคอนทราสต์ของข้อความและปุ่ม";
 
-"NAVBAR_SETTINGS" = "แถบด้านบน";
+"NAVBAR_SETTINGS" = "แท็บด้านบน";
 "DONT_STICK_HEADERS" = "ไม่ล็อกแถบ";
 "DONT_STICK_HEADERS_DESC" = "ปลดล็อกการล็อกแถบด้านบนของหน้าจอ";
 "HIDE_HISTORY_BUTTON" = "ซ่อนปุ่มประวัติ";
@@ -59,7 +59,7 @@
 "HIDE_FILTER_BUTTON" = "ลบปุ่มตัวกรองการจัดเรียง";
 "HIDE_FILTER_BUTTON_DESC" = "ลบปุ่มกรองจากคลังเพลงและดาวน์โหลดออกจากแถบนำทาง";
 
-"TABBAR_SETTINGS" = "แถบนำทาง";
+"TABBAR_SETTINGS" = "แท็บนำทาง";
 "STARTUP_TAB" = "แท็บเริ่มต้น";
 "HOME" = "หน้าแรก";
 "SAMPLES" = "ลองฟัง";
