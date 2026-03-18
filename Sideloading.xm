@@ -153,6 +153,24 @@ static NSString *accessGroupID() {
 - (id)mainAppBundleIdentifier { return YT_BUNDLE_ID; }
 %end
 
+%hook FIRDynamicLinkIOSParameters
+- (id)bundleID {
+    return YT_BUNDLE_ID;
+}
+- (id)iPadBundleID {
+    return YT_BUNDLE_ID;
+}
+- (id)initWithBundleID:(id)arg1 {
+    return %orig(YT_BUNDLE_ID);
+}
++ (id)parametersWithBundleID:(id)arg1 {
+    return %orig(YT_BUNDLE_ID);
+}
+- (void)setIPadBundleID:(id)arg1 {
+    %orig(YT_BUNDLE_ID);
+}
+%end
+
 %hook SSOConfiguration
 - (id)initWithClientID:(id)clientID supportedAccountServices:(id)supportedAccountServices {
     self = %orig;
@@ -209,6 +227,14 @@ static NSString *accessGroupID() {
 
 %hook GAZAppInfo
 - (id)currentBundleIdentifier { return YT_BUNDLE_ID; }
+%end
+
+%hook FIRMessagingCheckinStore
+- (id)bundleIdentifierForKeychainAccount { return YT_BUNDLE_ID; }
+%end
+
+%hook CHRMetricIntentDetectorInfo
+- (id)installedAppBundleIdentifier { return YT_BUNDLE_ID; }
 %end
 
 NSDictionary *(*orig_infoDictionary)(id self, SEL _cmd);
