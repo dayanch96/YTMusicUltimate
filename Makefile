@@ -1,9 +1,3 @@
-ifeq ($(ROOTLESS),1)
-THEOS_PACKAGE_SCHEME = rootless
-else ifeq ($(ROOTHIDE),1)
-THEOS_PACKAGE_SCHEME = roothide
-endif
-
 ARCHS = arm64
 INSTALL_TARGET_PROCESSES = YouTubeMusic
 TARGET = iphone:clang:latest:13.0

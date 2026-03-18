@@ -61,7 +61,6 @@ static BOOL isLowContrast = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"lowContrast"
 }
 %end
 
-// Need test before PR
 %hook YTMPlayerPageColorScheme
 - (UIColor *)backgroundColor { return isOLEDTheme ? [UIColor blackColor] : %orig; }
 - (UIColor *)expandedTabsBackgroundColor { return isOLEDTheme ? [UIColor blackColor] : %orig; }

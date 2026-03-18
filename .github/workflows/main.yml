@@ -108,7 +108,7 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2.5.0
         with:
-          name: YTMusicUltimate-v${{ github.run_number }}
+          name: YTMusicUltimate (${{ github.run_number }})
           files: YTMusicUltimate.ipa
           draft: true
 

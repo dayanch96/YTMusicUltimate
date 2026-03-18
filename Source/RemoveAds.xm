@@ -8,7 +8,7 @@ static BOOL YTMU(NSString *key) {
 static BOOL removeAds = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"noAds");
 
 %hook YTAdsInnerTubeContextDecorator
-- (void)decorateContext:(id)arg1{
+- (void)decorateContext:(id)arg1 {
     if (!removeAds) return %orig;
 }
 %end

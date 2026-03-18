@@ -157,7 +157,9 @@ static BOOL YTMU(NSString *key) {
 %end
 
 %hook YTPromoThrottleControllerImpl
-- (BOOL)canShowThrottledPromo { return NO; }
+- (BOOL)canShowThrottledPromo {
+    return YTMU(@"YTMUltimateIsEnabled") ? NO : %orig;
+}
 %end
 
 %hook YTHintController
@@ -307,7 +309,9 @@ static BOOL YTMU(NSString *key) {
 - (void)presentPromosheetWithEvent:(id)arg {
     if (!YTMU(@"YTMUltimateIsEnabled")) %orig;
 }
-- (BOOL)canPresentPromosheetWithGlobalThrottling:(BOOL)arg1 customizedThrottling:(id)arg2 shouldReplacePromosheet:(BOOL)arg3 { return YTMU(@"YTMUltimateIsEnabled") ? NO : %orig; }
+- (BOOL)canPresentPromosheetWithGlobalThrottling:(BOOL)arg1 customizedThrottling:(id)arg2 shouldReplacePromosheet:(BOOL)arg3 {
+    return YTMU(@"YTMUltimateIsEnabled") ? NO : %orig;
+}
 %end
 
 %hook YTOfflineButtonPromoController
