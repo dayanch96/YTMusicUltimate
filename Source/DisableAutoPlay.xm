@@ -9,31 +9,76 @@ static BOOL isDisableAutoRadio = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"disable
 
 // To respect users autoplay switch status
 %hook YTDefaultQueueConfig
-- (bool)autoplayEnabled {
-    return isDisableAutoRadio ? 0 : %orig;
+- (BOOL)autoplayEnabled {
+    return isDisableAutoRadio ? NO : %orig;
 }
 %end
 
 %hook YTQueueController
-- (bool)isAutoplaySupported {
-    return isDisableAutoRadio ? 0 : %orig;
+- (BOOL)isAutoplaySupported {
+    return isDisableAutoRadio ? NO : %orig;
 }
 %end
 
 %hook YTMQueueConfig
-- (bool)autoplayEnabled {
-    return isDisableAutoRadio ? 0 : %orig;
+- (BOOL)autoplayEnabled {
+    return isDisableAutoRadio ? NO : %orig;
+}
+%end
+
+%hook YTMQueueConfigImpl
+- (BOOL)autoplayEnabled {
+    return isDisableAutoRadio ? NO : %orig;
 }
 %end
 
 %hook YTMSettings
-- (bool)autoplayEnabled {
-    return isDisableAutoRadio ? 0 : %orig;
+- (BOOL)autoplayEnabled {
+    return isDisableAutoRadio ? NO : %orig;
+}
+%end
+
+%hook YTMSettingsImpl
+- (BOOL)autoplayEnabled {
+    return isDisableAutoRadio ? NO : %orig;
+}
+- (void)setAutoplayEnabled:(BOOL)arg { 
+    isDisableAutoRadio ? %orig(NO) : %orig;
 }
 %end
 
 %hook YTUserDefaults
-- (bool)autoplayEnabled {
-    return isDisableAutoRadio ? 0 : %orig;
+- (BOOL)autoplayEnabled {
+    return isDisableAutoRadio ? NO : %orig;
+}
+- (void)setAutoplayEnabled:(BOOL)arg {
+    isDisableAutoRadio ? %orig(NO) : %orig;
+}
+%end
+
+%hook YTMPlaybackQueueAutoplayHeaderReusableView
+- (BOOL)isAutoplayEnabled {
+    return isDisableAutoRadio ? NO : %orig;
+}
+- (void)setAutoplayEnabled:(BOOL)arg {
+    isDisableAutoRadio ? %orig(NO) : %orig;
+}
+%end
+
+%hook YTMQueueCollectionViewController
+- (void)setMDXAutoplayEnabled:(BOOL)arg {
+    isDisableAutoRadio ? %orig(NO) : %orig;
+}
+%end
+
+%hook MDXBaseScreen
+- (BOOL)isAutoplayEnabled {
+    return isDisableAutoRadio ? NO : %orig;
+}
+%end
+
+%hook MDXSessionImpl
+- (BOOL)isAutoplayEnabled {
+    return isDisableAutoRadio ? NO : %orig;
 }
 %end
