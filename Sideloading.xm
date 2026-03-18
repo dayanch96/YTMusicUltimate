@@ -67,6 +67,10 @@ static NSString *accessGroupID() {
 - (void)setTemporarilyDisableSafariSignIn:(BOOL)arg1 { return %orig(NO); }
 %end
 
+%hook SSOFolsomKeychainUtils
+- (id)sharedAccessGroup { return accessGroupID(); }
+%end
+
 %hook SSOKeychainHelper
 - (id)accessGroup { return accessGroupID(); }
 - (id)sharedAccessGroup { return accessGroupID(); }
@@ -120,14 +124,6 @@ static NSString *accessGroupID() {
 - (id)shortAppName { return YT_NAME; }
 %end
 
-%hook GVROverlayView
-- (id)appName { return YT_NAME; }
-%end
-
-%hook OGLGM2AccountSelectorViewController 
-- (id)shortAppName { return YT_NAME; }
-%end
-
 %hook OGLPhenotypeFlagServiceImpl
 - (NSString *)bundleId { return YT_BUNDLE_ID; }
 %end
@@ -147,6 +143,14 @@ static NSString *accessGroupID() {
 
 %hook APMIdentity
 - (BOOL)isFromAppStore { return YES; }
+%end
+
+%hook CHRMetricAppStateInfo
+- (id)bundleIdentifier { return YT_BUNDLE_ID; }
+%end
+
+%hook PHTPhenotypeUtil
+- (id)mainAppBundleIdentifier { return YT_BUNDLE_ID; }
 %end
 
 %hook SSOConfiguration
@@ -239,7 +243,6 @@ BOOL isFirstTime = YES;
         }];
     });
 }
-
 @end
 
 %hook SFAuthenticationViewController
