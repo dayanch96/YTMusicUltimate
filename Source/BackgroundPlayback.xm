@@ -13,7 +13,6 @@ static BOOL YTMU(NSString *key) {
 - (id)upsellNotificationTriggerOnBackground {
     return YTMU(@"YTMUltimateIsEnabled") && YTMU(@"backgroundPlayback") ? nil : %orig;
 }
-
 - (void)maybeScheduleBackgroundUpsellNotification {
     %orig;
     if (YTMU(@"YTMUltimateIsEnabled") && YTMU(@"backgroundPlayback")) [self removePendingBackgroundNotifications];
@@ -34,9 +33,14 @@ static BOOL YTMU(NSString *key) {
 - (BOOL)isPlayableInBackground{
     return YTMU(@"YTMUltimateIsEnabled") && YTMU(@"backgroundPlayback") ? YES : %orig;
 }
-
 - (void)setIsPlayableInBackground:(BOOL)backgroundable {
     YTMU(@"YTMUltimateIsEnabled") && YTMU(@"backgroundPlayback") ? %orig(YES) : %orig;
+}
+%end
+
+%hook YTPlaybackData
+- (BOOL)isPlayableInBackground {
+    return YTMU(@"YTMUltimateIsEnabled") && YTMU(@"backgroundPlayback") ? YES : %orig;
 }
 %end
 
@@ -46,9 +50,20 @@ static BOOL YTMU(NSString *key) {
 }
 %end
 
+%hook YTMMusicAppMetadataImpl
+- (BOOL)canPlayBackgroundableContent {
+    return YTMU(@"YTMUltimateIsEnabled") && YTMU(@"backgroundPlayback") ? YES : %orig;
+}
+%end
+
+%hook YTLocalPlaybackController
+- (BOOL)isPlaybackBackgroundable {
+    return YTMU(@"YTMUltimateIsEnabled") && YTMU(@"backgroundPlayback") ? YES : %orig;
+}
+%end
+
 %ctor {
     NSMutableDictionary *YTMUltimateDict = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"YTMUltimate"]];
-
     NSArray *keys = @[@"YTMUltimateIsEnabled", @"backgroundPlayback", @"noAds", @"downloadAudio", @"downloadCoverImage"];
     for (NSString *key in keys) {
         if (!YTMUltimateDict[key]) {
