@@ -180,7 +180,20 @@
         [[NSFileManager defaultManager] removeItemAtURL:mediaURL error:nil];
     }];
 
-    UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    UIViewController *rootViewController = UIApplication.sharedApplication.keyWindow.rootViewController;
+    while (rootViewController.presentedViewController) {
+        rootViewController = rootViewController.presentedViewController;
+    }
+
+    UIPopoverPresentationController *popover = activityViewController.popoverPresentationController;
+    if (popover) {
+        popover.sourceView = rootViewController.view;
+        popover.sourceRect = CGRectMake(CGRectGetMidX(rootViewController.view.bounds),
+                                        CGRectGetMidY(rootViewController.view.bounds),
+                                        1,
+                                        1);
+        popover.permittedArrowDirections = 0;
+    }
     [rootViewController presentViewController:activityViewController animated:YES completion:nil];
 }
 
