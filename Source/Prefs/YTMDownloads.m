@@ -206,6 +206,15 @@
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[audioURL] applicationActivities:nil];
     activityViewController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypePrint];
 
+    UIPopoverPresentationController *popover = activityViewController.popoverPresentationController;
+    if (popover) {
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+
+        popover.sourceView = cell;
+        popover.sourceRect = CGRectMake(CGRectGetWidth(cell.bounds) - 10.0, CGRectGetMidY(cell.bounds), 1.0, 1.0);
+        popover.permittedArrowDirections = UIPopoverArrowDirectionRight;
+    }
+
     [self presentViewController:activityViewController animated:YES completion:nil];
 }
 
