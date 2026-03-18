@@ -5,6 +5,7 @@
 #import "Headers/YTPlayabilityResolutionUserActionUIController.h"
 
 @interface YTPlayabilityResolutionUserActionUIControllerImpl : NSObject
+- (void)confirmAlertDidPressConfirm;
 @end
 
 static BOOL YTMU(NSString *key) {
