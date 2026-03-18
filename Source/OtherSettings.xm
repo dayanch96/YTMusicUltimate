@@ -122,3 +122,11 @@ BOOL isTabSelected = NO;
 %hook YTHotConfig
 - (BOOL)isPromptForLocalNetworkPermissionsEnabled { return NO; }
 %end
+
+// Stub for server-side request (Search results)
+%hook YTMLightweightOfflineTrackingSectionController
+%new
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return 1;
+}
+%end
