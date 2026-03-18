@@ -99,7 +99,7 @@ jobs:
       - name: Build Tweak for Sideloading
         run: |
           cd main
-          make clean package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless SIDELOADING=1
+          make clean package DEBUG=0 FINALPACKAGE=1 SIDELOADING=1
           mv packages/*.deb ../ytmult.deb
 
       - name: Inject tweak into provided IPA
