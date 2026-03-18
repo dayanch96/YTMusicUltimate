@@ -36,27 +36,23 @@ static BOOL isLowContrast = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"lowContrast"
 
 #pragma mark - OLED Dark mode
 @interface YTColor : UIColor
-+ (UIColor *)blackPure;
+- (UIColor *)blackPure;
 @end
 
 %hook YTColor
-+ (UIColor *)black0 {
+- (UIColor *)black0 {
     return isOLEDTheme ? [self blackPure] : %orig;
 }
-
-+ (UIColor *)black1 {
+- (UIColor *)black1 {
     return isOLEDTheme ? [self blackPure] : %orig;
 }
-
-+ (UIColor *)black2 {
+- (UIColor *)black2 {
     return isOLEDTheme ? [self blackPure] : %orig;
 }
-
-+ (UIColor *)black3 {
+- (UIColor *)black3 {
     return isOLEDTheme ? [self blackPure] : %orig;
 }
-
-+ (UIColor *)black4 {
+- (UIColor *)black4 {
     return isOLEDTheme ? [self blackPure] : %orig;
 }
 %end
@@ -72,7 +68,12 @@ static BOOL isLowContrast = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"lowContrast"
 - (UIColor *)AVSwitchActiveModeColor { return isOLEDTheme ? [[UIColor whiteColor] colorWithAlphaComponent:0.1] : %orig; }
 - (UIColor *)queueBackgroundColor { return isOLEDTheme ? [UIColor blackColor] : %orig; }
 - (UIColor *)queueCurrentlyPlayingColor { return isOLEDTheme ? [[UIColor whiteColor] colorWithAlphaComponent:0.1] : %orig; }
-
+- (UIColor *)halfExpandedQueueBackgroundColor { return isOLEDTheme ? [UIColor blackColor] : %orig; }
+- (UIColor *)halfExpandedQueueCurrentlyPlayingColor { return isOLEDTheme ? [UIColor blackColor] : %orig; }
+- (UIColor *)halfExpandedTabsBackgroundColor { return isOLEDTheme ? [UIColor blackColor] : %orig; }
+- (UIColor *)playerTopScrimColors { return isOLEDTheme ? [UIColor blackColor] : %orig; }
+- (UIColor *)playerBottomScrimColors { return isOLEDTheme ? [UIColor blackColor] : %orig; }
+- (UIColor *)gradientBackgroundColors { return isOLEDTheme ? [UIColor blackColor] : %orig; }
 - (BOOL)gradientBackgroundEnabled { return isOLEDTheme ? NO : %orig; }
 %end
 
@@ -92,7 +93,6 @@ static BOOL isLowContrast = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"lowContrast"
     if (!isOLEDTheme) {
         return %orig;
     }
-    
     self.backgroundColor = [UIColor blackColor];
     return nil;
 }
@@ -201,7 +201,7 @@ static BOOL isLowContrast = YTMU(@"YTMUltimateIsEnabled") && YTMU(@"lowContrast"
 %end
 
 %hook UIColor
-+ (UIColor *)whiteColor {
+- (UIColor *)whiteColor {
     return isLowContrast ? [UIColor colorWithWhite:0.565 alpha:1] : %orig;
 }
 %end
