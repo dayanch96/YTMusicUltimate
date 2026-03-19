@@ -49,9 +49,9 @@
 "LOW_CONTRAST" = "คอนทราสต์ต่ำ";
 "LOW_CONTRAST_DESC" = "ลดความคอนทราสต์ของข้อความและปุ่ม";
 
-"NAVBAR_SETTINGS" = "แท็บด้านบน";
-"DONT_STICK_HEADERS" = "ไม่ล็อกแถบ";
-"DONT_STICK_HEADERS_DESC" = "ปลดล็อกการล็อกแถบด้านบนของหน้าจอ";
+"NAVBAR_SETTINGS" = "แถบนำทาง";
+"DONT_STICK_HEADERS" = "ไม่ยึดแถบ";
+"DONT_STICK_HEADERS_DESC" = "ปิดการยึดแถบนำทางด้านบนของหน้าจอ";
 "HIDE_HISTORY_BUTTON" = "ซ่อนปุ่มประวัติ";
 "HIDE_HISTORY_BUTTON_DESC" = "ซ่อนปุ่มประวัติในแถบนำทาง";
 "HIDE_CAST_BUTTON" = "ซ่อนปุ่มแคสต์";
