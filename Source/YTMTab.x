@@ -11,14 +11,15 @@ static BOOL YTMU(NSString *key) {
 
 %hook YTMPivotBarItemStyle
 - (UIImage *)pivotBarItemIconImageWithIconType:(int)type color:(UIColor *)color useNewIcons:(BOOL)isNew selected:(BOOL)isSelected {
+    if (type == 1 || type == 2) {
+        NSString *imageName = isSelected ? @"icons/downloads_selected" : @"icons/downloads";
+        if (type == 2) imageName = isSelected ? @"icons/downloads_cairo_selected" : @"icons/downloads_cairo";
 
-    // Create image
-    NSString *imageName = isSelected ? @"icons/downloads_selected" : @"icons/downloads";
+        YTAssetLoader *al = [[%c(YTAssetLoader) alloc] initWithBundle:NSBundle.ytmu_defaultBundle];
+        return [al imageNamed:imageName];
+    }
 
-    YTAssetLoader *al = [[%c(YTAssetLoader) alloc] initWithBundle:NSBundle.ytmu_defaultBundle];
-
-    // Set our image if icon type is 1
-    return type == 1 ? [al imageNamed:imageName] : %orig;
+    return %orig;
 }
 %end
 
@@ -28,6 +29,10 @@ static BOOL YTMU(NSString *key) {
     if (YTMU(@"YTMUltimateIsEnabled") && !YTMU(@"hideDownloadsTab")) {
         YTIIcon *ytmuIcon = [%c(YTIIcon) new];
         ytmuIcon.iconType = 1;
+
+        if ([[renderer description] containsString:@"TAB_BOOKMARK"]) {
+            ytmuIcon.iconType = 2;
+        }
 
         YTIBrowseEndpoint *ytmuBrowseEndpoint = [%c(YTIBrowseEndpoint) new];
         ytmuBrowseEndpoint.browseId = @"FEytmu_downloads";
