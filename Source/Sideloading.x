@@ -67,13 +67,36 @@ static NSString *accessGroupID() {
 - (void)setTemporarilyDisableSafariSignIn:(BOOL)arg1 { return %orig(NO); }
 %end
 
-%hook SSOFolsomKeychainUtils
-+ (id)sharedAccessGroup { return accessGroupID(); }
-%end
-
 %hook SSOKeychainHelper
 + (id)accessGroup { return accessGroupID(); }
 + (id)sharedAccessGroup { return accessGroupID(); }
+%end
+
+%hook SSOFolsomKeychainUtils
+- (id)sharedAccessGroup { return accessGroupID(); }
+%end
+
+%hook GULKeychainStorage
+- (void)getObjectForKey:(id)key objectClass:(Class)objectClass accessGroup:(id)accessGroup completionHandler:(id)handler {
+    accessGroup = accessGroupID();
+    %orig;
+}
+- (void)setObject:(id)object forKey:(id)key accessGroup:(id)accessGroup completionHandler:(id)handler {
+    accessGroup = accessGroupID();
+    %orig;
+}
+- (void)removeObjectForKey:(id)key accessGroup:(id)accessGroup completionHandler:(id)handler {
+    accessGroup = accessGroupID();
+    %orig;
+}
+- (void)getObjectFromKeychainForKey:(id)key objectClass:(Class)objectClass accessGroup:(id)accessGroup completionHandler:(id)handler {
+    accessGroup = accessGroupID();
+    %orig;
+}
+- (id)keychainQueryWithKey:(id)key accessGroup:(id)accessGroup {
+    accessGroup = accessGroupID();
+    return %orig(key, accessGroup);
+}
 %end
 
 // Thanks to jawshoeadan for this hook.
@@ -83,7 +106,7 @@ static NSString *accessGroupID() {
 %end
 
 %hook SSOBundleIdServiceImpl
-+ (id)bundleId { return YT_BUNDLE_ID; }
+- (id)bundleId { return YT_BUNDLE_ID; }
 %end
 
 %hook NSFileManager
@@ -134,42 +157,6 @@ static NSString *accessGroupID() {
 
 %hook SSOClientLogin
 + (NSString *)defaultSourceString { return YT_BUNDLE_ID; }
-%end
-
-%hook OGLGM2AccountSelectorViewController 
-- (id)shortAppName { return YT_NAME; }
-%end
-
-%hook GCKApplicationMetadata
-- (id)senderAppIdentifier { return YT_BUNDLE_ID; }
-%end
-
-%hook CHRAppState
-+ (id)appName { return YT_NAME; }
-%end
-
-%hook FIRInstallationsIIDTokenStore
-+ (id)IIDAppIdentifier { return YT_BUNDLE_ID; }
-%end
-
-%hook APMIdentity
-+ (BOOL)isFromAppStore { return YES; }
-%end
-
-%hook PHTPhenotypeUtil
-- (id)mainAppBundleIdentifier { return YT_BUNDLE_ID; }
-%end
-
-%hook GHKReceiverConfig
-- (id)appBundleID { return YT_BUNDLE_ID; }
-%end
-
-%hook YTMXSDKAllowListController
-- (BOOL)isBundleIDValid { return YES; }
-%end
-
-%hook YTMXURLHandler
-- (BOOL)isBundleIDValid { return YES; }
 %end
 
 %hook SSOConfiguration
@@ -238,6 +225,42 @@ static NSString *accessGroupID() {
 - (id)currentBundleIdentifier { return YT_BUNDLE_ID; }
 %end
 
+%hook OGLGM2AccountSelectorViewController 
+- (id)shortAppName { return YT_NAME; }
+%end
+
+%hook GCKApplicationMetadata
+- (id)senderAppIdentifier { return YT_BUNDLE_ID; }
+%end
+
+%hook CHRAppState
++ (id)appName { return YT_NAME; }
+%end
+
+%hook FIRInstallationsIIDTokenStore
++ (id)IIDAppIdentifier { return YT_BUNDLE_ID; }
+%end
+
+%hook APMIdentity
++ (BOOL)isFromAppStore { return YES; }
+%end
+
+%hook PHTPhenotypeUtil
+- (id)mainAppBundleIdentifier { return YT_BUNDLE_ID; }
+%end
+
+%hook GHKReceiverConfig
+- (id)appBundleID { return YT_BUNDLE_ID; }
+%end
+
+%hook YTMXSDKAllowListController
+- (BOOL)isBundleIDValid { return YES; }
+%end
+
+%hook YTMXURLHandler
+- (BOOL)isBundleIDValid { return YES; }
+%end
+
 NSDictionary *(*orig_infoDictionary)(id self, SEL _cmd);
 NSDictionary *replaceInfoDict(id self, SEL _cmd) {
     NSDictionary *originalInfoDictionary = orig_infoDictionary(self, _cmd);
@@ -294,7 +317,7 @@ BOOL isFirstTime = YES;
 %end
 
 %hook YTMFirstTimeSignInViewController
-- (void)viewDidDisappear:(BOOL)arg1 {
+- (void)viewDidDisappear:(bool)arg1 {
     %orig;
     YTAlertView *alertView = [%c(YTAlertView) infoDialog];
     alertView.title = LOC(@"WARNING");
