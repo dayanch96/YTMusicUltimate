@@ -17,7 +17,7 @@
 
     self.sponsorBlockValues = [NSMutableDictionary dictionary];
 
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://sponsor.ajay.app/api/skipSegments?videoID=%@&categories=%@", self.currentVideoID, @"%5B%22music_offtopic%22%5D"]]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://sponsor.ajay.app/api/skipSegments?videoID=%@&categories=%@", self.currentVideoID, @"%5B%22music_offtopic%22%2C%22sponsor%22%2C%22selfpromo%22%5D"]]];
 
     [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (!error) {
@@ -58,8 +58,9 @@
             NSString *uuid = [jsonDictionary objectForKey:@"UUID"];
             NSNumber *segmentSkipValue = [segmentSkipValues objectForKey:uuid];
 
+            NSArray *validCategories = @[@"music_offtopic", @"sponsor", @"selfpromo"];
             if (segmentSkipValue && [segmentSkipValue isEqual:@(1)]
-                && [[jsonDictionary objectForKey:@"category"] isEqual:@"music_offtopic"]
+                && [validCategories containsObject:[jsonDictionary objectForKey:@"category"]]
                 && self.currentVideoMediaTime >= [[jsonDictionary objectForKey:@"segment"][0] floatValue]
                 && self.currentVideoMediaTime <= ([[jsonDictionary objectForKey:@"segment"][1] floatValue] - 1)) {
 
