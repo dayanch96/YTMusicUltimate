@@ -76,6 +76,8 @@
 "HIDE_DOWNLOADS" = "Ukryj zakładkę \"Pobrane\"";
 
 "CLEAR_CACHE" = "Wyczyść pamięć podręczną";
+"AUTO_CLEAR_CACHE" = "Automatycznie wyczyść pamięć podręczną";
+"AUTO_CLEAR_CACHE_DESC" = "Automatycznie czyść pamięć podręczną przy każdym uruchomieniu aplikacji";
 
 "APPLY" = "Zastosuj";
 "APPLY_DESC" = "Zamyka aplikację, by zastosować zmiany";

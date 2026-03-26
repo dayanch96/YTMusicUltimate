@@ -76,6 +76,8 @@
 "HIDE_DOWNLOADS" = "Nerodyti Atsisiuntimų kortelės";
 
 "CLEAR_CACHE" = "Išvalyti talpyklą";
+"AUTO_CLEAR_CACHE" = "Automatiškai išvalyti talpyklą";
+"AUTO_CLEAR_CACHE_DESC" = "Automatiškai išvalyti talpyklą kiekvieną kartą paleidus programą";
 
 "APPLY" = "Taikyti";
 "APPLY_DESC" = "Uždaro programėlę, kad pritaikytų pakeitimus";

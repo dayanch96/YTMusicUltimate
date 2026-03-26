@@ -76,6 +76,8 @@
 "HIDE_DOWNLOADS" = "Hide Downloads tab";
 
 "CLEAR_CACHE" = "Clear cache";
+"AUTO_CLEAR_CACHE" = "Auto clear cache";
+"AUTO_CLEAR_CACHE_DESC" = "Auto clear cache everytime the app starts";
 
 "APPLY" = "Apply";
 "APPLY_DESC" = "Closes the app to apply changes";

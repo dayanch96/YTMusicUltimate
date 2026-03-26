@@ -76,6 +76,8 @@
 "HIDE_DOWNLOADS" = "隱藏下載管理器";
 
 "CLEAR_CACHE" = "清除快取";
+"AUTO_CLEAR_CACHE" = "自動清除快取";
+"AUTO_CLEAR_CACHE_DESC" = "每次啟動應用程式時自動清除快取";
 
 "APPLY" = "套用";
 "APPLY_DESC" = "按下套用會關閉應用程式讓變更生效";

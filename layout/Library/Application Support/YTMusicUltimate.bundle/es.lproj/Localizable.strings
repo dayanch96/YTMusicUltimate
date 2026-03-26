@@ -76,6 +76,8 @@
 "HIDE_DOWNLOADS" = "Ocultar pestaña Descargas";
 
 "CLEAR_CACHE" = "Borrar caché";
+"AUTO_CLEAR_CACHE" = "Borrar caché automáticamente";
+"AUTO_CLEAR_CACHE_DESC" = "Borrar la caché automáticamente cada vez que se inicia la app";
 
 "APPLY" = "Aplicar";
 "APPLY_DESC" = "Cierra la aplicación para aplicar los cambios";

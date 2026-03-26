@@ -76,6 +76,8 @@
 "HIDE_DOWNLOADS" = "İndirilenler Sekmesini Gizle";
 
 "CLEAR_CACHE" = "Önbelleği temizle";
+"AUTO_CLEAR_CACHE" = "Önbelleği otomatik temizle";
+"AUTO_CLEAR_CACHE_DESC" = "Uygulama her başlatıldığında önbelleği otomatik olarak temizler";
 
 "APPLY" = "Uygula";
 "APPLY_DESC" = "Değişiklikleri uygulamak için uygulamayı kapatır.";
