@@ -79,7 +79,7 @@
         case 1:
             return 5;
         case 2:
-            return 1;
+            return 2;
         case 3:
             return 4;
         default:
@@ -141,23 +141,41 @@
     }
 
     if (indexPath.section == 2) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cacheSection"];
+        if (indexPath.row == 0) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cacheSection"];
 
-        cell.textLabel.text = LOC(@"CLEAR_CACHE");
+            cell.textLabel.text = LOC(@"CLEAR_CACHE");
 
-        UILabel *cache = [[UILabel alloc] init];
-        cache.text = [self getCacheSize];
-        cache.textColor = [UIColor secondaryLabelColor];
-        cache.font = [UIFont systemFontOfSize:16];
-        cache.textAlignment = NSTextAlignmentRight;
-        [cache sizeToFit];
+            UILabel *cache = [[UILabel alloc] init];
+            cache.text = [self getCacheSize];
+            cache.textColor = [UIColor secondaryLabelColor];
+            cache.font = [UIFont systemFontOfSize:16];
+            cache.textAlignment = NSTextAlignmentRight;
+            [cache sizeToFit];
 
-        cell.accessoryView = cache;
-        cell.imageView.image = [UIImage systemImageNamed:@"trash"];
-        cell.imageView.tintColor = [UIColor redColor];
+            cell.accessoryView = cache;
+            cell.imageView.image = [UIImage systemImageNamed:@"trash"];
+            cell.imageView.tintColor = [UIColor redColor];
 
-        return cell;
-    }
+            return cell;
+        }
+     
+        if (indexPath.row == 1) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"autoClearCacheSection"];
+
+            cell.textLabel.text = LOC(@"AUTO_CLEAR_CACHE");
+            cell.detailTextLabel.text = LOC(@"AUTO_CLEAR_CACHE_DESC");
+            cell.detailTextLabel.numberOfLines = 0;
+            cell.imageView.image = [UIImage systemImageNamed:@"clock.arrow.circlepath"];
+
+            ABCSwitch *autoSwitch = [[NSClassFromString(@"ABCSwitch") alloc] init];
+            autoSwitch.on = [YTMUltimateDict[@"YTMAutoClearCache"] boolValue];
+
+            [autoSwitch addTarget:self action:@selector(toggleAutoClearCache:) forControlEvents:UIControlEventValueChanged];
+            cell.accessoryView = autoSwitch;
+            return cell;
+        }
+    } 
 
     if (indexPath.section == 3) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"linkSection"];
@@ -202,6 +220,13 @@
     formatter.countStyle = NSByteCountFormatterCountStyleFile;
 
     return [formatter stringFromByteCount:folderSize];
+}
+
+- (void)toggleAutoClearCache:(UISwitch *)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:[defaults dictionaryForKey:@"YTMUltimate"]];
+    dict[@"YTMAutoClearCache"] = @([sender isOn]);
+    [defaults setObject:dict forKey:@"YTMUltimate"];
 }
 
 #pragma mark - UITableViewDelegate
