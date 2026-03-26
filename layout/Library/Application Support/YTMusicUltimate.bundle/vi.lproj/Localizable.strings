@@ -76,6 +76,8 @@
 "HIDE_DOWNLOADS" = "Ẩn tab Tải xuống";
 
 "CLEAR_CACHE" = "Xóa bộ nhớ đệm";
+"AUTO_CLEAR_CACHE" = "Tự động xóa bộ nhớ đệm";
+"AUTO_CLEAR_CACHE_DESC" = "Tự động xóa bộ nhớ đệm mỗi khi ứng dụng khởi động";
 
 "APPLY" = "Áp dụng";
 "APPLY_DESC" = "Đóng ứng dụng để áp dụng các thay đổi";

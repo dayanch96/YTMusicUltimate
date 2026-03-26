@@ -76,6 +76,8 @@
 "HIDE_DOWNLOADS" = "Downloads-Tab ausblenden";
 
 "CLEAR_CACHE" = "Cache leeren";
+"AUTO_CLEAR_CACHE" = "Cache automatisch löschen";
+"AUTO_CLEAR_CACHE_DESC" = "Löscht den Cache automatisch jedes Mal, wenn die App gestartet wird";
 
 "APPLY" = "Übernehmen";
 "APPLY_DESC" = "Schließt die App, um Änderungen zu übernehmen";

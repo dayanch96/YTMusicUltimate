@@ -76,6 +76,8 @@
 "HIDE_DOWNLOADS" = "Nascondi tab Download";
 
 "CLEAR_CACHE" = "Cancella cache";
+"AUTO_CLEAR_CACHE" = "Cancella cache automaticamente";
+"AUTO_CLEAR_CACHE_DESC" = "Cancella automaticamente la cache ogni volta che l'app si avvia";
 
 "APPLY" = "Applica";
 "APPLY_DESC" = "Chiude l'app per applicare le modifiche";

@@ -76,6 +76,8 @@
 "HIDE_DOWNLOADS" = "隐藏下载按钮";
 
 "CLEAR_CACHE" = "清除缓存";
+"AUTO_CLEAR_CACHE" = "自动清除缓存";
+"AUTO_CLEAR_CACHE_DESC" = "每次启动应用时自动清除缓存";
 
 "APPLY" = "应用";
 "APPLY_DESC" = "按下应用会关闭APP以应用变更";
