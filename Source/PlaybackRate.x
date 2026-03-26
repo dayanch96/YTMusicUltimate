@@ -18,6 +18,16 @@ static BOOL playbackRateButton(void) {
 @property (readonly, nonatomic) NSArray <YTMPlaybackRateButtonHolder *> *playbackRateButtons;
 @end
 
+%hook YTMNowPlayingViewController
+- (BOOL)playbackRateButtonEnabled {
+    return playbackRateButton() ? YES : %orig;
+}
+
+- (void)setPlaybackRateButtonEnabled:(BOOL)enabled {
+    playbackRateButton() ? %orig(YES) : %orig;
+}
+%end
+
 %hook YTMModularNowPlayingViewController
 - (BOOL)playbackRateButtonEnabled {
     return playbackRateButton() ? YES : %orig;
