@@ -77,7 +77,7 @@
 
 "CLEAR_CACHE" = "Cache leeren";
 "AUTO_CLEAR_CACHE" = "Cache automatisch löschen";
-"AUTO_CLEAR_CACHE_DESC" = "Cache jedes Mal automatisch löschen, wenn die App startet";
+"AUTO_CLEAR_CACHE_DESC" = "Löscht den Cache automatisch jedes Mal, wenn die App gestartet wird";
 
 "APPLY" = "Übernehmen";
 "APPLY_DESC" = "Schließt die App, um Änderungen zu übernehmen";

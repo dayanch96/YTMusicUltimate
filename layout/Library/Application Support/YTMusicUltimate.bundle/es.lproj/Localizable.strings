@@ -77,7 +77,7 @@
 
 "CLEAR_CACHE" = "Borrar caché";
 "AUTO_CLEAR_CACHE" = "Borrar caché automáticamente";
-"AUTO_CLEAR_CACHE_DESC" = "Borrar la caché automáticamente cada vez que se inicia la app";
+"AUTO_CLEAR_CACHE_DESC" = "Borra la caché automáticamente cada vez que se inicia la aplicación";
 
 "APPLY" = "Aplicar";
 "APPLY_DESC" = "Cierra la aplicación para aplicar los cambios";

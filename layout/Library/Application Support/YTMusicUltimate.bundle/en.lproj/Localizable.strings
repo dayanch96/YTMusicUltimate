@@ -77,7 +77,7 @@
 
 "CLEAR_CACHE" = "Clear cache";
 "AUTO_CLEAR_CACHE" = "Auto clear cache";
-"AUTO_CLEAR_CACHE_DESC" = "Automatically clears cache everytime the app starts";
+"AUTO_CLEAR_CACHE_DESC" = "Automatically clears cache every time the app starts";
 
 "APPLY" = "Apply";
 "APPLY_DESC" = "Closes the app to apply changes";
