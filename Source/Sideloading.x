@@ -9,14 +9,6 @@
 #define YT_BUNDLE_NAME @"YouTubeMusic"
 #define YT_NAME @"YouTube Music"
 
-@interface InitWorkaround : UIViewController
-@property (nonatomic, copy) void (^completion)(void);
-@end
-
-@interface SFAuthenticationViewController : UIViewController
-- (void)remoteViewControllerWillDismiss:(id)remoteVC;
-@end
-
 @interface SSOConfiguration : NSObject
 @end
 
@@ -38,27 +30,6 @@ static NSString *accessGroupID() {
     NSString *accessGroup = [(__bridge NSDictionary *)result objectForKey:(__bridge NSString *)kSecAttrAccessGroup];
     return accessGroup;
 }
-
-// Fix login (2) - Ginsu & AhmedBakfir
-// %hook SSOSafariSignIn
-// - (void)signInWithURL:(id)arg1 presentationAnchor:(id)arg2 completionHandler:(id)arg3 {
-//     NSURL *origURL = arg1;
-//     NSURLComponents *urlComponents = [[NSURLComponents alloc] initWithURL:origURL resolvingAgainstBaseURL:NO];
-//     NSMutableArray *newQueryItems = [urlComponents.queryItems mutableCopy];
-//     for (NSURLQueryItem *queryItem in urlComponents.queryItems) {
-//         if ([queryItem.name isEqualToString:@"system_version"]
-//             || [queryItem.name isEqualToString:@"app_version"]
-//             || [queryItem.name isEqualToString:@"kdlc"]
-//             || [queryItem.name isEqualToString:@"kss"]
-//             || [queryItem.name isEqualToString:@"lib_ver"]
-//             || [queryItem.name isEqualToString:@"device_model"]) {
-//             [newQueryItems removeObject:queryItem];
-//         }
-//     }
-//     urlComponents.queryItems = [newQueryItems copy];
-//     %orig(urlComponents.URL, arg2, arg3);
-// }
-// %end
 
 // Force enable safari sign-in
 %hook SSOConfiguration
@@ -151,7 +122,7 @@ static NSString *accessGroupID() {
 - (id)appName { return YT_NAME; }
 %end
 
-%hook OGLGM2AccountSelectorViewController 
+%hook OGLGM2AccountSelectorViewController
 - (id)shortAppName { return YT_NAME; }
 %end
 
@@ -190,24 +161,36 @@ static NSString *accessGroupID() {
 - (NSString *)bundleIdentifier {
     NSArray *address = [NSThread callStackReturnAddresses];
     Dl_info info = {0};
-    if (dladdr((void *)[address[2] longLongValue], &info) == 0)
-        return %orig;
+    if (dladdr((void *)[address[2] longLongValue], &info) == 0) return %orig;
     NSString *path = [NSString stringWithUTF8String:info.dli_fname];
-    if ([path hasPrefix:NSBundle.mainBundle.bundlePath])
-        return YT_BUNDLE_ID;
+    if ([path hasPrefix:NSBundle.mainBundle.bundlePath]) return YT_BUNDLE_ID;
     return %orig;
 }
+
+// Fix: hook infoDictionary at load time so Google SSO sees the correct bundle ID
+// from the very first check, including before any sign-in attempt is made.
+// Uses a mainBundle guard to avoid side-effects on system/framework bundles.
+- (NSDictionary *)infoDictionary {
+    NSDictionary *original = %orig;
+    if (self != NSBundle.mainBundle) return original;
+    NSString *bundleID = original[@"CFBundleIdentifier"];
+    if ([bundleID isEqualToString:YT_BUNDLE_ID]) return original;
+    NSMutableDictionary *modified = [NSMutableDictionary dictionaryWithDictionary:original];
+    modified[@"CFBundleIdentifier"] = YT_BUNDLE_ID;
+    return [modified copy];
+}
+
+// Scoped to mainBundle only to avoid corrupting system bundle lookups.
 - (id)objectForInfoDictionaryKey:(NSString *)key {
-    if ([key isEqualToString:@"CFBundleIdentifier"])
-        return YT_BUNDLE_ID;
-    if ([key isEqualToString:@"CFBundleDisplayName"])
-        return YT_NAME;
-    if ([key isEqualToString:@"CFBundleName"])
-        return YT_BUNDLE_NAME;
+    if (self == NSBundle.mainBundle) {
+        if ([key isEqualToString:@"CFBundleIdentifier"]) return YT_BUNDLE_ID;
+        if ([key isEqualToString:@"CFBundleDisplayName"]) return YT_NAME;
+        if ([key isEqualToString:@"CFBundleName"]) return YT_BUNDLE_NAME;
+    }
     return %orig;
 }
 %end
-/*IAmYouTube end */
+/* IAmYouTube end */
 
 %hook ASWUtilities
 - (id)productionBundleIdentifier { return YT_BUNDLE_ID; }
@@ -232,62 +215,6 @@ static NSString *accessGroupID() {
 
 %hook GAZAppInfo
 - (id)currentBundleIdentifier { return YT_BUNDLE_ID; }
-%end
-
-NSDictionary *(*orig_infoDictionary)(id self, SEL _cmd);
-NSDictionary *replaceInfoDict(id self, SEL _cmd) {
-    NSDictionary *originalInfoDictionary = orig_infoDictionary(self, _cmd);
-    NSString *bundleIdentifier = originalInfoDictionary[@"CFBundleIdentifier"];
-    if (![bundleIdentifier isEqualToString:YT_BUNDLE_ID]) {
-        NSMutableDictionary *newInfoDictionary = [NSMutableDictionary dictionaryWithDictionary:originalInfoDictionary];
-        [newInfoDictionary setValue:YT_BUNDLE_ID forKey:@"CFBundleIdentifier"];
-        return newInfoDictionary;
-    }
-    return originalInfoDictionary;
-}
-
-BOOL isFirstTime = YES;
-
-@implementation InitWorkaround
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    isFirstTime = NO;
-    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleLarge];
-    activityIndicator.color = [UIColor whiteColor];
-    activityIndicator.center = self.view.center;
-    [self.view addSubview:activityIndicator];
-    [activityIndicator startAnimating];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        MSHookMessageEx(objc_getClass("NSBundle"), @selector(infoDictionary), (IMP)replaceInfoDict, (IMP *)&orig_infoDictionary);
-        [self dismissViewControllerAnimated:YES completion:^{
-            if (self.completion) {
-                self.completion();
-            }
-        }];
-    });
-}
-
-@end
-
-%hook SFAuthenticationViewController
-- (void)viewDidAppear:(BOOL)animated {
-    %orig;
-    if (isFirstTime) {
-        InitWorkaround *workaround = [[InitWorkaround alloc] init];
-        workaround.completion = ^{
-            [self dismissViewControllerAnimated:YES completion:^{
-                if ([self respondsToSelector:@selector(remoteViewControllerWillDismiss:)]) {
-                    [self performSelector:@selector(remoteViewControllerWillDismiss:)];
-                }
-                YTAlertView *alertView = [%c(YTAlertView) infoDialog];
-                alertView.title = LOC(@"WARNING");
-                alertView.subtitle = LOC(@"RETRY_LOGIN");
-                [alertView show];
-            }];
-        };
-        [self presentViewController:workaround animated:YES completion:nil];
-    }
-}
 %end
 
 %hook YTMFirstTimeSignInViewController
