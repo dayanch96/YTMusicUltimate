@@ -13,8 +13,10 @@ The best tweak for the YouTube Music on iOS.
 
 ## Download Links
 
+Downl0ad it on my [discord server](https://discord.gg/ycnqHYG2yn)!
+
 * **Jailbreak:**
-Add __[https://ginsu.dev/repo](https://ginsu.dev/repo)__ to your favorite installer and download latest version from there, or from __[Releases](https://github.com/ginsudev/YTMusicUltimate/releases)__ page.
+Add __[https://ginsu.dev/repo](https://ginsu.dev/repo)__ to your favorite installer and download latest version from there, or from __[Releases (https://github.com/ginsudev/YTMusicUltimate/releases)__ page.
 
 (arm.deb version for Rootful and arm64.deb version for Rootless devices)
 
