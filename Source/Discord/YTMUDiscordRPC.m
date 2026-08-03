@@ -7,8 +7,11 @@
 
 // Refresh the access token when it has less than an hour left on it.
 static NSTimeInterval const kTokenRefreshWindow = 3600.0;
-// Discord rate limits presence updates; collapse bursts that say the same thing.
-static NSTimeInterval const kPresenceDebounce = 2.0;
+// Start timestamps wobble by a fraction of a second between lock screen
+// refreshes; anything past this is a real seek and worth republishing.
+static long long const kSeekToleranceMs = 3000;
+// How long to leave a failing cover art URL alone before trying it again.
+static NSTimeInterval const kArtworkRetryDelay = 30.0;
 
 static NSString *YTMUDiscordTemplateOrDefault(NSString *key, NSString *fallback) {
     NSString *value = YTMUDiscordPrefString(key);
@@ -49,9 +52,17 @@ static NSString *YTMUDiscordTemplateOrDefault(NSString *key, NSString *fallback)
 
 @property (nonatomic, copy, nullable) YTMUDiscordTrack *currentTrack;
 @property (nonatomic, copy, nullable) NSString *lastPresenceSignature;
-@property (nonatomic, assign) NSTimeInterval lastPresenceSentAt;
-@property (nonatomic, assign) NSUInteger presenceGeneration;
+@property (nonatomic, assign) long long lastSentStartTimestamp;
 @property (nonatomic, assign) BOOL refreshInFlight;
+
+// Cover art resolution is slow enough that it always lands after the first
+// presence goes out, so the result is kept here and folded into every
+// subsequent activity for the same image.
+@property (nonatomic, copy, nullable) NSString *resolvedArtworkURL;
+@property (nonatomic, copy, nullable) NSString *resolvedArtworkPath;
+@property (nonatomic, copy, nullable) NSString *pendingArtworkURL;
+@property (nonatomic, copy, nullable) NSString *failedArtworkURL;
+@property (nonatomic, assign) NSTimeInterval failedArtworkAt;
 
 @end
 
@@ -130,7 +141,8 @@ static NSString *YTMUDiscordTemplateOrDefault(NSString *key, NSString *fallback)
     [self.gateway disconnect];
     self.currentTrack = nil;
     self.lastPresenceSignature = nil;
-    self.presenceGeneration++;
+    self.lastSentStartTimestamp = 0;
+    self.pendingArtworkURL = nil;
     [self setConnectionState:YTMUDiscordConnectionStateDisconnected];
 }
 
@@ -223,7 +235,13 @@ static NSString *YTMUDiscordTemplateOrDefault(NSString *key, NSString *fallback)
     self.username = nil;
     self.currentTrack = nil;
     self.lastPresenceSignature = nil;
-    self.presenceGeneration++;
+    self.lastSentStartTimestamp = 0;
+
+    // External assets belong to the application the tokens were issued for.
+    self.resolvedArtworkURL = nil;
+    self.resolvedArtworkPath = nil;
+    self.pendingArtworkURL = nil;
+    self.failedArtworkURL = nil;
 
     [self setConnectionState:YTMUDiscordConnectionStateDisconnected];
 }
@@ -233,7 +251,7 @@ static NSString *YTMUDiscordTemplateOrDefault(NSString *key, NSString *fallback)
 - (void)invalidateCachedPresence {
     dispatch_async(self.queue, ^{
         self.lastPresenceSignature = nil;
-        self.lastPresenceSentAt = 0;
+        self.lastSentStartTimestamp = 0;
 
         YTMUDiscordTrack *track = self.currentTrack;
         if (track) {
@@ -259,52 +277,82 @@ static NSString *YTMUDiscordTemplateOrDefault(NSString *key, NSString *fallback)
             return;
         }
 
-        NSString *signature = [NSString stringWithFormat:@"%@|%@|%@|%d",
-                               snapshot.videoID ?: @"",
-                               snapshot.title ?: @"",
-                               snapshot.artist ?: @"",
-                               snapshot.isPlaying];
-
-        NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
-        if ([signature isEqualToString:self.lastPresenceSignature] && (now - self.lastPresenceSentAt) < kPresenceDebounce) {
-            return;
-        }
-
-        self.lastPresenceSignature = signature;
-        self.lastPresenceSentAt = now;
-        self.presenceGeneration++;
-
-        NSUInteger generation = self.presenceGeneration;
-        YTMUDiscordActivity *activity = [self activityForTrack:snapshot];
-
-        // Go out with text straight away, then upgrade with the cover art once
-        // Discord has ingested it.
-        [self sendActivity:activity];
-
-        if (!YTMUDiscordPrefBool(YTMUDiscordPrefShowArtwork) || snapshot.artworkURL.length == 0) return;
-
-        NSString *token = self.accessToken;
-        if (token.length == 0) return;
-
-        NSString *bearer = [@"Bearer " stringByAppendingString:token];
-
-        __weak __typeof(self) weakSelf = self;
-        [YTMUDiscordExternalAssets resolveImageURL:snapshot.artworkURL
-                                     applicationID:YTMUDiscordApplicationID()
-                                       bearerToken:bearer
-                                        completion:^(NSString *assetPath) {
-            __strong __typeof(weakSelf) strongSelf = weakSelf;
-            if (!strongSelf || assetPath.length == 0) return;
-
-            dispatch_async(strongSelf.queue, ^{
-                if (generation != strongSelf.presenceGeneration) return;
-
-                YTMUDiscordActivity *withArtwork = [activity copy];
-                withArtwork.largeImage = assetPath;
-                [strongSelf sendActivity:withArtwork];
-            });
-        }];
+        // The lock screen republishes the same track every few seconds. Those
+        // repeats must not reach Discord, or each one would overwrite the
+        // presence with a copy that has not had its cover art attached yet.
+        [self sendActivityIfChanged:[self activityForTrack:snapshot]];
+        [self resolveArtworkForTrack:snapshot];
     });
+}
+
+// Must run on self.queue. Publishes only when the activity actually differs
+// from the one Discord is already showing.
+- (void)sendActivityIfChanged:(YTMUDiscordActivity *)activity {
+    // Timestamps are compared separately: they move continuously while the
+    // rest of the payload stands still, so they cannot go in the signature.
+    NSMutableDictionary *payload = [[activity JSONObject] mutableCopy];
+    [payload removeObjectForKey:@"timestamps"];
+
+    NSData *data = [NSJSONSerialization dataWithJSONObject:payload options:NSJSONWritingSortedKeys error:nil];
+    NSString *signature = data ? [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] : nil;
+
+    BOOL contentChanged = signature == nil || ![signature isEqualToString:self.lastPresenceSignature];
+    BOOL seeked = llabs(activity.startTimestamp - self.lastSentStartTimestamp) > kSeekToleranceMs;
+    if (!contentChanged && !seeked) return;
+
+    self.lastPresenceSignature = signature;
+    self.lastSentStartTimestamp = activity.startTimestamp;
+
+    [self sendActivity:activity];
+}
+
+// Must run on self.queue.
+- (void)resolveArtworkForTrack:(YTMUDiscordTrack *)track {
+    if (!YTMUDiscordPrefBool(YTMUDiscordPrefShowArtwork)) return;
+
+    NSString *artworkURL = track.artworkURL;
+    if (artworkURL.length == 0) return;
+
+    // Already resolved, already in flight, or recently rejected by Discord.
+    if ([artworkURL isEqualToString:self.resolvedArtworkURL] && self.resolvedArtworkPath.length > 0) return;
+    if ([artworkURL isEqualToString:self.pendingArtworkURL]) return;
+    if ([artworkURL isEqualToString:self.failedArtworkURL]
+        && ([[NSDate date] timeIntervalSince1970] - self.failedArtworkAt) < kArtworkRetryDelay) return;
+
+    NSString *token = self.accessToken;
+    if (token.length == 0) return;
+
+    self.pendingArtworkURL = artworkURL;
+
+    __weak __typeof(self) weakSelf = self;
+    [YTMUDiscordExternalAssets resolveImageURL:artworkURL
+                                 applicationID:YTMUDiscordApplicationID()
+                                   bearerToken:[@"Bearer " stringByAppendingString:token]
+                                    completion:^(NSString *assetPath) {
+        __strong __typeof(weakSelf) strongSelf = weakSelf;
+        if (!strongSelf) return;
+
+        dispatch_async(strongSelf.queue, ^{
+            // A newer track started while this was in flight.
+            if (![artworkURL isEqualToString:strongSelf.pendingArtworkURL]) return;
+            strongSelf.pendingArtworkURL = nil;
+
+            if (assetPath.length == 0) {
+                strongSelf.failedArtworkURL = artworkURL;
+                strongSelf.failedArtworkAt = [[NSDate date] timeIntervalSince1970];
+                return;
+            }
+
+            strongSelf.resolvedArtworkURL = artworkURL;
+            strongSelf.resolvedArtworkPath = assetPath;
+            strongSelf.failedArtworkURL = nil;
+
+            YTMUDiscordTrack *current = strongSelf.currentTrack;
+            if (![current.artworkURL isEqualToString:artworkURL]) return;
+
+            [strongSelf sendActivityIfChanged:[strongSelf activityForTrack:current]];
+        });
+    }];
 }
 
 - (void)clearPresence {
@@ -317,7 +365,8 @@ static NSString *YTMUDiscordTemplateOrDefault(NSString *key, NSString *fallback)
 // Must run on self.queue.
 - (void)sendClear {
     self.lastPresenceSignature = nil;
-    self.presenceGeneration++;
+    self.lastSentStartTimestamp = 0;
+    self.pendingArtworkURL = nil;
 
     NSString *json = [YTMUDiscordPresence presenceUpdateJSONWithActivities:@[] status:@"online"];
     if (json) [self.gateway sendPresenceUpdate:json];
@@ -349,6 +398,12 @@ static NSString *YTMUDiscordTemplateOrDefault(NSString *key, NSString *fallback)
 
     if (YTMUDiscordPrefBool(YTMUDiscordPrefShowArtwork)) {
         activity.largeText = album.length > 0 ? album : title;
+
+        // Present only once -resolveArtworkForTrack: has been round the
+        // external-assets endpoint for this exact image.
+        if (track.artworkURL.length > 0 && [track.artworkURL isEqualToString:self.resolvedArtworkURL]) {
+            activity.largeImage = self.resolvedArtworkPath;
+        }
     }
 
     // Discord renders elapsed/remaining from these, so a paused track gets no
@@ -452,7 +507,7 @@ static NSString *YTMUDiscordTemplateOrDefault(NSString *key, NSString *fallback)
     if (!track) return;
 
     self.lastPresenceSignature = nil;
-    self.lastPresenceSentAt = 0;
+    self.lastSentStartTimestamp = 0;
 
     dispatch_async(dispatch_get_main_queue(), ^{
         [self updateWithTrack:track];
