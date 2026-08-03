@@ -119,3 +119,35 @@
 "ALL_DOWNLOADS" = "alle heruntergeladenen audios"; //keep it lowercase
 "DELETE" = "Löschen";
 "RENAME" = "Umbenennen";
+
+
+"DISCORD_RPC_SETTINGS" = "Discord Rich Presence";
+"DISCORD_RPC" = "Enable Rich Presence";
+"DISCORD_RPC_DESC" = "Shows what you are listening to on your Discord profile";
+"DISCORD_RPC_ACCOUNT" = "Account";
+"DISCORD_RPC_STATUS" = "Status";
+"DISCORD_RPC_STATUS_CONNECTED" = "Connected";
+"DISCORD_RPC_STATUS_CONNECTING" = "Connecting...";
+"DISCORD_RPC_STATUS_DISCONNECTED" = "Disconnected";
+"DISCORD_RPC_CONNECT" = "Connect Discord account";
+"DISCORD_RPC_DISCONNECT" = "Disconnect Discord account";
+"DISCORD_RPC_APPLICATION" = "Application";
+"DISCORD_RPC_APP_ID" = "Application ID";
+"DISCORD_RPC_APPLICATION_FOOTER" = "Create an application at discord.com/developers, add %@ as an OAuth2 redirect URI, then paste the application ID here.";
+"DISCORD_RPC_APPEARANCE" = "Appearance";
+"DISCORD_RPC_LISTENING" = "Listening";
+"DISCORD_RPC_PLAYING" = "Playing";
+"DISCORD_RPC_WATCHING" = "Watching";
+"DISCORD_RPC_COMPETING" = "Competing";
+"DISCORD_RPC_ACTIVITY_NAME" = "Activity name";
+"DISCORD_RPC_ARTWORK" = "Show cover art";
+"DISCORD_RPC_TIMESTAMPS" = "Show progress";
+"DISCORD_RPC_BUTTONS" = "Show buttons";
+"DISCORD_RPC_PAUSED" = "When paused";
+"DISCORD_RPC_PAUSED_KEEP" = "Keep";
+"DISCORD_RPC_PAUSED_CLEAR" = "Clear";
+"DISCORD_RPC_TEXT" = "Text";
+"DISCORD_RPC_DETAILS" = "First line";
+"DISCORD_RPC_STATE" = "Second line";
+"DISCORD_RPC_TEXT_FOOTER" = "Placeholders: {song.name}, {artist.name}, {album.name}, {song.id}";
+"DISCORD_RPC_NO_APP_ID" = "Set an application ID before connecting";
