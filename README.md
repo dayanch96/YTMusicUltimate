@@ -57,17 +57,18 @@ If the github action works and you cannot find where you can download the result
 
 Shows the song you are playing on your Discord profile. Found under **YTMusicUltimate > Discord Rich Presence**.
 
-Discord only accepts a presence on behalf of an application, so the tweak needs an application ID before it can sign you in:
+Just turn it on and tap "Connect Discord account". No setup is needed: the tweak ships with __[Metrolist's](https://github.com/MetrolistGroup/Metrolist)__ Discord application (`1447278780795064401`) configured by default.
+
+The sign-in uses OAuth2 with PKCE (scopes `openid` and `sdk.social_layer_presence`); no password or account token is ever entered into the app, and the tokens Discord hands back are kept in the keychain. Cover art is uploaded to Discord's external-assets endpoint.
+
+To use your own Discord application instead, note that the redirect URI is fixed at `metrolistdiscord://oauth2/callback`, so your application has to register that exact URI:
 
 1. Go to __[discord.com/developers/applications](https://discord.com/developers/applications)__ and click "New Application". The name you give it is what Discord shows next to "Listening to".
-2. Open **OAuth2** and add `ytmusicultimate://discord/callback` as a redirect URI, then save.
-3. Copy the **Application ID** from the General Information page into the "Application ID" field in the tweak settings.
-4. Tap "Connect Discord account" and approve the login.
-
-The sign-in uses OAuth2 with PKCE (scopes `openid` and `sdk.social_layer_presence`); no password or account token is ever entered into the app, and the tokens Discord hands back are kept in the keychain. Cover art is uploaded to Discord's external-assets endpoint for the application you configured.
-
-If you build the package yourself you can bake an application ID in so this setup is not needed:
+2. Open **OAuth2** and add `metrolistdiscord://oauth2/callback` as a redirect URI, then save.
+3. Copy the **Application ID** into the "Application ID" field in the tweak settings, or bake it into a build:
 
    • '**make clean package DISCORD_APP_ID=000000000000000000**'
+
+(To change the redirect URI itself, edit `YTMUDiscordCallbackScheme` and `YTMUDiscordCallbackURL` in `Source/Discord/YTMUDiscordDefaults.m`.)
 
 Made with ❤ by Ginsu and Dayanch96

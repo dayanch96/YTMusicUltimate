@@ -14,9 +14,10 @@ include $(THEOS)/makefiles/common.mk
 TWEAK_NAME = YTMusicUltimate
 $(TWEAK_NAME)_FILES = $(filter-out Source/Sideloading.x, $(wildcard Source/*.x))
 $(TWEAK_NAME)_FILES += $(shell find Source -name '*.m')
-# Optional: bake in a Discord application id so Rich Presence works out of the
-# box instead of the user registering their own application (make DISCORD_APP_ID=...).
-DISCORD_APP_ID ?=
+# Discord application used by Rich Presence. Defaults to Metrolist's, whose
+# registered OAuth2 redirect URI matches YTMUDiscordCallbackURL. Override with
+# make DISCORD_APP_ID=... (your application must register that redirect URI too).
+DISCORD_APP_ID ?= 1447278780795064401
 
 $(TWEAK_NAME)_CFLAGS = -fobjc-arc -Wno-deprecated-declarations -DTWEAK_VERSION=$(PACKAGE_VERSION) -DYTMU_DISCORD_APP_ID=$(DISCORD_APP_ID)
 $(TWEAK_NAME)_FRAMEWORKS = UIKit Foundation AVFoundation AudioToolbox VideoToolbox MediaPlayer AuthenticationServices Security

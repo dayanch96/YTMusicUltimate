@@ -132,7 +132,7 @@
 "DISCORD_RPC_DISCONNECT" = "Disconnect Discord account";
 "DISCORD_RPC_APPLICATION" = "Application";
 "DISCORD_RPC_APP_ID" = "Application ID";
-"DISCORD_RPC_APPLICATION_FOOTER" = "Create an application at discord.com/developers, add %@ as an OAuth2 redirect URI, then paste the application ID here.";
+"DISCORD_RPC_APPLICATION_FOOTER" = "Leave empty to use the built-in application. To use your own instead, create one at discord.com/developers, add %@ as an OAuth2 redirect URI, then paste its ID here.";
 "DISCORD_RPC_APPEARANCE" = "Appearance";
 "DISCORD_RPC_LISTENING" = "Listening";
 "DISCORD_RPC_PLAYING" = "Playing";

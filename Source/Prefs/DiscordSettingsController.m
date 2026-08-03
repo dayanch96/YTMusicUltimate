@@ -139,9 +139,11 @@ typedef NS_ENUM(NSInteger, DiscordSettingsField) {
 
     if (indexPath.section == DiscordSettingsSectionApplication) {
         cell.textLabel.text = LOC(@"DISCORD_RPC_APP_ID");
+        // Left empty the built-in application is used, so show that as the
+        // placeholder rather than a made-up number.
         cell.accessoryView = [self textFieldWithTag:DiscordSettingsFieldAppID
                                                text:YTMUDiscordPrefString(YTMUDiscordPrefAppID)
-                                        placeholder:@"000000000000000000"
+                                        placeholder:YTMUDiscordApplicationID()
                                        numericInput:YES];
 
         return cell;

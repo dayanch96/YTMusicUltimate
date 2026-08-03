@@ -7,8 +7,10 @@ NSString *const YTMUDiscordAPIBase = @"https://discord.com/api";
 NSString *const YTMUDiscordOAuthAuthorizeURL = @"https://discord.com/oauth2/authorize";
 NSString *const YTMUDiscordOAuthTokenURL = @"https://discord.com/api/v10/oauth2/token";
 NSString *const YTMUDiscordOAuthScopes = @"openid sdk.social_layer_presence";
-NSString *const YTMUDiscordCallbackScheme = @"ytmusicultimate";
-NSString *const YTMUDiscordCallbackURL = @"ytmusicultimate://discord/callback";
+// Matches the redirect registered on the default application below. Changing
+// one without the other gets you "invalid oauth2 redirect_uri" from Discord.
+NSString *const YTMUDiscordCallbackScheme = @"metrolistdiscord";
+NSString *const YTMUDiscordCallbackURL = @"metrolistdiscord://oauth2/callback";
 NSString *const YTMUDiscordWatchURLPrefix = @"https://music.youtube.com/watch?v=";
 NSString *const YTMUDiscordSourceURL = @"https://github.com/dayanch96/YTMusicUltimate";
 

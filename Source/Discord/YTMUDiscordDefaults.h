@@ -3,11 +3,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 // Discord application (client) id used for the OAuth2 flow and for uploading
-// external assets. Builds can bake one in with
-// `make DISCORD_APP_ID=1234567890`, otherwise the user supplies their own in
-// the settings page.
+// external assets. Defaults to Metrolist's application, whose registered
+// redirect URI is the one in YTMUDiscordCallbackURL. Override per build with
+// `make DISCORD_APP_ID=1234567890`, or per install from the settings page —
+// but an application of your own also needs that redirect URI registered on
+// it, otherwise Discord rejects the authorize request.
 #ifndef YTMU_DISCORD_APP_ID
-#define YTMU_DISCORD_APP_ID
+#define YTMU_DISCORD_APP_ID 1447278780795064401
 #endif
 
 #define YTMU_DISCORD_STR_(x) #x
