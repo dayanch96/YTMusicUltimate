@@ -12,6 +12,13 @@ static NSTimeInterval const kTokenRefreshWindow = 3600.0;
 static long long const kSeekToleranceMs = 3000;
 // How long to leave a failing cover art URL alone before trying it again.
 static NSTimeInterval const kArtworkRetryDelay = 30.0;
+// Discord rate limits presence updates, and skipping through a queue can
+// produce them far faster than this. Bursts are coalesced to this interval,
+// with the last state always sent once it expires.
+static NSTimeInterval const kMinimumSendInterval = 2.0;
+// Stands in for "no activity" in the delivered-state comparison, kept distinct
+// from a real serialised activity so the two can never collide.
+static NSString *const kClearedSignature = @"\x01cleared";
 
 static NSString *YTMUDiscordTemplateOrDefault(NSString *key, NSString *fallback) {
     NSString *value = YTMUDiscordPrefString(key);
@@ -51,9 +58,15 @@ static NSString *YTMUDiscordTemplateOrDefault(NSString *key, NSString *fallback)
 @property (nonatomic, copy, nullable) NSString *lastErrorMessage;
 
 @property (nonatomic, copy, nullable) YTMUDiscordTrack *currentTrack;
-@property (nonatomic, copy, nullable) NSString *lastPresenceSignature;
-@property (nonatomic, assign) long long lastSentStartTimestamp;
 @property (nonatomic, assign) BOOL refreshInFlight;
+
+// What Discord is believed to be showing. Only written once the gateway has
+// accepted the frame, so an update that never made it off the device is
+// retried rather than deduplicated away.
+@property (nonatomic, copy, nullable) NSString *deliveredSignature;
+@property (nonatomic, assign) long long deliveredStartTimestamp;
+@property (nonatomic, assign) NSTimeInterval lastSendAt;
+@property (nonatomic, assign) BOOL flushScheduled;
 
 // Cover art resolution is slow enough that it always lands after the first
 // presence goes out, so the result is kept here and folded into every
@@ -140,8 +153,8 @@ static NSString *YTMUDiscordTemplateOrDefault(NSString *key, NSString *fallback)
 - (void)teardownConnection {
     [self.gateway disconnect];
     self.currentTrack = nil;
-    self.lastPresenceSignature = nil;
-    self.lastSentStartTimestamp = 0;
+    self.deliveredSignature = nil;
+    self.deliveredStartTimestamp = 0;
     self.pendingArtworkURL = nil;
     [self setConnectionState:YTMUDiscordConnectionStateDisconnected];
 }
@@ -234,8 +247,8 @@ static NSString *YTMUDiscordTemplateOrDefault(NSString *key, NSString *fallback)
     self.accessToken = nil;
     self.username = nil;
     self.currentTrack = nil;
-    self.lastPresenceSignature = nil;
-    self.lastSentStartTimestamp = 0;
+    self.deliveredSignature = nil;
+    self.deliveredStartTimestamp = 0;
 
     // External assets belong to the application the tokens were issued for.
     self.resolvedArtworkURL = nil;
@@ -250,15 +263,9 @@ static NSString *YTMUDiscordTemplateOrDefault(NSString *key, NSString *fallback)
 
 - (void)invalidateCachedPresence {
     dispatch_async(self.queue, ^{
-        self.lastPresenceSignature = nil;
-        self.lastSentStartTimestamp = 0;
-
-        YTMUDiscordTrack *track = self.currentTrack;
-        if (track) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self updateWithTrack:track];
-            });
-        }
+        self.deliveredSignature = nil;
+        self.deliveredStartTimestamp = 0;
+        [self publishCurrentActivity];
     });
 }
 
@@ -271,39 +278,73 @@ static NSString *YTMUDiscordTemplateOrDefault(NSString *key, NSString *fallback)
         if (!YTMUDiscordIsEnabled()) return;
 
         self.currentTrack = snapshot;
-
-        if (!snapshot.isPlaying && YTMUDiscordPrefBool(YTMUDiscordPrefClearWhenPaused)) {
-            [self sendClear];
-            return;
-        }
-
-        // The lock screen republishes the same track every few seconds. Those
-        // repeats must not reach Discord, or each one would overwrite the
-        // presence with a copy that has not had its cover art attached yet.
-        [self sendActivityIfChanged:[self activityForTrack:snapshot]];
+        [self publishCurrentActivity];
         [self resolveArtworkForTrack:snapshot];
     });
 }
 
-// Must run on self.queue. Publishes only when the activity actually differs
-// from the one Discord is already showing.
-- (void)sendActivityIfChanged:(YTMUDiscordActivity *)activity {
-    // Timestamps are compared separately: they move continuously while the
-    // rest of the payload stands still, so they cannot go in the signature.
+// Must run on self.queue. Brings Discord in line with self.currentTrack,
+// sending only when it is actually out of date. The lock screen calls this
+// every few seconds, which doubles as the retry driver for anything that
+// previously failed to go out.
+- (void)publishCurrentActivity {
+    YTMUDiscordTrack *track = self.currentTrack;
+    if (!track.isUsable) return;
+
+    if (!track.isPlaying && YTMUDiscordPrefBool(YTMUDiscordPrefClearWhenPaused)) {
+        [self sendClear];
+        return;
+    }
+
+    YTMUDiscordActivity *activity = [self activityForTrack:track];
+    NSString *signature = [self signatureForActivity:activity];
+
+    BOOL contentChanged = signature == nil || ![signature isEqualToString:self.deliveredSignature];
+    BOOL seeked = llabs(activity.startTimestamp - self.deliveredStartTimestamp) > kSeekToleranceMs;
+    if (!contentChanged && !seeked) return;
+
+    // Skipping through a queue can change the track faster than Discord will
+    // accept updates. Hold the burst back, but always schedule the trailing
+    // send so the track that is actually playing is the one that lands.
+    NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
+    NSTimeInterval sinceLastSend = now - self.lastSendAt;
+    if (self.lastSendAt > 0 && sinceLastSend < kMinimumSendInterval) {
+        [self scheduleFlushAfter:(kMinimumSendInterval - sinceLastSend)];
+        return;
+    }
+
+    // Only record it as delivered if the gateway actually took it, otherwise
+    // the next call retries instead of assuming Discord is up to date.
+    if (![self sendActivity:activity]) return;
+
+    self.deliveredSignature = signature;
+    self.deliveredStartTimestamp = activity.startTimestamp;
+    self.lastSendAt = now;
+}
+
+// Must run on self.queue.
+- (void)scheduleFlushAfter:(NSTimeInterval)delay {
+    if (self.flushScheduled) return;
+    self.flushScheduled = YES;
+
+    __weak __typeof(self) weakSelf = self;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), self.queue, ^{
+        __strong __typeof(weakSelf) strongSelf = weakSelf;
+        if (!strongSelf) return;
+
+        strongSelf.flushScheduled = NO;
+        [strongSelf publishCurrentActivity];
+    });
+}
+
+// Timestamps are excluded: they advance continuously while the rest of the
+// payload stands still, so they are compared separately against a tolerance.
+- (nullable NSString *)signatureForActivity:(YTMUDiscordActivity *)activity {
     NSMutableDictionary *payload = [[activity JSONObject] mutableCopy];
     [payload removeObjectForKey:@"timestamps"];
 
     NSData *data = [NSJSONSerialization dataWithJSONObject:payload options:NSJSONWritingSortedKeys error:nil];
-    NSString *signature = data ? [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] : nil;
-
-    BOOL contentChanged = signature == nil || ![signature isEqualToString:self.lastPresenceSignature];
-    BOOL seeked = llabs(activity.startTimestamp - self.lastSentStartTimestamp) > kSeekToleranceMs;
-    if (!contentChanged && !seeked) return;
-
-    self.lastPresenceSignature = signature;
-    self.lastSentStartTimestamp = activity.startTimestamp;
-
-    [self sendActivity:activity];
+    return data ? [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] : nil;
 }
 
 // Must run on self.queue.
@@ -350,7 +391,7 @@ static NSString *YTMUDiscordTemplateOrDefault(NSString *key, NSString *fallback)
             YTMUDiscordTrack *current = strongSelf.currentTrack;
             if (![current.artworkURL isEqualToString:artworkURL]) return;
 
-            [strongSelf sendActivityIfChanged:[strongSelf activityForTrack:current]];
+            [strongSelf publishCurrentActivity];
         });
     }];
 }
@@ -364,18 +405,27 @@ static NSString *YTMUDiscordTemplateOrDefault(NSString *key, NSString *fallback)
 
 // Must run on self.queue.
 - (void)sendClear {
-    self.lastPresenceSignature = nil;
-    self.lastSentStartTimestamp = 0;
-    self.pendingArtworkURL = nil;
+    // Pausing keeps the lock screen ticking, so without this the clear would
+    // be resent every few seconds for as long as playback stays paused.
+    if ([self.deliveredSignature isEqualToString:kClearedSignature]) return;
 
     NSString *json = [YTMUDiscordPresence presenceUpdateJSONWithActivities:@[] status:@"online"];
-    if (json) [self.gateway sendPresenceUpdate:json];
+    if (!json) return;
+
+    // An empty activity list is a state like any other, so record it only once
+    // the gateway takes it and leave the retry to the next update otherwise.
+    if (![self.gateway sendPresenceUpdate:json]) return;
+
+    self.deliveredSignature = kClearedSignature;
+    self.deliveredStartTimestamp = 0;
+    self.lastSendAt = [[NSDate date] timeIntervalSince1970];
+    self.pendingArtworkURL = nil;
 }
 
 // Must run on self.queue.
-- (void)sendActivity:(YTMUDiscordActivity *)activity {
+- (BOOL)sendActivity:(YTMUDiscordActivity *)activity {
     NSString *json = [YTMUDiscordPresence presenceUpdateJSONWithActivities:@[activity] status:@"online"];
-    if (json) [self.gateway sendPresenceUpdate:json];
+    return json ? [self.gateway sendPresenceUpdate:json] : NO;
 }
 
 // Must run on self.queue.
@@ -503,15 +553,13 @@ static NSString *YTMUDiscordTemplateOrDefault(NSString *key, NSString *fallback)
 
 // Must run on self.queue.
 - (void)resendCurrentPresence {
-    YTMUDiscordTrack *track = self.currentTrack;
-    if (!track) return;
+    // A new session starts with no presence at all, so whatever Discord was
+    // showing before the drop no longer counts as delivered.
+    self.deliveredSignature = nil;
+    self.deliveredStartTimestamp = 0;
+    self.lastSendAt = 0;
 
-    self.lastPresenceSignature = nil;
-    self.lastSentStartTimestamp = 0;
-
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self updateWithTrack:track];
-    });
+    [self publishCurrentActivity];
 }
 
 @end

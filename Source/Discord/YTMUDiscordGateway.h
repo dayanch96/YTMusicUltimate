@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface YTMUDiscordGateway : NSObject
 
 @property (nonatomic, weak, nullable) id<YTMUDiscordGatewayDelegate> delegate;
-@property (nonatomic, readonly, getter=isReady) BOOL ready;
+@property (atomic, readonly, getter=isReady) BOOL ready;
 
 // YES while connected or working through a reconnect. Goes back to NO once the
 // gateway gives up or is disconnected, which is the cue to call -connect again.
@@ -32,8 +32,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)connect;
 - (void)disconnect;
 
-// Sends a pre-serialised op 3 frame. No-op while disconnected.
-- (void)sendPresenceUpdate:(NSString *)presenceJSON;
+// Sends a pre-serialised op 3 frame. Returns NO when the session is not in a
+// state to carry it, so the caller knows Discord did not get the update and
+// can try again rather than assuming it landed.
+- (BOOL)sendPresenceUpdate:(NSString *)presenceJSON;
 
 @end
 

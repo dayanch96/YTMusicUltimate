@@ -44,7 +44,7 @@ static NSTimeInterval const kDefaultHeartbeatInterval = 41.25;
 @property (nonatomic, assign) NSUInteger generation;
 
 @property (nonatomic, assign) BOOL open;
-@property (nonatomic, assign, getter=isReady) BOOL ready;
+@property (atomic, assign, getter=isReady) BOOL ready;
 @property (atomic, assign, getter=isActive) BOOL active;
 @property (nonatomic, assign) BOOL stopped;
 @property (nonatomic, assign) BOOL awaitingHeartbeatAck;
@@ -251,13 +251,20 @@ static NSTimeInterval const kDefaultHeartbeatInterval = 41.25;
     }];
 }
 
-- (void)sendPresenceUpdate:(NSString *)presenceJSON {
-    if (presenceJSON.length == 0) return;
+- (BOOL)sendPresenceUpdate:(NSString *)presenceJSON {
+    if (presenceJSON.length == 0) return NO;
+
+    // Presence updates are only valid after READY, and one sent earlier is
+    // dropped on the floor. Report that so the caller can retry instead of
+    // believing Discord is showing something it never received.
+    if (!self.ready) return NO;
 
     dispatch_async(self.queue, ^{
         if (!self.ready) return;
         [self sendString:presenceJSON];
     });
+
+    return YES;
 }
 
 // Must run on self.queue.

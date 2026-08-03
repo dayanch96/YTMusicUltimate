@@ -13,6 +13,9 @@
 static NSString *gCurrentVideoID = nil;
 static NSString *gCurrentArtworkURL = nil;
 static NSString *gCurrentAuthor = nil;
+// The title the player reported alongside the ids above, used to notice when
+// the lock screen has moved on to a track the player hook never saw.
+static NSString *gCurrentTitle = nil;
 static NSString *const gVideoContextLock = @"YTMUDiscordVideoContextLock";
 
 static NSString *YTMUBestThumbnailURL(YTIThumbnailDetails *thumbnail) {
@@ -46,14 +49,19 @@ static void YTMUPublishNowPlayingInfo(NSDictionary *info) {
     }
 
     YTMUDiscordTrack *track = [[YTMUDiscordTrack alloc] init];
+    track.title = info[MPMediaItemPropertyTitle];
 
+    // Queue advances do not always reach the player hook, which would leave
+    // the previous song's cover and link attached to the new title. Trust the
+    // cached ids only while they still describe what is playing.
     @synchronized (gVideoContextLock) {
-        track.videoID = gCurrentVideoID;
-        track.artworkURL = gCurrentArtworkURL;
-        track.artist = gCurrentAuthor;
+        if (gCurrentTitle.length == 0 || [gCurrentTitle isEqualToString:track.title]) {
+            track.videoID = gCurrentVideoID;
+            track.artworkURL = gCurrentArtworkURL;
+            track.artist = gCurrentAuthor;
+        }
     }
 
-    track.title = info[MPMediaItemPropertyTitle];
     if ([info[MPMediaItemPropertyArtist] length] > 0) track.artist = info[MPMediaItemPropertyArtist];
     track.album = info[MPMediaItemPropertyAlbumTitle];
     track.duration = [info[MPMediaItemPropertyPlaybackDuration] doubleValue];
@@ -80,6 +88,7 @@ static void YTMUPublishNowPlayingInfo(NSDictionary *info) {
     @synchronized (gVideoContextLock) {
         gCurrentVideoID = [self.currentVideoID copy];
         gCurrentAuthor = [details.author copy];
+        gCurrentTitle = [details.title copy];
         gCurrentArtworkURL = [YTMUBestThumbnailURL(details.thumbnail) copy];
     }
 
