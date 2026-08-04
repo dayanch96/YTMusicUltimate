@@ -10,7 +10,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) NSString *title;
 @property (nonatomic, copy, nullable) NSString *artist;
 @property (nonatomic, copy, nullable) NSString *album;
+// The image Discord is asked for, and the ordered alternatives to fall back
+// on when it will not accept that one. artworkURL is always the first of
+// them and doubles as the identity of the image for caching.
 @property (nonatomic, copy, nullable) NSString *artworkURL;
+@property (nonatomic, copy, nullable) NSArray<NSString *> *artworkCandidates;
 @property (nonatomic, assign) NSTimeInterval duration;
 @property (nonatomic, assign) NSTimeInterval elapsed;
 @property (nonatomic, assign, getter=isPlaying) BOOL playing;

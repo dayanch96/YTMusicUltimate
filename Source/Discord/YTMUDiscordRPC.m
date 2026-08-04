@@ -12,6 +12,11 @@ static NSTimeInterval const kTokenRefreshWindow = 3600.0;
 static long long const kSeekToleranceMs = 3000;
 // How long to leave a failing cover art URL alone before trying it again.
 static NSTimeInterval const kArtworkRetryDelay = 30.0;
+// Upper bound on alternative images tried for one track, so a track Discord
+// simply will not take does not turn into a run of pointless requests. High
+// enough to still reach the plain thumbnail names after the player's own
+// list, since those are the likeliest to be accepted.
+static NSUInteger const kMaxArtworkCandidates = 6;
 // Discord rate limits presence updates, and skipping through a queue can
 // produce them far faster than this. Bursts are coalesced to this interval,
 // with the last state always sent once it expires.
@@ -34,6 +39,7 @@ static NSString *YTMUDiscordTemplateOrDefault(NSString *key, NSString *fallback)
     copy.artist = self.artist;
     copy.album = self.album;
     copy.artworkURL = self.artworkURL;
+    copy.artworkCandidates = self.artworkCandidates;
     copy.duration = self.duration;
     copy.elapsed = self.elapsed;
     copy.playing = self.playing;
@@ -363,12 +369,35 @@ static NSString *YTMUDiscordTemplateOrDefault(NSString *key, NSString *fallback)
     NSString *token = self.accessToken;
     if (token.length == 0) return;
 
+    NSArray<NSString *> *candidates = track.artworkCandidates.count > 0 ? track.artworkCandidates : @[artworkURL];
+
     self.pendingArtworkURL = artworkURL;
+    [self resolveCandidates:candidates
+                    atIndex:0
+              forArtworkURL:artworkURL
+                bearerToken:[@"Bearer " stringByAppendingString:token]];
+}
+
+// Must run on self.queue. Discord silently refuses some perfectly reachable
+// images, so the alternatives are tried in turn rather than giving up on the
+// first refusal.
+- (void)resolveCandidates:(NSArray<NSString *> *)candidates
+                  atIndex:(NSUInteger)index
+            forArtworkURL:(NSString *)artworkURL
+              bearerToken:(NSString *)bearerToken {
+    if (index >= candidates.count || index >= kMaxArtworkCandidates) {
+        if ([artworkURL isEqualToString:self.pendingArtworkURL]) {
+            self.pendingArtworkURL = nil;
+            self.failedArtworkURL = artworkURL;
+            self.failedArtworkAt = [[NSDate date] timeIntervalSince1970];
+        }
+        return;
+    }
 
     __weak __typeof(self) weakSelf = self;
-    [YTMUDiscordExternalAssets resolveImageURL:artworkURL
+    [YTMUDiscordExternalAssets resolveImageURL:candidates[index]
                                  applicationID:YTMUDiscordApplicationID()
-                                   bearerToken:[@"Bearer " stringByAppendingString:token]
+                                   bearerToken:bearerToken
                                     completion:^(NSString *assetPath) {
         __strong __typeof(weakSelf) strongSelf = weakSelf;
         if (!strongSelf) return;
@@ -376,14 +405,16 @@ static NSString *YTMUDiscordTemplateOrDefault(NSString *key, NSString *fallback)
         dispatch_async(strongSelf.queue, ^{
             // A newer track started while this was in flight.
             if (![artworkURL isEqualToString:strongSelf.pendingArtworkURL]) return;
-            strongSelf.pendingArtworkURL = nil;
 
             if (assetPath.length == 0) {
-                strongSelf.failedArtworkURL = artworkURL;
-                strongSelf.failedArtworkAt = [[NSDate date] timeIntervalSince1970];
+                [strongSelf resolveCandidates:candidates
+                                      atIndex:index + 1
+                                forArtworkURL:artworkURL
+                                  bearerToken:bearerToken];
                 return;
             }
 
+            strongSelf.pendingArtworkURL = nil;
             strongSelf.resolvedArtworkURL = artworkURL;
             strongSelf.resolvedArtworkPath = assetPath;
             strongSelf.failedArtworkURL = nil;

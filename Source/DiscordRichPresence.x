@@ -11,33 +11,40 @@
 // state and the elapsed time. The two arrive on different threads, hence the
 // lock around the shared context.
 static NSString *gCurrentVideoID = nil;
-static NSString *gCurrentArtworkURL = nil;
+static NSArray<NSString *> *gCurrentArtworkCandidates = nil;
 static NSString *gCurrentAuthor = nil;
 // The title the player reported alongside the ids above, used to notice when
 // the lock screen has moved on to a track the player hook never saw.
 static NSString *gCurrentTitle = nil;
 static NSString *const gVideoContextLock = @"YTMUDiscordVideoContextLock";
 
-static NSString *YTMUBestThumbnailURL(YTIThumbnailDetails *thumbnail) {
-    NSArray *thumbnails = thumbnail.thumbnailsArray;
-    if (thumbnails.count == 0) return nil;
+// Widest first, then the fixed thumbnail names YouTube publishes for every
+// video. Discord fetches these itself and refuses some of them for reasons it
+// does not report, so it gets a list to work down rather than a single URL.
+static NSArray<NSString *> *YTMUThumbnailCandidates(YTIThumbnailDetails *thumbnail, NSString *videoID) {
+    NSMutableArray<NSString *> *urls = [NSMutableArray array];
 
-    NSString *bestURL = nil;
-    unsigned int bestWidth = 0;
+    NSMutableArray *thumbnails = [thumbnail.thumbnailsArray mutableCopy];
+    [thumbnails sortUsingComparator:^NSComparisonResult(YTIThumbnailDetails_Thumbnail *a, YTIThumbnailDetails_Thumbnail *b) {
+        if (a.width == b.width) return NSOrderedSame;
+        return a.width > b.width ? NSOrderedAscending : NSOrderedDescending;
+    }];
 
     for (YTIThumbnailDetails_Thumbnail *candidate in thumbnails) {
         if (![candidate respondsToSelector:@selector(URL)]) continue;
 
         NSString *url = candidate.URL;
-        if (url.length == 0) continue;
+        if (url.length > 0 && ![urls containsObject:url]) [urls addObject:url];
+    }
 
-        if (bestURL == nil || candidate.width > bestWidth) {
-            bestURL = url;
-            bestWidth = candidate.width;
+    if (videoID.length > 0) {
+        for (NSString *name in @[@"maxresdefault", @"sddefault", @"hqdefault"]) {
+            NSString *url = [NSString stringWithFormat:@"https://i.ytimg.com/vi/%@/%@.jpg", videoID, name];
+            if (![urls containsObject:url]) [urls addObject:url];
         }
     }
 
-    return bestURL;
+    return urls;
 }
 
 static void YTMUPublishNowPlayingInfo(NSDictionary *info) {
@@ -57,7 +64,8 @@ static void YTMUPublishNowPlayingInfo(NSDictionary *info) {
     @synchronized (gVideoContextLock) {
         if (gCurrentTitle.length == 0 || [gCurrentTitle isEqualToString:track.title]) {
             track.videoID = gCurrentVideoID;
-            track.artworkURL = gCurrentArtworkURL;
+            track.artworkCandidates = gCurrentArtworkCandidates;
+            track.artworkURL = gCurrentArtworkCandidates.firstObject;
             track.artist = gCurrentAuthor;
         }
     }
@@ -89,7 +97,7 @@ static void YTMUPublishNowPlayingInfo(NSDictionary *info) {
         gCurrentVideoID = [self.currentVideoID copy];
         gCurrentAuthor = [details.author copy];
         gCurrentTitle = [details.title copy];
-        gCurrentArtworkURL = [YTMUBestThumbnailURL(details.thumbnail) copy];
+        gCurrentArtworkCandidates = YTMUThumbnailCandidates(details.thumbnail, self.currentVideoID);
     }
 
     // The lock screen info usually lands a beat later; publish what we already
@@ -98,7 +106,8 @@ static void YTMUPublishNowPlayingInfo(NSDictionary *info) {
     track.videoID = self.currentVideoID;
     track.title = details.title;
     track.artist = details.author;
-    track.artworkURL = YTMUBestThumbnailURL(details.thumbnail);
+    track.artworkCandidates = YTMUThumbnailCandidates(details.thumbnail, self.currentVideoID);
+    track.artworkURL = track.artworkCandidates.firstObject;
     track.duration = self.currentVideoTotalMediaTime;
     track.elapsed = self.currentVideoMediaTime;
     track.playing = YES;
