@@ -19,6 +19,7 @@ NSString *const YTMUDiscordStateDidChangeNotification = @"YTMUDiscordStateDidCha
 NSString *const YTMUDiscordPrefEnabled = @"discordRPC";
 NSString *const YTMUDiscordPrefAppID = @"discordAppID";
 NSString *const YTMUDiscordPrefActivityType = @"discordActivityType";
+NSString *const YTMUDiscordPrefNameFromSong = @"discordNameFromSong";
 NSString *const YTMUDiscordPrefActivityName = @"discordActivityName";
 NSString *const YTMUDiscordPrefDetailsTemplate = @"discordDetailsTemplate";
 NSString *const YTMUDiscordPrefStateTemplate = @"discordStateTemplate";
@@ -67,6 +68,7 @@ void YTMUDiscordRegisterDefaults(void) {
     NSDictionary *initialValues = @{
         YTMUDiscordPrefEnabled: @(NO),
         YTMUDiscordPrefActivityType: @(0),
+        YTMUDiscordPrefNameFromSong: @(YES),
         YTMUDiscordPrefActivityName: @"YouTube Music",
         YTMUDiscordPrefDetailsTemplate: @"{song.name}",
         YTMUDiscordPrefStateTemplate: @"{artist.name}",

@@ -437,9 +437,15 @@ static NSString *YTMUDiscordTemplateOrDefault(NSString *key, NSString *fallback)
     YTMUDiscordActivity *activity = [[YTMUDiscordActivity alloc] init];
     activity.type = YTMUDiscordActivityTypeForIndex(YTMUDiscordPrefInteger(YTMUDiscordPrefActivityType));
 
-    NSString *name = YTMUDiscordRenderTemplate(YTMUDiscordPrefString(YTMUDiscordPrefActivityName) ?: @"",
-                                               title, artist, album, track.videoID);
-    activity.name = name.length > 0 ? name : (artist.length > 0 ? artist : @"YouTube Music");
+    if (YTMUDiscordPrefBool(YTMUDiscordPrefNameFromSong)) {
+        // Built directly rather than through a template so a missing artist
+        // does not leave a dangling separator.
+        activity.name = artist.length > 0 ? [NSString stringWithFormat:@"%@ - %@", title, artist] : title;
+    } else {
+        NSString *name = YTMUDiscordRenderTemplate(YTMUDiscordPrefString(YTMUDiscordPrefActivityName) ?: @"",
+                                                   title, artist, album, track.videoID);
+        activity.name = name.length > 0 ? name : (artist.length > 0 ? artist : @"YouTube Music");
+    }
 
     activity.details = YTMUDiscordRenderTemplate(YTMUDiscordTemplateOrDefault(YTMUDiscordPrefDetailsTemplate, @"{song.name}"),
                                                  title, artist, album, track.videoID);

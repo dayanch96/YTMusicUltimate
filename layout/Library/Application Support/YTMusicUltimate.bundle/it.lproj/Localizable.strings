@@ -138,6 +138,8 @@
 "DISCORD_RPC_PLAYING" = "Playing";
 "DISCORD_RPC_WATCHING" = "Watching";
 "DISCORD_RPC_COMPETING" = "Competing";
+"DISCORD_RPC_NAME_FROM_SONG" = "Song and artist as name";
+"DISCORD_RPC_NAME_FROM_SONG_DESC" = "Shows \"Song - Artist\" instead of a fixed name";
 "DISCORD_RPC_ACTIVITY_NAME" = "Activity name";
 "DISCORD_RPC_ARTWORK" = "Show cover art";
 "DISCORD_RPC_TIMESTAMPS" = "Show progress";

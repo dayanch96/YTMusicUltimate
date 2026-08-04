@@ -12,6 +12,18 @@ typedef NS_ENUM(NSInteger, DiscordSettingsSection) {
     DiscordSettingsSectionCount
 };
 
+// The appearance section gains and loses a row depending on whether the
+// activity name is being generated, so its rows are addressed by identity
+// rather than by a fixed index.
+typedef NS_ENUM(NSInteger, DiscordAppearanceRow) {
+    DiscordAppearanceRowActivityType = 0,
+    DiscordAppearanceRowNameFromSong,
+    DiscordAppearanceRowActivityName,
+    DiscordAppearanceRowArtwork,
+    DiscordAppearanceRowTimestamps,
+    DiscordAppearanceRowButtons
+};
+
 // Tags let one -textFieldDidEndEditing: serve every text field on the page.
 typedef NS_ENUM(NSInteger, DiscordSettingsField) {
     DiscordSettingsFieldAppID = 100,
@@ -65,10 +77,26 @@ typedef NS_ENUM(NSInteger, DiscordSettingsField) {
     return DiscordSettingsSectionCount;
 }
 
+- (NSArray<NSNumber *> *)appearanceRows {
+    NSMutableArray<NSNumber *> *rows = [@[@(DiscordAppearanceRowActivityType),
+                                          @(DiscordAppearanceRowNameFromSong)] mutableCopy];
+
+    // A custom name is only reachable when one is not being generated.
+    if (!YTMUDiscordPrefBool(YTMUDiscordPrefNameFromSong)) {
+        [rows addObject:@(DiscordAppearanceRowActivityName)];
+    }
+
+    [rows addObjectsFromArray:@[@(DiscordAppearanceRowArtwork),
+                                @(DiscordAppearanceRowTimestamps),
+                                @(DiscordAppearanceRowButtons)]];
+
+    return rows;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case DiscordSettingsSectionAccount: return 2;
-        case DiscordSettingsSectionAppearance: return 5;
+        case DiscordSettingsSectionAppearance: return [self appearanceRows].count;
         case DiscordSettingsSectionText: return 2;
         default: return 1;
     }
@@ -150,8 +178,8 @@ typedef NS_ENUM(NSInteger, DiscordSettingsField) {
     }
 
     if (indexPath.section == DiscordSettingsSectionAppearance) {
-        switch (indexPath.row) {
-            case 0: {
+        switch ([self appearanceRows][indexPath.row].integerValue) {
+            case DiscordAppearanceRowActivityType: {
                 // Four segments need the full row, so the label is dropped and
                 // the section header carries the meaning.
                 UISegmentedControl *control = [[UISegmentedControl alloc] initWithItems:@[
@@ -172,7 +200,13 @@ typedef NS_ENUM(NSInteger, DiscordSettingsField) {
                 return cell;
             }
 
-            case 1:
+            case DiscordAppearanceRowNameFromSong:
+                cell.textLabel.text = LOC(@"DISCORD_RPC_NAME_FROM_SONG");
+                cell.detailTextLabel.text = LOC(@"DISCORD_RPC_NAME_FROM_SONG_DESC");
+                cell.accessoryView = [self switchForKey:YTMUDiscordPrefNameFromSong action:@selector(toggleNameFromSong:)];
+                return cell;
+
+            case DiscordAppearanceRowActivityName:
                 cell.textLabel.text = LOC(@"DISCORD_RPC_ACTIVITY_NAME");
                 cell.accessoryView = [self textFieldWithTag:DiscordSettingsFieldActivityName
                                                        text:YTMUDiscordPrefString(YTMUDiscordPrefActivityName)
@@ -180,12 +214,12 @@ typedef NS_ENUM(NSInteger, DiscordSettingsField) {
                                                numericInput:NO];
                 return cell;
 
-            case 2:
+            case DiscordAppearanceRowArtwork:
                 cell.textLabel.text = LOC(@"DISCORD_RPC_ARTWORK");
                 cell.accessoryView = [self switchForKey:YTMUDiscordPrefShowArtwork action:@selector(toggleArtwork:)];
                 return cell;
 
-            case 3:
+            case DiscordAppearanceRowTimestamps:
                 cell.textLabel.text = LOC(@"DISCORD_RPC_TIMESTAMPS");
                 cell.accessoryView = [self switchForKey:YTMUDiscordPrefShowTimestamps action:@selector(toggleTimestamps:)];
                 return cell;
@@ -327,6 +361,15 @@ typedef NS_ENUM(NSInteger, DiscordSettingsField) {
     YTMUDiscordSetPref(YTMUDiscordPrefEnabled, @(sender.isOn));
     [YTMUDiscordRPC.sharedInstance synchronizeConnection];
     [self.tableView reloadData];
+}
+
+- (void)toggleNameFromSong:(UISwitch *)sender {
+    YTMUDiscordSetPref(YTMUDiscordPrefNameFromSong, @(sender.isOn));
+    [YTMUDiscordRPC.sharedInstance invalidateCachedPresence];
+
+    // Turning it off reveals the custom name field, turning it on hides it.
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:DiscordSettingsSectionAppearance]
+                  withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (void)toggleArtwork:(UISwitch *)sender {

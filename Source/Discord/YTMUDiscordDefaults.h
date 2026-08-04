@@ -33,6 +33,7 @@ extern NSString *const YTMUDiscordStateDidChangeNotification;
 extern NSString *const YTMUDiscordPrefEnabled;
 extern NSString *const YTMUDiscordPrefAppID;
 extern NSString *const YTMUDiscordPrefActivityType;
+extern NSString *const YTMUDiscordPrefNameFromSong;
 extern NSString *const YTMUDiscordPrefActivityName;
 extern NSString *const YTMUDiscordPrefDetailsTemplate;
 extern NSString *const YTMUDiscordPrefStateTemplate;
