@@ -471,15 +471,18 @@ static NSString *YTMUDiscordTemplateOrDefault(NSString *key, NSString *fallback)
         activity.endTimestamp = startMs + (long long)(track.duration * 1000.0);
     }
 
-    if (YTMUDiscordPrefBool(YTMUDiscordPrefShowButtons)) {
-        NSMutableArray<NSArray<NSString *> *> *buttons = [NSMutableArray array];
-        if (track.videoID.length > 0) {
-            [buttons addObject:@[@"Listen on YouTube Music",
-                                 [YTMUDiscordWatchURLPrefix stringByAppendingString:track.videoID]]];
-        }
-        [buttons addObject:@[@"YTMusicUltimate", YTMUDiscordSourceURL]];
-        activity.buttons = buttons;
+    NSMutableArray<NSArray<NSString *> *> *buttons = [NSMutableArray array];
+
+    if (YTMUDiscordPrefBool(YTMUDiscordPrefShowListenButton) && track.videoID.length > 0) {
+        [buttons addObject:@[@"Listen on YouTube Music",
+                             [YTMUDiscordWatchURLPrefix stringByAppendingString:track.videoID]]];
     }
+
+    if (YTMUDiscordPrefBool(YTMUDiscordPrefShowTweakButton)) {
+        [buttons addObject:@[@"YTMusicUltimate", YTMUDiscordSourceURL]];
+    }
+
+    activity.buttons = buttons;
 
     return activity;
 }

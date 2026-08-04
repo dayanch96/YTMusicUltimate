@@ -21,7 +21,8 @@ typedef NS_ENUM(NSInteger, DiscordAppearanceRow) {
     DiscordAppearanceRowActivityName,
     DiscordAppearanceRowArtwork,
     DiscordAppearanceRowTimestamps,
-    DiscordAppearanceRowButtons
+    DiscordAppearanceRowListenButton,
+    DiscordAppearanceRowTweakButton
 };
 
 // Tags let one -textFieldDidEndEditing: serve every text field on the page.
@@ -88,7 +89,8 @@ typedef NS_ENUM(NSInteger, DiscordSettingsField) {
 
     [rows addObjectsFromArray:@[@(DiscordAppearanceRowArtwork),
                                 @(DiscordAppearanceRowTimestamps),
-                                @(DiscordAppearanceRowButtons)]];
+                                @(DiscordAppearanceRowListenButton),
+                                @(DiscordAppearanceRowTweakButton)]];
 
     return rows;
 }
@@ -224,9 +226,14 @@ typedef NS_ENUM(NSInteger, DiscordSettingsField) {
                 cell.accessoryView = [self switchForKey:YTMUDiscordPrefShowTimestamps action:@selector(toggleTimestamps:)];
                 return cell;
 
+            case DiscordAppearanceRowListenButton:
+                cell.textLabel.text = LOC(@"DISCORD_RPC_BUTTON_LISTEN");
+                cell.accessoryView = [self switchForKey:YTMUDiscordPrefShowListenButton action:@selector(toggleListenButton:)];
+                return cell;
+
             default:
-                cell.textLabel.text = LOC(@"DISCORD_RPC_BUTTONS");
-                cell.accessoryView = [self switchForKey:YTMUDiscordPrefShowButtons action:@selector(toggleButtons:)];
+                cell.textLabel.text = LOC(@"DISCORD_RPC_BUTTON_TWEAK");
+                cell.accessoryView = [self switchForKey:YTMUDiscordPrefShowTweakButton action:@selector(toggleTweakButton:)];
                 return cell;
         }
     }
@@ -382,8 +389,13 @@ typedef NS_ENUM(NSInteger, DiscordSettingsField) {
     [YTMUDiscordRPC.sharedInstance invalidateCachedPresence];
 }
 
-- (void)toggleButtons:(UISwitch *)sender {
-    YTMUDiscordSetPref(YTMUDiscordPrefShowButtons, @(sender.isOn));
+- (void)toggleListenButton:(UISwitch *)sender {
+    YTMUDiscordSetPref(YTMUDiscordPrefShowListenButton, @(sender.isOn));
+    [YTMUDiscordRPC.sharedInstance invalidateCachedPresence];
+}
+
+- (void)toggleTweakButton:(UISwitch *)sender {
+    YTMUDiscordSetPref(YTMUDiscordPrefShowTweakButton, @(sender.isOn));
     [YTMUDiscordRPC.sharedInstance invalidateCachedPresence];
 }
 

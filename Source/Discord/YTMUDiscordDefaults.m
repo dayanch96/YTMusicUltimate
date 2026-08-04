@@ -25,7 +25,11 @@ NSString *const YTMUDiscordPrefDetailsTemplate = @"discordDetailsTemplate";
 NSString *const YTMUDiscordPrefStateTemplate = @"discordStateTemplate";
 NSString *const YTMUDiscordPrefShowArtwork = @"discordShowArtwork";
 NSString *const YTMUDiscordPrefShowTimestamps = @"discordShowTimestamps";
-NSString *const YTMUDiscordPrefShowButtons = @"discordShowButtons";
+NSString *const YTMUDiscordPrefShowListenButton = @"discordShowListenButton";
+NSString *const YTMUDiscordPrefShowTweakButton = @"discordShowTweakButton";
+
+// Replaced by the pair above, kept only to carry the old choice across.
+static NSString *const kLegacyShowButtonsKey = @"discordShowButtons";
 NSString *const YTMUDiscordPrefClearWhenPaused = @"discordClearWhenPaused";
 
 static NSString *const kPrefsDomain = @"YTMUltimate";
@@ -74,7 +78,8 @@ void YTMUDiscordRegisterDefaults(void) {
         YTMUDiscordPrefStateTemplate: @"{artist.name}",
         YTMUDiscordPrefShowArtwork: @(YES),
         YTMUDiscordPrefShowTimestamps: @(YES),
-        YTMUDiscordPrefShowButtons: @(YES),
+        YTMUDiscordPrefShowListenButton: @(YES),
+        YTMUDiscordPrefShowTweakButton: @(NO),
         YTMUDiscordPrefClearWhenPaused: @(NO)
     };
 
@@ -84,6 +89,18 @@ void YTMUDiscordRegisterDefaults(void) {
             prefs[key] = initialValues[key];
             changed = YES;
         }
+    }
+
+    // The two button switches replaced a single one. Somebody who had turned
+    // that off wanted no buttons, so do not hand them back a new default.
+    id legacyShowButtons = prefs[kLegacyShowButtonsKey];
+    if (legacyShowButtons != nil) {
+        if (![legacyShowButtons boolValue]) {
+            prefs[YTMUDiscordPrefShowListenButton] = @(NO);
+            prefs[YTMUDiscordPrefShowTweakButton] = @(NO);
+        }
+        [prefs removeObjectForKey:kLegacyShowButtonsKey];
+        changed = YES;
     }
 
     if (changed) [defaults setObject:prefs forKey:kPrefsDomain];

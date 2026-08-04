@@ -143,7 +143,8 @@
 "DISCORD_RPC_ACTIVITY_NAME" = "Activity name";
 "DISCORD_RPC_ARTWORK" = "Show cover art";
 "DISCORD_RPC_TIMESTAMPS" = "Show progress";
-"DISCORD_RPC_BUTTONS" = "Show buttons";
+"DISCORD_RPC_BUTTON_LISTEN" = "\"Listen on YouTube Music\" button";
+"DISCORD_RPC_BUTTON_TWEAK" = "\"YTMusicUltimate\" button";
 "DISCORD_RPC_PAUSED" = "When paused";
 "DISCORD_RPC_PAUSED_KEEP" = "Keep";
 "DISCORD_RPC_PAUSED_CLEAR" = "Clear";

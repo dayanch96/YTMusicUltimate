@@ -39,7 +39,8 @@ extern NSString *const YTMUDiscordPrefDetailsTemplate;
 extern NSString *const YTMUDiscordPrefStateTemplate;
 extern NSString *const YTMUDiscordPrefShowArtwork;
 extern NSString *const YTMUDiscordPrefShowTimestamps;
-extern NSString *const YTMUDiscordPrefShowButtons;
+extern NSString *const YTMUDiscordPrefShowListenButton;
+extern NSString *const YTMUDiscordPrefShowTweakButton;
 extern NSString *const YTMUDiscordPrefClearWhenPaused;
 
 typedef NS_ENUM(NSInteger, YTMUDiscordConnectionState) {
