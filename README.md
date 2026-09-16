@@ -21,6 +21,12 @@ Add __[https://ginsu.dev/repo](https://ginsu.dev/repo)__ to your favorite instal
 * **Sideloading:**
   We no longer provide a sideloading IPA but you can build one yourself, keep reading:
 
+### CarPlay in sideloaded builds
+
+Apple restricts the CarPlay audio entitlement to approved provisioning profiles. As a result, an IPA re-signed with Sideloadly, AltStore, or SideStore cannot appear as a full app on the CarPlay Home screen, even when the original YouTube Music IPA supports CarPlay.
+
+YTMusicUltimate publishes the active track's title, artist, artwork, duration, and playback position to the system Now Playing interface as a fallback. Full CarPlay browsing (Home, Library, playlists, and search) still requires an Apple-authorized CarPlay entitlement or an installation method that preserves the original entitlement.
+
 ## How to build a YTMusicUltimate IPA by yourself using Github actions
 
 If this is your first time here, start from step 1. If you built a YTMU IPA before, skip steps 1 and 2. Instead, click on the "Sync fork" button to get the latest version of the tweak and continue through step 3.
